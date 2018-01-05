@@ -3,7 +3,7 @@ version = '0.0.1-SNAPSHOT'
 
 subprojects { p ->
     p.buildscript {
-        ext.kotlin_version = "1.1.51"
+        ext.kotlin_version = "1.2.10"
 
         repositories {
             mavenLocal()
@@ -14,13 +14,14 @@ subprojects { p ->
         
         dependencies {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-            classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.23"
+            classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.26"
             classpath "com.android.tools.build:gradle:3.0.0"
         }
     }
     repositories {
         mavenLocal()
         jcenter()
+        google()
         maven { url "http://dl.bintray.com/kotlin/kotlinx.html" }
         maven { url "http://dl.bintray.com/kotlin/ktor" }
         maven { url "https://dl.bintray.com/kotlin/squash" }
@@ -28,8 +29,8 @@ subprojects { p ->
 }
 
 ext {
-    kotlin_version = "1.1.51"
-    html_version = "0.6.6"
-    ktor_version = "0.3.0"
-    squash_version = "0.2.2"
+    kotlin_version = "1.2.10"
+    html_version = "0.6.8"
+    ktor_version = "0.9.0"
+    squash_version = "0.2.3"
 }

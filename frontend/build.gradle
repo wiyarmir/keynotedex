@@ -1,4 +1,4 @@
-group = 'org.jetbrains.elemental'
+group = 'es.guillermoorellana.conferences'
 version = '0.0.1-SNAPSHOT'
 
 apply plugin: 'kotlin2js'
@@ -22,27 +22,28 @@ kotlinFrontend {
     sourceMaps = false
 
     npm {
-        replaceVersion("kotlinx-html-js", "1.1.0")
-        replaceVersion("kotlinx-html-shared", "1.1.0")
-        replaceVersion("kotlin-js-library", "1.1.0")
+        replaceVersion "kotlinx-html-js", "$kotlin_version"
+        replaceVersion "kotlinx-html-shared", "$kotlin_version"
+        replaceVersion "kotlin-js-library", "$kotlin_version"
 
-        dependency("react")
-        dependency("react-dom")
-        dependency("react-router")
-        dependency("jquery")
-        dependency("react-markdown")
+        dependency "react"
+        dependency "react-dom"
+        dependency "react-router"
+        dependency "jquery"
+        dependency "react-markdown"
 
-        devDependency("css-loader")
-        devDependency("style-loader")
-        devDependency("babel-loader")
-        devDependency("babel-core")
-        devDependency("karma")
+        devDependency "css-loader"
+        devDependency "style-loader"
+        devDependency "babel-loader"
+        devDependency "babel-core"
+        devDependency "karma"
+        devDependency "webpack-dashboard"
     }
 
     webpackBundle {
         publicPath = "/frontend/"
         port = 8080
-        proxyUrl = "http://localhost:9090"
+        proxyUrl = "http://localhost:9090/"
     }
 }
 
