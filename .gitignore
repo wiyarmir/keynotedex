@@ -3,6 +3,7 @@
 .vscode/
 .idea/
 build/
+out/
 
 .project
 .classpath

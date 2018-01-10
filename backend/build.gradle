@@ -9,6 +9,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     compile "io.ktor:ktor-locations:$ktor_version"
+    compile "io.ktor:ktor-gson:$ktor_version"
     compile "io.ktor:ktor-html-builder:$ktor_version"
     compile "org.ehcache:ehcache:3.0.0.m4"
 
