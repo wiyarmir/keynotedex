@@ -37,7 +37,6 @@ kotlinFrontend {
         devDependency "babel-loader"
         devDependency "babel-core"
         devDependency "karma"
-        devDependency "webpack-dashboard"
     }
 
     webpackBundle {
