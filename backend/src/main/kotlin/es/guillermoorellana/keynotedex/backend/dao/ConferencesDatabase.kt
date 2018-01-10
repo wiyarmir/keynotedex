@@ -1,10 +1,10 @@
 package es.guillermoorellana.keynotedex.backend.dao
 
+import es.guillermoorellana.keynotedex.backend.conference.Conference
 import es.guillermoorellana.keynotedex.backend.dao.tables.Conferences
 import es.guillermoorellana.keynotedex.backend.dao.tables.Talks
 import es.guillermoorellana.keynotedex.backend.dao.tables.Users
-import es.guillermoorellana.keynotedex.backend.model.Conference
-import es.guillermoorellana.keynotedex.backend.model.User
+import es.guillermoorellana.keynotedex.backend.user.model.User
 import org.jetbrains.squash.connection.DatabaseConnection
 import org.jetbrains.squash.connection.transaction
 import org.jetbrains.squash.dialects.h2.H2Connection
@@ -35,9 +35,9 @@ class ConferencesDatabase(private val db: DatabaseConnection = H2Connection.crea
 
                 insertInto(Users)
                         .values {
-                            it[id] = "user$i"
+                            it[id] = "userId$i"
                             it[displayName] = "User #$i"
-                            it[email] = "user$i@keynotedex.co"
+                            it[email] = "userId$i@keynotedex.co"
                             it[passwordHash] = ""
                         }
                         .execute()

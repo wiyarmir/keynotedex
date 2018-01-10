@@ -1,9 +1,8 @@
-package es.guillermoorellana.keynotedex.backend.routes
+package es.guillermoorellana.keynotedex.backend.index
 
+import es.guillermoorellana.keynotedex.backend.ApplicationPage
 import es.guillermoorellana.keynotedex.backend.Index
 import es.guillermoorellana.keynotedex.backend.dao.ConferencesDatabase
-import es.guillermoorellana.keynotedex.backend.model.responses.IndexResponse
-import es.guillermoorellana.keynotedex.backend.pages.ApplicationPage
 import io.ktor.application.call
 import io.ktor.html.respondHtmlTemplate
 import io.ktor.http.ContentType
@@ -16,7 +15,7 @@ fun Route.index(storage: ConferencesDatabase) {
     accept(ContentType.Text.Html) {
         get<Index> {
             call.respondHtmlTemplate(ApplicationPage()) {
-                caption { +"Conferences" }
+                caption { +"Keynotedex" }
             }
         }
     }

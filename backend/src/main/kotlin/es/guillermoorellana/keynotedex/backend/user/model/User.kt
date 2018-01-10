@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.backend.model
+package es.guillermoorellana.keynotedex.backend.user.model
 
 data class User(
         val userId: String,

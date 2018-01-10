@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.model.User
+import es.guillermoorellana.keynotedex.backend.user.model.User
 import io.ktor.application.ApplicationCall
 import io.ktor.application.feature
 import io.ktor.http.HttpHeaders

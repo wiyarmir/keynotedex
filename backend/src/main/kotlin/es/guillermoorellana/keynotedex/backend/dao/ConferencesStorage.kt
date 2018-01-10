@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.backend.dao
 
-import es.guillermoorellana.keynotedex.backend.model.Conference
-import es.guillermoorellana.keynotedex.backend.model.User
+import es.guillermoorellana.keynotedex.backend.conference.Conference
+import es.guillermoorellana.keynotedex.backend.user.model.User
 import java.io.Closeable
 
 interface ConferencesStorage : Closeable {

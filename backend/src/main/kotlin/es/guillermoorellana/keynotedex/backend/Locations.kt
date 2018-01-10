@@ -5,5 +5,8 @@ import io.ktor.locations.location
 @location("/")
 class Index()
 
-@location("/user/{user}")
-data class UserPage(val user: String)
+@location("/userId/{userId}")
+data class UserPage(val userId: String)
+
+@location("/conference/{conferenceId}")
+data class ConferencePage(val conferenceId: String)
