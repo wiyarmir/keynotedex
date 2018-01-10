@@ -1,7 +1,7 @@
-package es.guillermoorellana.conferences.backend
+package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.conferences.backend.dao.ConferencesDatabase
-import es.guillermoorellana.conferences.backend.model.responses.IndexResponse
+import es.guillermoorellana.keynotedex.backend.dao.ConferencesDatabase
+import es.guillermoorellana.keynotedex.backend.model.responses.IndexResponse
 import io.ktor.application.call
 import io.ktor.html.respondHtmlTemplate
 import io.ktor.http.ContentType

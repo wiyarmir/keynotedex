@@ -6,7 +6,7 @@ android {
     compileSdkVersion 26
 
     defaultConfig {
-        applicationId "es.guillermoorellana.conferences.app"
+        applicationId "es.guillermoorellana.keynotedex.app"
         manifestPlaceholders = [:]
         minSdkVersion 21
         targetSdkVersion 26

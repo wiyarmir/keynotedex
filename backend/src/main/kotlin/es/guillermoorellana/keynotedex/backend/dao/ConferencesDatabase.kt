@@ -1,10 +1,10 @@
-package es.guillermoorellana.conferences.backend.dao
+package es.guillermoorellana.keynotedex.backend.dao
 
-import es.guillermoorellana.conferences.backend.dao.tables.Conferences
-import es.guillermoorellana.conferences.backend.dao.tables.Talks
-import es.guillermoorellana.conferences.backend.dao.tables.Users
-import es.guillermoorellana.conferences.backend.model.Conference
-import es.guillermoorellana.conferences.backend.model.User
+import es.guillermoorellana.keynotedex.backend.dao.tables.Conferences
+import es.guillermoorellana.keynotedex.backend.dao.tables.Talks
+import es.guillermoorellana.keynotedex.backend.dao.tables.Users
+import es.guillermoorellana.keynotedex.backend.model.Conference
+import es.guillermoorellana.keynotedex.backend.model.User
 import org.jetbrains.squash.connection.DatabaseConnection
 import org.jetbrains.squash.connection.transaction
 import org.jetbrains.squash.dialects.h2.H2Connection

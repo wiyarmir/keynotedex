@@ -1,4 +1,4 @@
-package es.guillermoorellana.conferences.backend.dao.tables
+package es.guillermoorellana.keynotedex.backend.dao.tables
 
 import org.jetbrains.squash.definition.TableDefinition
 

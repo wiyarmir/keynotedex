@@ -1,6 +1,6 @@
-package es.guillermoorellana.conferences.backend
+package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.conferences.backend.model.User
+import es.guillermoorellana.keynotedex.backend.model.User
 import io.ktor.application.ApplicationCall
 import io.ktor.application.feature
 import io.ktor.http.HttpHeaders

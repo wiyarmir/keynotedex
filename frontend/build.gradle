@@ -1,4 +1,4 @@
-group = 'es.guillermoorellana.conferences'
+group = 'es.guillermoorellana.keynotedex'
 version = '0.0.1-SNAPSHOT'
 
 apply plugin: 'kotlin2js'

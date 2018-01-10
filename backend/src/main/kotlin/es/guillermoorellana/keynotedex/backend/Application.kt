@@ -1,6 +1,6 @@
-package es.guillermoorellana.conferences.backend
+package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.conferences.backend.dao.ConferencesDatabase
+import es.guillermoorellana.keynotedex.backend.dao.ConferencesDatabase
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install

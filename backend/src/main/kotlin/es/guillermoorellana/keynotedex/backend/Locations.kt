@@ -1,4 +1,4 @@
-package es.guillermoorellana.conferences.backend
+package es.guillermoorellana.keynotedex.backend
 
 import io.ktor.locations.location
 

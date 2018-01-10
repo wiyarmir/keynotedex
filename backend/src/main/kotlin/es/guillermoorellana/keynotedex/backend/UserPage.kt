@@ -1,6 +1,6 @@
-package es.guillermoorellana.conferences.backend
+package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.conferences.backend.dao.ConferencesStorage
+import es.guillermoorellana.keynotedex.backend.dao.ConferencesStorage
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.get
