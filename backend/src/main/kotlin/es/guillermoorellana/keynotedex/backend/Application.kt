@@ -1,8 +1,10 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.dao.ConferencesDatabase
+import es.guillermoorellana.keynotedex.backend.conferences.conference
+import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
+import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.index.index
-import es.guillermoorellana.keynotedex.backend.user.userPage
+import es.guillermoorellana.keynotedex.backend.user.user
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -25,7 +27,7 @@ import io.ktor.sessions.cookie
 data class Session(val userId: String)
 
 fun Application.main() {
-    val storage = ConferencesDatabase()
+    val storage: KeynotedexStorage = KeynotedexDatabase()
 
     install(DefaultHeaders)
     install(CallLogging)
@@ -51,7 +53,8 @@ fun Application.main() {
 
     install(Routing) {
         index(storage)
-        userPage(storage)
+        user(storage)
+        conference(storage)
     }
 }
 

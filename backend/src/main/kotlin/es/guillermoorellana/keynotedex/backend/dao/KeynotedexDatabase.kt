@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.dao
 
-import es.guillermoorellana.keynotedex.backend.conference.Conference
+import es.guillermoorellana.keynotedex.backend.conferences.Conference
 import es.guillermoorellana.keynotedex.backend.dao.tables.Conferences
 import es.guillermoorellana.keynotedex.backend.dao.tables.Talks
 import es.guillermoorellana.keynotedex.backend.dao.tables.Users
@@ -17,7 +17,7 @@ import org.jetbrains.squash.statements.insertInto
 import org.jetbrains.squash.statements.values
 import java.io.File
 
-class ConferencesDatabase(private val db: DatabaseConnection = H2Connection.createMemoryConnection()) : ConferencesStorage {
+class KeynotedexDatabase(private val db: DatabaseConnection = H2Connection.createMemoryConnection()) : KeynotedexStorage {
     constructor(dir: File) : this(H2Connection.create("jdbc:h2:file:${dir.canonicalFile.absolutePath}"))
 
     init {
@@ -97,6 +97,16 @@ class ConferencesDatabase(private val db: DatabaseConnection = H2Connection.crea
                     Conference(name = it[Conferences.name])
                 }
                 .toList()
+    }
+
+    override fun conference(conferenceId: String) = db.transaction {
+        from(Conferences)
+                .where { Conferences.id eq conferenceId }
+                .execute()
+                .map {
+                    Conference(name = it[Conferences.name])
+                }
+                .singleOrNull()
     }
 
     override fun close() {

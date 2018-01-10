@@ -14,7 +14,7 @@ import kotlinx.html.meta
 import kotlinx.html.script
 import kotlinx.html.title
 
-class ApplicationPage : Template<HTML> {
+class ApplicationPageContent : Template<HTML> {
     val caption = Placeholder<TITLE>()
     val head = Placeholder<HEAD>()
 

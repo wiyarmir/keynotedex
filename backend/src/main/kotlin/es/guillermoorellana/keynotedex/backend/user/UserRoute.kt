@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.backend.user
 
 import es.guillermoorellana.keynotedex.backend.UserPage
-import es.guillermoorellana.keynotedex.backend.dao.ConferencesStorage
+import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.error.ErrorResponse
 import es.guillermoorellana.keynotedex.backend.user.model.toPublic
 import io.ktor.application.call
@@ -12,7 +12,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 
-fun Route.userPage(dao: ConferencesStorage) {
+fun Route.user(dao: KeynotedexStorage) {
     accept(ContentType.Text.Html) {
         get<UserPage> {
             val user = dao.user(it.userId)
