@@ -22,6 +22,7 @@ class ConferencesDatabase(private val db: DatabaseConnection = H2Connection.crea
 
     init {
         db.transaction { databaseSchema().create(Conferences, Talks, Users) }
+
         println("Populating db with mock data")
         db.transaction {
             for (i in 1..10) {
@@ -29,6 +30,15 @@ class ConferencesDatabase(private val db: DatabaseConnection = H2Connection.crea
                         .values {
                             it[id] = "$i"
                             it[name] = "Conference$i"
+                        }
+                        .execute()
+
+                insertInto(Users)
+                        .values {
+                            it[id] = "user$i"
+                            it[displayName] = "User #$i"
+                            it[email] = "user$i@keynotedex.co"
+                            it[passwordHash] = ""
                         }
                         .execute()
             }

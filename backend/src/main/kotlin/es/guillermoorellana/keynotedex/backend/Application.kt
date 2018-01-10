@@ -1,6 +1,8 @@
 package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.backend.dao.ConferencesDatabase
+import es.guillermoorellana.keynotedex.backend.routes.index
+import es.guillermoorellana.keynotedex.backend.routes.userPage
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install

@@ -1,7 +1,9 @@
-package es.guillermoorellana.keynotedex.backend
+package es.guillermoorellana.keynotedex.backend.routes
 
+import es.guillermoorellana.keynotedex.backend.Index
 import es.guillermoorellana.keynotedex.backend.dao.ConferencesDatabase
 import es.guillermoorellana.keynotedex.backend.model.responses.IndexResponse
+import es.guillermoorellana.keynotedex.backend.pages.ApplicationPage
 import io.ktor.application.call
 import io.ktor.html.respondHtmlTemplate
 import io.ktor.http.ContentType

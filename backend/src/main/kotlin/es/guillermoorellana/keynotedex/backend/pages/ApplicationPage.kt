@@ -1,9 +1,18 @@
-package es.guillermoorellana.keynotedex.backend
+package es.guillermoorellana.keynotedex.backend.pages
 
 import io.ktor.html.Placeholder
 import io.ktor.html.Template
 import io.ktor.html.insert
-import kotlinx.html.*
+import kotlinx.html.HEAD
+import kotlinx.html.HTML
+import kotlinx.html.TITLE
+import kotlinx.html.body
+import kotlinx.html.div
+import kotlinx.html.head
+import kotlinx.html.id
+import kotlinx.html.meta
+import kotlinx.html.script
+import kotlinx.html.title
 
 class ApplicationPage : Template<HTML> {
     val caption = Placeholder<TITLE>()
