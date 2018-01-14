@@ -4,6 +4,7 @@ import es.guillermoorellana.keynotedex.backend.conferences.conference
 import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.index.index
+import es.guillermoorellana.keynotedex.backend.user.register.register
 import es.guillermoorellana.keynotedex.backend.user.user
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -27,7 +28,10 @@ import io.ktor.sessions.cookie
 data class Session(val userId: String)
 
 fun Application.main() {
-    val storage: KeynotedexStorage = KeynotedexDatabase()
+    val storage: KeynotedexStorage = KeynotedexDatabase().apply {
+        environment.log.debug("Populating db with mock data")
+        mockData()
+    }
 
     install(DefaultHeaders)
     install(CallLogging)
@@ -46,15 +50,13 @@ fun Application.main() {
     }
 
     install(ContentNegotiation) {
-        gson {
-
-        }
+        gson { }
     }
 
     install(Routing) {
         index(storage)
         user(storage)
         conference(storage)
+        register(storage, ::hash)
     }
 }
-

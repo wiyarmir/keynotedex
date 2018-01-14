@@ -17,32 +17,11 @@ import org.jetbrains.squash.statements.insertInto
 import org.jetbrains.squash.statements.values
 import java.io.File
 
-class KeynotedexDatabase(private val db: DatabaseConnection = H2Connection.createMemoryConnection()) : KeynotedexStorage {
+class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryConnection()) : KeynotedexStorage {
     constructor(dir: File) : this(H2Connection.create("jdbc:h2:file:${dir.canonicalFile.absolutePath}"))
 
     init {
         db.transaction { databaseSchema().create(Conferences, Talks, Users) }
-
-        println("Populating db with mock data")
-        db.transaction {
-            for (i in 1..10) {
-                insertInto(Conferences)
-                        .values {
-                            it[id] = "$i"
-                            it[name] = "Conference$i"
-                        }
-                        .execute()
-
-                insertInto(Users)
-                        .values {
-                            it[id] = "userId$i"
-                            it[displayName] = "User #$i"
-                            it[email] = "userId$i@keynotedex.co"
-                            it[passwordHash] = ""
-                        }
-                        .execute()
-            }
-        }
     }
 
     override fun user(userId: String, hash: String?) = db.transaction {

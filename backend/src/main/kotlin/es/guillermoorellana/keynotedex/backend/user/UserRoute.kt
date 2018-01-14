@@ -26,7 +26,7 @@ fun Route.user(dao: KeynotedexStorage) {
         get<UserPage> {
             val user = dao.user(it.userId)
             when (user) {
-                null -> call.respond(ErrorResponse("User ${it.userId} doesn't exist"))
+                null -> call.respond(HttpStatusCode.NotFound, ErrorResponse("User ${it.userId} doesn't exist"))
                 else -> call.respond(UserResponse(user.toPublic()))
             }
         }

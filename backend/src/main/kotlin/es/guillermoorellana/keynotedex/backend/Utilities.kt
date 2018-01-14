@@ -1,5 +1,8 @@
 package es.guillermoorellana.keynotedex.backend
 
+import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
+import es.guillermoorellana.keynotedex.backend.dao.tables.Conferences
+import es.guillermoorellana.keynotedex.backend.dao.tables.Users
 import es.guillermoorellana.keynotedex.backend.user.model.User
 import io.ktor.application.ApplicationCall
 import io.ktor.application.feature
@@ -10,6 +13,9 @@ import io.ktor.request.host
 import io.ktor.request.port
 import io.ktor.response.respondRedirect
 import io.ktor.util.hex
+import org.jetbrains.squash.connection.transaction
+import org.jetbrains.squash.statements.insertInto
+import org.jetbrains.squash.statements.values
 import java.net.URI
 import java.util.concurrent.TimeUnit
 import javax.crypto.Mac
@@ -42,3 +48,25 @@ fun ApplicationCall.verifyCode(date: Long, user: User, code: String, hashFunctio
 
 private val userIdPattern = "[a-zA-Z0-9_.]+".toRegex()
 internal fun userNameValid(userId: String) = userId.matches(userIdPattern)
+
+internal fun KeynotedexDatabase.mockData() {
+    db.transaction {
+        for (i in 1..10) {
+            insertInto(Conferences)
+                    .values {
+                        it[id] = "$i"
+                        it[name] = "Conference$i"
+                    }
+                    .execute()
+
+            insertInto(Users)
+                    .values {
+                        it[id] = "user$i"
+                        it[displayName] = "User #$i"
+                        it[email] = "userId$i@keynotedex.co"
+                        it[passwordHash] = ""
+                    }
+                    .execute()
+        }
+    }
+}

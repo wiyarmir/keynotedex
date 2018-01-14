@@ -1,0 +1,81 @@
+###
+
+GET http://localhost:9090
+Accept: application/json
+Cache-Control: no-cache
+
+###
+# USER
+###
+
+GET http://localhost:9090/user/user1
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:9090/user/user0
+Accept: application/json
+Cache-Control: no-cache
+
+###
+# CONFERENCE
+###
+
+GET http://localhost:9090/conference
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:9090/conference/0
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:9090/conference/3
+Accept: application/json
+Cache-Control: no-cache
+
+
+###
+# REGISTER
+###
+
+GET http://localhost:9090/register
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/register?userId=user30&password=p4ss!w0rd&email=u30@keynotedex.co&displayName=1😁2👩🏼3
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/register?userId=user40&password=p4ss!w0rd&email=u30@keynotedex.co
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/register?userId=user50&password=p4ss&email=u30@keynotedex.co
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/register?userId=usr&password=p4ss!w0rd&email=u30@keynotedex.co
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/register?userId=user70&password=p4ss!w0rd
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
