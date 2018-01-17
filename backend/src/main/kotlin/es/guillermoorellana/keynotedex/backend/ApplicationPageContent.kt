@@ -33,7 +33,7 @@ class ApplicationPageContent : Template<HTML> {
         }
         body {
             div { id = "content" }
-            script(src = "frontend/frontend.bundle.js")
+            script(src = "frontend/web.bundle.js")
         }
     }
 }
