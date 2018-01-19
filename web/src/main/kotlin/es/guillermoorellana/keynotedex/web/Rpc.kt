@@ -1,14 +1,11 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.web.model.Conference
-import es.guillermoorellana.keynotedex.web.model.IndexResponse
-import es.guillermoorellana.keynotedex.web.model.User
+import es.guillermoorellana.keynotedex.web.model.*
 import kotlinx.coroutines.experimental.await
 import org.w3c.dom.url.URLSearchParams
-import org.w3c.fetch.RequestCredentials
-import org.w3c.fetch.RequestInit
+import org.w3c.fetch.*
 import kotlin.browser.window
-import kotlin.js.json
+import kotlin.js.*
 
 suspend fun index(): IndexResponse = getAndParseResult("/", null, ::parseIndexResponse)
 

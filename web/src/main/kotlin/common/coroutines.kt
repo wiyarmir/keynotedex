@@ -1,7 +1,7 @@
 package kotlinx.coroutines.experimental
 
 import kotlin.coroutines.experimental.*
-import kotlin.js.Promise
+import kotlin.js.*
 
 suspend fun <T> Promise<T>.await() = suspendCoroutine<T> { cont ->
     then({ value -> cont.resume(value) },
