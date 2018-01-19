@@ -24,6 +24,3 @@ class MAIN(
 
 inline fun RBuilder.main(classes: String? = null, block: RDOMBuilder<MAIN>.() -> Unit = {}): ReactElement =
     tag(block) { MAIN(attributesMapOf("class", classes), it) }
-
-//inline fun RBuilder.mark(classes: String? = null, block: RDOMBuilder<MARK>.() -> Unit): ReactElement = tag(block) { MARK(
-//    attributesMapOf("class", classes), it) }

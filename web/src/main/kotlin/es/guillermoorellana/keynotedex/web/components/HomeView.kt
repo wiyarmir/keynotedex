@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web
+package es.guillermoorellana.keynotedex.web.components
 
 import react.*
 import react.dom.*
@@ -51,3 +51,5 @@ class HomeView : RComponent<HomeView.Props, HomeView.State>() {
 
     class State() : RState
 }
+
+fun RBuilder.homeView() = child(HomeView::class) {}

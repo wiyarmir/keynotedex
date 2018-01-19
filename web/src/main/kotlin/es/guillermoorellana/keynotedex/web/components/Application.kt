@@ -1,24 +1,13 @@
-package es.guillermoorellana.keynotedex.web
+package es.guillermoorellana.keynotedex.web.components
 
 import kotlinx.html.*
 import react.*
 import react.dom.*
-import kotlin.browser.*
 
-fun main(args: Array<String>) {
-    runtime.wrappers.require("narrow-jumbotron.css")
+class Application : RComponent<RProps, ApplicationPageState>() {
 
-    window.onload = {
-        render(document.getElementById("content")) {
-            child(Application::class) {}
-        }
-    }
-}
-
-class Application : RComponent<ApplicationProps, ApplicationPageState>() {
-
-    init {
-        state = ApplicationPageState(MainView.Home)
+    override fun ApplicationPageState.init() {
+        selected = MainView.Home
     }
 
     override fun RBuilder.render() {
@@ -50,10 +39,7 @@ class Application : RComponent<ApplicationProps, ApplicationPageState>() {
             }
             main {
                 attrs { role = "main" }
-                when (state.selected) {
-                    MainView.Loading -> h1 { +"Loading..." }
-                    MainView.Home -> child(HomeView::class) {}
-                }
+                loading(state.selected) { homeView() }
             }
             footer("container") {
                 p { +"© Keynotedex ${js("new Date().getFullYear()")}" }
@@ -71,4 +57,4 @@ class ApplicationPageState(
     var selected: MainView
 ) : RState
 
-class ApplicationProps : RProps
+fun RBuilder.application() = child(Application::class) {}

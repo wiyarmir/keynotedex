@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web
+package es.guillermoorellana.keynotedex.web.comms
 
 import es.guillermoorellana.keynotedex.web.model.*
 import kotlinx.coroutines.experimental.await
@@ -7,7 +7,8 @@ import org.w3c.fetch.*
 import kotlin.browser.window
 import kotlin.js.*
 
-suspend fun index(): IndexResponse = getAndParseResult("/", null, ::parseIndexResponse)
+suspend fun index(): IndexResponse =
+    getAndParseResult("/", null, ::parseIndexResponse)
 
 suspend fun register(
         userId: String,
@@ -15,28 +16,29 @@ suspend fun register(
         displayName: String,
         email: String
 ): User = postAndParseResult(
-        "/register",
-        URLSearchParams().apply {
-            append("userId", userId)
-            append("password", password)
-            append("displayName", displayName)
-            append("email", email)
-        },
-        ::parseLoginOrRegisterResponse)
+    "/register",
+    URLSearchParams().apply {
+        append("userId", userId)
+        append("password", password)
+        append("displayName", displayName)
+        append("email", email)
+    },
+    ::parseLoginOrRegisterResponse
+)
 
 suspend fun pollFromLastTime(lastTime: String = ""): String =
-        getAndParseResult<String>("/poll?lastTime=$lastTime", null, { json ->
-            json.count
-        })
+    getAndParseResult<String>("/poll?lastTime=$lastTime", null, { json ->
+        json.count
+    })
 
 suspend fun checkSession(): User =
-        getAndParseResult("/login", null, ::parseLoginOrRegisterResponse)
+    getAndParseResult("/login", null, ::parseLoginOrRegisterResponse)
 
 suspend fun login(userId: String, password: String): User =
-        postAndParseResult("/login", URLSearchParams().apply {
-            append("userId", userId)
-            append("password", password)
-        }, ::parseLoginOrRegisterResponse)
+    postAndParseResult("/login", URLSearchParams().apply {
+        append("userId", userId)
+        append("password", password)
+    }, ::parseLoginOrRegisterResponse)
 
 suspend fun logoutUser() {
     window.fetch(
@@ -74,10 +76,10 @@ private fun parseLoginOrRegisterResponse(json: dynamic): User {
 class LoginOrRegisterFailedException(message: String) : Throwable(message)
 
 suspend fun <T> postAndParseResult(url: String, body: dynamic, parse: (dynamic) -> T): T =
-        requestAndParseResult("POST", url, body, parse)
+    requestAndParseResult("POST", url, body, parse)
 
 suspend fun <T> getAndParseResult(url: String, body: dynamic, parse: (dynamic) -> T): T =
-        requestAndParseResult("GET", url, body, parse)
+    requestAndParseResult("GET", url, body, parse)
 
 suspend fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: (dynamic) -> T): T {
     val response = window.fetch(url, object : RequestInit {
