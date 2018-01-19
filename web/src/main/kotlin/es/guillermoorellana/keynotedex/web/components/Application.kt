@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.components
 
-import kotlinx.html.*
+import kotlinx.html.main
 import react.*
 import react.dom.*
 
@@ -12,34 +12,17 @@ class Application : RComponent<RProps, ApplicationPageState>() {
 
     override fun RBuilder.render() {
         div {
-            nav("navbar navbar-expand-md navbar-dark fixed-top bg-dark") {
-                a(href = "#", classes = "navbar-brand") { +"Keynotedex" }
-                button(type = ButtonType.button, classes = "navbar-toggler") {
-                    attrs {
-                        attributes.putAll(
-                            arrayOf(
-                                "data-toggle" to "collapse",
-                                "data-target" to "#navbarsExampleDefault",
-                                "aria-controls" to "navbarsExampleDefault",
-                                "aria-expanded" to "false",
-                                "aria-label" to "Toggle navigation"
-                            )
-                        )
-                    }
-                    span("navbar-toggler-icon") { }
-                }
-                div("collapse navbar-collapse") {
-                    ul("navbar-nav mr-auto") {
-                        li("nav-item") { a(href = "#", classes = "nav-link active") { +"Home" } }
-                        li("nav-item") { a(href = "#", classes = "nav-link ") { +"Conferences" } }
-                        li("nav-item") { a(href = "#", classes = "nav-link ") { +"Speakers" } }
-                    }
-                    a(href = "#", classes = "btn btn-outline-success") { +"Login" }
-                }
-            }
+            navigation()
             main {
                 attrs { role = "main" }
-                loading(state.selected) { homeView() }
+                hashRouter {
+                    switch {
+                        route("/", HomeView::class, exact = true)
+                        route("/login", LoginView::class)
+                        route("/conferences", ConferencesView::class)
+                        route("/speakers", SpeakersView::class)
+                    }
+                }
             }
             footer("container") {
                 p { +"© Keynotedex ${js("new Date().getFullYear()")}" }

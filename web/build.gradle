@@ -14,7 +14,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
     compile "org.jetbrains.kotlinx:kotlinx-html-js:$html_version"
 
-    compile "org.jetbrains:kotlin-extensions:$kotlin_wrapper_version"
+    compile "org.jetbrains:kotlin-extensions:$kotlin_js_ext_version"
     compile "org.jetbrains:kotlin-react:$kotlin_wrapper_version"
     compile "org.jetbrains:kotlin-react-dom:$kotlin_wrapper_version"
 }
@@ -50,6 +50,7 @@ kotlinFrontend {
 
     webpackBundle {
         publicPath = "/frontend/"
+        sourceMapEnabled = true
         port = 8080
         proxyUrl = "http://localhost:9090/"
     }

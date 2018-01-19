@@ -51,5 +51,3 @@ class HomeView : RComponent<HomeView.Props, HomeView.State>() {
 
     class State() : RState
 }
-
-fun RBuilder.homeView() = child(HomeView::class) {}
