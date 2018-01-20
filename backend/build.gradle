@@ -33,4 +33,4 @@ kotlin {
     }
 }
 
-mainClassName = "io.ktor.server.netty.DevelopmentEngine"
+mainClassName = "es.guillermoorellana.keynotedex.backend.ServerKt"
