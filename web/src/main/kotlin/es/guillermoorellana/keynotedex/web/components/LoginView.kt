@@ -56,8 +56,8 @@ class LoginView : RComponent<LoginProps, LoginState>() {
     override fun RBuilder.render() {
         main {
             attrs { role = "main" }
-            if (props.isUserLoggedIn()) redirect("/user") {}
             style { +css }
+            if (props.isUserLoggedIn()) redirect("/user") {}
             form(classes = "form-signin") {
                 attrs {
                     onSubmitFunction = {
