@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.web.components
 
+import kotlinx.html.main
 import react.*
 import react.dom.*
 
@@ -16,7 +17,8 @@ class HomeView : RComponent<HomeView.Props, HomeView.State>() {
     }
 
     override fun RBuilder.render() {
-        div {
+        main {
+            attrs { role = "main" }
             div("jumbotron") {
                 div("container") {
 

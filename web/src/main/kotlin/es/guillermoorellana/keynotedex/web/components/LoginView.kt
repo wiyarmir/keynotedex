@@ -1,10 +1,13 @@
 package es.guillermoorellana.keynotedex.web.components
 
 import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.experimental.async
 import kotlinx.html.*
-import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.*
+import org.w3c.dom.*
+import org.w3c.dom.events.Event
 import react.*
 import react.dom.*
 
@@ -45,12 +48,23 @@ class LoginView : RComponent<LoginProps, LoginState>() {
 
     override fun LoginState.init() {
         disabled = false
+        login = ""
+        password = ""
+        errorMessage = null
     }
 
     override fun RBuilder.render() {
-        div {
+        main {
+            attrs { role = "main" }
+            if (props.isUserLoggedIn()) redirect("/user") {}
             style { +css }
             form(classes = "form-signin") {
+                attrs {
+                    onSubmitFunction = {
+                        it.preventDefault()
+                        doLogin()
+                    }
+                }
                 h2("form-signin-heading") { +"Please sign in" }
                 label(classes = "sr-only") {
                     attrs {
@@ -58,12 +72,20 @@ class LoginView : RComponent<LoginProps, LoginState>() {
                     }
                     +"Email address"
                 }
-                input(type = InputType.email, classes = "form-control") {
+                input(type = InputType.text, classes = "form-control") {
                     attrs {
                         id = "inputEmail"
                         placeholder = "Email"
                         required = true
                         autoFocus = true
+                        value = state.login
+                        disabled = state.disabled
+                        onChangeFunction = { event ->
+                            val value = event.inputValue
+                            setState {
+                                login = value
+                            }
+                        }
                     }
                 }
                 label("sr-only") {
@@ -76,16 +98,18 @@ class LoginView : RComponent<LoginProps, LoginState>() {
                         id = "inputPassword"
                         placeholder = "Password"
                         required = true
+                        value = state.password
+                        disabled = state.disabled
+                        onChangeFunction = { event ->
+                            val value = event.inputValue
+                            setState {
+                                password = value
+                            }
+                        }
                     }
                 }
                 button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) {
                     +"Sign in"
-                    attrs {
-                        onClickFunction = {
-                            it.preventDefault()
-                            doLogin()
-                        }
-                    }
                 }
             }
         }
@@ -98,36 +122,42 @@ class LoginView : RComponent<LoginProps, LoginState>() {
         async {
             val user = login(state.login, state.password)
             loggedIn(user)
-        }
-            .catch { err -> loginFailed(err) }
+        }.catch { err -> loginFailed(err) }
     }
 
     private fun loggedIn(user: User) {
-        props.userAssigned(user)
+        props.onUserLoggedIn(user)
     }
 
     private fun loginFailed(err: Throwable) {
         if (err is LoginOrRegisterFailedException) {
             setState {
                 disabled = false
-//                errorMessage = err.message
+                errorMessage = err.message
             }
         } else {
             console.error("Login failed", err)
             setState {
                 disabled = false
-//                errorMessage = "Login failed: please reload page and try again"
+                errorMessage = "Login failed: please reload page and try again"
             }
         }
     }
 }
 
 class LoginProps : RProps {
-    var userAssigned: (User) -> Unit = {}
+    var isUserLoggedIn: () -> Boolean = { false }
+    var onUserLoggedIn: (User) -> Unit = {}
 }
 
 data class LoginState(
     var login: String,
     var password: String,
-    var disabled: Boolean
+    var disabled: Boolean,
+    var errorMessage: String?
 ) : RState
+
+internal val Event.inputValue: String
+    get() = (target as? HTMLInputElement)?.value ?: (target as? HTMLTextAreaElement)?.value ?: ""
+
+fun RBuilder.login(handler: RHandler<LoginProps>) = child(LoginView::class, handler)

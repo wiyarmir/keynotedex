@@ -64,7 +64,7 @@ internal fun KeynotedexDatabase.mockData() {
                     it[id] = "user$i"
                     it[displayName] = if (i % 3 == 0) "User #$i" else null
                     it[email] = if (i % 2 == 0) "userId$i@keynotedex.co" else null
-                    it[passwordHash] = hash("user$i")
+                    it[passwordHash] = hash("user$i!")
                 }
                 .execute()
         }

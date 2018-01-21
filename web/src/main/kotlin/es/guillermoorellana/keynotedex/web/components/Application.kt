@@ -1,43 +1,49 @@
 package es.guillermoorellana.keynotedex.web.components
 
-import kotlinx.html.main
+import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.model.User
 import react.*
 import react.dom.*
 
 class Application : RComponent<RProps, ApplicationPageState>() {
 
     override fun ApplicationPageState.init() {
-        selected = MainView.Home
+        currentUser = null
     }
 
     override fun RBuilder.render() {
-        div {
-            navigation()
-            main {
-                attrs { role = "main" }
-                hashRouter {
-                    switch {
-                        route("/", HomeView::class, exact = true)
-                        route("/login", LoginView::class)
-                        route("/conferences", ConferencesView::class)
-                        route("/speakers", SpeakersView::class)
+        hashRouter {
+            div {
+                navigation()
+                switch {
+                    route("/", HomeView::class, exact = true)
+                    route("/login") {
+                        login {
+                            attrs {
+                                onUserLoggedIn = { user -> userLoggedIn(user) }
+                                isUserLoggedIn = { isCurrentUserLoggedIn() }
+                            }
+                        }
                     }
+                    route("/conferences", ConferencesView::class)
+                    route("/speakers", SpeakersView::class)
+                }
+                footer("container") {
+                    p { +"© Keynotedex ${js("new Date().getFullYear()")}" }
                 }
             }
-            footer("container") {
-                p { +"© Keynotedex ${js("new Date().getFullYear()")}" }
-            }
+        }
+    }
+
+    private fun isCurrentUserLoggedIn() = state.currentUser != null
+
+    private fun userLoggedIn(user: User) {
+        setState {
+            currentUser = user
         }
     }
 }
 
-enum class MainView {
-    Loading,
-    Home
-}
+class ApplicationPageState(var currentUser: User?) : RState
 
-class ApplicationPageState(
-    var selected: MainView
-) : RState
-
-fun RBuilder.application() = child(Application::class) {}
+fun RBuilder.application(handler: RHandler<RProps>) = child(Application::class, handler)

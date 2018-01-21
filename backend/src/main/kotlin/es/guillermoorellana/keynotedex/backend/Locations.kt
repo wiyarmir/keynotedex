@@ -12,7 +12,7 @@ data class UserPage(val userId: String)
 data class ConferencePage(val conferenceId: String)
 
 @location("/register")
-data class RegisterPage(
-    val userId: String = "",
-    val password: String = ""
-)
+data class RegisterPage(val userId: String = "", val password: String = "")
+
+@location("/login")
+data class LoginPage(val userId: String = "", val password: String = "")

@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
 
     window.onload = {
         render(document.getElementById("content")) {
-            application()
+            application {}
         }
     }
 }

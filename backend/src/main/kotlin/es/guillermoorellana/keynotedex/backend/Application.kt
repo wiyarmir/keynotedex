@@ -3,6 +3,7 @@ package es.guillermoorellana.keynotedex.backend
 import es.guillermoorellana.keynotedex.backend.conferences.conference
 import es.guillermoorellana.keynotedex.backend.dao.*
 import es.guillermoorellana.keynotedex.backend.index.index
+import es.guillermoorellana.keynotedex.backend.user.login.login
 import es.guillermoorellana.keynotedex.backend.user.register.register
 import es.guillermoorellana.keynotedex.backend.user.user
 import io.ktor.application.*
@@ -53,5 +54,6 @@ fun Application.main() {
         user(storage)
         conference(storage)
         register(storage, ::hash)
+        login(storage)
     }
 }
