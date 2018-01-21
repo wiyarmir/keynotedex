@@ -10,6 +10,14 @@ fun RBuilder.hashRouter(handler: RHandler<RProps>) = child(HashRouterComponent::
 fun RBuilder.switch(handler: RHandler<RProps>) = child(SwitchComponent::class, handler)
 
 @ReactDsl
+fun RBuilder.route(component: KClass<out React.Component<*, *>>) =
+    child(RouteComponent::class) {
+        attrs {
+            this.component = component.js.unsafeCast<RClass<RProps>>()
+        }
+    }
+
+@ReactDsl
 fun RBuilder.route(path: String, component: KClass<out React.Component<*, *>>, exact: Boolean = false) =
     child(RouteComponent::class) {
         attrs {

@@ -74,10 +74,10 @@ private suspend fun parseLoginOrRegisterResponse(response: Response): User {
 
 class LoginOrRegisterFailedException(message: String) : Throwable(message)
 
-suspend fun <T> postAndParseResult(url: String, body: dynamic, parse: suspend (dynamic) -> T): T =
+suspend fun <T> postAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): T =
     requestAndParseResult("POST", url, body, parse)
 
-suspend fun <T> getAndParseResult(url: String, body: dynamic, parse: suspend (dynamic) -> T): T =
+suspend fun <T> getAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): T =
     requestAndParseResult("GET", url, body, parse)
 
 suspend fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: suspend (Response) -> T): T {

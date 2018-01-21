@@ -57,7 +57,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
         main {
             attrs { role = "main" }
             style { +css }
-            if (props.isUserLoggedIn()) redirect("/user") {}
+            if (props.isUserLoggedIn()) redirect("/user/${props.getCurrentUser()!!.userId}") {}
             form(classes = "form-signin") {
                 attrs {
                     onSubmitFunction = {
@@ -67,9 +67,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
                 }
                 h2("form-signin-heading") { +"Please sign in" }
                 label(classes = "sr-only") {
-                    attrs {
-                        htmlFor = "inputEmail"
-                    }
+                    attrs { htmlFor = "inputEmail" }
                     +"Email address"
                 }
                 input(type = InputType.text, classes = "form-control") {
@@ -89,9 +87,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
                     }
                 }
                 label("sr-only") {
-                    attrs {
-                        htmlFor = "inputPassword"
-                    }
+                    attrs { htmlFor = "inputPassword" }
                 }
                 input(type = InputType.password, classes = "form-control") {
                     attrs {
@@ -108,9 +104,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
                         }
                     }
                 }
-                button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) {
-                    +"Sign in"
-                }
+                button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign in" }
             }
         }
     }
@@ -146,6 +140,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
 }
 
 class LoginProps : RProps {
+    var getCurrentUser: () -> User? = { null }
     var isUserLoggedIn: () -> Boolean = { false }
     var onUserLoggedIn: (User) -> Unit = {}
 }
