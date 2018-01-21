@@ -46,13 +46,15 @@ kotlinFrontend {
         devDependency "css-loader"
         devDependency "karma"
         devDependency "style-loader"
+        devDependency "source-map-loader"
     }
 
     webpackBundle {
         publicPath = "/frontend/"
-        sourceMapEnabled = true
         port = 8080
         proxyUrl = "http://localhost:9090/"
+        sourceMapEnabled = true
+        stats = "errors-only"
     }
 }
 
@@ -60,6 +62,7 @@ compileKotlin2Js {
     kotlinOptions.metaInfo = true
     kotlinOptions.outputFile = "$project.buildDir.path/js/${project.name}.js"
     kotlinOptions.sourceMap = true
+    kotlinOptions.sourceMapEmbedSources = "always"
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = "call"
 }
