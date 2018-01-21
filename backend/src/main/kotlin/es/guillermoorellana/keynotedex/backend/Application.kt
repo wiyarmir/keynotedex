@@ -23,7 +23,9 @@ fun Application.main() {
         mockData()
     }
 
-    install(DefaultHeaders)
+    install(DefaultHeaders) {
+        //        header(HttpHeaders.Server, "")
+    }
     install(CallLogging)
     install(ConditionalHeaders)
     install(PartialContentSupport)

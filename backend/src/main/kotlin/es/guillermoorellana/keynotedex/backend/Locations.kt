@@ -13,9 +13,6 @@ data class ConferencePage(val conferenceId: String)
 
 @location("/register")
 data class RegisterPage(
-        val userId: String = "",
-        val displayName: String = "",
-        val email: String = "",
-        val password: String = "",
-        val error: String = ""
+    val userId: String = "",
+    val password: String = ""
 )

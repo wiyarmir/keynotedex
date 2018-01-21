@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web
 
 import kotlinext.js.*
 import react.*

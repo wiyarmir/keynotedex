@@ -1,6 +1,10 @@
 package es.guillermoorellana.keynotedex.web.components
 
+import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.model.User
+import kotlinx.coroutines.experimental.async
 import kotlinx.html.*
+import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 
@@ -37,7 +41,12 @@ const val css = """
 }
 """
 
-class LoginView : RComponent<RProps, RState>() {
+class LoginView : RComponent<LoginProps, LoginState>() {
+
+    override fun LoginState.init() {
+        disabled = false
+    }
+
     override fun RBuilder.render() {
         div {
             style { +css }
@@ -71,9 +80,54 @@ class LoginView : RComponent<RProps, RState>() {
                 }
                 button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) {
                     +"Sign in"
+                    attrs {
+                        onClickFunction = {
+                            it.preventDefault()
+                            doLogin()
+                        }
+                    }
                 }
+            }
+        }
+    }
+
+    private fun doLogin() {
+        setState {
+            disabled = true
+        }
+        async {
+            val user = login(state.login, state.password)
+            loggedIn(user)
+        }
+            .catch { err -> loginFailed(err) }
+    }
+
+    private fun loggedIn(user: User) {
+        props.userAssigned(user)
+    }
+
+    private fun loginFailed(err: Throwable) {
+        if (err is LoginOrRegisterFailedException) {
+            setState {
+                disabled = false
+//                errorMessage = err.message
+            }
+        } else {
+            console.error("Login failed", err)
+            setState {
+                disabled = false
+//                errorMessage = "Login failed: please reload page and try again"
             }
         }
     }
 }
 
+class LoginProps : RProps {
+    var userAssigned: (User) -> Unit = {}
+}
+
+data class LoginState(
+    var login: String,
+    var password: String,
+    var disabled: Boolean
+) : RState
