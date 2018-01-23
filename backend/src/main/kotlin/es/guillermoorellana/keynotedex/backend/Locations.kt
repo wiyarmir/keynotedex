@@ -2,8 +2,8 @@ package es.guillermoorellana.keynotedex.backend
 
 import io.ktor.locations.location
 
-@location("/")
-class Index()
+@location("/{trail...}")
+class Index(val trail: List<String>)
 
 @location("/user/{userId}")
 data class UserPage(val userId: String)

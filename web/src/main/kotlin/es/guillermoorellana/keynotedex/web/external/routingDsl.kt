@@ -7,6 +7,9 @@ import kotlin.reflect.KClass
 fun RBuilder.hashRouter(handler: RHandler<RProps>) = child(HashRouterComponent::class, handler)
 
 @ReactDsl
+fun RBuilder.browserRouter(handler: RHandler<RProps>) = child(BrowserRouterComponent::class, handler)
+
+@ReactDsl
 fun RBuilder.switch(handler: RHandler<RProps>) = child(SwitchComponent::class, handler)
 
 @ReactDsl

@@ -1,21 +1,7 @@
 package es.guillermoorellana.keynotedex.backend
 
-import io.ktor.html.Placeholder
-import io.ktor.html.Template
-import io.ktor.html.insert
-import kotlinx.html.HEAD
-import kotlinx.html.HTML
-import kotlinx.html.LinkRel
-import kotlinx.html.LinkType
-import kotlinx.html.TITLE
-import kotlinx.html.body
-import kotlinx.html.div
-import kotlinx.html.head
-import kotlinx.html.id
-import kotlinx.html.link
-import kotlinx.html.meta
-import kotlinx.html.script
-import kotlinx.html.title
+import io.ktor.html.*
+import kotlinx.html.*
 
 class ApplicationPageContent : Template<HTML> {
     val caption = Placeholder<TITLE>()
@@ -41,7 +27,7 @@ class ApplicationPageContent : Template<HTML> {
             script(src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")
             script(src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js")
 
-            script(src = "frontend/web.bundle.js")
+            script(src = "/frontend/web.bundle.js")
         }
     }
 }

@@ -23,11 +23,14 @@ suspend fun register(
         append("displayName", displayName)
         append("email", email)
     },
-    { parseLoginOrRegisterResponse(it) }
+    { parseUserResponse(it) }
 )
 
+suspend fun user(userId: String): User =
+    getAndParseResult("/user/$userId", null, { parseUserResponse(it) })
+
 suspend fun checkSession(): User =
-    getAndParseResult("/login", null, { parseLoginOrRegisterResponse(it) })
+    getAndParseResult("/login", null, { parseUserResponse(it) })
 
 suspend fun login(userId: String, password: String): User =
     postAndParseResult(
@@ -36,7 +39,7 @@ suspend fun login(userId: String, password: String): User =
             append("userId", userId)
             append("password", password)
         },
-        { parseLoginOrRegisterResponse(it) }
+        { parseUserResponse(it) }
     )
 
 suspend fun logoutUser() {
@@ -59,13 +62,13 @@ private fun parseConference(json: dynamic): Conference {
     return Conference(json.name as String)
 }
 
-private suspend fun parseLoginOrRegisterResponse(response: Response): User {
+private suspend fun parseUserResponse(response: Response): User {
     val json: dynamic = response.json().await()
 
     if (response.ok) {
         return User(
             json.user.userId as String,
-            json.user.displayName as String?
+            json.user.displayName as String
         )
     } else {
         throw LoginOrRegisterFailedException(json.message.toString())

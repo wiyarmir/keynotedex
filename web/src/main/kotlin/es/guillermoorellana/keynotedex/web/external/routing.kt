@@ -9,6 +9,11 @@ external class HashRouterComponent : React.Component<RProps, RState> {
     override fun render(): ReactElement?
 }
 
+@JsName("BrowserRouter")
+external class BrowserRouterComponent : React.Component<RProps, RState> {
+    override fun render(): ReactElement?
+}
+
 @JsName("Switch")
 external class SwitchComponent : React.Component<RProps, RState> {
     override fun render(): ReactElement?

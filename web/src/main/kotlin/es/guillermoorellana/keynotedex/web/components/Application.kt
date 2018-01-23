@@ -15,7 +15,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
     }
 
     override fun RBuilder.render() {
-        hashRouter {
+        browserRouter {
             div {
                 navigation {
                     attrs {
@@ -24,6 +24,8 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                 }
                 switch {
                     route("/", HomeView::class, exact = true)
+                    route("/user/:userId", UserView::class)
+                    route("/conferences", ConferencesView::class)
                     route("/login") {
                         login {
                             attrs {
@@ -35,7 +37,6 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                     }
                     route("/conferences", ConferencesView::class)
                     route("/speakers", SpeakersView::class)
-                    route("/user/:userId", UserView::class)
                     route(NotFoundView::class)
                 }
                 footer("container") {
