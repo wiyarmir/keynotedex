@@ -13,11 +13,10 @@ import react.dom.style
 class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
 
     override fun UserState.init() {
-
     }
 
-    override fun componentWillReceiveProps(nextProps: RouteResultProps<UserProps>) {
-        fetchUser(nextProps.match.params.userId)
+    override fun componentDidMount() {
+        fetchUser(props.match.params.userId)
     }
 
     override fun RBuilder.render() {
