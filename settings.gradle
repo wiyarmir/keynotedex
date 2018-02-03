@@ -1,2 +1,4 @@
 rootProject.name = 'keynotedex'
-include 'android', 'backend', 'web'
+include 'android',
+        'backend',
+        'web'

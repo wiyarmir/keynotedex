@@ -3,7 +3,7 @@ version = '0.0.1-SNAPSHOT'
 
 subprojects { p ->
     p.buildscript {
-        ext.kotlin_version = "1.2.10"
+        ext.kotlin_version = "1.2.21"
 
         repositories {
             mavenLocal()
