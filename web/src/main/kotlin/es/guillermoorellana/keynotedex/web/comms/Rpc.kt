@@ -1,11 +1,16 @@
 package es.guillermoorellana.keynotedex.web.comms
 
-import es.guillermoorellana.keynotedex.web.model.*
+import es.guillermoorellana.keynotedex.web.model.Conference
+import es.guillermoorellana.keynotedex.web.model.IndexResponse
+import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.experimental.await
 import org.w3c.dom.url.URLSearchParams
-import org.w3c.fetch.*
+import org.w3c.fetch.RequestCredentials
+import org.w3c.fetch.RequestInit
+import org.w3c.fetch.Response
 import kotlin.browser.window
-import kotlin.js.*
+import kotlin.js.json
 
 suspend fun index(): IndexResponse =
     getAndParseResult("/", null, { parseIndexResponse(it) })
@@ -68,7 +73,8 @@ private suspend fun parseUserResponse(response: Response): User {
     if (response.ok) {
         return User(
             json.user.userId as String,
-            json.user.displayName as String
+            json.user.displayName as String,
+            json.user.submissions as? List<Submission> ?: emptyList()
         )
     } else {
         throw LoginOrRegisterFailedException(json.message.toString())

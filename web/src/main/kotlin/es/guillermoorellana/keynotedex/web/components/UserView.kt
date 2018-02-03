@@ -2,10 +2,13 @@ package es.guillermoorellana.keynotedex.web.components
 
 import es.guillermoorellana.keynotedex.web.comms.user
 import es.guillermoorellana.keynotedex.web.external.RouteResultProps
+import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.experimental.async
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.h1
+import react.dom.style
 
 class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
 
@@ -23,9 +26,12 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
             +".profile-container { padding: 40px 15px; text-align: center; }"
         }
         div("row") {
-            div("col-md-12") {
-                div("profile-container") {
-                    h1 { +"${state.user?.displayName}" }
+            div("col-md-10 offset-md-1") {
+                loading(state.user) {
+                    div("profile-container") {
+                        h1 { +it.displayName }
+                    }
+                    submissions { attrs { submissions = it.submissions } }
                 }
             }
         }
@@ -38,7 +44,7 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
                 this.user = user
             }
         }.catch {
-
+            console.error(it)
         }
     }
 }
