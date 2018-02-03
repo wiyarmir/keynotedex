@@ -1,15 +1,12 @@
 package es.guillermoorellana.keynotedex.backend.index
 
-import es.guillermoorellana.keynotedex.backend.ApplicationPageContent
-import es.guillermoorellana.keynotedex.backend.Index
-import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
-import io.ktor.application.call
-import io.ktor.html.respondHtmlTemplate
-import io.ktor.http.ContentType
-import io.ktor.locations.get
-import io.ktor.response.respond
-import io.ktor.routing.Route
-import io.ktor.routing.accept
+import es.guillermoorellana.keynotedex.backend.*
+import es.guillermoorellana.keynotedex.backend.dao.*
+import io.ktor.application.*
+import io.ktor.html.*
+import io.ktor.http.*
+import io.ktor.locations.*
+import io.ktor.routing.*
 
 fun Route.index(storage: KeynotedexStorage) {
     accept(ContentType.Text.Html) {
@@ -19,10 +16,5 @@ fun Route.index(storage: KeynotedexStorage) {
             }
         }
     }
-    accept(ContentType.Application.Json) {
-        get<Index> {
-            val conferences = storage.conferences()
-            call.respond(IndexResponse(conferences))
-        }
-    }
 }
+

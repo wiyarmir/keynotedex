@@ -1,20 +1,21 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.conferences.conference
+import es.guillermoorellana.keynotedex.backend.conference.*
 import es.guillermoorellana.keynotedex.backend.dao.*
-import es.guillermoorellana.keynotedex.backend.index.index
-import es.guillermoorellana.keynotedex.backend.user.login.login
-import es.guillermoorellana.keynotedex.backend.user.register.register
-import es.guillermoorellana.keynotedex.backend.user.user
+import es.guillermoorellana.keynotedex.backend.index.*
+import es.guillermoorellana.keynotedex.backend.login.*
+import es.guillermoorellana.keynotedex.backend.register.*
+import es.guillermoorellana.keynotedex.backend.submission.*
+import es.guillermoorellana.keynotedex.backend.user.*
 import io.ktor.application.*
 import io.ktor.features.*
-import io.ktor.gson.gson
-import io.ktor.http.HttpStatusCode
-import io.ktor.locations.Locations
-import io.ktor.response.respond
-import io.ktor.routing.Routing
+import io.ktor.gson.*
+import io.ktor.http.*
+import io.ktor.locations.*
+import io.ktor.response.*
+import io.ktor.routing.*
 import io.ktor.sessions.*
-import io.ktor.util.error
+import io.ktor.util.*
 
 data class Session(val userId: String)
 
@@ -55,5 +56,6 @@ fun Application.main() {
         conference(storage)
         register(storage, ::hash)
         login(storage)
+        submission(storage)
     }
 }

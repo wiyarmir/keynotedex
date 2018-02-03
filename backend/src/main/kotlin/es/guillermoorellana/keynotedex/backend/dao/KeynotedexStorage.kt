@@ -1,23 +1,14 @@
 package es.guillermoorellana.keynotedex.backend.dao
 
-import es.guillermoorellana.keynotedex.backend.conferences.Conference
-import es.guillermoorellana.keynotedex.backend.user.model.User
-import java.io.Closeable
-
-interface UserStorage : Closeable {
-    fun user(userId: String, hash: String? = null): User?
-    fun userByEmail(email: String): User?
-    fun createUser(user: User)
-}
-
-interface ConferenceStorage : Closeable {
-    fun conference(conferenceId: String): Conference?
-    fun conferences(): List<Conference>
-}
+import es.guillermoorellana.keynotedex.backend.conference.*
+import es.guillermoorellana.keynotedex.backend.submission.*
+import es.guillermoorellana.keynotedex.backend.user.*
+import java.io.*
 
 interface KeynotedexStorage :
-        Closeable,
-        UserStorage,
-        ConferenceStorage
+    Closeable,
+    UserStorage,
+    ConferenceStorage,
+    SubmissionStorage
 
 

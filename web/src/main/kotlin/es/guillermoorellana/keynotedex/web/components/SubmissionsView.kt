@@ -1,11 +1,8 @@
 package es.guillermoorellana.keynotedex.web.components
 
-import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.*
 import react.*
-import react.dom.br
-import react.dom.button
-import react.dom.h2
-import react.dom.p
+import react.dom.*
 
 class SubmissionsView : RComponent<SubmissionsProps, RState>() {
     override fun RBuilder.render() {
@@ -13,7 +10,8 @@ class SubmissionsView : RComponent<SubmissionsProps, RState>() {
         props.submissions.apply {
             if (isEmpty()) {
                 p { +"No submissions yet" }
-                button { +"Create new" }
+//                Only when logged in??
+//                button { +"Create new" }
             } else {
                 forEach {
                     submission {

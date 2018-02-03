@@ -1,14 +1,13 @@
-package es.guillermoorellana.keynotedex.backend.user.register
+package es.guillermoorellana.keynotedex.backend.register
 
 import es.guillermoorellana.keynotedex.backend.*
-import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
-import es.guillermoorellana.keynotedex.backend.error.ErrorResponse
-import es.guillermoorellana.keynotedex.backend.user.UserResponse
-import es.guillermoorellana.keynotedex.backend.user.model.*
+import es.guillermoorellana.keynotedex.backend.dao.*
+import es.guillermoorellana.keynotedex.backend.error.*
+import es.guillermoorellana.keynotedex.backend.user.*
 import io.ktor.application.*
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 import io.ktor.locations.*
-import io.ktor.response.respond
+import io.ktor.response.*
 import io.ktor.routing.Route
 import io.ktor.sessions.*
 

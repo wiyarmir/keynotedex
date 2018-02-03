@@ -1,20 +1,20 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
+import es.guillermoorellana.keynotedex.backend.dao.*
 import es.guillermoorellana.keynotedex.backend.dao.tables.*
-import es.guillermoorellana.keynotedex.backend.user.model.User
+import es.guillermoorellana.keynotedex.backend.user.*
 import io.ktor.application.*
-import io.ktor.http.HttpHeaders
-import io.ktor.locations.Locations
+import io.ktor.http.*
+import io.ktor.locations.*
 import io.ktor.request.*
-import io.ktor.response.respondRedirect
-import io.ktor.util.hex
-import org.jetbrains.squash.connection.transaction
+import io.ktor.response.*
+import io.ktor.util.*
+import org.jetbrains.squash.connection.*
 import org.jetbrains.squash.statements.*
-import java.net.URI
-import java.util.concurrent.TimeUnit
-import javax.crypto.Mac
-import javax.crypto.spec.SecretKeySpec
+import java.net.*
+import java.util.concurrent.*
+import javax.crypto.*
+import javax.crypto.spec.*
 
 val hashKey = hex("6819b57a326945c1968f45236589")
 val hmacKey = SecretKeySpec(hashKey, "HmacSHA1")
@@ -65,6 +65,15 @@ internal fun KeynotedexDatabase.mockData() {
                     it[displayName] = "User #$i"
                     it[email] = if (i % 2 == 0) "userId$i@keynotedex.co" else null
                     it[passwordHash] = hash("user$i!")
+                }
+                .execute()
+
+            insertInto(Submissions)
+                .values {
+                    it[id] = "$i"
+                    it[submitter] = "user1"
+                    it[title] = "My talk $i"
+                    it[abstract] = "This talk is about talks.\nSo it is a meta talk."
                 }
                 .execute()
         }
