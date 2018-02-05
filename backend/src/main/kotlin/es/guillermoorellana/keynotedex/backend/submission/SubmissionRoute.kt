@@ -1,7 +1,8 @@
 package es.guillermoorellana.keynotedex.backend.submission
 
 import es.guillermoorellana.keynotedex.backend.*
-import es.guillermoorellana.keynotedex.backend.error.*
+import es.guillermoorellana.keynotedex.backend.dao.tables.*
+import es.guillermoorellana.keynotedex.responses.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
@@ -19,7 +20,7 @@ fun Route.submission(dao: SubmissionStorage) {
                     val submission = dao.submissionById(it.submissionId)
                     when (submission) {
                         null -> call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
-                        else -> call.respond(SubmissionResponse(submission))
+                        else -> call.respond(SubmissionResponse(submission.toDto()))
                     }
                 }
             }

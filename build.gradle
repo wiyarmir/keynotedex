@@ -4,16 +4,19 @@ version = '0.0.1-SNAPSHOT'
 subprojects { p ->
     p.buildscript {
         ext.kotlin_version = "1.2.10"
+        ext.serialization_version = '0.4'
 
         repositories {
             mavenLocal()
             jcenter()
             google()
             maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
+            maven { url "https://kotlin.bintray.com/kotlinx" }
         }
 
         dependencies {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+            classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
             classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.26"
             classpath "com.android.tools.build:gradle:3.0.0"
         }
@@ -22,6 +25,7 @@ subprojects { p ->
         mavenLocal()
         jcenter()
         google()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url "http://dl.bintray.com/kotlin/kotlinx.html" }
         maven { url "http://dl.bintray.com/kotlin/ktor" }
         maven { url "https://dl.bintray.com/kotlin/squash" }

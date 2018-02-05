@@ -1,8 +1,8 @@
 package es.guillermoorellana.keynotedex.web.components
 
-import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.User
-import kotlinx.html.ButtonType
+import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.model.*
+import kotlinx.html.*
 import react.*
 import react.dom.*
 
@@ -50,7 +50,7 @@ class NavigationView : RComponent<NavigationProps, RState>() {
                 } else {
                     routeLink("/user/${props.getCurrentUser()!!.userId}") {
                         attrs { className = "nav-link" }
-                        +"${props.getCurrentUser()!!.displayName}"
+                        +props.getCurrentUser()!!.displayName
                     }
                 }
             }

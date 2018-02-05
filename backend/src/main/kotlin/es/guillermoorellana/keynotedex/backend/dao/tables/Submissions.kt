@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.backend.dao.tables
 
-import es.guillermoorellana.keynotedex.backend.submission.*
 import org.jetbrains.squash.definition.*
 import org.jetbrains.squash.results.*
 
@@ -11,7 +10,16 @@ object Submissions : TableDefinition() {
     val abstract = varchar("abstract", 2000).nullable()
 }
 
-fun transformSubmission(it: ResultRow): Submission = Submission(
-    title = it[Submissions.title],
-    abstract = it[Submissions.abstract]
-)
+data class Submission(val title: String, val abstract: String?)
+
+fun transformSubmission(it: ResultRow): Submission =
+    Submission(
+        title = it[Submissions.title],
+        abstract = it[Submissions.abstract]
+    )
+
+fun Submission.toDto(): es.guillermoorellana.keynotedex.dto.Submission =
+    es.guillermoorellana.keynotedex.dto.Submission(
+        title = title,
+        abstract = abstract
+    )

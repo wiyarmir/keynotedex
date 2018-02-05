@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.backend.dao.tables
 
-import es.guillermoorellana.keynotedex.backend.conference.*
 import org.jetbrains.squash.definition.*
 import org.jetbrains.squash.results.*
 
@@ -9,6 +8,13 @@ object Conferences : TableDefinition() {
     val name = varchar("name", 64)
 }
 
-fun transformConference(it: ResultRow): Conference = Conference(
-    name = it[Conferences.name]
+data class Conference(val name: String)
+
+fun transformConference(it: ResultRow): Conference =
+    Conference(
+        name = it[Conferences.name]
+    )
+
+fun Conference.toDto() = es.guillermoorellana.keynotedex.dto.Conference(
+    name = name
 )

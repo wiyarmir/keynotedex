@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    compile project(":common-js")
+
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
     compile "org.jetbrains.kotlinx:kotlinx-html-js:$html_version"

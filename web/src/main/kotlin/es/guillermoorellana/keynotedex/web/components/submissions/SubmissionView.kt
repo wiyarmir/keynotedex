@@ -1,9 +1,8 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web.components.submissions
 
-import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.*
 import react.*
-import react.dom.h2
-import react.dom.p
+import react.dom.*
 
 class SubmissionView : RComponent<SubmissionProps, RState>() {
     override fun RBuilder.render() {
@@ -22,4 +21,6 @@ external interface SubmissionProps : RProps {
     var submission: Submission
 }
 
-fun RBuilder.submission(handler: RHandler<SubmissionProps>) = child(SubmissionView::class, handler)
+fun RBuilder.submission(handler: RHandler<SubmissionProps>) = child(
+    SubmissionView::class, handler
+)

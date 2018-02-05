@@ -2,8 +2,8 @@ package es.guillermoorellana.keynotedex.backend.register
 
 import es.guillermoorellana.keynotedex.backend.*
 import es.guillermoorellana.keynotedex.backend.dao.*
-import es.guillermoorellana.keynotedex.backend.error.*
-import es.guillermoorellana.keynotedex.backend.user.*
+import es.guillermoorellana.keynotedex.backend.dao.tables.*
+import es.guillermoorellana.keynotedex.responses.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
@@ -15,7 +15,7 @@ fun Route.register(dao: KeynotedexStorage, hashFunction: (String) -> String) {
     post<RegisterPage> {
         val user = call.sessions.get<Session>()?.let { dao.user(it.userId) }
         if (user != null) {
-            call.redirect(UserResponse(user.toPublic()))
+            call.redirect(UserResponse(user.toDto()))
             return@post
         }
 
@@ -66,7 +66,7 @@ fun Route.register(dao: KeynotedexStorage, hashFunction: (String) -> String) {
         }
 
         call.sessions.set(Session(newUser.userId))
-        call.respond(UserResponse(newUser.toPublic()))
+        call.respond(UserResponse(newUser.toDto()))
     }
 
     get<RegisterPage> {

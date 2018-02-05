@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.backend.dao.tables
 
-import es.guillermoorellana.keynotedex.backend.user.*
 import org.jetbrains.squash.definition.*
 import org.jetbrains.squash.results.*
 
@@ -17,4 +16,19 @@ fun transformUser(it: ResultRow): User =
         it[Users.email],
         it[Users.displayName],
         it[Users.passwordHash]
+    )
+
+data class User(
+    val userId: String,
+    val email: String? = null,
+    val displayName: String? = null,
+    val passwordHash: String,
+    val submissions: List<Submission> = emptyList()
+)
+
+fun User.toDto() =
+    es.guillermoorellana.keynotedex.dto.User(
+        userId = userId,
+        displayName = displayName,
+        submissions = submissions.map { it.toDto() }
     )

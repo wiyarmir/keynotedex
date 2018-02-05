@@ -1,8 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.dao
 
 import es.guillermoorellana.keynotedex.backend.dao.tables.*
-import es.guillermoorellana.keynotedex.backend.submission.*
-import es.guillermoorellana.keynotedex.backend.user.*
 import org.jetbrains.squash.connection.*
 import org.jetbrains.squash.dialects.h2.*
 import org.jetbrains.squash.expressions.*

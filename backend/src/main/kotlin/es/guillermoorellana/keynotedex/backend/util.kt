@@ -2,7 +2,6 @@ package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.backend.dao.*
 import es.guillermoorellana.keynotedex.backend.dao.tables.*
-import es.guillermoorellana.keynotedex.backend.user.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*

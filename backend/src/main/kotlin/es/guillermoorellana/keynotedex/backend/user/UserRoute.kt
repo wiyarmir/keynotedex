@@ -2,7 +2,8 @@ package es.guillermoorellana.keynotedex.backend.user
 
 import es.guillermoorellana.keynotedex.backend.*
 import es.guillermoorellana.keynotedex.backend.dao.*
-import es.guillermoorellana.keynotedex.backend.error.*
+import es.guillermoorellana.keynotedex.backend.dao.tables.*
+import es.guillermoorellana.keynotedex.responses.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
@@ -17,7 +18,7 @@ fun Route.user(dao: KeynotedexStorage) {
                 null -> call.respond(HttpStatusCode.NotFound, ErrorResponse("User ${it.userId} doesn't exist"))
                 else -> {
                     val submissions = dao.submissionsByUserId(user.userId)
-                    call.respond(UserResponse(user.copy(submissions = submissions).toPublic()))
+                    call.respond(UserResponse(user.copy(submissions = submissions).toDto()))
                 }
             }
         }

@@ -1,12 +1,22 @@
 apply plugin: 'kotlin-platform-js'
+apply plugin: 'kotlinx-serialization'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    expectedBy project(':common')
+    expectedBy project(":common")
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$serialization_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+}
+
+[compileKotlin2Js, compileTestKotlin2Js]*.configure {
+    kotlinOptions {
+        sourceMap = true
+        sourceMapEmbedSources = "always"
+        moduleKind = 'commonjs'
+    }
 }

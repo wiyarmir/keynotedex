@@ -1,19 +1,14 @@
 package es.guillermoorellana.keynotedex.web.comms
 
-import es.guillermoorellana.keynotedex.web.model.Conference
-import es.guillermoorellana.keynotedex.web.model.IndexResponse
-import es.guillermoorellana.keynotedex.web.model.Submission
-import es.guillermoorellana.keynotedex.web.model.User
-import kotlinx.coroutines.experimental.await
-import org.w3c.dom.url.URLSearchParams
-import org.w3c.fetch.RequestCredentials
-import org.w3c.fetch.RequestInit
-import org.w3c.fetch.Response
-import kotlin.browser.window
-import kotlin.js.json
-
-suspend fun index(): IndexResponse =
-    getAndParseResult("/", null, { parseIndexResponse(it) })
+import es.guillermoorellana.keynotedex.dto.User
+import es.guillermoorellana.keynotedex.responses.*
+import es.guillermoorellana.keynotedex.web.model.*
+import kotlinx.coroutines.experimental.*
+import org.w3c.dom.url.*
+import org.w3c.fetch.*
+import kotlin.browser.*
+import kotlin.js.*
+import kotlinx.serialization.json.JSON as KJSON
 
 suspend fun register(
     userId: String,
@@ -31,13 +26,15 @@ suspend fun register(
     { parseUserResponse(it) }
 )
 
-suspend fun user(userId: String): User =
+suspend fun user(userId: String) =
     getAndParseResult("/user/$userId", null, { parseUserResponse(it) })
+        .toModel()
 
-suspend fun checkSession(): User =
+suspend fun checkSession() =
     getAndParseResult("/login", null, { parseUserResponse(it) })
+        .toModel()
 
-suspend fun login(userId: String, password: String): User =
+suspend fun login(userId: String, password: String) =
     postAndParseResult(
         "/login",
         URLSearchParams().apply {
@@ -45,7 +42,7 @@ suspend fun login(userId: String, password: String): User =
             append("password", password)
         },
         { parseUserResponse(it) }
-    )
+    ).toModel()
 
 suspend fun logoutUser() {
     window.fetch(
@@ -57,31 +54,21 @@ suspend fun logoutUser() {
         .await()
 }
 
-private fun parseIndexResponse(json: dynamic): IndexResponse {
-    val top = json.top as Array<dynamic>
-
-    return IndexResponse(top.map(::parseConference))
-}
-
-private fun parseConference(json: dynamic): Conference {
-    return Conference(json.name as String)
-}
-
 private suspend fun parseUserResponse(response: Response): User {
-    val json: dynamic = response.json().await()
-
-    if (response.ok) {
-        return User(
-            json.user.userId as String,
-            json.user.displayName as String,
-            json.user.submissions as? List<Submission> ?: emptyList()
-        )
-    } else {
-        throw LoginOrRegisterFailedException(json.message.toString())
+    val responseText = response.text().await()
+    when {
+        response.ok -> {
+            val userResponse: UserResponse = KJSON.parse(responseText)
+            return userResponse.user
+        }
+        else -> {
+            val errorResponse: ErrorResponse = KJSON.parse(responseText)
+            throw LoginOrRegisterFailedException(errorResponse)
+        }
     }
 }
 
-class LoginOrRegisterFailedException(message: String) : Throwable(message)
+class LoginOrRegisterFailedException(message: ErrorResponse) : Throwable(message.message)
 
 suspend fun <T> postAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): T =
     requestAndParseResult("POST", url, body, parse)

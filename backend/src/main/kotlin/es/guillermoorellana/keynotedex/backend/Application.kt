@@ -47,11 +47,14 @@ fun Application.main() {
     }
 
     install(ContentNegotiation) {
-        gson { }
+        gson {
+            setPrettyPrinting()
+            serializeNulls()
+        }
     }
 
     install(Routing) {
-        index(storage)
+        index()
         user(storage)
         conference(storage)
         register(storage, ::hash)

@@ -1,8 +1,9 @@
 package es.guillermoorellana.keynotedex.backend.login
 
 import es.guillermoorellana.keynotedex.backend.*
-import es.guillermoorellana.keynotedex.backend.error.*
+import es.guillermoorellana.keynotedex.backend.dao.tables.*
 import es.guillermoorellana.keynotedex.backend.user.*
+import es.guillermoorellana.keynotedex.responses.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
@@ -15,10 +16,9 @@ fun Route.login(dao: UserStorage) {
     accept(ContentType.Application.Json) {
         get<LoginPage> {
             val user = call.sessions.get<Session>()?.let { dao.user(it.userId) }
-            if (user == null) {
-                call.respond(HttpStatusCode.Forbidden, ErrorResponse("Forbidden"))
-            } else {
-                call.respond(LoginResponse(user.toPublic()))
+            when (user) {
+                null -> call.respond(HttpStatusCode.Forbidden, ErrorResponse("Forbidden"))
+                else -> call.respond(LoginResponse(user.toDto()))
             }
         }
         post<LoginPage> {
@@ -42,7 +42,7 @@ fun Route.login(dao: UserStorage) {
                 )
                 else -> {
                     call.sessions.set(Session(login.userId))
-                    call.respond(LoginResponse(login.toPublic()))
+                    call.respond(LoginResponse(login.toDto()))
                 }
             }
         }

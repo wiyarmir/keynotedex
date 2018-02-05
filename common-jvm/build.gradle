@@ -1,4 +1,5 @@
 apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'kotlinx-serialization'
 
 repositories {
     mavenCentral()
@@ -8,6 +9,7 @@ dependencies {
     expectedBy project(":common")
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
 
     testCompile "junit:junit:4.12"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

@@ -1,14 +1,13 @@
 package es.guillermoorellana.keynotedex.web.components
 
-import es.guillermoorellana.keynotedex.web.comms.user
-import es.guillermoorellana.keynotedex.web.external.RouteResultProps
+import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.components.submissions.*
+import es.guillermoorellana.keynotedex.web.external.*
 import es.guillermoorellana.keynotedex.web.loading
-import es.guillermoorellana.keynotedex.web.model.User
-import kotlinx.coroutines.experimental.async
+import es.guillermoorellana.keynotedex.web.model.*
+import kotlinx.coroutines.experimental.*
 import react.*
-import react.dom.div
-import react.dom.h1
-import react.dom.style
+import react.dom.*
 
 class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
 

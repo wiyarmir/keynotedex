@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web.components.submissions
 
 import es.guillermoorellana.keynotedex.web.model.*
 import react.*
