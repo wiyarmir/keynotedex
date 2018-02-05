@@ -1,6 +1,9 @@
 package es.guillermoorellana.keynotedex.backend.dao
 
-import es.guillermoorellana.keynotedex.backend.dao.tables.*
+import es.guillermoorellana.keynotedex.backend.dao.conferences.*
+import es.guillermoorellana.keynotedex.backend.dao.submissions.*
+import es.guillermoorellana.keynotedex.backend.dao.talks.*
+import es.guillermoorellana.keynotedex.backend.dao.users.*
 import org.jetbrains.squash.connection.*
 import org.jetbrains.squash.dialects.h2.*
 import org.jetbrains.squash.expressions.*
@@ -14,7 +17,13 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
     constructor(dir: File) : this(H2Connection.create("jdbc:h2:file:${dir.canonicalFile.absolutePath}"))
 
     init {
-        db.transaction { databaseSchema().create(Conferences, Talks, Users, Submissions) }
+        db.transaction {
+            databaseSchema().create(
+                Conferences, Talks,
+                Users,
+                Submissions
+            )
+        }
     }
 
     override fun user(userId: String, hash: String?) = db.transaction {

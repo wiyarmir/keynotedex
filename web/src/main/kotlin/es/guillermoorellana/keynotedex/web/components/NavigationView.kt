@@ -28,7 +28,7 @@ class NavigationView : RComponent<NavigationProps, RState>() {
                 span("navbar-toggler-icon") { }
             }
             div("collapse navbar-collapse") {
-                ul("navbar-nav mr-auto") {
+                ul("nav navbar-nav mr-auto") {
                     li("nav-item") {
                         routeLink("/conferences") {
                             attrs { className = "nav-link" }
@@ -42,15 +42,20 @@ class NavigationView : RComponent<NavigationProps, RState>() {
                         }
                     }
                 }
-                if (props.getCurrentUser() == null) {
-                    routeLink("/login") {
-                        attrs { className = "btn btn-outline-success" }
-                        +"Login"
-                    }
-                } else {
-                    routeLink("/user/${props.getCurrentUser()!!.userId}") {
-                        attrs { className = "nav-link" }
-                        +props.getCurrentUser()!!.displayName
+                ul("nav navbar-nav navbar-right") {
+                    if (props.getCurrentUser() == null) {
+                        routeLink("/login") {
+                            attrs { className = "btn btn-outline-success" }
+                            +"Login"
+                        }
+                    } else {
+                        li("dropdown") {
+                            span("glyphicon glyphicon-user") { }
+                            routeLink("/user/${props.getCurrentUser()!!.userId}") {
+                                attrs { className = "dropdown-toggle" }
+                                +props.getCurrentUser()!!.displayName
+                            }
+                        }
                     }
                 }
             }
