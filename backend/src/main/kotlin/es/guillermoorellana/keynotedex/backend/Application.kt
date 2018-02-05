@@ -1,12 +1,7 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.conference.*
 import es.guillermoorellana.keynotedex.backend.dao.*
 import es.guillermoorellana.keynotedex.backend.index.*
-import es.guillermoorellana.keynotedex.backend.login.*
-import es.guillermoorellana.keynotedex.backend.register.*
-import es.guillermoorellana.keynotedex.backend.submission.*
-import es.guillermoorellana.keynotedex.backend.user.*
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
@@ -21,7 +16,7 @@ data class Session(val userId: String)
 
 fun Application.main() {
     val storage: KeynotedexStorage = KeynotedexDatabase().apply {
-        environment.log.debug("Populating db with mock data")
+        environment.log.warn("Populating db with mock data")
         mockData()
     }
 
@@ -55,10 +50,6 @@ fun Application.main() {
 
     install(Routing) {
         index()
-        user(storage)
-        conference(storage)
-        register(storage, ::hash)
-        login(storage)
-        submission(storage)
+        api(storage, ::hash)
     }
 }

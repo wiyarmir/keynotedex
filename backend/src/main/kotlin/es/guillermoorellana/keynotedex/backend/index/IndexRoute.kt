@@ -10,7 +10,7 @@ import io.ktor.routing.*
 fun Route.index() {
     accept(ContentType.Text.Html) {
         get<Index> {
-            call.respondHtmlTemplate(ApplicationPageContent()) {
+            call.respondHtmlTemplate(IndexPageContent()) {
                 caption { +"Keynotedex" }
             }
         }
