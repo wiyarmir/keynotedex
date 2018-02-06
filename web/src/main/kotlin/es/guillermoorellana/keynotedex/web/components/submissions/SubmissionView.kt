@@ -6,14 +6,12 @@ import react.dom.*
 
 class SubmissionView : RComponent<SubmissionProps, RState>() {
     override fun RBuilder.render() {
-        h2 { +"Title" }
-        p { +props.submission.title }
-        h2 { +"Abstract" }
-        p { props.submission.abstract }
-        h2 { +"Type" }
-        p { props.submission.type }
-        h2 { +"Submitted to" }
-        p { props.submission.submittedTo }
+        div("col-6 col-sm-12 col-md-5 col-xl-4") {
+            h3 { +props.submission.title }
+            props.submission.abstract.let { if (it.isNotEmpty()) p { +it } }
+            props.submission.type.let { if (it.isNotEmpty()) p { +"Type $it" } }
+            props.submission.submittedTo.let { if (it.isNotEmpty()) p { +"Submitted to ${it}" } }
+        }
     }
 }
 

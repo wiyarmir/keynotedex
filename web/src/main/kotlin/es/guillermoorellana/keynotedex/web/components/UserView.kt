@@ -23,8 +23,8 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
             //language=CSS
             +".profile-container { padding: 40px 15px; text-align: center; }"
         }
-        div("row") {
-            div("col-md-10 offset-md-1") {
+        div("row justify-content-center") {
+            div("col-12 col-md-9 col-xl-8") {
                 loading(state.user) {
                     div("profile-container") {
                         h1 { +it.displayName }

@@ -7,19 +7,22 @@ import react.dom.*
 class SubmissionsView : RComponent<SubmissionsProps, RState>() {
     override fun RBuilder.render() {
         h2 { +"Submissions" }
-        props.submissions.apply {
-            if (isEmpty()) {
-                p { +"No submissions yet" }
+        hr { }
+        div("row") {
+            props.submissions
+                .apply {
+                    if (isEmpty()) {
+                        p { +"No submissions yet" }
 //                Only when logged in??
 //                button { +"Create new" }
-            } else {
-                forEach {
-                    submission {
-                        attrs { submission = it }
+                    } else {
+                        forEach {
+                            submission {
+                                attrs { submission = it }
+                            }
+                        }
                     }
-                    br { }
                 }
-            }
         }
     }
 }
