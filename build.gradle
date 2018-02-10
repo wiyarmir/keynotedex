@@ -18,7 +18,6 @@ subprojects { p ->
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
             classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
             classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.26"
-            classpath "com.android.tools.build:gradle:3.0.0"
         }
     }
     repositories {

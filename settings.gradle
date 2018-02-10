@@ -1,7 +1,10 @@
 rootProject.name = 'keynotedex'
-include 'android',
-        'common',
-        'common-jvm',
-        'common-js',
-        'backend',
-        'web'
+include 'common'
+include 'common-jvm'
+include 'common-js'
+include 'backend'
+include 'web'
+
+if (INCLUDE_ANDROID == "true") {
+    include 'android', 'android:app'
+}
