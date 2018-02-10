@@ -1,11 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-
 buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:3.0.0"
     }
 }
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
 

@@ -1,8 +1,20 @@
 group = 'es.guillermoorellana.keynotedex'
 version = '0.0.1-SNAPSHOT'
 
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+    }
+}
+
 apply plugin: 'kotlin'
 apply plugin: 'application'
+apply plugin: "com.github.johnrengelman.shadow"
+
+mainClassName = "es.guillermoorellana.keynotedex.backend.ServerKt"
 
 dependencies {
     compile project(":common-jvm")
@@ -34,5 +46,3 @@ kotlin {
         coroutines "enable"
     }
 }
-
-mainClassName = "es.guillermoorellana.keynotedex.backend.ServerKt"
