@@ -19,20 +19,20 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
     init {
         db.transaction {
             databaseSchema().create(
-                Conferences,
-                Talks,
-                Users,
-                Submissions
+                ConferencesTable,
+                TalksTable,
+                UsersTable,
+                SubmissionsTable
             )
         }
     }
 
     override fun user(userId: String, hash: String?) = db.transaction {
-        from(Users)
-            .where { Users.id eq userId }
+        from(UsersTable)
+            .where { UsersTable.id eq userId }
             .execute()
             .mapNotNull {
-                if (hash == null || it[Users.passwordHash] == hash) {
+                if (hash == null || it[UsersTable.passwordHash] == hash) {
                     transformUser(it)
                 } else {
                     null
@@ -42,15 +42,15 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
     }
 
     override fun userByEmail(email: String) = db.transaction {
-        from(Users)
-            .where { Users.email eq email }
+        from(UsersTable)
+            .where { UsersTable.email eq email }
             .execute()
             .map(::transformUser)
             .singleOrNull()
     }
 
     override fun createUser(user: User) = db.transaction {
-        insertInto(Users)
+        insertInto(UsersTable)
             .values {
                 it[id] = user.userId
                 it[displayName] = user.displayName
@@ -61,38 +61,38 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
     }
 
     override fun conferences() = db.transaction {
-        from(Conferences)
+        from(ConferencesTable)
             .execute()
             .map(::transformConference)
             .toList()
     }
 
     override fun conference(conferenceId: String) = db.transaction {
-        from(Conferences)
-            .where { Conferences.id eq conferenceId }
+        from(ConferencesTable)
+            .where { ConferencesTable.id eq conferenceId }
             .execute()
             .map(::transformConference)
             .singleOrNull()
     }
 
     override fun submissionById(submissionId: String): Submission? = db.transaction {
-        from(Submissions)
-            .where { Submissions.id eq submissionId }
+        from(SubmissionsTable)
+            .where { SubmissionsTable.id eq submissionId }
             .execute()
             .map(::transformSubmission)
             .singleOrNull()
     }
 
     override fun submissionsByUserId(userId: String): List<Submission> = db.transaction {
-        from(Submissions)
-            .where { Submissions.submitter eq userId }
+        from(SubmissionsTable)
+            .where { SubmissionsTable.submitter eq userId }
             .execute()
             .map(::transformSubmission)
             .toList()
     }
 
     override fun submissions(): List<Submission> = db.transaction {
-        from(Conferences)
+        from(ConferencesTable)
             .execute()
             .map(::transformSubmission)
             .toList()

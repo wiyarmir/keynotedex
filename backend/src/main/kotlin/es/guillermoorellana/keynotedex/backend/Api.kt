@@ -85,7 +85,7 @@ private fun Route.apiGetUser(userStorage: UserStorage, submissionStorage: Submis
             val submissions = submissionStorage.submissionsByUserId(user.userId)
                 .filter { it.isPublic || currentUser?.userId == it.submitterId }
 
-            call.respond(UserResponse(user.copy(submissions = submissions).toDto()))
+            call.respond(UserProfileResponse(user.toDto(), submissions.map(Submission::toDto)))
         }
     }
 }
@@ -131,7 +131,7 @@ private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (Strin
         val user = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
         if (user != null) {
             val dtoUser = user.toDto()
-            call.redirect(UserResponse(dtoUser))
+            call.redirect(UserProfileResponse(dtoUser))
             return@post
         }
 
@@ -185,6 +185,6 @@ private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (Strin
         }
 
         call.sessions.set(Session(newUser.userId))
-        call.respond(UserResponse(newUser.toDto()))
+        call.respond(UserProfileResponse(newUser.toDto()))
     }
 }

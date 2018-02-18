@@ -4,11 +4,11 @@ import org.jetbrains.squash.results.*
 
 fun transformSubmission(it: ResultRow): Submission =
     Submission(
-        id = it[Submissions.id],
-        submitterId = it[Submissions.submitter],
-        isPublic = it[Submissions.public],
-        title = it[Submissions.title],
-        abstract = it[Submissions.abstract]
+        id = it[SubmissionsTable.id],
+        submitterId = it[SubmissionsTable.submitter],
+        isPublic = it[SubmissionsTable.public],
+        title = it[SubmissionsTable.title],
+        abstract = it[SubmissionsTable.abstract]
     )
 
 fun Submission.toDto(): es.guillermoorellana.keynotedex.dto.Submission =

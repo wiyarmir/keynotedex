@@ -4,7 +4,7 @@ import org.jetbrains.squash.results.*
 
 fun transformConference(it: ResultRow): Conference =
     Conference(
-        name = it[Conferences.name]
+        name = it[ConferencesTable.name]
     )
 
 fun Conference.toDto() = es.guillermoorellana.keynotedex.dto.Conference(

@@ -1,9 +1,9 @@
 package es.guillermoorellana.keynotedex.web.components
 
+import es.guillermoorellana.keynotedex.web.*
 import es.guillermoorellana.keynotedex.web.comms.*
 import es.guillermoorellana.keynotedex.web.components.submissions.*
 import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.*
 import kotlinx.coroutines.experimental.*
 import react.*
@@ -27,7 +27,7 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
             div("col-12 col-md-9 col-xl-8") {
                 loading(state.user) {
                     div("profile-container") {
-                        h1 { +it.displayName }
+                        h1 { +it.user.displayName }
                     }
                     submissions { attrs { submissions = it.submissions } }
                 }
@@ -37,7 +37,7 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
 
     private fun fetchUser(userId: String) {
         promise {
-            val user = user(userId)
+            val user = userProfile(userId)
             setState {
                 this.user = user
             }
@@ -52,5 +52,5 @@ interface UserProps : RProps {
 }
 
 interface UserState : RState {
-    var user: User?
+    var user: UserProfile?
 }

@@ -15,3 +15,6 @@ fun es.guillermoorellana.keynotedex.dto.Submission.toModel() = Submission(
     type = type ?: "",
     submittedTo = submittedTo ?: ""
 )
+
+fun List<es.guillermoorellana.keynotedex.dto.Submission>.toModel() =
+    map { it.toModel() }

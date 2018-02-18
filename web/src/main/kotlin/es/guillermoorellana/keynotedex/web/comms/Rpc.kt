@@ -24,16 +24,20 @@ suspend fun register(
         append("displayName", displayName)
         append("email", email)
     },
-    { parseUserResponse(it) }
+    { parseUserProfileResponse(it).user }
 )
 
 suspend fun user(userId: String) =
     getAndParseResult("/user/$userId", null, { parseUserResponse(it) })
         .toModel()
 
-suspend fun checkSession() =
-    getAndParseResult("/login", null, { parseUserResponse(it) })
+suspend fun userProfile(userId: String) =
+    getAndParseResult("/user/$userId", null, { parseUserProfileResponse(it) })
         .toModel()
+
+suspend fun checkSession() =
+    getAndParseResult("/login", null, { parseUserProfileResponse(it) })
+        .user.toModel()
 
 suspend fun login(userId: String, password: String) =
     postAndParseResult(
@@ -42,8 +46,8 @@ suspend fun login(userId: String, password: String) =
             append("userId", userId)
             append("password", password)
         },
-        { parseUserResponse(it) }
-    ).toModel()
+        { parseUserProfileResponse(it) }
+    ).user.toModel()
 
 suspend fun logoutUser() {
     window.fetch(
@@ -63,8 +67,22 @@ private suspend fun parseUserResponse(response: Response): User {
     val responseText = response.text().await()
     when {
         response.ok -> {
-            val userResponse: UserResponse = KJSON.parse(responseText)
+            val userResponse: UserProfileResponse = KJSON.parse(responseText)
             return userResponse.user
+        }
+        else -> {
+            val errorResponse: ErrorResponse = KJSON.parse(responseText)
+            throw LoginOrRegisterFailedException(errorResponse)
+        }
+    }
+}
+
+private suspend fun parseUserProfileResponse(response: Response): UserProfileResponse {
+    val responseText = response.text().await()
+    when {
+        response.ok -> {
+            val profileResponse: UserProfileResponse = KJSON.parse(responseText)
+            return profileResponse
         }
         else -> {
             val errorResponse: ErrorResponse = KJSON.parse(responseText)

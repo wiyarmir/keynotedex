@@ -11,14 +11,16 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 import io.ktor.util.*
+import java.io.*
 
 data class Session(val userId: String)
 
 fun Application.main() {
-    val storage: KeynotedexStorage = KeynotedexDatabase().apply {
-        environment.log.warn("Populating db with mock data")
-        mockData()
-    }
+    val storage: KeynotedexStorage = KeynotedexDatabase(File("build/db"))
+        .apply {
+            environment.log.warn("Populating db with mock data")
+            mockData()
+        }
 
     install(DefaultHeaders) {
         //        header(HttpHeaders.Server, "")

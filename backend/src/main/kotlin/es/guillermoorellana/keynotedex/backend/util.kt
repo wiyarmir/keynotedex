@@ -53,14 +53,14 @@ internal fun userNameValid(userId: String) = userId.matches(userIdPattern)
 internal fun KeynotedexDatabase.mockData() {
     db.transaction {
         for (i in 1..10) {
-            insertInto(Conferences)
+            insertInto(ConferencesTable)
                 .values {
                     it[id] = "$i"
                     it[name] = "Conference$i"
                 }
                 .execute()
 
-            insertInto(Users)
+            insertInto(UsersTable)
                 .values {
                     it[id] = "user$i"
                     it[displayName] = "User #$i"
@@ -69,7 +69,7 @@ internal fun KeynotedexDatabase.mockData() {
                 }
                 .execute()
 
-            insertInto(Submissions)
+            insertInto(SubmissionsTable)
                 .values {
                     it[id] = "$i"
                     it[public] = i % 2 == 0
@@ -79,7 +79,7 @@ internal fun KeynotedexDatabase.mockData() {
                 }
                 .execute()
 
-            insertInto(Submissions)
+            insertInto(SubmissionsTable)
                 .values {
                     it[id] = "2$i"
                     it[public] = i % 2 == 0
