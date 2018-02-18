@@ -61,6 +61,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                 currentUser = user
             }
         }.catch {
+            console.error(it)
             setState {
                 currentUser = null
             }

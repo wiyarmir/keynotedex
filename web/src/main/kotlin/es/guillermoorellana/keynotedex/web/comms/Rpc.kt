@@ -36,8 +36,8 @@ suspend fun userProfile(userId: String) =
         .toModel()
 
 suspend fun checkSession() =
-    getAndParseResult("/login", null, { parseUserProfileResponse(it) })
-        .user.toModel()
+    getAndParseResult("/login", null, { parseUserResponse(it) })
+        .toModel()
 
 suspend fun login(userId: String, password: String) =
     postAndParseResult(
@@ -67,7 +67,7 @@ private suspend fun parseUserResponse(response: Response): User {
     val responseText = response.text().await()
     when {
         response.ok -> {
-            val userResponse: UserProfileResponse = KJSON.parse(responseText)
+            val userResponse: UserResponse = KJSON.parse(responseText)
             return userResponse.user
         }
         else -> {
