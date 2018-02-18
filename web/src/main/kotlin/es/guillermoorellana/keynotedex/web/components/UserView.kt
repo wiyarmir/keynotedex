@@ -2,7 +2,7 @@ package es.guillermoorellana.keynotedex.web.components
 
 import es.guillermoorellana.keynotedex.web.*
 import es.guillermoorellana.keynotedex.web.comms.*
-import es.guillermoorellana.keynotedex.web.components.submissions.*
+import es.guillermoorellana.keynotedex.web.components.profile.*
 import es.guillermoorellana.keynotedex.web.external.*
 import es.guillermoorellana.keynotedex.web.model.*
 import kotlinx.coroutines.experimental.*
@@ -25,11 +25,11 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
         }
         div("row justify-content-center") {
             div("col-12 col-md-9 col-xl-8") {
-                loading(state.user) {
-                    div("profile-container") {
-                        h1 { +it.user.displayName }
+                loading(state.userProfile) {
+                    when {
+                        it.editable -> editableProfile { attrs { userProfile = it } }
+                        else -> publicProfile { attrs { userProfile = it } }
                     }
-                    submissions { attrs { submissions = it.submissions } }
                 }
             }
         }
@@ -39,10 +39,13 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
         promise {
             val user = userProfile(userId)
             setState {
-                this.user = user
+                this.userProfile = user
             }
         }.catch {
             console.error(it)
+            setState {
+                // not found?
+            }
         }
     }
 }
@@ -52,5 +55,5 @@ interface UserProps : RProps {
 }
 
 interface UserState : RState {
-    var user: UserProfile?
+    var userProfile: UserProfile?
 }

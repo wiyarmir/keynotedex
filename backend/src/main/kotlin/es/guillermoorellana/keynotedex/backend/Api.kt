@@ -85,7 +85,13 @@ private fun Route.apiGetUser(userStorage: UserStorage, submissionStorage: Submis
             val submissions = submissionStorage.submissionsByUserId(user.userId)
                 .filter { it.isPublic || currentUser?.userId == it.submitterId }
 
-            call.respond(UserProfileResponse(user.toDto(), submissions.map(Submission::toDto)))
+            call.respond(
+                UserProfileResponse(
+                    user = user.toDto(),
+                    submissions = submissions.map(Submission::toDto),
+                    editable = currentUser?.userId == user.userId
+                )
+            )
         }
     }
 }
