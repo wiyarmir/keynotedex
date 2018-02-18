@@ -1,6 +1,5 @@
-package es.guillermoorellana.keynotedex.backend.user
+package es.guillermoorellana.keynotedex.backend.dao.users
 
-import es.guillermoorellana.keynotedex.backend.dao.users.*
 import java.io.*
 
 interface UserStorage : Closeable {

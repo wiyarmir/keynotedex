@@ -4,8 +4,6 @@ import es.guillermoorellana.keynotedex.backend.dao.*
 import es.guillermoorellana.keynotedex.backend.dao.conferences.*
 import es.guillermoorellana.keynotedex.backend.dao.submissions.*
 import es.guillermoorellana.keynotedex.backend.dao.users.*
-import es.guillermoorellana.keynotedex.backend.submission.*
-import es.guillermoorellana.keynotedex.backend.user.*
 import es.guillermoorellana.keynotedex.responses.*
 import io.ktor.application.*
 import io.ktor.http.*

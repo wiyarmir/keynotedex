@@ -1,6 +1,5 @@
-package es.guillermoorellana.keynotedex.backend.submission
+package es.guillermoorellana.keynotedex.backend.dao.submissions
 
-import es.guillermoorellana.keynotedex.backend.dao.submissions.*
 import java.io.*
 
 interface SubmissionStorage : Closeable {

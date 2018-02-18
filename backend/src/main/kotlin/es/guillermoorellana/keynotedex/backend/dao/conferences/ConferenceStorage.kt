@@ -1,6 +1,5 @@
-package es.guillermoorellana.keynotedex.backend.conference
+package es.guillermoorellana.keynotedex.backend.dao.conferences
 
-import es.guillermoorellana.keynotedex.backend.dao.conferences.*
 import java.io.*
 
 interface ConferenceStorage : Closeable {
