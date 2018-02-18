@@ -14,7 +14,9 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+
     compile "org.jetbrains.kotlinx:kotlinx-html-js:$html_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$kotlinx_coroutines_version"
 
     compile "org.jetbrains:kotlin-extensions:$kotlin_js_ext_version"
     compile "org.jetbrains:kotlin-react:$kotlin_wrapper_version"

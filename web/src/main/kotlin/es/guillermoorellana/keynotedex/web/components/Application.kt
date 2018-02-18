@@ -55,7 +55,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
     }
 
     private fun checkUserSession() {
-        async {
+        promise {
             val user = checkSession()
             setState {
                 currentUser = user

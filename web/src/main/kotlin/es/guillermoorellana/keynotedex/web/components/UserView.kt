@@ -36,7 +36,7 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
     }
 
     private fun fetchUser(userId: String) {
-        async {
+        promise {
             val user = user(userId)
             setState {
                 this.user = user

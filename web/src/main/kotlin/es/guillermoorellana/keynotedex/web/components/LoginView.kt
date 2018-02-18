@@ -113,7 +113,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
         setState {
             disabled = true
         }
-        async {
+        promise {
             val user = login(state.login, state.password)
             loggedIn(user)
         }.catch { err -> loginFailed(err) }
