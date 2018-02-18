@@ -16,17 +16,17 @@ import io.ktor.sessions.*
 fun Route.api(dao: KeynotedexStorage, hashFunction: (String) -> String) {
     apiGetConference(dao)
     apiGetLogin(dao)
-    apiGetSubmission(dao)
-    apiGetUser(dao)
+    apiGetSubmission(dao, dao)
+    apiGetUser(dao, dao)
 
     apiPostLogin(dao)
     apiPostRegister(dao, hashFunction)
 }
 
-private fun Route.apiGetConference(storage: KeynotedexStorage) {
+private fun Route.apiGetConference(conferenceStorage: ConferenceStorage) {
     accept(ContentType.Application.Json) {
         get<ConferenceEndpoint> {
-            val conference = storage.conference(it.conferenceId)
+            val conference = conferenceStorage.conference(it.conferenceId)
             when (conference) {
                 null -> call.respond(ErrorResponse("Can't find conference with id ${it.conferenceId}"))
                 else -> call.respond(ConferenceResponse(conference.toDto()))
@@ -35,10 +35,10 @@ private fun Route.apiGetConference(storage: KeynotedexStorage) {
     }
 }
 
-private fun Route.apiGetLogin(dao: UserStorage) {
+private fun Route.apiGetLogin(userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
         get<LoginEndpoint> {
-            val user = call.sessions.get<Session>()?.let { dao.user(it.userId) }
+            val user = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
             when (user) {
                 null -> call.respond(
                     HttpStatusCode.Forbidden,
@@ -50,37 +50,47 @@ private fun Route.apiGetLogin(dao: UserStorage) {
     }
 }
 
-private fun Route.apiGetSubmission(dao: SubmissionStorage) {
+private fun Route.apiGetSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
         get<SubmissionEndpoint> {
-            val submission = dao.submissionById(it.submissionId)
-            when (submission) {
-                null -> call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
-                else -> call.respond(SubmissionResponse(submission.toDto()))
+            val submission = submissionStorage.submissionById(it.submissionId)
+            if (submission == null) {
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
+                return@get
+            }
+            if (submission.isPublic) {
+                call.respond(SubmissionResponse(submission.toDto()))
+                return@get
+            }
+            val user = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
+            if (user?.userId == submission.submitterId) {
+                call.respond(SubmissionResponse(submission.toDto()))
+            } else {
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
             }
         }
     }
 }
 
-private fun Route.apiGetUser(dao: KeynotedexStorage) {
+private fun Route.apiGetUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
     accept(ContentType.Application.Json) {
         get<UserEndpoint> {
-            val user = dao.user(it.userId)
-            when (user) {
-                null -> call.respond(
-                    HttpStatusCode.NotFound,
-                    ErrorResponse("User ${it.userId} doesn't exist")
-                )
-                else -> {
-                    val submissions = dao.submissionsByUserId(user.userId)
-                    call.respond(UserResponse(user.copy(submissions = submissions).toDto()))
-                }
+            val user = userStorage.user(it.userId)
+            if (user == null) {
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("User ${it.userId} doesn't exist"))
+                return@get
             }
+
+            val currentUser = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
+            val submissions = submissionStorage.submissionsByUserId(user.userId)
+                .filter { it.isPublic || currentUser?.userId == it.submitterId }
+
+            call.respond(UserResponse(user.copy(submissions = submissions).toDto()))
         }
     }
 }
 
-private fun Route.apiPostLogin(dao: UserStorage) {
+private fun Route.apiPostLogin(userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
         post<LoginEndpoint> {
             val params = call.receiveParameters()
@@ -92,7 +102,7 @@ private fun Route.apiPostLogin(dao: UserStorage) {
                 password.length < 6 -> null
                 !userNameValid(userId) -> null
                 else -> {
-                    dao.user(userId, hash(password))
+                    userStorage.user(userId, hash(password))
                 }
             }
 
@@ -110,7 +120,7 @@ private fun Route.apiPostLogin(dao: UserStorage) {
     }
 }
 
-private fun Route.apiPostRegister(dao: UserStorage, hashFunction: (String) -> String) {
+private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (String) -> String) {
 
     fun passwordNotValid(password: String) = password.length < 6
     fun userIdShort(userId: String) = userId.length < 4
@@ -118,7 +128,7 @@ private fun Route.apiPostRegister(dao: UserStorage, hashFunction: (String) -> St
     fun userInDatabase(dao: UserStorage, userId: String) = dao.user(userId) != null
 
     post<RegisterEndpoint> {
-        val user = call.sessions.get<Session>()?.let { dao.user(it.userId) }
+        val user = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
         if (user != null) {
             val dtoUser = user.toDto()
             call.redirect(UserResponse(dtoUser))
@@ -156,11 +166,11 @@ private fun Route.apiPostRegister(dao: UserStorage, hashFunction: (String) -> St
         val newUser = User(userId = userId, passwordHash = hash)
 
         try {
-            dao.createUser(newUser)
+            userStorage.createUser(newUser)
         } catch (e: Throwable) {
             application.environment.log.error("Failed to register user", e)
             when {
-                userInDatabase(dao, userId) -> call.respond(
+                userInDatabase(userStorage, userId) -> call.respond(
                     HttpStatusCode.Conflict,
                     ErrorResponse(message = "User with the following login is already registered")
                 )

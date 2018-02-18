@@ -72,7 +72,18 @@ internal fun KeynotedexDatabase.mockData() {
             insertInto(Submissions)
                 .values {
                     it[id] = "$i"
+                    it[public] = i % 2 == 0
                     it[submitter] = "user1"
+                    it[title] = "My talk $i"
+                    it[abstract] = "This talk is about talks.\nSo it is a meta talk."
+                }
+                .execute()
+
+            insertInto(Submissions)
+                .values {
+                    it[id] = "2$i"
+                    it[public] = i % 2 == 0
+                    it[submitter] = "user2"
                     it[title] = "My talk $i"
                     it[abstract] = "This talk is about talks.\nSo it is a meta talk."
                 }

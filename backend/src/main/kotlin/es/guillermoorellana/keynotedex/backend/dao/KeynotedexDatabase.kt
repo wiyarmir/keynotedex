@@ -19,7 +19,8 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
     init {
         db.transaction {
             databaseSchema().create(
-                Conferences, Talks,
+                Conferences,
+                Talks,
                 Users,
                 Submissions
             )
