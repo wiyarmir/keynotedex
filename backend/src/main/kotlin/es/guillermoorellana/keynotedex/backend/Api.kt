@@ -27,7 +27,7 @@ fun Route.api(dao: KeynotedexStorage, hashFunction: (String) -> String) {
 
 private fun Route.apiGetConference(storage: KeynotedexStorage) {
     accept(ContentType.Application.Json) {
-        get<ConferencePage> {
+        get<ConferenceEndpoint> {
             val conference = storage.conference(it.conferenceId)
             when (conference) {
                 null -> call.respond(ErrorResponse("Can't find conference with id ${it.conferenceId}"))
@@ -39,7 +39,7 @@ private fun Route.apiGetConference(storage: KeynotedexStorage) {
 
 private fun Route.apiGetLogin(dao: UserStorage) {
     accept(ContentType.Application.Json) {
-        get<LoginPage> {
+        get<LoginEndpoint> {
             val user = call.sessions.get<Session>()?.let { dao.user(it.userId) }
             when (user) {
                 null -> call.respond(
@@ -54,24 +54,11 @@ private fun Route.apiGetLogin(dao: UserStorage) {
 
 private fun Route.apiGetSubmission(dao: SubmissionStorage) {
     accept(ContentType.Application.Json) {
-        get<SubmissionPage> {
-            when {
-                it.submissionId == null || it.submissionId.isNullOrBlank() -> {
-                    call.respond(
-                        HttpStatusCode.BadRequest,
-                        ErrorResponse("Bad request")
-                    )
-                }
-                else -> {
-                    val submission = dao.submissionById(it.submissionId)
-                    when (submission) {
-                        null -> call.respond(
-                            HttpStatusCode.NotFound,
-                            ErrorResponse("Not found")
-                        )
-                        else -> call.respond(SubmissionResponse(submission.toDto()))
-                    }
-                }
+        get<SubmissionEndpoint> {
+            val submission = dao.submissionById(it.submissionId)
+            when (submission) {
+                null -> call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
+                else -> call.respond(SubmissionResponse(submission.toDto()))
             }
         }
     }
@@ -79,7 +66,7 @@ private fun Route.apiGetSubmission(dao: SubmissionStorage) {
 
 private fun Route.apiGetUser(dao: KeynotedexStorage) {
     accept(ContentType.Application.Json) {
-        get<UserPage> {
+        get<UserEndpoint> {
             val user = dao.user(it.userId)
             when (user) {
                 null -> call.respond(
@@ -97,7 +84,7 @@ private fun Route.apiGetUser(dao: KeynotedexStorage) {
 
 private fun Route.apiPostLogin(dao: UserStorage) {
     accept(ContentType.Application.Json) {
-        post<LoginPage> {
+        post<LoginEndpoint> {
             val params = call.receiveParameters()
             val userId = params["userId"] ?: ""
             val password = params["password"] ?: ""
@@ -132,7 +119,7 @@ private fun Route.apiPostRegister(dao: UserStorage, hashFunction: (String) -> St
     fun userNameNotValid(userName: String) = !userNameValid(userName)
     fun userInDatabase(dao: UserStorage, userId: String) = dao.user(userId) != null
 
-    post<RegisterPage> {
+    post<RegisterEndpoint> {
         val user = call.sessions.get<Session>()?.let { dao.user(it.userId) }
         if (user != null) {
             val dtoUser = user.toDto()

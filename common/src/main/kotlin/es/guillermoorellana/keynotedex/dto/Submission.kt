@@ -4,6 +4,7 @@ import kotlinx.serialization.*
 
 @Serializable
 data class Submission(
+    val submissionId: String,
     val title: String,
     val abstract: String? = null,
     val type: String? = null,

@@ -1,16 +1,7 @@
 package es.guillermoorellana.keynotedex.web
 
-import kotlinext.js.*
 import react.*
-import react.dom.div
-
-inline fun <T : RState> React.Component<*, T>.setState(action: T.() -> Unit) {
-    setState(jsObject(action))
-}
-
-inline fun <T : RState> React.Component<*, T>.updateState(action: T.() -> Unit) {
-    setState(clone(state).apply(action))
-}
+import react.dom.*
 
 inline fun <T> RBuilder.loading(value: T?, action: (T) -> Unit) {
     if (value == null) {

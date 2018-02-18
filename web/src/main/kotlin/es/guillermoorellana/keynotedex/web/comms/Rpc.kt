@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.web.comms
 
+import es.guillermoorellana.keynotedex.dto.Submission
 import es.guillermoorellana.keynotedex.dto.User
 import es.guillermoorellana.keynotedex.responses.*
 import es.guillermoorellana.keynotedex.web.model.*
@@ -54,12 +55,30 @@ suspend fun logoutUser() {
         .await()
 }
 
+suspend fun getSubmission(submissionId: String) =
+    getAndParseResult("/submission/$submissionId", null, { parseSubmissionResponse(it) })
+        .toModel()
+
 private suspend fun parseUserResponse(response: Response): User {
     val responseText = response.text().await()
     when {
         response.ok -> {
             val userResponse: UserResponse = KJSON.parse(responseText)
             return userResponse.user
+        }
+        else -> {
+            val errorResponse: ErrorResponse = KJSON.parse(responseText)
+            throw LoginOrRegisterFailedException(errorResponse)
+        }
+    }
+}
+
+private suspend fun parseSubmissionResponse(response: Response): Submission {
+    val responseText = response.text().await()
+    when {
+        response.ok -> {
+            val submissionResponse: SubmissionResponse = KJSON.parse(responseText)
+            return submissionResponse.submission
         }
         else -> {
             val errorResponse: ErrorResponse = KJSON.parse(responseText)

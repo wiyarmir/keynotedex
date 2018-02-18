@@ -4,7 +4,7 @@ import es.guillermoorellana.keynotedex.web.model.*
 import react.*
 import react.dom.*
 
-class SubmissionsView : RComponent<SubmissionsProps, RState>() {
+class Submissions : RComponent<SubmissionsProps, RState>() {
     override fun RBuilder.render() {
         h2 { +"Submissions" }
         hr { }
@@ -17,7 +17,7 @@ class SubmissionsView : RComponent<SubmissionsProps, RState>() {
 //                button { +"Create new" }
                     } else {
                         forEach {
-                            submission {
+                            submissionCard {
                                 attrs { submission = it }
                             }
                         }
@@ -31,4 +31,4 @@ external interface SubmissionsProps : RProps {
     var submissions: List<Submission>
 }
 
-fun RBuilder.submissions(handler: RHandler<SubmissionsProps>) = child(SubmissionsView::class, handler)
+fun RBuilder.submissions(handler: RHandler<SubmissionsProps>) = child(Submissions::class, handler)

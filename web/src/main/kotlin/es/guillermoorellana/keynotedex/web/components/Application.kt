@@ -24,9 +24,8 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                 }
                 switch {
                     route("/", HomeView::class, exact = true)
-                    route("/user/:userId", UserView::class)
-                    route("/conferences", ConferencesView::class)
-                    route("/login") {
+                    route("/user/:userId", UserView::class, exact = true)
+                    route("/login", exact = true) {
                         login {
                             attrs {
                                 getCurrentUser = { state.currentUser }
@@ -35,8 +34,9 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                             }
                         }
                     }
-                    route("/conferences", ConferencesView::class)
-                    route("/speakers", SpeakersView::class)
+                    route("/conferences", ComingSoonView::class)
+                    route("/speakers", ComingSoonView::class)
+                    route("/submission/:submissionId", SubmissionView::class, exact = true)
                     route(NotFoundView::class)
                 }
                 footer("container") {
