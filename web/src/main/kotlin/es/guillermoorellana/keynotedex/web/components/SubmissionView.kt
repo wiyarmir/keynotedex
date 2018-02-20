@@ -2,6 +2,7 @@ package es.guillermoorellana.keynotedex.web.components
 
 import es.guillermoorellana.keynotedex.web.*
 import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.components.editable.*
 import es.guillermoorellana.keynotedex.web.external.*
 import es.guillermoorellana.keynotedex.web.model.*
 import kotlinx.coroutines.experimental.*
@@ -18,11 +19,36 @@ class SubmissionView : RComponent<RouteResultProps<SubmissionRouteProps>, Submis
         div("container") {
             loading(state.submission) {
                 with(it) {
-                    h3 { +title }
-                    abstract.let { if (it.isNotEmpty()) p { +it } }
+                    h3 {
+                        editableText {
+                            attrs {
+                                value = title
+                                propName = "title"
+                                change = this@SubmissionView::onChangeEvent
+                            }
+                        }
+                    }
+                    editableText {
+                        attrs {
+                            value = abstract
+                            propName = "abstract"
+                            change = this@SubmissionView::onChangeEvent
+                        }
+                    }
                     type.let { if (it.isNotEmpty()) p { +"Type $it" } }
                     submittedTo.let { if (it.isNotEmpty()) p { +"Submitted to $it" } }
                 }
+            }
+        }
+    }
+
+    private fun onChangeEvent(chg: ChangeEvent) {
+        setState {
+            chg["abstract"]?.let { abstract ->
+                submission = submission?.copy(abstract = abstract)
+            }
+            chg["title"]?.let { title ->
+                submission = submission?.copy(title = title)
             }
         }
     }
