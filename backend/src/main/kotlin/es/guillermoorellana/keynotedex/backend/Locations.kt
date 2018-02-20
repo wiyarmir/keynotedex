@@ -2,20 +2,20 @@ package es.guillermoorellana.keynotedex.backend
 
 import io.ktor.locations.*
 
-@location("/{trail...}")
+@Location("/{trail...}")
 class IndexPage(val trail: List<String>)
 
-@location("/user/{userId}")
+@Location("/user/{userId}")
 data class UserEndpoint(val userId: String)
 
-@location("/submission/{submissionId}")
+@Location("/submission/{submissionId}")
 data class SubmissionEndpoint(val submissionId: String)
 
-@location("/conference/{conferenceId}")
+@Location("/conference/{conferenceId}")
 data class ConferenceEndpoint(val conferenceId: String)
 
-@location("/register")
+@Location("/register")
 data class RegisterEndpoint(val userId: String = "", val password: String = "")
 
-@location("/login")
+@Location("/login")
 data class LoginEndpoint(val userId: String = "", val password: String = "")

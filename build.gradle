@@ -38,6 +38,6 @@ ext {
     kotlin_js_ext_version = "1.0.0-pre.17-kotlin-1.2.0"
     kotlin_wrapper_version = "16.2.0-pre.17-kotlin-1.2.0"
     kotlinx_coroutines_version = "0.21"
-    ktor_version = "0.9.0"
-    squash_version = "0.2.3"
+    ktor_version = "0.9.1"
+    squash_version = "0.2.4"
 }

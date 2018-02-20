@@ -13,6 +13,7 @@ import io.ktor.util.*
 import org.jetbrains.squash.connection.*
 import org.jetbrains.squash.statements.*
 import java.net.*
+import java.sql.*
 import java.util.concurrent.*
 import javax.crypto.*
 import javax.crypto.spec.*
@@ -51,43 +52,47 @@ private val userIdPattern = "[a-zA-Z0-9_.]+".toRegex()
 internal fun userNameValid(userId: String) = userId.matches(userIdPattern)
 
 internal fun KeynotedexDatabase.mockData() {
-    db.transaction {
-        for (i in 1..10) {
-            insertInto(ConferencesTable)
-                .values {
-                    it[id] = "$i"
-                    it[name] = "Conference$i"
-                }
-                .execute()
+    try {
+        db.transaction {
+            for (i in 1..10) {
+                insertInto(ConferencesTable)
+                    .values {
+                        it[id] = "$i"
+                        it[name] = "Conference$i"
+                    }
+                    .execute()
 
-            insertInto(UsersTable)
-                .values {
-                    it[id] = "user$i"
-                    it[displayName] = "User #$i"
-                    it[email] = if (i % 2 == 0) "userId$i@keynotedex.co" else null
-                    it[passwordHash] = hash("user$i!")
-                }
-                .execute()
+                insertInto(UsersTable)
+                    .values {
+                        it[id] = "user$i"
+                        it[displayName] = "User #$i"
+                        it[email] = if (i % 2 == 0) "userId$i@keynotedex.co" else null
+                        it[passwordHash] = hash("user$i!")
+                    }
+                    .execute()
 
-            insertInto(SubmissionsTable)
-                .values {
-                    it[id] = "$i"
-                    it[public] = i % 2 == 0
-                    it[submitter] = "user1"
-                    it[title] = "My talk $i"
-                    it[abstract] = "This talk is about talks.\nSo it is a meta talk."
-                }
-                .execute()
+                insertInto(SubmissionsTable)
+                    .values {
+                        it[id] = "$i"
+                        it[public] = i % 2 == 0
+                        it[submitter] = "user1"
+                        it[title] = "My talk $i"
+                        it[abstract] = "This talk is about talks.\nSo it is a meta talk."
+                    }
+                    .execute()
 
-            insertInto(SubmissionsTable)
-                .values {
-                    it[id] = "2$i"
-                    it[public] = i % 2 == 0
-                    it[submitter] = "user2"
-                    it[title] = "My talk $i"
-                    it[abstract] = "This talk is about talks.\nSo it is a meta talk."
-                }
-                .execute()
+                insertInto(SubmissionsTable)
+                    .values {
+                        it[id] = "2$i"
+                        it[public] = i % 2 == 0
+                        it[submitter] = "user2"
+                        it[title] = "My talk $i"
+                        it[abstract] = "This talk is about talks.\nSo it is a meta talk."
+                    }
+                    .execute()
+            }
         }
+    } catch (e: SQLException) {
+        println("Problem mocking data")
     }
 }

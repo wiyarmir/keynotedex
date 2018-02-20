@@ -27,7 +27,7 @@ fun Application.main() {
     }
     install(CallLogging)
     install(ConditionalHeaders)
-    install(PartialContentSupport)
+    install(PartialContent)
     install(Compression)
     install(Locations)
     install(StatusPages) {
