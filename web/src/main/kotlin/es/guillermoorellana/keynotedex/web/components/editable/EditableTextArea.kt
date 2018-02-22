@@ -7,28 +7,32 @@ import org.w3c.dom.events.*
 import react.*
 import react.dom.*
 
-open class EditableText : EditableElement<HTMLInputElement>() {
-
-    override fun EditableElementState.init(props: EditableElementProps) {
-        editing = false
-        loading = false
-        disabled = false
-        invalid = false
-    }
+class EditableTextArea : EditableElement<HTMLTextAreaElement>() {
 
     override fun RBuilder.renderNormalComponent() {
+        val value = state.newValue ?: props.value
+
+
         span(makeClassString()) {
             attrs {
                 tabIndex = "0"
                 onClickFunction = { startEditing() }
                 onFocusFunction = { startEditing() }
             }
-            +(state.newValue ?: props.value)
+            value.split('\n')
+                .mapIndexed { index, line ->
+                    val keyNumber = 2 * index
+                    span {
+                        key = keyNumber.toString()
+                        +line
+                    }
+                    br { key = (keyNumber + 1).toString() }
+                }
         }
     }
 
     override fun RBuilder.renderEditingComponent() {
-        input(classes = makeClassString()) {
+        textArea(classes = makeClassString()) {
             attrs {
                 defaultValue = props.value
                 disabled = isDisabled()
@@ -36,10 +40,16 @@ open class EditableText : EditableElement<HTMLInputElement>() {
                 onBlurFunction = { finishEditing() }
                 onKeyDownFunction = { event: Event -> keyDown(event) }
             }
-            ref { refs = it as HTMLInputElement? }
+            ref { refs = it as HTMLTextAreaElement? }
         }
     }
 
+
+    override fun keyDown(event: Event) {
+        when (event.keyCode) {
+            KEY_ESCAPE -> cancelEditing()
+        }
+    }
 }
 
-fun RBuilder.editableText(handler: RHandler<EditableElementProps>) = child(EditableText::class, handler)
+fun RBuilder.editableTextArea(handler: RHandler<EditableElementProps>) = child(EditableTextArea::class, handler)

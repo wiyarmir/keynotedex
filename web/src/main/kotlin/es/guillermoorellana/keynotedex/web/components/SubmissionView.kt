@@ -28,7 +28,7 @@ class SubmissionView : RComponent<RouteResultProps<SubmissionRouteProps>, Submis
                             }
                         }
                     }
-                    editableText {
+                    editableTextArea {
                         attrs {
                             value = abstract
                             propName = "abstract"
