@@ -10,12 +10,23 @@ import react.*
 import react.dom.*
 
 class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
-
-    override fun UserState.init() {
+    init {
+        console.log("constructor")
     }
 
+    override fun UserState.init() {
+        userProfile = null
+    }
+
+
     override fun componentDidMount() {
-        fetchUserProfile(props.match.params.userId)
+        fetchUserProfileFromProps(props)
+    }
+
+    override fun componentWillReceiveProps(nextProps: RouteResultProps<UserProps>) {
+        if (nextProps.match.params != props.match.params) {
+            fetchUserProfileFromProps(nextProps)
+        }
     }
 
     override fun RBuilder.render() {
@@ -40,7 +51,8 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
         }
     }
 
-    private fun fetchUserProfile(userId: String) {
+    private fun fetchUserProfileFromProps(props: RouteResultProps<UserProps>) {
+        val userId = props.match.params.userId
         promise {
             val user = userProfile(userId)
             setState {
