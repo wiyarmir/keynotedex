@@ -27,7 +27,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
         }
     }
 
-    override fun user(userId: String, hash: String?) = db.transaction {
+    override fun retrieveUser(userId: String, hash: String?) = db.transaction {
         from(UsersTable)
             .where { UsersTable.id eq userId }
             .execute()
@@ -41,7 +41,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .singleOrNull()
     }
 
-    override fun userByEmail(email: String) = db.transaction {
+    override fun retrieveUserByEmail(email: String) = db.transaction {
         from(UsersTable)
             .where { UsersTable.email eq email }
             .execute()
@@ -57,6 +57,15 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
                 it[email] = user.email
                 it[passwordHash] = user.passwordHash
             }
+            .execute()
+    }
+
+    override fun updateUser(user: User) = db.transaction {
+        update(UsersTable)
+            .set {
+                it[displayName] = user.displayName
+            }
+            .where { UsersTable.id eq user.userId }
             .execute()
     }
 

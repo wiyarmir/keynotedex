@@ -24,7 +24,7 @@ class SubmissionView : RComponent<RouteResultProps<SubmissionRouteProps>, Submis
                             attrs {
                                 value = title
                                 propName = "title"
-                                change = this@SubmissionView::onChangeEvent
+                                change = { chg: ChangeEvent -> onChangeEvent(chg) }
                             }
                         }
                     }
@@ -32,7 +32,7 @@ class SubmissionView : RComponent<RouteResultProps<SubmissionRouteProps>, Submis
                         attrs {
                             value = abstract
                             propName = "abstract"
-                            change = this@SubmissionView::onChangeEvent
+                            change = { chg: ChangeEvent -> onChangeEvent(chg) }
                         }
                     }
                     type.let { if (it.isNotEmpty()) p { +"Type $it" } }

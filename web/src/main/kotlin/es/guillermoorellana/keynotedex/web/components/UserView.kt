@@ -15,7 +15,7 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
     }
 
     override fun componentDidMount() {
-        fetchUser(props.match.params.userId)
+        fetchUserProfile(props.match.params.userId)
     }
 
     override fun RBuilder.render() {
@@ -27,7 +27,12 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
             div("col-12 col-md-9 col-xl-8") {
                 loading(state.userProfile) {
                     when {
-                        it.editable -> editableProfile { attrs { userProfile = it } }
+                        it.editable -> editableProfile {
+                            attrs {
+                                userProfile = it
+                                onUserProfileUpdated = { postUserProfile(it) }
+                            }
+                        }
                         else -> publicProfile { attrs { userProfile = it } }
                     }
                 }
@@ -35,7 +40,7 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
         }
     }
 
-    private fun fetchUser(userId: String) {
+    private fun fetchUserProfile(userId: String) {
         promise {
             val user = userProfile(userId)
             setState {
@@ -43,9 +48,17 @@ class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
             }
         }.catch {
             console.error(it)
+        }
+    }
+
+    private fun postUserProfile(userProfile: UserProfile) {
+        promise {
+            val updatedUserProfile = updateUserProfile(userProfile)
             setState {
-                // not found?
+                this.userProfile = updatedUserProfile
             }
+        }.catch {
+            console.error(it)
         }
     }
 }

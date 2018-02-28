@@ -8,6 +8,13 @@ import react.dom.*
 
 abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProps, EditableElementState>() {
 
+    override fun EditableElementState.init() {
+        editing = false
+        loading = false
+        invalid = false
+        disabled = false
+    }
+
     protected open var refs: T? = null
 
     override fun componentWillReceiveProps(nextProps: EditableElementProps) {
@@ -117,7 +124,7 @@ abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProp
         this.cancelEditing()
     }
 
-    protected fun isDisabled() = props.shouldBlockWhileLoading == true && this.state.loading
+    protected fun isDisabled() = props.shouldBlockWhileLoading != false && this.state.loading
 
     companion object {
         protected const val KEY_ENTER = 13
@@ -128,7 +135,7 @@ abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProp
 
 external interface EditableElementProps : RProps {
     var value: String
-    var change: (chg: ChangeEvent) -> Unit
+    var change: (event: ChangeEvent) -> Unit
     var propName: String
     var validate: ((value: String) -> Boolean)?
     var shouldBlockWhileLoading: Boolean?

@@ -12,7 +12,6 @@ class EditableTextArea : EditableElement<HTMLTextAreaElement>() {
     override fun RBuilder.renderNormalComponent() {
         val value = state.newValue ?: props.value
 
-
         span(makeClassString()) {
             attrs {
                 tabIndex = "0"

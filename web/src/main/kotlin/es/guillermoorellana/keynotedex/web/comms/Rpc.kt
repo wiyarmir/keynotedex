@@ -31,9 +31,17 @@ suspend fun user(userId: String) =
     getAndParseResult("/user/$userId", null, { parseUserResponse(it) })
         .toModel()
 
+
 suspend fun userProfile(userId: String) =
     getAndParseResult("/user/$userId", null, { parseUserProfileResponse(it) })
         .toModel()
+
+suspend fun updateUserProfile(userProfile: UserProfile): UserProfile {
+    val userId = userProfile.user.userId
+    val body = KJSON.stringify(userProfile.toUpdateRequest())
+    return putAndParseResult("/user/$userId", body, { parseUserProfileResponse(it) })
+        .toModel()
+}
 
 suspend fun checkSession() =
     getAndParseResult("/login", null, { parseUserResponse(it) })
@@ -46,8 +54,8 @@ suspend fun login(userId: String, password: String) =
             append("userId", userId)
             append("password", password)
         },
-        { parseUserProfileResponse(it) }
-    ).user.toModel()
+        { parseUserResponse(it) }
+    ).toModel()
 
 suspend fun logoutUser() {
     window.fetch(
@@ -110,15 +118,22 @@ class LoginOrRegisterFailedException(message: ErrorResponse) : Throwable(message
 suspend fun <T> postAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): T =
     requestAndParseResult("POST", url, body, parse)
 
+suspend fun <T> putAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): T =
+    requestAndParseResult("PUT", url, body, parse)
+
 suspend fun <T> getAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): T =
     requestAndParseResult("GET", url, body, parse)
 
 suspend fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: suspend (Response) -> T): T {
+    val headers =
+        mutableListOf("Accept" to "application/json")
+            .apply { if (body != null && body !is URLSearchParams) add("Content-Type" to "application/json") }
+            .toTypedArray()
     val response = window.fetch(url, object : RequestInit {
         override var method: String? = method
         override var body: dynamic = body
         override var credentials: RequestCredentials? = "same-origin".asDynamic()
-        override var headers: dynamic = json("Accept" to "application/json")
+        override var headers: dynamic = json(*headers)
     }).await()
     return parse(response)
 }

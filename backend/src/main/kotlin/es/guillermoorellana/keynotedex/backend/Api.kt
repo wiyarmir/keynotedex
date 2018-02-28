@@ -4,10 +4,12 @@ import es.guillermoorellana.keynotedex.backend.dao.*
 import es.guillermoorellana.keynotedex.backend.dao.conferences.*
 import es.guillermoorellana.keynotedex.backend.dao.submissions.*
 import es.guillermoorellana.keynotedex.backend.dao.users.*
+import es.guillermoorellana.keynotedex.requests.*
 import es.guillermoorellana.keynotedex.responses.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
+import io.ktor.pipeline.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -21,6 +23,8 @@ fun Route.api(dao: KeynotedexStorage, hashFunction: (String) -> String) {
 
     apiPostLogin(dao)
     apiPostRegister(dao, hashFunction)
+
+    apiPutUser(dao, dao)
 }
 
 private fun Route.apiGetConference(conferenceStorage: ConferenceStorage) {
@@ -38,7 +42,7 @@ private fun Route.apiGetConference(conferenceStorage: ConferenceStorage) {
 private fun Route.apiGetLogin(userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
         get<LoginEndpoint> {
-            val user = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
+            val user = getCurrentLoggedUser(userStorage)
             when (user) {
                 null -> call.respond(
                     HttpStatusCode.Forbidden,
@@ -62,7 +66,7 @@ private fun Route.apiGetSubmission(submissionStorage: SubmissionStorage, userSto
                 call.respond(SubmissionResponse(submission.toDto()))
                 return@get
             }
-            val user = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
+            val user = getCurrentLoggedUser(userStorage)
             if (user?.userId == submission.submitterId) {
                 call.respond(SubmissionResponse(submission.toDto()))
             } else {
@@ -75,23 +79,32 @@ private fun Route.apiGetSubmission(submissionStorage: SubmissionStorage, userSto
 private fun Route.apiGetUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
     accept(ContentType.Application.Json) {
         get<UserEndpoint> {
-            val user = userStorage.user(it.userId)
+            val userId = it.userId
+            val user = userStorage.retrieveUser(userId)
             if (user == null) {
-                call.respond(HttpStatusCode.NotFound, ErrorResponse("User ${it.userId} doesn't exist"))
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("User $userId doesn't exist"))
                 return@get
             }
+            val currentUser = getCurrentLoggedUser(userStorage)
+            doUserProfileResponse(user, submissionStorage, currentUser)
+        }
+    }
+}
 
-            val currentUser = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
-            val submissions = submissionStorage.submissionsByUserId(user.userId)
-                .filter { it.isPublic || currentUser?.userId == it.submitterId }
-
-            call.respond(
-                UserProfileResponse(
-                    user = user.toDto(),
-                    submissions = submissions.map(Submission::toDto),
-                    editable = currentUser?.userId == user.userId
-                )
-            )
+private fun Route.apiPutUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
+    accept(ContentType.Application.Json) {
+        contentType(ContentType.Application.Json) {
+            put<UserEndpoint> {
+                val request: UserProfileUpdateRequest = call.receive()
+                val sessionUser = getCurrentLoggedUser(userStorage)
+                if (request.user.userId != sessionUser?.userId) {
+                    call.respond(HttpStatusCode.Forbidden, ErrorResponse("Nope"))
+                }
+                userStorage.updateUser(request.user.toDao())
+                val updatedUser = userStorage.retrieveUser(request.user.userId)!!
+                doUserProfileResponse(updatedUser, submissionStorage, sessionUser)
+                call.respond(HttpStatusCode.Accepted, UserProfileResponse(updatedUser.toDto()))
+            }
         }
     }
 }
@@ -108,7 +121,7 @@ private fun Route.apiPostLogin(userStorage: UserStorage) {
                 password.length < 6 -> null
                 !userNameValid(userId) -> null
                 else -> {
-                    userStorage.user(userId, hash(password))
+                    userStorage.retrieveUser(userId, hash(password))
                 }
             }
 
@@ -131,10 +144,10 @@ private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (Strin
     fun passwordNotValid(password: String) = password.length < 6
     fun userIdShort(userId: String) = userId.length < 4
     fun userNameNotValid(userName: String) = !userNameValid(userName)
-    fun userInDatabase(dao: UserStorage, userId: String) = dao.user(userId) != null
+    fun userInDatabase(dao: UserStorage, userId: String) = dao.retrieveUser(userId) != null
 
     post<RegisterEndpoint> {
-        val user = call.sessions.get<Session>()?.let { userStorage.user(it.userId) }
+        val user = getCurrentLoggedUser(userStorage)
         if (user != null) {
             val dtoUser = user.toDto()
             call.redirect(UserProfileResponse(dtoUser))
@@ -193,4 +206,25 @@ private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (Strin
         call.sessions.set(Session(newUser.userId))
         call.respond(UserProfileResponse(newUser.toDto()))
     }
+}
+
+private fun PipelineContext<Unit, ApplicationCall>.getCurrentLoggedUser(userStorage: UserStorage) =
+    call.sessions.get<Session>()?.let { userStorage.retrieveUser(it.userId) }
+
+private suspend fun PipelineContext<Unit, ApplicationCall>.doUserProfileResponse(
+    user: User,
+    submissionStorage: SubmissionStorage,
+    currentUser: User?
+) {
+    val submissions =
+        submissionStorage.submissionsByUserId(user.userId)
+            .filter { it.isPublic || currentUser?.userId == it.submitterId }
+
+    call.respond(
+        UserProfileResponse(
+            user = user.toDto(),
+            submissions = submissions.map(Submission::toDto),
+            editable = currentUser?.userId == user.userId
+        )
+    )
 }

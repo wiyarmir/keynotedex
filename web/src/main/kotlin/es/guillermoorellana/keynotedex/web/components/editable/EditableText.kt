@@ -9,13 +9,6 @@ import react.dom.*
 
 open class EditableText : EditableElement<HTMLInputElement>() {
 
-    override fun EditableElementState.init(props: EditableElementProps) {
-        editing = false
-        loading = false
-        disabled = false
-        invalid = false
-    }
-
     override fun RBuilder.renderNormalComponent() {
         span(makeClassString()) {
             attrs {
