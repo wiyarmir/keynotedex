@@ -62,7 +62,7 @@ suspend fun logoutUser() {
         "/logout",
         object : RequestInit {
             override var method: String? = "POST"
-            override var credentials: RequestCredentials? = "same-origin".asDynamic()
+            override var credentials: RequestCredentials? = RequestCredentials.SAME_ORIGIN
         })
         .await()
 }
@@ -89,8 +89,7 @@ private suspend fun parseUserProfileResponse(response: Response): UserProfileRes
     val responseText = response.text().await()
     when {
         response.ok -> {
-            val profileResponse: UserProfileResponse = KJSON.parse(responseText)
-            return profileResponse
+            return KJSON.parse(responseText)
         }
         else -> {
             val errorResponse: ErrorResponse = KJSON.parse(responseText)
@@ -127,13 +126,15 @@ suspend fun <T> getAndParseResult(url: String, body: dynamic, parse: suspend (Re
 suspend fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: suspend (Response) -> T): T {
     val headers =
         mutableListOf("Accept" to "application/json")
+            // TODO rewrite, so ugly
             .apply { if (body != null && body !is URLSearchParams) add("Content-Type" to "application/json") }
             .toTypedArray()
-    val response = window.fetch(url, object : RequestInit {
+    val request: RequestInit = object : RequestInit {
         override var method: String? = method
         override var body: dynamic = body
-        override var credentials: RequestCredentials? = "same-origin".asDynamic()
+        override var credentials: RequestCredentials? = RequestCredentials.SAME_ORIGIN
         override var headers: dynamic = json(*headers)
-    }).await()
+    }
+    val response = window.fetch(url, request).await()
     return parse(response)
 }
