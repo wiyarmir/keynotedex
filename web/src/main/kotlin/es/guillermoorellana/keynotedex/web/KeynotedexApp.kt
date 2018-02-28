@@ -1,8 +1,10 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web
 
 import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.components.*
 import es.guillermoorellana.keynotedex.web.external.*
 import es.guillermoorellana.keynotedex.web.model.*
+import es.guillermoorellana.keynotedex.web.screens.*
 import kotlinx.coroutines.experimental.*
 import react.*
 import react.dom.*
@@ -23,8 +25,8 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                     }
                 }
                 switch {
-                    route("/", HomeView::class, exact = true)
-                    route("/user/:userId", UserView::class, exact = true)
+                    route("/", HomeScreen::class, exact = true)
+                    route("/user/:userId", UserScreen::class, exact = true)
                     route("/login", exact = true) {
                         login {
                             attrs {
@@ -34,10 +36,10 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                             }
                         }
                     }
-                    route("/conferences", ComingSoonView::class)
-                    route("/speakers", ComingSoonView::class)
-                    route("/submission/:submissionId", SubmissionView::class, exact = true)
-                    route(NotFoundView::class)
+                    route("/conferences", ComingSoonScreen::class)
+                    route("/speakers", ComingSoonScreen::class)
+                    route("/submission/:submissionId", SubmissionScreen::class, exact = true)
+                    route(NotFoundScreen::class)
                 }
                 footer("container") {
                     p { +"© Keynotedex ${js("new Date().getFullYear()")}" }
@@ -71,4 +73,4 @@ class Application : RComponent<RProps, ApplicationPageState>() {
 
 class ApplicationPageState(var currentUser: User?) : RState
 
-fun RBuilder.application(handler: RHandler<RProps>) = child(Application::class, handler)
+fun RBuilder.keynotedexApp(handler: RHandler<RProps>) = child(Application::class, handler)

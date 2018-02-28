@@ -1,8 +1,7 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.web.components.application
 import kotlinext.js.*
-import react.dom.render
+import react.dom.*
 import kotlin.browser.*
 
 fun main(args: Array<String>) {
@@ -10,7 +9,7 @@ fun main(args: Array<String>) {
 
     window.onload = {
         render(document.getElementById("content")) {
-            application {}
+            keynotedexApp {}
         }
     }
 }

@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.web.*
 import es.guillermoorellana.keynotedex.web.comms.*
@@ -9,7 +9,7 @@ import kotlinx.coroutines.experimental.*
 import react.*
 import react.dom.*
 
-class SubmissionView : RComponent<RouteResultProps<SubmissionRouteProps>, SubmissionViewState>() {
+class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, SubmissionViewState>() {
 
     override fun componentDidMount() {
         fetchSubmission()

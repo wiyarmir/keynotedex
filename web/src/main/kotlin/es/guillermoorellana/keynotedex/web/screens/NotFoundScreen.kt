@@ -1,9 +1,9 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web.screens
 
 import react.*
 import react.dom.*
 
-class NotFoundView : RComponent<RProps, RState>() {
+class NotFoundScreen : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         style {
             //language=CSS

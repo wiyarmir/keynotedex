@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.components.editable
 
-import es.guillermoorellana.keynotedex.web.components.*
+import es.guillermoorellana.keynotedex.web.screens.*
 import org.w3c.dom.*
 import org.w3c.dom.events.*
 import react.*

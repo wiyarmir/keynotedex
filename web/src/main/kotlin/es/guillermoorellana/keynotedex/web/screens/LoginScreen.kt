@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.web.comms.*
 import es.guillermoorellana.keynotedex.web.external.*

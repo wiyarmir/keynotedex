@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.web.*
 import es.guillermoorellana.keynotedex.web.comms.*
@@ -9,10 +9,7 @@ import kotlinx.coroutines.experimental.*
 import react.*
 import react.dom.*
 
-class UserView : RComponent<RouteResultProps<UserProps>, UserState>() {
-    init {
-        console.log("constructor")
-    }
+class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
 
     override fun UserState.init() {
         userProfile = null

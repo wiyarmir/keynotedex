@@ -1,10 +1,10 @@
-package es.guillermoorellana.keynotedex.web.components
+package es.guillermoorellana.keynotedex.web.screens
 
-import kotlinx.html.main
+import kotlinx.html.*
 import react.*
 import react.dom.*
 
-class HomeView : RComponent<HomeView.Props, HomeView.State>() {
+class HomeScreen : RComponent<HomeScreen.Props, HomeScreen.State>() {
 
     private val jumboHeading = "Jumbo heading"
     private val lead =
@@ -49,7 +49,7 @@ class HomeView : RComponent<HomeView.Props, HomeView.State>() {
         }
     }
 
-    class Props() : RProps
+    class Props : RProps
 
-    class State() : RState
+    class State : RState
 }
