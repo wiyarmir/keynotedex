@@ -41,3 +41,10 @@ ext {
     ktor_version = "0.9.1"
     squash_version = "0.2.4"
 }
+
+// Heroku/herokuish
+
+task stage() {
+    group "distribution"
+    dependsOn(':backend:release')
+}

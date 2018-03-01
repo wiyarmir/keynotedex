@@ -46,3 +46,15 @@ kotlin {
         coroutines "enable"
     }
 }
+
+task release() {
+    dependsOn('build')
+}
+
+task includeWebBundle(type: Copy) {
+    dependsOn(':web:build')
+    from('../web/build/bundle')
+    into('build/resources/main')
+}
+
+processResources.dependsOn includeWebBundle
