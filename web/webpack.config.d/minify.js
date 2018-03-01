@@ -1,3 +1,3 @@
-// config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-//     minimize: true
-// }));
+config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    minimize: true
+}));

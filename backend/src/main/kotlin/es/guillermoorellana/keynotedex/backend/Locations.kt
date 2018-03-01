@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.backend
 
-import io.ktor.locations.*
+import io.ktor.locations.Location
 
 @Location("/{trail...}")
 class IndexPage(val trail: List<String>)

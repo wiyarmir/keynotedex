@@ -1,13 +1,18 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.*
-import es.guillermoorellana.keynotedex.web.comms.*
-import es.guillermoorellana.keynotedex.web.components.editable.*
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.coroutines.experimental.*
+import es.guillermoorellana.keynotedex.web.comms.getSubmission
+import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
+import es.guillermoorellana.keynotedex.web.components.editable.editableText
+import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
+import es.guillermoorellana.keynotedex.web.components.editable.get
+import es.guillermoorellana.keynotedex.web.external.RouteResultProps
+import es.guillermoorellana.keynotedex.web.loading
+import es.guillermoorellana.keynotedex.web.model.Submission
+import kotlinx.coroutines.experimental.promise
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.h3
+import react.dom.p
 
 class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, SubmissionViewState>() {
 

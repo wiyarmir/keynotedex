@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web.model
 
-import es.guillermoorellana.keynotedex.requests.*
-import es.guillermoorellana.keynotedex.responses.*
+import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 
 data class UserProfile(
     val user: User,

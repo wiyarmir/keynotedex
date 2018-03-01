@@ -1,5 +1,5 @@
 group = 'es.guillermoorellana.keynotedex.web'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 apply plugin: 'kotlin2js'
 apply plugin: 'kotlin-dce-js'

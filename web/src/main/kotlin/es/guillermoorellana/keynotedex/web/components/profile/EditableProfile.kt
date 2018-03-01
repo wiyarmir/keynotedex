@@ -1,10 +1,15 @@
 package es.guillermoorellana.keynotedex.web.components.profile
 
-import es.guillermoorellana.keynotedex.web.components.editable.*
-import es.guillermoorellana.keynotedex.web.components.submissions.*
-import es.guillermoorellana.keynotedex.web.model.*
+import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
+import es.guillermoorellana.keynotedex.web.components.editable.editableText
+import es.guillermoorellana.keynotedex.web.components.editable.get
+import es.guillermoorellana.keynotedex.web.components.submissions.submissions
+import es.guillermoorellana.keynotedex.web.model.User
+import es.guillermoorellana.keynotedex.web.model.UserProfile
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.h1
+import react.dom.style
 
 //language=CSS
 private const val profileStyle = """

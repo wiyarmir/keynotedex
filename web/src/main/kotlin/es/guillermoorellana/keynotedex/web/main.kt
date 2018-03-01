@@ -1,8 +1,10 @@
 package es.guillermoorellana.keynotedex.web
 
-import kotlinext.js.*
-import react.dom.*
-import kotlin.browser.*
+import kotlinext.js.invoke
+import kotlinext.js.require
+import react.dom.render
+import kotlin.browser.document
+import kotlin.browser.window
 
 fun main(args: Array<String>) {
     require("narrow-jumbotron.css")

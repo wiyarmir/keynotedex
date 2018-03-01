@@ -1,8 +1,11 @@
 package es.guillermoorellana.keynotedex.web.components.submissions
 
-import es.guillermoorellana.keynotedex.web.model.*
+import es.guillermoorellana.keynotedex.web.model.Submission
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.h2
+import react.dom.hr
+import react.dom.p
 
 class Submissions : RComponent<SubmissionsProps, RState>() {
     override fun RBuilder.render() {

@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web
 
-import react.*
-import react.dom.*
+import react.RBuilder
+import react.dom.div
 
 inline fun <T> RBuilder.loading(value: T?, action: (T) -> Unit) {
     if (value == null) {

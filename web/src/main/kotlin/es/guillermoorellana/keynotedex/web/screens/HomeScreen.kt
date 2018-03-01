@@ -1,7 +1,10 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import kotlinx.html.*
-import react.*
+import kotlinx.html.main
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.*
 
 class HomeScreen : RComponent<HomeScreen.Props, HomeScreen.State>() {

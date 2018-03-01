@@ -1,11 +1,14 @@
 package es.guillermoorellana.keynotedex.web.components.editable
 
-import kotlinx.html.*
 import kotlinx.html.js.*
-import org.w3c.dom.*
-import org.w3c.dom.events.*
-import react.*
-import react.dom.*
+import kotlinx.html.tabIndex
+import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.events.Event
+import react.RBuilder
+import react.RHandler
+import react.dom.defaultValue
+import react.dom.input
+import react.dom.span
 
 open class EditableText : EditableElement<HTMLInputElement>() {
 

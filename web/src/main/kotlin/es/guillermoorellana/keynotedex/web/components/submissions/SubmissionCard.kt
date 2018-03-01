@@ -1,8 +1,10 @@
 package es.guillermoorellana.keynotedex.web.components.submissions
 
-import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.external.routeLink
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.h3
+import react.dom.p
 
 class SubmissionCard : RComponent<SubmissionProps, RState>() {
     override fun RBuilder.render() {

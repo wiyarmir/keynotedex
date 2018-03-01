@@ -1,9 +1,10 @@
 package es.guillermoorellana.keynotedex.web.components.profile
 
-import es.guillermoorellana.keynotedex.web.components.submissions.*
-import es.guillermoorellana.keynotedex.web.model.*
+import es.guillermoorellana.keynotedex.web.components.submissions.submissions
+import es.guillermoorellana.keynotedex.web.model.UserProfile
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.h1
 
 class PublicProfile : RComponent<ProfileProps, RState>() {
     override fun RBuilder.render() {

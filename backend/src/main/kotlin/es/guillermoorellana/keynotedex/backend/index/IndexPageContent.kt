@@ -1,6 +1,8 @@
 package es.guillermoorellana.keynotedex.backend.index
 
-import io.ktor.html.*
+import io.ktor.html.Placeholder
+import io.ktor.html.Template
+import io.ktor.html.insert
 import kotlinx.html.*
 
 class IndexPageContent : Template<HTML> {

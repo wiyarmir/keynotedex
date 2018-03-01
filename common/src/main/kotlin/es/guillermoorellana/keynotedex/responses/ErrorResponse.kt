@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.responses
 
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class ErrorResponse(val message: String)

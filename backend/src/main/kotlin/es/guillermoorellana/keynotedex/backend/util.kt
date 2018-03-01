@@ -1,22 +1,27 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.dao.*
-import es.guillermoorellana.keynotedex.backend.dao.conferences.*
-import es.guillermoorellana.keynotedex.backend.dao.submissions.*
-import es.guillermoorellana.keynotedex.backend.dao.users.*
-import io.ktor.application.*
-import io.ktor.http.*
-import io.ktor.locations.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.util.*
-import org.jetbrains.squash.connection.*
-import org.jetbrains.squash.statements.*
-import java.net.*
-import java.sql.*
-import java.util.concurrent.*
-import javax.crypto.*
-import javax.crypto.spec.*
+import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
+import es.guillermoorellana.keynotedex.backend.dao.conferences.ConferencesTable
+import es.guillermoorellana.keynotedex.backend.dao.submissions.SubmissionsTable
+import es.guillermoorellana.keynotedex.backend.dao.users.User
+import es.guillermoorellana.keynotedex.backend.dao.users.UsersTable
+import io.ktor.application.ApplicationCall
+import io.ktor.application.feature
+import io.ktor.http.HttpHeaders
+import io.ktor.locations.Locations
+import io.ktor.request.header
+import io.ktor.request.host
+import io.ktor.request.port
+import io.ktor.response.respondRedirect
+import io.ktor.util.hex
+import org.jetbrains.squash.connection.transaction
+import org.jetbrains.squash.statements.insertInto
+import org.jetbrains.squash.statements.values
+import java.net.URI
+import java.sql.SQLException
+import java.util.concurrent.TimeUnit
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 
 val hashKey = hex("6819b57a326945c1968f45236589")
 val hmacKey = SecretKeySpec(hashKey, "HmacSHA1")

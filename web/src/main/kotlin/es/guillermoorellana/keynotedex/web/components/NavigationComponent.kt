@@ -1,8 +1,8 @@
 package es.guillermoorellana.keynotedex.web.components
 
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.html.*
+import es.guillermoorellana.keynotedex.web.external.routeLink
+import es.guillermoorellana.keynotedex.web.model.User
+import kotlinx.html.ButtonType
 import react.*
 import react.dom.*
 

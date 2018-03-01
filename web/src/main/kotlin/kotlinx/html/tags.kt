@@ -1,8 +1,10 @@
 package kotlinx.html
 
 import kotlinx.html.attributes.StringAttribute
-import react.*
-import react.dom.*
+import react.RBuilder
+import react.ReactElement
+import react.dom.RDOMBuilder
+import react.dom.tag
 
 class MAIN(
     initialAttributes: Map<String, String>,

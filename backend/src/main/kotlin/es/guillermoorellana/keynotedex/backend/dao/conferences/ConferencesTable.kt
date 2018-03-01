@@ -1,6 +1,8 @@
 package es.guillermoorellana.keynotedex.backend.dao.conferences
 
-import org.jetbrains.squash.definition.*
+import org.jetbrains.squash.definition.TableDefinition
+import org.jetbrains.squash.definition.primaryKey
+import org.jetbrains.squash.definition.varchar
 
 object ConferencesTable : TableDefinition() {
     val id = varchar("id", 20).primaryKey()

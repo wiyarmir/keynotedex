@@ -1,17 +1,22 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.dao.*
-import es.guillermoorellana.keynotedex.backend.index.*
-import io.ktor.application.*
+import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
+import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
+import es.guillermoorellana.keynotedex.backend.index.index
+import io.ktor.application.Application
+import io.ktor.application.call
+import io.ktor.application.install
 import io.ktor.features.*
-import io.ktor.gson.*
-import io.ktor.http.*
-import io.ktor.locations.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.sessions.*
-import io.ktor.util.*
-import java.io.*
+import io.ktor.gson.gson
+import io.ktor.http.HttpStatusCode
+import io.ktor.locations.Locations
+import io.ktor.response.respond
+import io.ktor.routing.Routing
+import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
+import io.ktor.sessions.Sessions
+import io.ktor.sessions.cookie
+import io.ktor.util.error
+import java.io.File
 
 data class Session(val userId: String)
 

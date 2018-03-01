@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.dao.users
 
-import es.guillermoorellana.keynotedex.backend.dao.submissions.*
+import es.guillermoorellana.keynotedex.backend.dao.submissions.Submission
 import es.guillermoorellana.keynotedex.dto.User as DtoUser
 
 data class User(

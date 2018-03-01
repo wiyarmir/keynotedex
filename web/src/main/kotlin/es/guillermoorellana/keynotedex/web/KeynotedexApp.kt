@@ -1,13 +1,17 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.web.comms.*
-import es.guillermoorellana.keynotedex.web.components.*
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
+import es.guillermoorellana.keynotedex.web.comms.checkSession
+import es.guillermoorellana.keynotedex.web.components.navigation
+import es.guillermoorellana.keynotedex.web.external.browserRouter
+import es.guillermoorellana.keynotedex.web.external.route
+import es.guillermoorellana.keynotedex.web.external.switch
+import es.guillermoorellana.keynotedex.web.model.User
 import es.guillermoorellana.keynotedex.web.screens.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.promise
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.footer
+import react.dom.p
 
 class Application : RComponent<RProps, ApplicationPageState>() {
 

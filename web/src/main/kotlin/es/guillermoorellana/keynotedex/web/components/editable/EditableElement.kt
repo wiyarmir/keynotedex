@@ -1,10 +1,10 @@
 package es.guillermoorellana.keynotedex.web.components.editable
 
-import es.guillermoorellana.keynotedex.web.screens.*
-import org.w3c.dom.*
-import org.w3c.dom.events.*
+import es.guillermoorellana.keynotedex.web.screens.inputValue
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.events.Event
 import react.*
-import react.dom.*
+import react.dom.findDOMNode
 
 abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProps, EditableElementState>() {
 
