@@ -13,7 +13,7 @@ fun RBuilder.browserRouter(handler: RHandler<RProps>) = child(BrowserRouterCompo
 fun RBuilder.switch(handler: RHandler<RProps>) = child(SwitchComponent::class, handler)
 
 @ReactDsl
-fun RBuilder.route(component: KClass<out React.Component<*, *>>) =
+fun RBuilder.route(component: KClass<out Component<*, *>>) =
     child(RouteComponent::class) {
         attrs {
             this.component = component.js.unsafeCast<RClass<RProps>>()
@@ -21,7 +21,7 @@ fun RBuilder.route(component: KClass<out React.Component<*, *>>) =
     }
 
 @ReactDsl
-fun RBuilder.route(path: String, component: KClass<out React.Component<*, *>>, exact: Boolean = false) =
+fun RBuilder.route(path: String, component: KClass<out Component<*, *>>, exact: Boolean = false) =
     child(RouteComponent::class) {
         attrs {
             this.path = path

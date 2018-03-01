@@ -41,10 +41,6 @@ kotlinFrontend {
         dependency "react-markdown"
         dependency "jquery"
 
-        dependency "@jetbrains/kotlin-extensions"
-        dependency "@jetbrains/kotlin-react"
-        dependency "@jetbrains/kotlin-react-dom"
-
         devDependency "babel-loader"
         devDependency "babel-core"
         devDependency "css-loader"
