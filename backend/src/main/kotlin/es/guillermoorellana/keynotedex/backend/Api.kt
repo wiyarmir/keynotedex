@@ -29,14 +29,14 @@ import io.ktor.sessions.get
 import io.ktor.sessions.sessions
 import io.ktor.sessions.set
 
-fun Route.api(dao: KeynotedexStorage, hashFunction: (String) -> String) {
+fun Route.api(dao: KeynotedexStorage) {
     apiGetConference(dao)
     apiGetLogin(dao)
     apiGetSubmission(dao, dao)
     apiGetUser(dao, dao)
 
     apiPostLogin(dao)
-    apiPostRegister(dao, hashFunction)
+    apiPostRegister(dao)
 
     apiPutUser(dao, dao)
 }
@@ -135,7 +135,7 @@ private fun Route.apiPostLogin(userStorage: UserStorage) {
                 password.length < 6 -> null
                 !userNameValid(userId) -> null
                 else -> {
-                    userStorage.retrieveUser(userId, hash(password))
+                    userStorage.retrieveUser(userId, application.hashPassword(password))
                 }
             }
 
@@ -153,7 +153,7 @@ private fun Route.apiPostLogin(userStorage: UserStorage) {
     }
 }
 
-private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (String) -> String) {
+private fun Route.apiPostRegister(userStorage: UserStorage) {
 
     fun passwordNotValid(password: String) = password.length < 6
     fun userIdShort(userId: String) = userId.length < 4
@@ -164,7 +164,7 @@ private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (Strin
         val user = getCurrentLoggedUser(userStorage)
         if (user != null) {
             val dtoUser = user.toDto()
-            call.redirect(UserProfileResponse(dtoUser))
+            call.redirect(UserEndpoint(dtoUser.userId))
             return@post
         }
 
@@ -195,7 +195,7 @@ private fun Route.apiPostRegister(userStorage: UserStorage, hashFunction: (Strin
             }
         }
 
-        val hash = hashFunction(password)
+        val hash = application.hashPassword(password)
         val newUser = User(userId = userId, passwordHash = hash)
 
         try {

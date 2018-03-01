@@ -20,16 +20,14 @@ import java.io.File
 
 data class Session(val userId: String)
 
-fun Application.main() {
+fun Application.keynotedex() {
     val storage: KeynotedexStorage = KeynotedexDatabase(File("build/db"))
         .apply {
             environment.log.warn("Populating db with mock data")
-            mockData()
+            mockData(this@keynotedex)
         }
 
-    install(DefaultHeaders) {
-        //        header(HttpHeaders.Server, "")
-    }
+    install(DefaultHeaders)
     install(CallLogging)
     install(ConditionalHeaders)
     install(PartialContent)
@@ -44,7 +42,7 @@ fun Application.main() {
 
     install(Sessions) {
         cookie<Session>("SESSION") {
-            transform(SessionTransportTransformerMessageAuthentication(hashKey))
+            transform(SessionTransportTransformerMessageAuthentication(sessionKey()))
         }
     }
 
@@ -57,6 +55,6 @@ fun Application.main() {
 
     install(Routing) {
         index()
-        api(storage, ::hash)
+        api(storage)
     }
 }
