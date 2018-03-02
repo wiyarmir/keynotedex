@@ -2,6 +2,8 @@ package es.guillermoorellana.keynotedex.backend.index
 
 import es.guillermoorellana.keynotedex.backend.IndexPage
 import io.ktor.application.call
+import io.ktor.content.resource
+import io.ktor.content.static
 import io.ktor.html.respondHtmlTemplate
 import io.ktor.http.ContentType
 import io.ktor.locations.get
@@ -15,6 +17,9 @@ fun Route.index() {
                 caption { +"Keynotedex" }
             }
         }
+    }
+    static("frontend") {
+        resource("web.bundle.js")
     }
 }
 

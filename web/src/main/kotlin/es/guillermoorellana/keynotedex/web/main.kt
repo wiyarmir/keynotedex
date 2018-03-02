@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.web
 
-import kotlinext.js.invoke
 import kotlinext.js.require
 import react.dom.render
 import kotlin.browser.document
