@@ -16,12 +16,11 @@ import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
 import io.ktor.sessions.Sessions
 import io.ktor.sessions.cookie
 import io.ktor.util.error
-import java.io.File
 
 data class Session(val userId: String)
 
 fun Application.keynotedex() {
-    val storage: KeynotedexStorage = KeynotedexDatabase(File("build/db"))
+    val storage: KeynotedexStorage = KeynotedexDatabase()
         .apply {
             environment.log.warn("Populating db with mock data")
             mockData(this@keynotedex)

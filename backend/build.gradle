@@ -48,8 +48,11 @@ kotlin {
 }
 
 task release() {
-    dependsOn('build')
+    dependsOn('clean')
+    dependsOn('shadowJar')
 }
+
+shadowJar.mustRunAfter clean
 
 task includeWebBundle(type: Copy) {
     dependsOn(':web:build')
@@ -57,4 +60,4 @@ task includeWebBundle(type: Copy) {
     into('build/resources/main')
 }
 
-processResources.dependsOn includeWebBundle
+shadowJar.dependsOn includeWebBundle
