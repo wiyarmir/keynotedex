@@ -11,15 +11,15 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 
 fun Route.index() {
+    static("frontend") {
+        resource("web.bundle.js")
+    }
     accept(ContentType.Text.Html) {
         get<IndexPage> {
             call.respondHtmlTemplate(IndexPageContent()) {
                 caption { +"Keynotedex" }
             }
         }
-    }
-    static("frontend") {
-        resource("web.bundle.js")
     }
 }
 
