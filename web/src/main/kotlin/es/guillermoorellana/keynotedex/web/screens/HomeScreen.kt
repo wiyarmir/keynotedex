@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import kotlinx.html.main
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -20,8 +19,7 @@ class HomeScreen : RComponent<HomeScreen.Props, HomeScreen.State>() {
     }
 
     override fun RBuilder.render() {
-        main {
-            attrs { role = "main" }
+        div {
             div("jumbotron") {
                 div("container") {
 

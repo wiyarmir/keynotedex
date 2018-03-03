@@ -10,7 +10,6 @@ import kotlinx.html.InputType
 import kotlinx.html.id
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onSubmitFunction
-import kotlinx.html.main
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.HTMLTextAreaElement
 import org.w3c.dom.events.Event
@@ -60,58 +59,58 @@ class LoginView : RComponent<LoginProps, LoginState>() {
     }
 
     override fun RBuilder.render() {
-        main {
-            attrs { role = "main" }
-            style { +css }
-            if (props.isUserLoggedIn()) redirect("/user/${props.getCurrentUser()!!.userId}") {}
-            form(classes = "form-signin") {
-                attrs {
-                    onSubmitFunction = {
-                        it.preventDefault()
-                        doLogin()
-                    }
+        style { +css }
+        if (props.isUserLoggedIn()) {
+            redirect("/user/${props.getCurrentUser()!!.userId}") {}
+            return
+        }
+        form(classes = "form-signin") {
+            attrs {
+                onSubmitFunction = {
+                    it.preventDefault()
+                    doLogin()
                 }
-                h2("form-signin-heading") { +"Please sign in" }
-                label(classes = "sr-only") {
-                    attrs { htmlFor = "inputEmail" }
-                    +"Email address"
-                }
-                input(type = InputType.text, classes = "form-control") {
-                    attrs {
-                        id = "inputEmail"
-                        placeholder = "Email"
-                        required = true
-                        autoFocus = true
-                        value = state.login
-                        disabled = state.disabled
-                        onChangeFunction = { event ->
-                            val value = event.inputValue
-                            setState {
-                                login = value
-                            }
-                        }
-                    }
-                }
-                label("sr-only") {
-                    attrs { htmlFor = "inputPassword" }
-                }
-                input(type = InputType.password, classes = "form-control") {
-                    attrs {
-                        id = "inputPassword"
-                        placeholder = "Password"
-                        required = true
-                        value = state.password
-                        disabled = state.disabled
-                        onChangeFunction = { event ->
-                            val value = event.inputValue
-                            setState {
-                                password = value
-                            }
-                        }
-                    }
-                }
-                button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign in" }
             }
+            h2("form-signin-heading") { +"Please sign in" }
+            label(classes = "sr-only") {
+                attrs { htmlFor = "inputEmail" }
+                +"Email address"
+            }
+            input(type = InputType.text, classes = "form-control") {
+                attrs {
+                    id = "inputEmail"
+                    placeholder = "Email"
+                    required = true
+                    autoFocus = true
+                    value = state.login
+                    disabled = state.disabled
+                    onChangeFunction = { event ->
+                        val value = event.inputValue
+                        setState {
+                            login = value
+                        }
+                    }
+                }
+            }
+            label("sr-only") {
+                attrs { htmlFor = "inputPassword" }
+            }
+            input(type = InputType.password, classes = "form-control") {
+                attrs {
+                    id = "inputPassword"
+                    placeholder = "Password"
+                    required = true
+                    value = state.password
+                    disabled = state.disabled
+                    onChangeFunction = { event ->
+                        val value = event.inputValue
+                        setState {
+                            password = value
+                        }
+                    }
+                }
+            }
+            button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign in" }
         }
     }
 

@@ -8,6 +8,7 @@ import es.guillermoorellana.keynotedex.web.external.switch
 import es.guillermoorellana.keynotedex.web.model.User
 import es.guillermoorellana.keynotedex.web.screens.*
 import kotlinx.coroutines.experimental.promise
+import kotlinx.html.main
 import react.*
 import react.dom.div
 import react.dom.footer
@@ -24,29 +25,30 @@ class Application : RComponent<RProps, ApplicationPageState>() {
         browserRouter {
             div {
                 navigation {
-                    attrs {
-                        getCurrentUser = { state.currentUser }
-                    }
+                    attrs { currentUser = state.currentUser }
                 }
-                switch {
-                    route("/", HomeScreen::class, exact = true)
-                    route("/user/:userId", UserScreen::class, exact = true)
-                    route("/login", exact = true) {
-                        login {
-                            attrs {
-                                getCurrentUser = { state.currentUser }
-                                onUserLoggedIn = { user -> userLoggedIn(user) }
-                                isUserLoggedIn = { isCurrentUserLoggedIn() }
+                main("mt-0 mt-md-2 mt-lg-0") {
+                    attrs { role = "main" }
+                    switch {
+                        route("/", HomeScreen::class, exact = true)
+                        route("/user/:userId", UserScreen::class, exact = true)
+                        route("/login", exact = true) {
+                            login {
+                                attrs {
+                                    getCurrentUser = { state.currentUser }
+                                    onUserLoggedIn = { user -> userLoggedIn(user) }
+                                    isUserLoggedIn = { isCurrentUserLoggedIn() }
+                                }
                             }
                         }
+                        route("/conferences", ComingSoonScreen::class)
+                        route("/speakers", ComingSoonScreen::class)
+                        route("/submission/:submissionId", SubmissionScreen::class, exact = true)
+                        route(NotFoundScreen::class)
                     }
-                    route("/conferences", ComingSoonScreen::class)
-                    route("/speakers", ComingSoonScreen::class)
-                    route("/submission/:submissionId", SubmissionScreen::class, exact = true)
-                    route(NotFoundScreen::class)
-                }
-                footer("container") {
-                    p { +"© Keynotedex ${js("new Date().getFullYear()")}" }
+                    footer("container") {
+                        p { +"© Keynotedex ${js("new Date().getFullYear()")}" }
+                    }
                 }
             }
         }

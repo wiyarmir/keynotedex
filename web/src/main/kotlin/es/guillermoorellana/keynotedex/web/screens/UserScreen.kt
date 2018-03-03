@@ -35,7 +35,7 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
             +".profile-container { padding: 40px 15px; text-align: center; }"
         }
         div("row justify-content-center") {
-            div("col-12 col-md-9 col-xl-8") {
+            div("col-10 col-offset-1 col-sm-9 col-xl-8") {
                 loading(state.userProfile) {
                     when {
                         it.editable -> editableProfile {

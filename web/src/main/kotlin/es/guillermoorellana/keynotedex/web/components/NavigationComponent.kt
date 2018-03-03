@@ -3,10 +3,11 @@ package es.guillermoorellana.keynotedex.web.components
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.html.ButtonType
+import kotlinx.html.id
 import react.*
 import react.dom.*
 
-class NavigationView : RComponent<NavigationProps, RState>() {
+class NavBarComponent : RComponent<NavigationProps, RState>() {
     override fun RBuilder.render() {
         nav("navbar navbar-expand-md navbar-dark fixed-top bg-dark") {
             routeLink("/") {
@@ -18,8 +19,8 @@ class NavigationView : RComponent<NavigationProps, RState>() {
                     attributes.putAll(
                         arrayOf(
                             "data-toggle" to "collapse",
-                            "data-target" to "#navbarsExampleDefault",
-                            "aria-controls" to "navbarsExampleDefault",
+                            "data-target" to "#navbar",
+                            "aria-controls" to "navbar",
                             "aria-expanded" to "false",
                             "aria-label" to "Toggle navigation"
                         )
@@ -28,7 +29,8 @@ class NavigationView : RComponent<NavigationProps, RState>() {
                 span("navbar-toggler-icon") { }
             }
             div("collapse navbar-collapse") {
-                ul("nav navbar-nav mr-auto") {
+                attrs { id = "navbar" }
+                ul("nav navbar-nav mr-auto mt-2 mt-lg-0") {
                     li("nav-item") {
                         routeLink("/conferences") {
                             attrs { className = "nav-link" }
@@ -66,4 +68,4 @@ class NavigationView : RComponent<NavigationProps, RState>() {
 class NavigationProps(var getCurrentUser: () -> User?) : RProps
 
 @ReactDsl
-fun RBuilder.navigation(handler: RHandler<NavigationProps>) = child(NavigationView::class, handler)
+fun RBuilder.navigation(handler: RHandler<NavigationProps>) = child(NavBarComponent::class, handler)
