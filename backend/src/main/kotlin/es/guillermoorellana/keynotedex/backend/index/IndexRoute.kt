@@ -16,8 +16,8 @@ fun Route.index() {
     }
     accept(ContentType.Text.Html) {
         get<IndexPage> {
-            call.respondHtmlTemplate(IndexPageContent()) {
-                caption { +"Keynotedex" }
+            call.respondHtmlTemplate(KeynotedexPageContent()) {
+                bundle { src = "/frontend/web.bundle.js" }
             }
         }
     }
