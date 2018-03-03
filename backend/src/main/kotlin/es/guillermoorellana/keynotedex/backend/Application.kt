@@ -16,15 +16,12 @@ import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
 import io.ktor.sessions.Sessions
 import io.ktor.sessions.cookie
 import io.ktor.util.error
+import java.io.File
 
 data class Session(val userId: String)
 
 fun Application.keynotedex() {
-    val storage: KeynotedexStorage = KeynotedexDatabase()
-        .apply {
-            environment.log.warn("Populating db with mock data")
-            mockData(this@keynotedex)
-        }
+    val storage: KeynotedexStorage = createStorage()
 
     install(DefaultHeaders)
     install(CallLogging)
@@ -57,3 +54,17 @@ fun Application.keynotedex() {
         index()
     }
 }
+
+private fun Application.createStorage(): KeynotedexDatabase = when {
+    isDevelopment() -> {
+        KeynotedexDatabase(File("build/db"))
+            .apply {
+                environment.log.warn("Populating db with mock data")
+                mockData(this@createStorage)
+            }
+    }
+    else -> KeynotedexDatabase()
+}
+
+fun Application.isDevelopment() =
+    environment.config.propertyOrNull("ktor.deployment.environment")?.getString() == "development"
