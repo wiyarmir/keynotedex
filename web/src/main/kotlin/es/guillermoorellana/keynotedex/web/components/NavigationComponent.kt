@@ -44,18 +44,17 @@ class NavBarComponent : RComponent<NavigationProps, RState>() {
                         }
                     }
                 }
-                ul("nav navbar-nav navbar-right") {
-                    if (props.getCurrentUser() == null) {
-                        routeLink("/login") {
+                div("nav navbar-nav navbar-right mt-2 mt-lg-0") {
+                    val user = props.currentUser
+                    when (user) {
+                        null -> routeLink("/login") {
                             attrs { className = "btn btn-outline-success" }
                             +"Login"
                         }
-                    } else {
-                        li("dropdown") {
-                            span("glyphicon glyphicon-user") { }
-                            routeLink("/user/${props.getCurrentUser()!!.userId}") {
+                        else -> li("dropdown") {
+                            routeLink("/user/${user.userId}") {
                                 attrs { className = "dropdown-toggle" }
-                                +props.getCurrentUser()!!.displayName
+                                +user.displayName
                             }
                         }
                     }
@@ -65,7 +64,9 @@ class NavBarComponent : RComponent<NavigationProps, RState>() {
     }
 }
 
-class NavigationProps(var getCurrentUser: () -> User?) : RProps
+external interface NavigationProps : RProps {
+    var currentUser: User?
+}
 
 @ReactDsl
 fun RBuilder.navigation(handler: RHandler<NavigationProps>) = child(NavBarComponent::class, handler)

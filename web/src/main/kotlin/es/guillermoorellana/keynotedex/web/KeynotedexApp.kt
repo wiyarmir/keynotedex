@@ -35,7 +35,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                         route("/login", exact = true) {
                             login {
                                 attrs {
-                                    getCurrentUser = { state.currentUser }
+                                    currentUser = state.currentUser
                                     onUserLoggedIn = { user -> userLoggedIn(user) }
                                     isUserLoggedIn = { isCurrentUserLoggedIn() }
                                 }

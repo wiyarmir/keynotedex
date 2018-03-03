@@ -16,8 +16,6 @@ class Submissions : RComponent<SubmissionsProps, RState>() {
                 .apply {
                     if (isEmpty()) {
                         p { +"No submissions yet" }
-//                Only when logged in??
-//                button { +"Create new" }
                     } else {
                         forEach {
                             submissionCard {

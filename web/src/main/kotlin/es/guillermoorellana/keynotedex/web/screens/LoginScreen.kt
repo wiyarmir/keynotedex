@@ -61,7 +61,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
     override fun RBuilder.render() {
         style { +css }
         if (props.isUserLoggedIn()) {
-            redirect("/user/${props.getCurrentUser()!!.userId}") {}
+            redirect("/user/${props.currentUser!!.userId}") {}
             return
         }
         form(classes = "form-signin") {
@@ -145,7 +145,7 @@ class LoginView : RComponent<LoginProps, LoginState>() {
 }
 
 class LoginProps : RProps {
-    var getCurrentUser: () -> User? = { null }
+    var currentUser: User? = null
     var isUserLoggedIn: () -> Boolean = { false }
     var onUserLoggedIn: (User) -> Unit = {}
 }
