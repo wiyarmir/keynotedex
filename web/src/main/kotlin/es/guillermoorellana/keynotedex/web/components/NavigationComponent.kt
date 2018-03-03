@@ -51,11 +51,9 @@ class NavBarComponent : RComponent<NavigationProps, RState>() {
                             attrs { className = "btn btn-outline-success" }
                             +"Login"
                         }
-                        else -> li("dropdown") {
-                            routeLink("/user/${user.userId}") {
-                                attrs { className = "dropdown-toggle" }
-                                +user.displayName
-                            }
+                        else -> routeLink("/user/${user.userId}") {
+                            attrs { className = "btn btn-outline-light" }
+                            +user.displayName
                         }
                     }
                 }
