@@ -55,16 +55,14 @@ fun Application.keynotedex() {
     }
 }
 
-private fun Application.createStorage(): KeynotedexDatabase = when {
-    isDevelopment() -> {
-        KeynotedexDatabase(File("build/db"))
-            .apply {
-                environment.log.warn("Populating db with mock data")
-                mockData(this@createStorage)
-            }
+private fun Application.createStorage(): KeynotedexDatabase =
+    when {
+        isDevelopment() -> KeynotedexDatabase(File("build/db"))
+        else -> KeynotedexDatabase()
+    }.apply {
+        environment.log.warn("Populating db with mock data")
+        mockData(this@createStorage)
     }
-    else -> KeynotedexDatabase()
-}
 
 fun Application.isDevelopment() =
     environment.config.propertyOrNull("ktor.deployment.environment")?.getString() == "development"
