@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.web.comms
 
+import es.guillermoorellana.keynotedex.api.ApiPaths
 import es.guillermoorellana.keynotedex.dto.Submission
 import es.guillermoorellana.keynotedex.dto.User
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
@@ -25,7 +26,7 @@ suspend fun register(
     displayName: String,
     email: String
 ): User = postAndParseResult(
-    "/register",
+    ApiPaths.register,
     URLSearchParams().apply {
         append("userId", userId)
         append("password", password)
@@ -36,28 +37,28 @@ suspend fun register(
 )
 
 suspend fun user(userId: String) =
-    getAndParseResult("/user/$userId", null, { parseUserResponse(it) })
+    getAndParseResult(ApiPaths.user.replace("{userId}", userId), null, { parseUserResponse(it) })
         .toModel()
 
 
 suspend fun userProfile(userId: String) =
-    getAndParseResult("/user/$userId", null, { parseUserProfileResponse(it) })
+    getAndParseResult(ApiPaths.user.replace("{userId}", userId), null, { parseUserProfileResponse(it) })
         .toModel()
 
 suspend fun updateUserProfile(userProfile: UserProfile): UserProfile {
     val userId = userProfile.user.userId
     val body = KJSON.stringify(userProfile.toUpdateRequest())
-    return putAndParseResult("/user/$userId", body, { parseUserProfileResponse(it) })
+    return putAndParseResult(ApiPaths.user.replace("{userId}", userId), body, { parseUserProfileResponse(it) })
         .toModel()
 }
 
 suspend fun checkSession() =
-    getAndParseResult("/login", null, { parseUserResponse(it) })
+    getAndParseResult(ApiPaths.login, null, { parseUserResponse(it) })
         .toModel()
 
 suspend fun login(userId: String, password: String) =
     postAndParseResult(
-        "/login",
+        ApiPaths.login,
         URLSearchParams().apply {
             append("userId", userId)
             append("password", password)
@@ -67,7 +68,7 @@ suspend fun login(userId: String, password: String) =
 
 suspend fun logoutUser() {
     window.fetch(
-        "/logout",
+        ApiPaths.logout,
         object : RequestInit {
             override var method: String? = "POST"
             override var credentials: RequestCredentials? = RequestCredentials.SAME_ORIGIN
@@ -76,7 +77,10 @@ suspend fun logoutUser() {
 }
 
 suspend fun getSubmission(submissionId: String) =
-    getAndParseResult("/submission/$submissionId", null, { parseSubmissionResponse(it) })
+    getAndParseResult(
+        ApiPaths.submissions.replace("{submissionId}", submissionId),
+        null,
+        { parseSubmissionResponse(it) })
         .toModel()
 
 private suspend fun parseUserResponse(response: Response): User {

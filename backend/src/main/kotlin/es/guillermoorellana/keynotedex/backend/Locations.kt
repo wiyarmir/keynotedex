@@ -1,21 +1,22 @@
 package es.guillermoorellana.keynotedex.backend
 
+import es.guillermoorellana.keynotedex.api.ApiPaths
 import io.ktor.locations.Location
 
 @Location("/{trail...}")
 class IndexPage(val trail: List<String>)
 
-@Location("/user/{userId}")
+@Location(ApiPaths.user)
 data class UserEndpoint(val userId: String)
 
-@Location("/submission/{submissionId}")
-data class SubmissionEndpoint(val submissionId: String)
+@Location(ApiPaths.submissions)
+data class SubmissionsEndpoint(val userId: String, val submissionId: String)
 
-@Location("/conference/{conferenceId}")
-data class ConferenceEndpoint(val conferenceId: String)
+@Location(ApiPaths.conferences)
+data class ConferenceEndpoint(val conferenceId: String?)
 
-@Location("/register")
+@Location(ApiPaths.register)
 data class RegisterEndpoint(val userId: String = "", val password: String = "")
 
-@Location("/login")
+@Location(ApiPaths.login)
 data class LoginEndpoint(val userId: String = "", val password: String = "")

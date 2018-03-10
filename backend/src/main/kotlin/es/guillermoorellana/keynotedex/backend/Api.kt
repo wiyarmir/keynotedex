@@ -43,11 +43,13 @@ fun Route.api(dao: KeynotedexStorage) {
 
 private fun Route.apiGetConference(conferenceStorage: ConferenceStorage) {
     accept(ContentType.Application.Json) {
-        get<ConferenceEndpoint> {
-            val conference = conferenceStorage.conference(it.conferenceId)
-            when (conference) {
-                null -> call.respond(ErrorResponse("Can't find conference with id ${it.conferenceId}"))
-                else -> call.respond(ConferenceResponse(conference.toDto()))
+        get<ConferenceEndpoint> { endpoint ->
+            endpoint.conferenceId?.let { conferenceId ->
+                val conference = conferenceStorage.conference(conferenceId)
+                when (conference) {
+                    null -> call.respond(ErrorResponse("Can't find conference with id ${endpoint.conferenceId}"))
+                    else -> call.respond(ConferenceResponse(conference.toDto()))
+                }
             }
         }
     }
@@ -70,8 +72,8 @@ private fun Route.apiGetLogin(userStorage: UserStorage) {
 
 private fun Route.apiGetSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
-        get<SubmissionEndpoint> {
-            val submission = submissionStorage.submissionById(it.submissionId)
+        get<SubmissionsEndpoint> { endpoint ->
+            val submission = submissionStorage.submissionById(endpoint.submissionId)
             if (submission == null) {
                 call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
                 return@get
