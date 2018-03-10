@@ -71,10 +71,13 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
     }
 
     private fun onChange(event: ChangeEvent) {
-
         event["displayName"]?.let { displayName ->
             val user = props.userProfile.user
             onUserUpdated(user.copy(displayName = displayName))
+        }
+        event["bio"]?.let { bio ->
+            val user = props.userProfile.user
+            onUserUpdated(user.copy(bio = bio))
         }
     }
 

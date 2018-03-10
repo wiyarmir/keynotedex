@@ -74,6 +74,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
         update(UsersTable)
             .set {
                 it[displayName] = user.displayName
+                it[bio] = user.bio
             }
             .where { UsersTable.id eq user.userId }
             .execute()
