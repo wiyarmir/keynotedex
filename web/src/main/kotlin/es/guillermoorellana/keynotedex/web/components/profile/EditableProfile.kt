@@ -2,13 +2,13 @@ package es.guillermoorellana.keynotedex.web.components.profile
 
 import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
+import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
 import es.guillermoorellana.keynotedex.web.components.editable.get
 import es.guillermoorellana.keynotedex.web.components.submissions.submissions
 import es.guillermoorellana.keynotedex.web.model.User
 import es.guillermoorellana.keynotedex.web.model.UserProfile
 import react.*
 import react.dom.div
-import react.dom.h1
 import react.dom.style
 
 //language=CSS
@@ -18,6 +18,25 @@ private const val profileStyle = """
     font-style: italic;
     cursor: wait;
 }
+
+.profile-container {
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.displayNameInput {
+    flex: 1;
+    font-size: 2.5rem;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.bioTextArea {
+    flex: 1;
+    text-align: left;
+}
 """
 
 class EditableProfile : RComponent<EditableProfileProps, RState>() {
@@ -26,14 +45,24 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
         style(content = profileStyle)
         props.userProfile.also { profile ->
             div("profile-container") {
-                h1 {
-                    editableText {
-                        attrs {
-                            propName = "displayName"
-                            value = profile.user.displayName
-                            change = { event -> onChange(event) }
-                            classLoading = "loading"
-                        }
+                editableText {
+                    attrs {
+                        editable = props.editable
+                        propName = "displayName"
+                        value = profile.user.displayName
+                        change = { event -> onChange(event) }
+                        className = "displayNameInput"
+                        classLoading = "loading"
+                    }
+                }
+                editableTextArea {
+                    attrs {
+                        editable = props.editable
+                        propName = "bio"
+                        value = profile.user.bio ?: "Introduce yourself"
+                        change = { event -> onChange(event) }
+                        className = "bioTextArea"
+                        classLoading = "loading"
                     }
                 }
             }
@@ -55,6 +84,7 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
 }
 
 external interface EditableProfileProps : RProps {
+    var editable: Boolean
     var userProfile: UserProfile
     var onUserProfileUpdated: (UserProfile) -> Unit
 }

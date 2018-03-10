@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.backend.dao.users
 
-import es.guillermoorellana.keynotedex.backend.dao.submissions.Submission
 import es.guillermoorellana.keynotedex.dto.User as DtoUser
 
 data class User(
@@ -8,10 +7,11 @@ data class User(
     val email: String? = null,
     val displayName: String? = null,
     val passwordHash: String? = null,
-    val submissions: List<Submission> = emptyList()
+    val bio: String? = null
 )
 
 fun DtoUser.toDao() = User(
     userId = userId,
-    displayName = displayName
+    displayName = displayName,
+    bio = bio
 )

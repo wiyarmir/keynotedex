@@ -74,6 +74,6 @@ internal fun KeynotedexDatabase.mockData(application: Application) {
             }
         }
     } catch (e: SQLException) {
-        println("Problem mocking data")
+        println("Problem mocking data: $e")
     }
 }

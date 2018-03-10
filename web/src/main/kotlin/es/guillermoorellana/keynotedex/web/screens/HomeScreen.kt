@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
+import es.guillermoorellana.keynotedex.web.external.routeLink
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -8,7 +9,7 @@ import react.dom.*
 
 class HomeScreen : RComponent<HomeScreen.Props, HomeScreen.State>() {
 
-    private val jumboHeading = "Jumbo heading"
+    private val jumboHeading = "Lorem ipsum"
     private val lead =
         "Cras justo odio, dapibus ac facilisis in, egestas eget quam. " +
                 "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, " +
@@ -25,7 +26,14 @@ class HomeScreen : RComponent<HomeScreen.Props, HomeScreen.State>() {
 
                     h1("display-3") { +jumboHeading }
                     p("lead") { +lead }
-                    p { a(href = "#", classes = "btn btn-primary btn-lg") { +"Sign up" } }
+                    p {
+                        routeLink(to = "register") {
+                            attrs {
+                                className = "btn btn-primary btn-lg"
+                            }
+                            +"Join"
+                        }
+                    }
                 }
             }
             div("container") {

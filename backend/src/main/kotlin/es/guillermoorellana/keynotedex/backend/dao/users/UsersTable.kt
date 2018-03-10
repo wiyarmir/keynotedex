@@ -7,4 +7,5 @@ object UsersTable : TableDefinition() {
     val email = varchar("email", 128).uniqueIndex().nullable()
     val displayName = varchar("display_name", 256).nullable()
     val passwordHash = varchar("password_hash", 64)
+    val bio = this.varchar("bio", 250).nullable()
 }

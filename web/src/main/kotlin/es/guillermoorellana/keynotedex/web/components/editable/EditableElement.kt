@@ -69,7 +69,7 @@ abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProp
             props.classLoading to state.loading
         )
             .filterKeys { it != null }
-            .filterValues { it == true }
+            .filterValues { it }
             .keys
             .joinToString(" ")
 
@@ -107,6 +107,8 @@ abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProp
     }
 
     protected fun startEditing() {
+        if (props.editable == false) return
+
         setState {
             editing = true
         }
@@ -139,6 +141,7 @@ external interface EditableElementProps : RProps {
     var propName: String
     var validate: ((value: String) -> Boolean)?
     var shouldBlockWhileLoading: Boolean?
+    var editable: Boolean?
     var className: String?
     var classEditing: String?
     var classLoading: String?
