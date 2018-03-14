@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 group = 'es.guillermoorellana.keynotedex'
 version = '0.0.1-SNAPSHOT'
 
@@ -6,7 +8,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.2"
     }
 }
 
@@ -15,6 +17,24 @@ apply plugin: 'application'
 apply plugin: "com.github.johnrengelman.shadow"
 
 mainClassName = "es.guillermoorellana.keynotedex.backend.ServerKt"
+
+sourceSets {
+    release {
+        kotlin {
+            srcDirs += sourceSets.main.kotlin.srcDirs
+        }
+        resources {
+            srcDirs += sourceSets.main.resources.srcDirs
+        }
+
+        compileClasspath += sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
+configurations {
+    releaseCompile.extendsFrom compile
+}
 
 dependencies {
     compile project(":common-jvm")
@@ -48,17 +68,26 @@ kotlin {
     }
 }
 
+task releaseJar(type: ShadowJar) {
+    manifest {
+        attributes "Main-Class": "es.guillermoorellana.keynotedex.backend.ServerKt"
+    }
+    classifier = 'release'
+    from([sourceSets.release.output, sourceSets.main.output])
+    configurations = [project.configurations.compile]
+}
+
 task release() {
     dependsOn('clean')
-    dependsOn('shadowJar')
+    dependsOn('releaseJar')
 }
 
-shadowJar.mustRunAfter clean
+releaseJar.mustRunAfter clean
 
-task includeWebBundle(type: Copy) {
+task copyWebBundle(type: Copy) {
     dependsOn(':web:build')
     from('../web/build/bundle')
-    into('build/resources/main')
+    into('build/resources/release')
 }
 
-shadowJar.dependsOn includeWebBundle
+processReleaseResources.dependsOn copyWebBundle
