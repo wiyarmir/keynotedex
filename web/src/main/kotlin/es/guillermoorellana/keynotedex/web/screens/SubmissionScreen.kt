@@ -58,8 +58,6 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
         }
     }
 
-    private fun idFromRoute(submissionRoute: String) = submissionRoute.substringBefore('-')
-
     private fun fetchSubmission() {
         promise {
             val submission = getSubmission(idFromRoute(props.match.params.submissionId))
@@ -71,9 +69,15 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
         }
     }
 
+    companion object {
+        const val route = "/:userId/:submissionId"
+    }
 }
 
+private fun idFromRoute(submissionRoute: String) = submissionRoute.substringBefore('-')
+
 external interface SubmissionRouteProps : RProps {
+    val userId: String
     val submissionId: String
 }
 

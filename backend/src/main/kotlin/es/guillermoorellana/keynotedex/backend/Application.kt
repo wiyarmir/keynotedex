@@ -50,8 +50,8 @@ fun Application.keynotedex() {
     }
 
     install(Routing) {
-        api(storage)
         index()
+        api(storage)
     }
 }
 

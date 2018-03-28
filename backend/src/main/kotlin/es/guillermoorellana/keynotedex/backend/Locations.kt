@@ -10,7 +10,7 @@ class IndexPage(val trail: List<String>)
 data class UserEndpoint(val userId: String)
 
 @Location(ApiPaths.submissions)
-data class SubmissionsEndpoint(val userId: String, val submissionId: String)
+data class SubmissionsEndpoint(val submissionId: String)
 
 @Location(ApiPaths.conferences)
 data class ConferenceEndpoint(val conferenceId: String?)

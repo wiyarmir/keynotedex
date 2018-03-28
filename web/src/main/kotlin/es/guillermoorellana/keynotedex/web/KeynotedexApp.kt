@@ -31,7 +31,6 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                     attrs { role = "main" }
                     switch {
                         route("/", HomeScreen::class, exact = true)
-                        route("/user/:userId", UserScreen::class, exact = true)
                         route("/login", exact = true) {
                             login {
                                 attrs {
@@ -43,7 +42,8 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                         }
                         route("/conferences", ComingSoonScreen::class)
                         route("/speakers", ComingSoonScreen::class)
-                        route("/submission/:submissionId", SubmissionScreen::class, exact = true)
+                        route("/:userId/:submissionId", SubmissionScreen::class, exact = true)
+                        route("/:userId", UserScreen::class, exact = true)
                         route(NotFoundScreen::class)
                     }
                     footer("container") {

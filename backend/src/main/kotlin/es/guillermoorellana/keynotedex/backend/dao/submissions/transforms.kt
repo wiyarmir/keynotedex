@@ -2,6 +2,7 @@ package es.guillermoorellana.keynotedex.backend.dao.submissions
 
 import org.jetbrains.squash.results.ResultRow
 import org.jetbrains.squash.results.get
+import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
 
 fun transformSubmission(it: ResultRow): Submission =
     Submission(
@@ -12,9 +13,9 @@ fun transformSubmission(it: ResultRow): Submission =
         abstract = it[SubmissionsTable.abstract]
     )
 
-fun Submission.toDto(): es.guillermoorellana.keynotedex.dto.Submission =
-    es.guillermoorellana.keynotedex.dto.Submission(
-        submissionId = id,
-        title = title,
-        abstract = abstract
-    )
+fun Submission.toDto() = DtoSubmission(
+    submissionId = id,
+    title = title,
+    abstract = abstract,
+    userId = submitterId
+)
