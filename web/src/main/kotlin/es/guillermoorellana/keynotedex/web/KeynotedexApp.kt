@@ -36,7 +36,6 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                                 attrs {
                                     currentUser = state.currentUser
                                     onUserLoggedIn = { user -> userLoggedIn(user) }
-                                    isUserLoggedIn = { isCurrentUserLoggedIn() }
                                 }
                             }
                         }
@@ -53,8 +52,6 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             }
         }
     }
-
-    private fun isCurrentUserLoggedIn() = state.currentUser != null
 
     private fun userLoggedIn(user: User) {
         setState {

@@ -49,7 +49,7 @@ const val css = """
 }
 """
 
-class LoginView : RComponent<LoginProps, LoginState>() {
+class LoginScreen : RComponent<LoginProps, LoginState>() {
 
     override fun LoginState.init() {
         disabled = false
@@ -60,8 +60,8 @@ class LoginView : RComponent<LoginProps, LoginState>() {
 
     override fun RBuilder.render() {
         style { +css }
-        if (props.isUserLoggedIn()) {
-            redirect("/user/${props.currentUser!!.userId}") {}
+        if (isUserLoggedIn()) {
+            redirect("/${props.currentUser!!.userId}") {}
             return
         }
         form(classes = "form-signin") {
@@ -142,22 +142,23 @@ class LoginView : RComponent<LoginProps, LoginState>() {
             }
         }
     }
+
+    private fun isUserLoggedIn() = props.currentUser != null
 }
 
-class LoginProps : RProps {
-    var currentUser: User? = null
-    var isUserLoggedIn: () -> Boolean = { false }
-    var onUserLoggedIn: (User) -> Unit = {}
+external interface LoginProps : RProps {
+    var currentUser: User?
+    var onUserLoggedIn: (User) -> Unit
 }
 
-data class LoginState(
-    var login: String,
-    var password: String,
-    var disabled: Boolean,
+external interface LoginState : RState {
+    var login: String
+    var password: String
+    var disabled: Boolean
     var errorMessage: String?
-) : RState
+}
 
 internal val Event.inputValue: String
     get() = (target as? HTMLInputElement)?.value ?: (target as? HTMLTextAreaElement)?.value ?: ""
 
-fun RBuilder.login(handler: RHandler<LoginProps>) = child(LoginView::class, handler)
+fun RBuilder.login(handler: RHandler<LoginProps>) = child(LoginScreen::class, handler)
