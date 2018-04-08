@@ -40,6 +40,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                             }
                         }
                         route("/conferences", ComingSoonScreen::class)
+                        route("/register", RegisterScreen::class)
                         route("/speakers", ComingSoonScreen::class)
                         route("/:userId/:submissionId", SubmissionScreen::class, exact = true)
                         route("/:userId", UserScreen::class, exact = true)

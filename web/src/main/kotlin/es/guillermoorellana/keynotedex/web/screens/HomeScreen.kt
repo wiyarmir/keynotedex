@@ -13,8 +13,8 @@ import react.dom.p
 
 class HomeScreen : RComponent<RProps, RState>() {
 
-    private val jumboHeading = "Prepare for a conference"
-    private val lead = "Submit early, submit often"
+    private val jumboHeading = "All about talks"
+    private val lead = "Share here the talk you will give, the talk you want to give and the talk you have given."
 
     override fun RBuilder.render() {
         div {
