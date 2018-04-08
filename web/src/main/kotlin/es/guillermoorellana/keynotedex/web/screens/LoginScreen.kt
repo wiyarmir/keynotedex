@@ -1,19 +1,13 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
-import es.guillermoorellana.keynotedex.web.comms.login
-import es.guillermoorellana.keynotedex.web.external.redirect
-import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.User
-import kotlinx.coroutines.experimental.promise
-import kotlinx.html.ButtonType
-import kotlinx.html.InputType
-import kotlinx.html.id
-import kotlinx.html.js.onChangeFunction
-import kotlinx.html.js.onSubmitFunction
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.HTMLTextAreaElement
-import org.w3c.dom.events.Event
+import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.model.*
+import kotlinx.coroutines.experimental.*
+import kotlinx.html.*
+import kotlinx.html.js.*
+import org.w3c.dom.*
+import org.w3c.dom.events.*
 import react.*
 import react.dom.*
 
