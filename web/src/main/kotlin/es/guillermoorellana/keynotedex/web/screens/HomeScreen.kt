@@ -1,23 +1,20 @@
 package es.guillermoorellana.keynotedex.web.screens
 
+import es.guillermoorellana.keynotedex.web.components.submissions.submissionPreview
 import es.guillermoorellana.keynotedex.web.external.routeLink
+import es.guillermoorellana.keynotedex.web.model.Submission
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.*
+import react.dom.div
+import react.dom.h1
+import react.dom.p
 
-class HomeScreen : RComponent<HomeScreen.Props, HomeScreen.State>() {
+class HomeScreen : RComponent<RProps, RState>() {
 
-    private val jumboHeading = "Lorem ipsum"
-    private val lead =
-        "Cras justo odio, dapibus ac facilisis in, egestas eget quam. " +
-                "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, " +
-                "ut fermentum massa justo sit amet risus."
-
-    init {
-        state = State()
-    }
+    private val jumboHeading = "Prepare for a conference"
+    private val lead = "Submit early, submit often"
 
     override fun RBuilder.render() {
         div {
@@ -38,27 +35,26 @@ class HomeScreen : RComponent<HomeScreen.Props, HomeScreen.State>() {
             }
             div("container") {
                 div("row") {
-                    div("col-md-4") {
-                        h4 { +"Subheading" }
-                        p { +"Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum." }
-                        p { a(href = "#", classes = "btn btn-secondary btn-lg") { +"View details" } }
+                    submissionPreview {
+                        attrs { submission = submission() }
                     }
-                    div("col-md-4") {
-                        h4 { +"Subheading" }
-                        p { +"Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum." }
-                        p { a(href = "#", classes = "btn btn-secondary btn-lg") { +"View details" } }
+                    submissionPreview {
+                        attrs { submission = submission() }
                     }
-                    div("col-md-4") {
-                        h4 { +"Subheading" }
-                        p { +"Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum." }
-                        p { a(href = "#", classes = "btn btn-secondary btn-lg") { +"View details" } }
+                    submissionPreview {
+                        attrs { submission = submission() }
                     }
                 }
             }
         }
     }
-
-    class Props : RProps
-
-    class State : RState
 }
+
+private fun submission() = Submission(
+    userId = "user1",
+    submissionId = "1",
+    title = "Subheading",
+    abstract = "Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.",
+    type = "",
+    submittedTo = ""
+)
