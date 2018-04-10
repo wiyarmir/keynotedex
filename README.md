@@ -1,4 +1,6 @@
-# keynotedex
+# Keynotedex
+
+Pure Kotlin implementation of a platform to save, track and share conference submissions.
 
 Deployment
 ----------
