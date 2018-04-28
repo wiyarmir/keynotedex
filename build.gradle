@@ -3,8 +3,8 @@ version = '0.0.1-SNAPSHOT'
 
 subprojects { p ->
     p.buildscript {
-        ext.kotlin_version = "1.2.21"
-        ext.serialization_version = '0.4'
+        ext.kotlin_version = "1.2.40"
+        ext.serialization_version = '0.5.0'
 
         repositories {
             mavenLocal()
@@ -17,7 +17,7 @@ subprojects { p ->
         dependencies {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
             classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
-            classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.29"
+            classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.30"
         }
     }
     repositories {
@@ -34,11 +34,11 @@ subprojects { p ->
 
 ext {
     html_version = "0.6.9"
-    kotlin_version = "1.2.21"
+    kotlin_version = "1.2.40"
     kotlin_js_ext_version = "1.0.1-pre.11-kotlin-1.2.21"
     kotlin_wrapper_version = "16.2.1-pre.11-kotlin-1.2.21"
-    kotlinx_coroutines_version = "0.22.3"
-    ktor_version = "0.9.2-alpha-2"
+    kotlinx_coroutines_version = "0.22.5"
+    ktor_version = "0.9.2"
     squash_version = "0.2.4"
 }
 
