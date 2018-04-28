@@ -2,21 +2,31 @@ package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
-import es.guillermoorellana.keynotedex.backend.index.index
+import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.content.resource
+import io.ktor.content.static
 import io.ktor.features.*
+import io.ktor.freemarker.FreeMarker
+import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.gson.gson
+import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.Locations
+import io.ktor.locations.get
 import io.ktor.response.respond
+import io.ktor.routing.Route
 import io.ktor.routing.Routing
+import io.ktor.routing.accept
 import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
 import io.ktor.sessions.Sessions
 import io.ktor.sessions.cookie
 import io.ktor.util.error
 import java.io.File
+
+class Keynotedex
 
 data class Session(val userId: String)
 
@@ -49,9 +59,27 @@ fun Application.keynotedex() {
         }
     }
 
+    install(FreeMarker) {
+        templateLoader = ClassTemplateLoader(Keynotedex::class.java.classLoader, "")
+    }
+
     install(Routing) {
         index()
         api(storage)
+    }
+}
+
+private fun Route.index() {
+    static("frontend") {
+        resource("web.bundle.js")
+    }
+    accept(ContentType.Text.Html) {
+        get<IndexPage> {
+            val model = mapOf(
+                "jsbundle" to "/frontend/web.bundle.js"
+            )
+            call.respond(FreeMarkerContent(template = "index.ftl", model = model))
+        }
     }
 }
 
