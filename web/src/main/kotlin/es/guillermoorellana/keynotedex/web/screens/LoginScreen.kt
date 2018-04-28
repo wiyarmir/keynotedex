@@ -3,6 +3,7 @@ package es.guillermoorellana.keynotedex.web.screens
 import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
 import es.guillermoorellana.keynotedex.web.comms.login
 import es.guillermoorellana.keynotedex.web.external.redirect
+import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.experimental.promise
 import kotlinx.html.ButtonType
@@ -71,7 +72,7 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
                     doLogin()
                 }
             }
-            h2("form-signin-heading") { +"Please sign in" }
+            h2("form-signin-heading") { +"Welcome back!" }
             label(classes = "sr-only") {
                 attrs { htmlFor = "inputEmail" }
                 +"Email address"
@@ -111,6 +112,12 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
                 }
             }
             button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign in" }
+            routeLink("/register") {
+                attrs {
+                    className = "btn btn-lg btn-secondary btn-block"
+                }
+                +"Register"
+            }
         }
     }
 

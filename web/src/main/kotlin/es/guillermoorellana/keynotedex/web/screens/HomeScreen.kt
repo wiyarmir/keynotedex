@@ -24,7 +24,7 @@ class HomeScreen : RComponent<RProps, RState>() {
                     h1("display-3") { +jumboHeading }
                     p("lead") { +lead }
                     p {
-                        routeLink(to = "register") {
+                        routeLink(to = "/register") {
                             attrs {
                                 className = "btn btn-primary btn-lg"
                             }
