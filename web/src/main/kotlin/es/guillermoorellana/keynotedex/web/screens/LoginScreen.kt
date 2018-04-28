@@ -118,6 +118,12 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
                 }
                 +"Register"
             }
+            routeLink("/login/github") {
+                attrs {
+                    className = "btn btn-lg btn-secondary btn-block"
+                }
+                +"Register"
+            }
         }
     }
 

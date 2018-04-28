@@ -6,6 +6,12 @@ import io.ktor.locations.Location
 @Location("/{trail...}")
 class IndexPage(val trail: List<String>)
 
+@Location("/oauth")
+class OAuthLoginEndpoint
+
+@Location("/oauth_failed")
+class OauthFailedPage(parameters: List<String>)
+
 @Location(ApiPaths.user)
 data class UserEndpoint(val userId: String)
 

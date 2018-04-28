@@ -6,6 +6,7 @@ import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.auth.Authentication
 import io.ktor.content.resource
 import io.ktor.content.static
 import io.ktor.features.*
@@ -46,8 +47,13 @@ fun Application.keynotedex() {
         }
     }
 
+    install(Authentication) {
+        configureOAuth(this)
+    }
+
     install(Sessions) {
         cookie<Session>("SESSION") {
+            cookie.path = "/"
             transform(SessionTransportTransformerMessageAuthentication(sessionKey()))
         }
     }
@@ -64,8 +70,9 @@ fun Application.keynotedex() {
     }
 
     install(Routing) {
-        index()
         api(storage)
+        oauth()
+        index()
     }
 }
 
