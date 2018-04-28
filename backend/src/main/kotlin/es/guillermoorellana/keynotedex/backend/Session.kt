@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec
 fun Application.sessionKey(): ByteArray {
     val config = environment.config.config("keynotedex")
     val sessionCookieConfig = config.config("session.cookie")
-    val key: String = sessionCookieConfig.property("key").getString()
+    val key: String = sessionCookieConfig.propertyOrNull("key")?.getString() ?: "deadbeef"
     return hex(key)
 }
 
