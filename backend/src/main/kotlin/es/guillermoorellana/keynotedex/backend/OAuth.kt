@@ -12,8 +12,8 @@ import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.param
 
-fun Application.configureOAuth(configuration: Authentication.Configuration) = configuration.oauth("oauth") {
-    val config = environment.config.config("oauth.github")
+fun Application.configureOAuth(authConf: Authentication.Configuration) = authConf.oauth("oauth") {
+    val config = environment.config.config("keynotedex.oauth.github")
     client = HttpClient(Apache).apply { environment.monitor.subscribe(ApplicationStopping) { close() } }
     providerLookup = {
         OAuthServerSettings.OAuth2ServerSettings(
