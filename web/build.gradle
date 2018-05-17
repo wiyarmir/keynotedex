@@ -25,7 +25,7 @@ dependencies {
 
 kotlinFrontend {
 
-    downloadNodeJsVersion = "8.7.0"
+    downloadNodeJsVersion = "8.11.2"
 
     sourceMaps = false
 
@@ -34,7 +34,7 @@ kotlinFrontend {
         replaceVersion "kotlinx-html-shared", "$kotlin_version"
         replaceVersion "kotlin-js-library", "$kotlin_version"
 
-        dependency "react"
+        dependency "react", "16.3.1"
         dependency "react-dom"
         dependency "react-router"
         dependency "react-router-dom"
