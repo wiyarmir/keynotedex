@@ -21,12 +21,14 @@ import java.sql.SQLException
 
 fun ApplicationCall.refererHost() = request.header(HttpHeaders.Referrer)?.let { URI.create(it).host }
 
-suspend fun ApplicationCall.redirect(location: Any) {
+suspend fun ApplicationCall.redirect(location: Any) = respondRedirect(redirectString(location))
+
+fun ApplicationCall.redirectString(location: Any): String {
     val host = request.host() ?: "localhost"
     val portSpec = request.port().let { if (it == 80) "" else ":$it" }
     val address = host + portSpec
 
-    respondRedirect("http://$address${application.feature(Locations).href(location)}")
+    return "http://$address${application.feature(Locations).href(location)}"
 }
 
 private val userIdPattern = "[a-zA-Z0-9_.]+".toRegex()

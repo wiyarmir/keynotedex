@@ -6,11 +6,11 @@ import io.ktor.locations.Location
 @Location("/{trail...}")
 class IndexPage(val trail: List<String>)
 
-@Location("/oauth")
-class OAuthLoginEndpoint
+@Location("/login/{service}")
+data class OAuthLoginEndpoint(val service:String)
 
 @Location("/oauth_failed")
-class OauthFailedPage(parameters: List<String>)
+data class OauthFailedPage(val parameters: List<String>)
 
 @Location(ApiPaths.user)
 data class UserEndpoint(val userId: String)
@@ -26,3 +26,6 @@ data class RegisterEndpoint(val userId: String = "", val password: String = "")
 
 @Location(ApiPaths.login)
 data class LoginEndpoint(val userId: String = "", val password: String = "")
+
+@Location("/login")
+class LoginPage

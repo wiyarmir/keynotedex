@@ -70,8 +70,8 @@ fun Application.keynotedex() {
     }
 
     install(Routing) {
-        api(storage)
         oauth()
+        api(storage)
         index()
     }
 }

@@ -7,10 +7,10 @@ import io.ktor.auth.*
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.apache.Apache
 import io.ktor.locations.location
-import io.ktor.response.respond
-import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.param
+import io.ktor.sessions.sessions
+import io.ktor.sessions.set
 
 fun Application.configureOAuth(authConf: Authentication.Configuration) = authConf.oauth("oauth") {
     val config = environment.config.config("keynotedex.oauth.github")
@@ -24,7 +24,7 @@ fun Application.configureOAuth(authConf: Authentication.Configuration) = authCon
             clientSecret = config.propertyOrNull("clientSecret")?.getString() ?: ""
         )
     }
-    urlProvider = { _: OAuthServerSettings -> "http://localhost:8080/oalogin" }
+    urlProvider = { settings: OAuthServerSettings -> redirectString(OAuthLoginEndpoint(settings.name)) }
 }
 
 fun Routing.oauth() {
@@ -35,16 +35,14 @@ fun Routing.oauth() {
                     call.redirect(OauthFailedPage(call.parameters.getAll("error").orEmpty()))
                 }
             }
-
             handle {
-                val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+                val principal = call.principal<OAuthAccessTokenResponse>()
                 if (principal != null) {
-                    call.respondText {
-                        "Success $principal"
+                    when (principal) {
+                        is OAuthAccessTokenResponse.OAuth2 -> call.sessions.set(Session(principal.accessToken))
                     }
-                } else {
-                    call.respond("login")
                 }
+                call.redirect(LoginPage())
             }
         }
     }
