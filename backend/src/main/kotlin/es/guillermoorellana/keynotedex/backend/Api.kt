@@ -1,33 +1,21 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
-import es.guillermoorellana.keynotedex.backend.dao.conferences.ConferenceStorage
-import es.guillermoorellana.keynotedex.backend.dao.conferences.toDto
-import es.guillermoorellana.keynotedex.backend.dao.submissions.Submission
-import es.guillermoorellana.keynotedex.backend.dao.submissions.SubmissionStorage
-import es.guillermoorellana.keynotedex.backend.dao.submissions.toDto
-import es.guillermoorellana.keynotedex.backend.dao.users.User
-import es.guillermoorellana.keynotedex.backend.dao.users.UserStorage
-import es.guillermoorellana.keynotedex.backend.dao.users.toDao
-import es.guillermoorellana.keynotedex.backend.dao.users.toDto
-import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.backend.data.*
+import es.guillermoorellana.keynotedex.backend.data.conferences.*
+import es.guillermoorellana.keynotedex.backend.data.submissions.*
+import es.guillermoorellana.keynotedex.backend.data.users.*
+import es.guillermoorellana.keynotedex.requests.*
 import es.guillermoorellana.keynotedex.responses.*
-import io.ktor.application.ApplicationCall
-import io.ktor.application.application
-import io.ktor.application.call
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
+import io.ktor.application.*
+import io.ktor.http.*
 import io.ktor.locations.*
-import io.ktor.pipeline.PipelineContext
-import io.ktor.request.receive
-import io.ktor.request.receiveParameters
-import io.ktor.response.respond
+import io.ktor.pipeline.*
+import io.ktor.request.*
+import io.ktor.response.*
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 import io.ktor.routing.contentType
-import io.ktor.sessions.get
-import io.ktor.sessions.sessions
-import io.ktor.sessions.set
+import io.ktor.sessions.*
 
 fun Route.api(dao: KeynotedexStorage) {
     apiGetConference(dao)

@@ -1,31 +1,20 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.dao.KeynotedexDatabase
-import es.guillermoorellana.keynotedex.backend.dao.KeynotedexStorage
-import freemarker.cache.ClassTemplateLoader
-import io.ktor.application.Application
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.auth.Authentication
-import io.ktor.content.resource
-import io.ktor.content.static
+import es.guillermoorellana.keynotedex.backend.data.*
+import freemarker.cache.*
+import io.ktor.application.*
+import io.ktor.auth.*
+import io.ktor.content.*
 import io.ktor.features.*
-import io.ktor.freemarker.FreeMarker
-import io.ktor.freemarker.FreeMarkerContent
-import io.ktor.gson.gson
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
-import io.ktor.locations.Locations
-import io.ktor.locations.get
-import io.ktor.response.respond
-import io.ktor.routing.Route
-import io.ktor.routing.Routing
-import io.ktor.routing.accept
-import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
-import io.ktor.sessions.Sessions
-import io.ktor.sessions.cookie
-import io.ktor.util.error
-import java.io.File
+import io.ktor.freemarker.*
+import io.ktor.gson.*
+import io.ktor.http.*
+import io.ktor.locations.*
+import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.sessions.*
+import io.ktor.util.*
+import java.io.*
 
 class Keynotedex
 

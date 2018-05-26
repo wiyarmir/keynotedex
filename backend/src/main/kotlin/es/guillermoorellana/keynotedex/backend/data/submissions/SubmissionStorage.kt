@@ -1,6 +1,6 @@
-package es.guillermoorellana.keynotedex.backend.dao.submissions
+package es.guillermoorellana.keynotedex.backend.data.submissions
 
-import java.io.Closeable
+import java.io.*
 
 interface SubmissionStorage : Closeable {
     fun submissionById(submissionId: String): Submission?

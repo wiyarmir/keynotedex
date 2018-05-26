@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.backend.dao.users
+package es.guillermoorellana.keynotedex.backend.data.users
 
 import es.guillermoorellana.keynotedex.dto.User as DtoUser
 

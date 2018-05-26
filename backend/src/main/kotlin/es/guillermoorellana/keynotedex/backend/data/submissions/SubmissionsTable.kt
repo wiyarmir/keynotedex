@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.backend.dao.submissions
+package es.guillermoorellana.keynotedex.backend.data.submissions
 
 import org.jetbrains.squash.definition.*
 

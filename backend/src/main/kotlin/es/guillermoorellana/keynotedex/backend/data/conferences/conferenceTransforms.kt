@@ -1,7 +1,6 @@
-package es.guillermoorellana.keynotedex.backend.dao.conferences
+package es.guillermoorellana.keynotedex.backend.data.conferences
 
-import org.jetbrains.squash.results.ResultRow
-import org.jetbrains.squash.results.get
+import org.jetbrains.squash.results.*
 
 fun transformConference(it: ResultRow): Conference =
     Conference(

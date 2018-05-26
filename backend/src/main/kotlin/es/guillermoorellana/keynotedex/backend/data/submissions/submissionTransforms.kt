@@ -1,7 +1,6 @@
-package es.guillermoorellana.keynotedex.backend.dao.submissions
+package es.guillermoorellana.keynotedex.backend.data.submissions
 
-import org.jetbrains.squash.results.ResultRow
-import org.jetbrains.squash.results.get
+import org.jetbrains.squash.results.*
 import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
 
 fun transformSubmission(it: ResultRow): Submission =

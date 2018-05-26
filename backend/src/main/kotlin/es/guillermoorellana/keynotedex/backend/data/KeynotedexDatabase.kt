@@ -1,27 +1,16 @@
-package es.guillermoorellana.keynotedex.backend.dao
+package es.guillermoorellana.keynotedex.backend.data
 
-import es.guillermoorellana.keynotedex.backend.dao.conferences.ConferencesTable
-import es.guillermoorellana.keynotedex.backend.dao.conferences.transformConference
-import es.guillermoorellana.keynotedex.backend.dao.submissions.Submission
-import es.guillermoorellana.keynotedex.backend.dao.submissions.SubmissionsTable
-import es.guillermoorellana.keynotedex.backend.dao.submissions.transformSubmission
-import es.guillermoorellana.keynotedex.backend.dao.talks.TalksTable
-import es.guillermoorellana.keynotedex.backend.dao.users.User
-import es.guillermoorellana.keynotedex.backend.dao.users.UsersTable
-import es.guillermoorellana.keynotedex.backend.dao.users.transformUser
-import org.jetbrains.squash.connection.DatabaseConnection
-import org.jetbrains.squash.connection.transaction
-import org.jetbrains.squash.dialects.h2.H2Connection
-import org.jetbrains.squash.expressions.eq
-import org.jetbrains.squash.query.from
-import org.jetbrains.squash.query.where
-import org.jetbrains.squash.results.get
-import org.jetbrains.squash.schema.create
-import org.jetbrains.squash.statements.insertInto
-import org.jetbrains.squash.statements.set
-import org.jetbrains.squash.statements.update
-import org.jetbrains.squash.statements.values
-import java.io.File
+import es.guillermoorellana.keynotedex.backend.data.conferences.*
+import es.guillermoorellana.keynotedex.backend.data.submissions.*
+import es.guillermoorellana.keynotedex.backend.data.users.*
+import org.jetbrains.squash.connection.*
+import org.jetbrains.squash.dialects.h2.*
+import org.jetbrains.squash.expressions.*
+import org.jetbrains.squash.query.*
+import org.jetbrains.squash.results.*
+import org.jetbrains.squash.schema.*
+import org.jetbrains.squash.statements.*
+import java.io.*
 
 class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryConnection()) : KeynotedexStorage {
     constructor(dir: File) : this(H2Connection.create("jdbc:h2:file:${dir.canonicalFile.absolutePath}"))
@@ -30,7 +19,6 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
         db.transaction {
             databaseSchema().create(
                 ConferencesTable,
-                TalksTable,
                 UsersTable,
                 SubmissionsTable
             )
