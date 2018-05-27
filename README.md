@@ -1,3 +1,5 @@
+![](https://circleci.com/gh/wiyarmir/keynotedex.svg?style=shield&circle-token=72ac43ae5f62b6afd03c960360f46d573d852f0b)
+
 # Keynotedex
 
 Pure Kotlin implementation of a platform to save, track and share conference submissions.
