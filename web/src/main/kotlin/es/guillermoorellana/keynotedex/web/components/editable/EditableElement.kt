@@ -28,7 +28,7 @@ abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProp
 
     override fun componentDidUpdate(prevProps: EditableElementProps, prevState: EditableElementState) {
         if (state.editing && !prevState.editing) {
-            val element: T = findDOMNode(refs) as T
+            val element: T = findDOMNode(refs).unsafeCast<T>()
             element.focus()
             selectInputText(element)
         }
