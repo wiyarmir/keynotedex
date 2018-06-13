@@ -2,7 +2,15 @@
 
 # Keynotedex
 
-Pure Kotlin implementation of a platform to save, track and share conference submissions. This currently includes a backend exposing an API, and a web frontend.
+Multiplatform Kotlin implementation of a service to save, track and share conference submissions.
+
+| Platform | Status |
+|----------|--------|
+| API      |   ✅   |
+| Backend  |   ✅   |
+| Web      |   ✅   |
+| Android  |   😶   |
+| iOS      |   😶   |
 
 ## Building the project
 
