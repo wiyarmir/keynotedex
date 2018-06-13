@@ -4,7 +4,3 @@ include 'common-jvm'
 include 'common-js'
 include 'backend'
 include 'web'
-
-if (INCLUDE_ANDROID == "true") {
-    include 'android', 'android:app'
-}
