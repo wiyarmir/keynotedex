@@ -70,7 +70,7 @@ For the frontend, it's enough to execute the original run task with `-t` flag.
 
 ## Deployment
 
-There is a `Procfile` that will JustWork(TM) on Heroku or Herokuish environments (think [Dokku](https://github.com/dokku/dokku)).
+There is a `Procfile` that will JustWork™️ on Heroku or Herokuish environments (think [Dokku](https://github.com/dokku/dokku)).
 
 ## Contributing
 
