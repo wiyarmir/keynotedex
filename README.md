@@ -1,4 +1,4 @@
-![CircleCI Badge](https://circleci.com/gh/wiyarmir/keynotedex.svg?style=shield&circle-token=72ac43ae5f62b6afd03c960360f46d573d852f0b)
+[![CircleCI Badge](https://circleci.com/gh/wiyarmir/keynotedex.svg?style=shield&circle-token=72ac43ae5f62b6afd03c960360f46d573d852f0b)](https://circleci.com/gh/wiyarmir/keynotedex)
 
 # Keynotedex
 
