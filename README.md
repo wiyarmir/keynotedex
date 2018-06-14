@@ -45,7 +45,7 @@ This will start serving the app in port 9090 by default.
 If you want to run the frontend development server as well, you can execute:
 
 ```bash
-$./gradlew web:run
+$ ./gradlew web:run
 ```
 
 This will start the webpack development server in port 8080, and proxy all calls to files it doesn't know to port 9090.
@@ -57,7 +57,7 @@ This will start the webpack development server in port 8080, and proxy all calls
 In backend, Ktor supports hot reloading, but since the task serving the app is kept alive, you need to execute in a separate console:
 
 ```bash
-./gradlew backend:classes -t
+$ ./gradlew backend:classes -t
 ```
 
 This will recompilate classes on file changes, and Ktor will detect it and reload them on the next request it serves.
@@ -65,7 +65,7 @@ This will recompilate classes on file changes, and Ktor will detect it and reloa
 For the frontend, it's enough to execute the original run task with `-t` flag.
 
 ```bash
-./gradlew web:run -t
+$ ./gradlew web:run -t
 ```
 
 ## Deployment
