@@ -12,6 +12,10 @@ Multiplatform Kotlin implementation of a service to save, track and share confer
 | Android  |   😶   |
 | iOS      |   😶   |
 
+### As featured in my talk "Kotlin beyond Android"
+
+- Slides: https://speakerdeck.com/wiyarmir/kotlin-beyond-android/
+
 ## Building the project
 
 There is a Gradle task that will produce a JAR ready to go.
