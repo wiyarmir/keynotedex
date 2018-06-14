@@ -36,9 +36,7 @@ fun Application.keynotedex() {
         }
     }
 
-    install(Authentication) {
-        configureOAuth(this)
-    }
+//    install(Authentication) { configureOAuth(this) }
 
     install(Sessions) {
         cookie<Session>("SESSION") {

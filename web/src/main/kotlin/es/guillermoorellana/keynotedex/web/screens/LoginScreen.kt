@@ -112,9 +112,9 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
                 }
                 +"Register"
             }
-            a(href = "/login/github", classes = "btn btn-lg btn-dark btn-block") {
-                +"Login via GitHub"
-            }
+//            a(href = "/login/github", classes = "btn btn-lg btn-dark btn-block") {
+//                +"Login via GitHub"
+//            }
         }
     }
 
