@@ -36,7 +36,7 @@ fun Application.keynotedex() {
         }
     }
 
-//    install(Authentication) { configureOAuth(this) }
+    notInProduction { install(Authentication) { configureOAuth(this) } }
 
     install(Sessions) {
         cookie<Session>("SESSION") {
@@ -57,7 +57,7 @@ fun Application.keynotedex() {
     }
 
     install(Routing) {
-        oauth()
+        notInProduction { oauth() }
         api(storage)
         index()
     }
@@ -88,3 +88,7 @@ private fun Application.createStorage(): KeynotedexDatabase =
 
 fun Application.isDevelopment() =
     environment.config.propertyOrNull("ktor.deployment.environment")?.getString() == "development"
+
+fun Application.notInProduction(block: () -> Unit) {
+    if (isDevelopment()) block()
+}
