@@ -14,7 +14,7 @@ Multiplatform Kotlin implementation of a service to save, track and share confer
 
 ### As featured in my talk "Kotlin beyond Android"
 
-- Slides: https://speakerdeck.com/wiyarmir/kotlin-beyond-android/
+- Slides, video and more: https://speakerdex.co/wiyarmir/kotlin-beyond-android-770522b4
 
 ## Building the project
 
