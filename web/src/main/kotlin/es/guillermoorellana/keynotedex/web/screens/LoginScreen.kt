@@ -3,7 +3,7 @@ package es.guillermoorellana.keynotedex.web.screens
 import es.guillermoorellana.keynotedex.web.comms.*
 import es.guillermoorellana.keynotedex.web.external.*
 import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import kotlinx.html.*
 import kotlinx.html.js.*
 import org.w3c.dom.*
@@ -122,7 +122,7 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
         setState {
             disabled = true
         }
-        promise {
+        GlobalScope.promise {
             val user = login(state.login, state.password)
             loggedIn(user)
         }.catch { err -> loginFailed(err) }

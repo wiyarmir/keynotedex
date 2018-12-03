@@ -1,18 +1,14 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.web.comms.checkSession
-import es.guillermoorellana.keynotedex.web.components.navigation
-import es.guillermoorellana.keynotedex.web.external.browserRouter
-import es.guillermoorellana.keynotedex.web.external.route
-import es.guillermoorellana.keynotedex.web.external.switch
-import es.guillermoorellana.keynotedex.web.model.User
+import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.components.*
+import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.model.*
 import es.guillermoorellana.keynotedex.web.screens.*
-import kotlinx.coroutines.experimental.promise
-import kotlinx.html.main
+import kotlinx.coroutines.*
+import kotlinx.html.*
 import react.*
-import react.dom.div
-import react.dom.footer
-import react.dom.p
+import react.dom.*
 
 class Application : RComponent<RProps, ApplicationPageState>() {
 
@@ -61,7 +57,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
     }
 
     private fun checkUserSession() {
-        promise {
+        GlobalScope.promise {
             val user = checkSession()
             setState {
                 currentUser = user
