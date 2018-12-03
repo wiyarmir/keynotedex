@@ -51,5 +51,6 @@ private fun submission() = Submission(
     title = "Subheading",
     abstract = "Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.",
     type = "",
-    submittedTo = ""
+    submittedTo = "",
+    visibility = SubmissionVisibility.PUBLIC
 )
