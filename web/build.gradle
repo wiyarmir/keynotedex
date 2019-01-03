@@ -41,8 +41,8 @@ kotlinFrontend {
         dependency "react-markdown"
         dependency "jquery"
 
-        devDependency "babel-loader"
-        devDependency "babel-core"
+        devDependency "babel-loader", "7"
+        devDependency "babel-core", "6"
         devDependency "css-loader"
         devDependency "karma"
         devDependency "style-loader"
