@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.web.comms
 
-
 import es.guillermoorellana.keynotedex.api.*
 import es.guillermoorellana.keynotedex.dto.Submission
 import es.guillermoorellana.keynotedex.dto.User
@@ -34,7 +33,6 @@ suspend fun user(userId: String) =
     getAndParseResult(ApiPaths.user.replace("{userId}", userId), null, { parseUserResponse(it) })
         .toModel()
 
-
 suspend fun userProfile(userId: String) =
     getAndParseResult(ApiPaths.user.replace("{userId}", userId), null, { parseUserProfileResponse(it) })
         .toModel()
@@ -61,15 +59,13 @@ suspend fun login(userId: String, password: String) =
         { parseUserResponse(it) }
     ).toModel()
 
-suspend fun logoutUser() {
+suspend fun logoutUser() =
     window.fetch(
         ApiPaths.logout,
         object : RequestInit {
             override var method: String? = "POST"
             override var credentials: RequestCredentials? = RequestCredentials.SAME_ORIGIN
         })
-        .await()
-}
 
 suspend fun getSubmission(submissionId: String) =
     getAndParseResult(

@@ -5,9 +5,11 @@ import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
 import es.guillermoorellana.keynotedex.web.components.editable.get
 import es.guillermoorellana.keynotedex.web.components.submissions.submissions
+import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.model.User
 import es.guillermoorellana.keynotedex.web.model.UserProfile
 import react.*
+import react.dom.button
 import react.dom.div
 import react.dom.style
 
@@ -67,6 +69,12 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
                 }
             }
             submissions { attrs { submissions = profile.submissions } }
+            routeLink(to = "/logout") {
+                attrs {
+                    className = "btn btn-primary btn-lg"
+                }
+                +"Log out"
+            }
         }
     }
 

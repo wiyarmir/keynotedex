@@ -14,6 +14,7 @@ import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ConferenceResponse
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.LogoutResponse
 import es.guillermoorellana.keynotedex.responses.SubmissionResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 import io.ktor.application.ApplicationCall
@@ -42,6 +43,7 @@ fun Route.api(dao: KeynotedexStorage) {
     apiGetUser(dao, dao)
 
     apiPostLogin(dao)
+    apiPostLogout(dao)
     apiPostRegister(dao)
 
     apiPutUser(dao, dao)
@@ -157,6 +159,15 @@ private fun Route.apiPostLogin(userStorage: UserStorage) {
                     call.respond(LoginResponse(login.toDto()))
                 }
             }
+        }
+    }
+}
+
+private fun Route.apiPostLogout(userStorage: UserStorage) {
+    accept(ContentType.Application.Json) {
+        post<LogoutEndpoint> {
+            call.sessions.set<Session>(null)
+            call.respond(LogoutResponse())
         }
     }
 }
