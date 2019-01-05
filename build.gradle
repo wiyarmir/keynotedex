@@ -1,5 +1,5 @@
 group = 'es.guillermoorellana.keynotedex'
-version = '0.0.1-SNAPSHOT'
+version = keynotedexVersion
 
 subprojects { p ->
     p.buildscript {
