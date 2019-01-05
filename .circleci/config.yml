@@ -54,6 +54,16 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            ssh-keyscan -H dev.wiyarmir.es >> ~/.ssh/known_hosts
+            git push $HEROKU_URL master
 
 #  ktlint:
 #    <<: *defaults
@@ -75,7 +85,14 @@ jobs:
 
 workflows:
   version: 2
-  test_and_ktlint:
+  pr-checks:
     jobs:
       - build
       - tests
+      - deploy:
+          requires:
+            - build
+            - tests
+          filters:
+            branches:
+              only: master

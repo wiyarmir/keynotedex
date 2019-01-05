@@ -1,10 +1,10 @@
 package es.guillermoorellana.keynotedex.web.components.editable
 
-import es.guillermoorellana.keynotedex.web.screens.inputValue
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.events.Event
+import es.guillermoorellana.keynotedex.web.screens.*
+import org.w3c.dom.*
+import org.w3c.dom.events.*
 import react.*
-import react.dom.findDOMNode
+import react.dom.*
 
 abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProps, EditableElementState>() {
 
@@ -26,7 +26,7 @@ abstract class EditableElement<T : HTMLElement> : RComponent<EditableElementProp
         }
     }
 
-    override fun componentDidUpdate(prevProps: EditableElementProps, prevState: EditableElementState) {
+    override fun componentDidUpdate(prevProps: EditableElementProps, prevState: EditableElementState, snapshot: Any) {
         if (state.editing && !prevState.editing) {
             val element: T = findDOMNode(refs).unsafeCast<T>()
             element.focus()

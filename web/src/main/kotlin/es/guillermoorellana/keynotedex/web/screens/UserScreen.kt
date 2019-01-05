@@ -1,14 +1,13 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.updateUserProfile
-import es.guillermoorellana.keynotedex.web.comms.userProfile
-import es.guillermoorellana.keynotedex.web.components.profile.editableProfile
-import es.guillermoorellana.keynotedex.web.external.RouteResultProps
-import es.guillermoorellana.keynotedex.web.loading
-import es.guillermoorellana.keynotedex.web.model.UserProfile
-import kotlinx.coroutines.experimental.promise
+import es.guillermoorellana.keynotedex.web.*
+import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.components.profile.*
+import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.model.*
+import kotlinx.coroutines.*
 import react.*
-import react.dom.div
+import react.dom.*
 
 class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
 
@@ -46,7 +45,7 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
 
     private fun fetchUserProfileFromProps(props: RouteResultProps<UserProps>) {
         val userId = props.match.params.userId
-        promise {
+        GlobalScope.promise {
             val user = userProfile(userId)
             setState {
                 this.userProfile = user
@@ -57,7 +56,7 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
     }
 
     private fun postUserProfile(userProfile: UserProfile) {
-        promise {
+        GlobalScope.promise {
             val updatedUserProfile = updateUserProfile(userProfile)
             setState {
                 this.userProfile = updatedUserProfile

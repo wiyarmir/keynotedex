@@ -4,11 +4,11 @@ import es.guillermoorellana.keynotedex.backend.data.*
 import freemarker.cache.*
 import io.ktor.application.*
 import io.ktor.auth.*
-import io.ktor.content.*
 import io.ktor.features.*
 import io.ktor.freemarker.*
 import io.ktor.gson.*
 import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.locations.*
 import io.ktor.response.*
 import io.ktor.routing.*
