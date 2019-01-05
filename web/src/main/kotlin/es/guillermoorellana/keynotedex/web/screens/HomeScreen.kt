@@ -1,20 +1,15 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.components.submissions.submissionPreview
-import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.Submission
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
-import react.dom.div
-import react.dom.h1
-import react.dom.p
+import es.guillermoorellana.keynotedex.web.components.submissions.*
+import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.model.*
+import react.*
+import react.dom.*
 
 class HomeScreen : RComponent<RProps, RState>() {
 
     private val jumboHeading = "All about talks"
-    private val lead = "Share here the talk you will give, the talk you want to give and the talk you have given."
+    private val lead = "Share here the talk you want to do, the talk you will do and the talk you have done."
 
     override fun RBuilder.render() {
         div {
@@ -56,5 +51,6 @@ private fun submission() = Submission(
     title = "Subheading",
     abstract = "Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.",
     type = "",
-    submittedTo = ""
+    submittedTo = "",
+    visibility = SubmissionVisibility.PUBLIC
 )

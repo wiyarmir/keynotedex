@@ -12,7 +12,7 @@ import react.*
 import react.dom.*
 
 //language=CSS
-const val css = """
+private const val css = """
 .form-signin {
   max-width: 330px;
   padding: 15px;

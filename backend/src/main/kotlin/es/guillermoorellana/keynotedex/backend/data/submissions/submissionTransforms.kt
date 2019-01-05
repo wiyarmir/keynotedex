@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.data.submissions
 
+import es.guillermoorellana.keynotedex.dto.SubmissionVisibility.*
 import org.jetbrains.squash.results.*
 import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
 
@@ -16,5 +17,6 @@ fun Submission.toDto() = DtoSubmission(
     submissionId = id,
     title = title,
     abstract = abstract,
-    userId = submitterId
+    userId = submitterId,
+    visibility = if (isPublic) PUBLIC else PRIVATE
 )

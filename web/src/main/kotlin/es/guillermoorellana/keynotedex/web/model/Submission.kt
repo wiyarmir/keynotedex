@@ -1,6 +1,7 @@
 package es.guillermoorellana.keynotedex.web.model
 
 import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
+import es.guillermoorellana.keynotedex.dto.SubmissionVisibility as DtoSubmissionVisibility
 
 data class Submission(
     val submissionId: String,
@@ -8,8 +9,18 @@ data class Submission(
     val title: String,
     val abstract: String,
     val type: String,
-    val submittedTo: String
+    val submittedTo: String,
+    val visibility: SubmissionVisibility
 )
+
+enum class SubmissionVisibility {
+    PUBLIC, PRIVATE
+}
+
+fun SubmissionVisibility.string() = when (this) {
+    SubmissionVisibility.PUBLIC -> "public"
+    SubmissionVisibility.PRIVATE -> "private"
+}
 
 fun DtoSubmission.toModel() = Submission(
     submissionId = submissionId,
@@ -17,7 +28,11 @@ fun DtoSubmission.toModel() = Submission(
     title = title,
     abstract = abstract ?: "",
     type = type ?: "",
-    submittedTo = submittedTo ?: ""
+    submittedTo = submittedTo ?: "",
+    visibility = when (visibility) {
+        DtoSubmissionVisibility.PRIVATE -> SubmissionVisibility.PRIVATE
+        DtoSubmissionVisibility.PUBLIC -> SubmissionVisibility.PUBLIC
+    }
 )
 
 fun List<DtoSubmission>.toModel(): List<Submission> = map(DtoSubmission::toModel)

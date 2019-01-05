@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.dto
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class Submission(
@@ -9,5 +9,10 @@ data class Submission(
     val title: String,
     val abstract: String? = null,
     val type: String? = null,
-    val submittedTo: String? = null
+    val submittedTo: String? = null,
+    val visibility: SubmissionVisibility
 )
+
+enum class SubmissionVisibility {
+    PRIVATE, PUBLIC
+}

@@ -1,13 +1,32 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.*
-import es.guillermoorellana.keynotedex.web.comms.*
-import es.guillermoorellana.keynotedex.web.components.editable.*
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.coroutines.*
-import react.*
-import react.dom.*
+import es.guillermoorellana.keynotedex.web.comms.getSubmission
+import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
+import es.guillermoorellana.keynotedex.web.components.editable.editableText
+import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
+import es.guillermoorellana.keynotedex.web.components.editable.get
+import es.guillermoorellana.keynotedex.web.external.RouteResultProps
+import es.guillermoorellana.keynotedex.web.loading
+import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.string
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.promise
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.button
+import react.dom.div
+import react.dom.h3
+import react.dom.hr
+import react.dom.legend
+import react.dom.p
+import react.dom.style
+import react.setState
+
+private const val css = """
+
+"""
 
 class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, SubmissionViewState>() {
 
@@ -16,28 +35,31 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
     }
 
     override fun RBuilder.render() {
+        style { +css }
         div("container") {
-            loading(state.submission) {
-                with(it) {
-                    h3 {
-                        editableText {
-                            attrs {
-                                value = title
-                                propName = "title"
-                                change = { chg: ChangeEvent -> onChangeEvent(chg) }
-                            }
-                        }
-                    }
-                    editableTextArea {
+            loading(state.submission) { sub ->
+                legend { +"This talk is ${sub.visibility.string()}." }
+                button(classes = "btn btn-primary btn-lg") { +"Make not ${sub.visibility.string()}" }
+
+                hr { }
+                h3 {
+                    editableText {
                         attrs {
-                            value = abstract
-                            propName = "abstract"
+                            value = sub.title
+                            propName = "title"
                             change = { chg: ChangeEvent -> onChangeEvent(chg) }
                         }
                     }
-                    type.let { if (it.isNotEmpty()) p { +"Type $it" } }
-                    submittedTo.let { if (it.isNotEmpty()) p { +"Submitted to $it" } }
                 }
+                editableTextArea {
+                    attrs {
+                        value = sub.abstract
+                        propName = "abstract"
+                        change = { chg: ChangeEvent -> onChangeEvent(chg) }
+                    }
+                }
+                sub.type.let { if (it.isNotEmpty()) p { +"Type $it" } }
+                sub.submittedTo.let { if (it.isNotEmpty()) p { +"Submitted to $it" } }
             }
         }
     }
@@ -62,10 +84,6 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
         }.catch {
             console.error(it)
         }
-    }
-
-    companion object {
-        const val route = "/:userId/:submissionId"
     }
 }
 
