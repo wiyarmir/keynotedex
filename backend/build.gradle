@@ -56,7 +56,9 @@ dependencies {
 
     compile Libs.ehcache
 
-    compile Libs.squashH2
+    compile(Libs.squashH2){
+        exclude group: "org.jetbrains.kotlin"
+    }
 
     testCompile Libs.kotlinTestJunit
     testCompile Libs.ktorServerTestHost
@@ -73,7 +75,6 @@ compileKotlin {
 
 kotlin {
     experimental {
-        coroutines "enable"
     }
 }
 

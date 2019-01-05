@@ -9,7 +9,7 @@ object Versions {
     const val kotlin_js_ext = "1.0.1-pre.61-kotlin-1.3.0"
     const val kotlin_wrapper = "16.6.0-pre.61-kotlin-1.3.0"
     const val kotlinx_coroutines = "1.0.1"
-    const val ktor = "1.0.0"
+    const val ktor = "1.1.1"
     const val logback = "1.2.1"
     const val node = "8.11.2"
     const val serialization = "0.9.1"

@@ -1,21 +1,39 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.data.*
-import es.guillermoorellana.keynotedex.backend.data.conferences.*
-import es.guillermoorellana.keynotedex.backend.data.submissions.*
-import es.guillermoorellana.keynotedex.backend.data.users.*
-import es.guillermoorellana.keynotedex.requests.*
-import es.guillermoorellana.keynotedex.responses.*
-import io.ktor.application.*
-import io.ktor.http.*
-import io.ktor.locations.*
-import io.ktor.pipeline.*
-import io.ktor.request.*
-import io.ktor.response.*
+import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
+import es.guillermoorellana.keynotedex.backend.data.conferences.ConferenceStorage
+import es.guillermoorellana.keynotedex.backend.data.conferences.toDto
+import es.guillermoorellana.keynotedex.backend.data.submissions.Submission
+import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
+import es.guillermoorellana.keynotedex.backend.data.submissions.toDto
+import es.guillermoorellana.keynotedex.backend.data.users.User
+import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
+import es.guillermoorellana.keynotedex.backend.data.users.toDao
+import es.guillermoorellana.keynotedex.backend.data.users.toDto
+import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.responses.ConferenceResponse
+import es.guillermoorellana.keynotedex.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.SubmissionResponse
+import es.guillermoorellana.keynotedex.responses.UserProfileResponse
+import io.ktor.application.ApplicationCall
+import io.ktor.application.application
+import io.ktor.application.call
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.locations.get
+import io.ktor.locations.post
+import io.ktor.locations.put
+import io.ktor.request.receive
+import io.ktor.request.receiveParameters
+import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 import io.ktor.routing.contentType
-import io.ktor.sessions.*
+import io.ktor.sessions.get
+import io.ktor.sessions.sessions
+import io.ktor.sessions.set
+import io.ktor.util.pipeline.PipelineContext
 
 fun Route.api(dao: KeynotedexStorage) {
     apiGetConference(dao)
