@@ -8,9 +8,9 @@ repositories {
 dependencies {
     expectedBy project(":common")
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$serialization_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+    compile Libs.kotlinStdlibJs
+    compile Libs.kotlinxSerializationRuntimeJs
+    testCompile Libs.kotlinTestJs
 }
 
 [compileKotlin2Js, compileTestKotlin2Js]*.configure {
