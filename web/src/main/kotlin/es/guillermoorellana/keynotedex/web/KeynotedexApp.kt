@@ -27,6 +27,14 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                     attrs { role = "main" }
                     switch {
                         route("/", HomeScreen::class, exact = true)
+                        route("/logout", exact = true) {
+                            logout {
+                                attrs {
+                                    currentUser = state.currentUser
+                                    nukeCurrentUser = { setState { currentUser = null } }
+                                }
+                            }
+                        }
                         route("/login", exact = true) {
                             login {
                                 attrs {
