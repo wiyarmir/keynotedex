@@ -73,11 +73,6 @@ compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-kotlin {
-    experimental {
-    }
-}
-
 task releaseJar(type: ShadowJar) {
     manifest {
         attributes "Main-Class": mainClassName

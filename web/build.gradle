@@ -66,9 +66,3 @@ compileKotlin2Js {
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = "call"
 }
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
