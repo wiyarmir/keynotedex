@@ -12,27 +12,27 @@ repositories {
 dependencies {
     compile project(":common-js")
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+    compile Libs.kotlinStdlibJs
+    testCompile Libs.kotlinTestJs
 
-    compile "org.jetbrains.kotlinx:kotlinx-html-js:$html_version"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$kotlinx_coroutines_version"
+    compile Libs.kotlinxHtmlJs
+    compile Libs.kotlinxCoroutinesCoreJs
 
-    compile "org.jetbrains:kotlin-extensions:$kotlin_js_ext_version"
-    compile "org.jetbrains:kotlin-react:$kotlin_wrapper_version"
-    compile "org.jetbrains:kotlin-react-dom:$kotlin_wrapper_version"
+    compile Libs.kotlinExtensions
+    compile Libs.kotlinReact
+    compile Libs.kotlinReactDom
 }
 
 kotlinFrontend {
 
-    downloadNodeJsVersion = "8.11.2"
+    downloadNodeJsVersion = Versions.node
 
     sourceMaps = false
 
     npm {
-        replaceVersion "kotlinx-html-js", "$kotlin_version"
-        replaceVersion "kotlinx-html-shared", "$kotlin_version"
-        replaceVersion "kotlin-js-library", "$kotlin_version"
+        replaceVersion "kotlinx-html-js", Versions.kotlin
+        replaceVersion "kotlinx-html-shared", Versions.kotlin
+        replaceVersion "kotlin-js-library", Versions.kotlin
 
         dependency "react", "16.3.1"
         dependency "react-dom"

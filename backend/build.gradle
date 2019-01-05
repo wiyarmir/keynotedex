@@ -43,28 +43,28 @@ configurations {
 
 dependencies {
     compile project(":common-jvm")
+    
+    compile Libs.kotlinStdlib
+    compile Libs.kotlinReflect
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile Libs.ktorLocations
+    compile Libs.ktorGson
+    compile Libs.ktorFreemaker
+    compile Libs.ktorHtmlBuilder
+    compile Libs.ktorServerNetty
+    compile Libs.ktorClientApache
 
-    compile "io.ktor:ktor-locations:$ktor_version"
-    compile "io.ktor:ktor-gson:$ktor_version"
-    compile "io.ktor:ktor-freemarker:$ktor_version"
-    compile "io.ktor:ktor-html-builder:$ktor_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "io.ktor:ktor-client-apache:$ktor_version"
+    compile Libs.ehcache
 
-    compile "org.ehcache:ehcache:3.6.1"
+    compile Libs.squashH2
 
-    compile "org.jetbrains.squash:squash-h2:$squash_version"
+    testCompile Libs.kotlinTestJunit
+    testCompile Libs.ktorServerTestHost
+    testCompile Libs.jsoup
 
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-    testCompile "io.ktor:ktor-server-test-host:$ktor_version"
-    testCompile "org.jsoup:jsoup:1.9.1"
-
-    compile "com.google.code.gson:gson:2.8.0"
-    compile "ch.qos.logback:logback-classic:1.2.1"
-    compile "com.github.kittinunf.fuel:fuel:1.11.0"
+    compile Libs.gson
+    compile Libs.logbackClassic
+    compile Libs.fuel
 }
 
 compileKotlin {
