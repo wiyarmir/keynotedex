@@ -1,16 +1,26 @@
 package es.guillermoorellana.keynotedex.web.comms
 
-import es.guillermoorellana.keynotedex.api.*
+import es.guillermoorellana.keynotedex.api.ApiPaths
 import es.guillermoorellana.keynotedex.dto.Submission
 import es.guillermoorellana.keynotedex.dto.User
-import es.guillermoorellana.keynotedex.responses.*
-import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.coroutines.*
-import kotlinx.serialization.*
-import org.w3c.dom.url.*
-import org.w3c.fetch.*
-import kotlin.browser.*
-import kotlin.js.*
+import es.guillermoorellana.keynotedex.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.responses.SubmissionResponse
+import es.guillermoorellana.keynotedex.responses.UserProfileResponse
+import es.guillermoorellana.keynotedex.responses.UserResponse
+import es.guillermoorellana.keynotedex.web.model.UserProfile
+import es.guillermoorellana.keynotedex.web.model.toModel
+import es.guillermoorellana.keynotedex.web.model.toUpdateRequest
+import kotlinx.coroutines.await
+import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
+import org.w3c.dom.url.URLSearchParams
+import org.w3c.fetch.RequestCredentials
+import org.w3c.fetch.RequestInit
+import org.w3c.fetch.Response
+import org.w3c.fetch.SAME_ORIGIN
+import kotlin.browser.window
+import kotlin.js.json
 import kotlinx.serialization.json.JSON as KJSON
 
 suspend fun register(
@@ -66,6 +76,7 @@ suspend fun logoutUser() =
             override var method: String? = "POST"
             override var credentials: RequestCredentials? = RequestCredentials.SAME_ORIGIN
         })
+        .await()
 
 suspend fun getSubmission(submissionId: String) =
     getAndParseResult(

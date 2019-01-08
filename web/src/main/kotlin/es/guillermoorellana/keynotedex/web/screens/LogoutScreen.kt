@@ -10,16 +10,13 @@ import react.RComponent
 import react.RHandler
 import react.RProps
 import react.RState
-import react.setState
 
 class LogoutScreen : RComponent<LogoutProps, RState>() {
 
     override fun componentDidMount() {
         GlobalScope.launch {
             logoutUser()
-                .then {
-                    props.nukeCurrentUser()
-                }
+            props.nukeCurrentUser()
         }
     }
 
