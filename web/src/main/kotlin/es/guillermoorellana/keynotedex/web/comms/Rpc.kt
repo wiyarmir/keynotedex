@@ -3,6 +3,7 @@ package es.guillermoorellana.keynotedex.web.comms
 import es.guillermoorellana.keynotedex.api.ApiPaths
 import es.guillermoorellana.keynotedex.dto.Submission
 import es.guillermoorellana.keynotedex.dto.User
+import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import es.guillermoorellana.keynotedex.responses.SubmissionResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
@@ -11,8 +12,6 @@ import es.guillermoorellana.keynotedex.web.model.UserProfile
 import es.guillermoorellana.keynotedex.web.model.toModel
 import es.guillermoorellana.keynotedex.web.model.toUpdateRequest
 import kotlinx.coroutines.await
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.w3c.dom.url.URLSearchParams
 import org.w3c.fetch.RequestCredentials
 import org.w3c.fetch.RequestInit
@@ -48,7 +47,7 @@ suspend fun userProfile(userId: String) =
 
 suspend fun updateUserProfile(userProfile: UserProfile): UserProfile {
     val userId = userProfile.user.userId
-    val body = KJSON.stringify(userProfile.toUpdateRequest())
+    val body = KJSON.stringify(UserProfileUpdateRequest.serializer(), userProfile.toUpdateRequest())
     return putAndParseResult(ApiPaths.user.replace("{userId}", userId), body, { parseUserProfileResponse(it) })
         .toModel()
 }
@@ -87,11 +86,11 @@ private suspend fun parseUserResponse(response: Response): User {
     val responseText = response.text().await()
     when {
         response.ok -> {
-            val userResponse: UserResponse = KJSON.parse(responseText)
+            val userResponse: UserResponse = KJSON.parse(UserResponse.serializer(), responseText)
             return userResponse.user
         }
         else -> {
-            val errorResponse: ErrorResponse = KJSON.parse(responseText)
+            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), responseText)
             throw LoginOrRegisterFailedException(errorResponse)
         }
     }
@@ -101,10 +100,10 @@ private suspend fun parseUserProfileResponse(response: Response): UserProfileRes
     val responseText = response.text().await()
     when {
         response.ok -> {
-            return KJSON.parse(responseText)
+            return KJSON.parse(UserProfileResponse.serializer(), responseText)
         }
         else -> {
-            val errorResponse: ErrorResponse = KJSON.parse(responseText)
+            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), responseText)
             throw LoginOrRegisterFailedException(errorResponse)
         }
     }
@@ -114,11 +113,11 @@ private suspend fun parseSubmissionResponse(response: Response): Submission {
     val responseText = response.text().await()
     when {
         response.ok -> {
-            val submissionResponse: SubmissionResponse = KJSON.parse(responseText)
+            val submissionResponse: SubmissionResponse = KJSON.parse(SubmissionResponse.serializer(), responseText)
             return submissionResponse.submission
         }
         else -> {
-            val errorResponse: ErrorResponse = KJSON.parse(responseText)
+            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), responseText)
             throw LoginOrRegisterFailedException(errorResponse)
         }
     }
