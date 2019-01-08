@@ -1,6 +1,9 @@
+@file:UseExperimental(KtorExperimentalLocationsAPI::class)
+
 package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.api.ApiPaths
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Location
 
 @Location("/{trail...}")
