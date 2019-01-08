@@ -1,15 +1,20 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.*
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.coroutines.*
-import kotlinx.html.*
-import kotlinx.html.js.*
-import org.w3c.dom.*
-import org.w3c.dom.events.*
-import react.*
-import react.dom.*
+import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
+import es.guillermoorellana.keynotedex.web.external.redirect
+import es.guillermoorellana.keynotedex.web.model.User
+import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.HTMLTextAreaElement
+import org.w3c.dom.events.Event
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
+import react.dom.a
+import react.dom.div
+import react.dom.style
+import react.setState
 
 //language=CSS
 private const val css = """
@@ -59,73 +64,11 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
             redirect("/${props.currentUser!!.userId}") {}
             return
         }
-        form(classes = "form-signin") {
-            attrs {
-                onSubmitFunction = {
-                    it.preventDefault()
-                    doLogin()
-                }
+        div(classes = "form-signin") {
+            a(href = "/login/github", classes = "btn btn-lg btn-dark btn-block") {
+                +"Login via GitHub"
             }
-            h2("form-signin-heading") { +"Welcome back!" }
-            label(classes = "sr-only") {
-                attrs { htmlFor = "inputEmail" }
-                +"Email address"
-            }
-            input(type = InputType.text, classes = "form-control") {
-                attrs {
-                    id = "inputEmail"
-                    placeholder = "Email"
-                    required = true
-                    autoFocus = true
-                    value = state.login
-                    disabled = state.disabled
-                    onChangeFunction = { event ->
-                        val value = event.inputValue
-                        setState {
-                            login = value
-                        }
-                    }
-                }
-            }
-            label("sr-only") {
-                attrs { htmlFor = "inputPassword" }
-            }
-            input(type = InputType.password, classes = "form-control") {
-                attrs {
-                    id = "inputPassword"
-                    placeholder = "Password"
-                    required = true
-                    value = state.password
-                    disabled = state.disabled
-                    onChangeFunction = { event ->
-                        val value = event.inputValue
-                        setState {
-                            password = value
-                        }
-                    }
-                }
-            }
-            button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign in" }
-            routeLink("/register") {
-                attrs {
-                    className = "btn btn-lg btn-secondary btn-block"
-                }
-                +"Register"
-            }
-//            a(href = "/login/github", classes = "btn btn-lg btn-dark btn-block") {
-//                +"Login via GitHub"
-//            }
         }
-    }
-
-    private fun doLogin() {
-        setState {
-            disabled = true
-        }
-        GlobalScope.promise {
-            val user = login(state.login, state.password)
-            loggedIn(user)
-        }.catch { err -> loginFailed(err) }
     }
 
     private fun loggedIn(user: User) {
