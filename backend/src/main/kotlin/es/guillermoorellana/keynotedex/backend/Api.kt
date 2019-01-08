@@ -1,3 +1,5 @@
+@file:UseExperimental(KtorExperimentalLocationsAPI::class)
+
 package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
@@ -22,6 +24,7 @@ import io.ktor.application.application
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.get
 import io.ktor.locations.post
 import io.ktor.locations.put
@@ -43,7 +46,7 @@ fun Route.api(dao: KeynotedexStorage) {
     apiGetUser(dao, dao)
 
     apiPostLogin(dao)
-    apiPostLogout(dao)
+    apiPostLogout()
     apiPostRegister(dao)
 
     apiPutUser(dao, dao)
@@ -163,7 +166,7 @@ private fun Route.apiPostLogin(userStorage: UserStorage) {
     }
 }
 
-private fun Route.apiPostLogout(userStorage: UserStorage) {
+private fun Route.apiPostLogout() {
     accept(ContentType.Application.Json) {
         post<LogoutEndpoint> {
             call.sessions.set<Session>(null)

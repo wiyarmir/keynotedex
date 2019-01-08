@@ -11,7 +11,6 @@ import es.guillermoorellana.keynotedex.web.model.UserProfile
 import es.guillermoorellana.keynotedex.web.model.toModel
 import es.guillermoorellana.keynotedex.web.model.toUpdateRequest
 import kotlinx.coroutines.await
-import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.parse
 import kotlinx.serialization.stringify
 import org.w3c.dom.url.URLSearchParams
@@ -47,7 +46,6 @@ suspend fun userProfile(userId: String) =
     getAndParseResult(ApiPaths.user.replace("{userId}", userId), null, { parseUserProfileResponse(it) })
         .toModel()
 
-@UseExperimental(ImplicitReflectionSerializer::class)
 suspend fun updateUserProfile(userProfile: UserProfile): UserProfile {
     val userId = userProfile.user.userId
     val body = KJSON.stringify(userProfile.toUpdateRequest())
@@ -85,7 +83,6 @@ suspend fun getSubmission(submissionId: String) =
         { parseSubmissionResponse(it) })
         .toModel()
 
-@UseExperimental(ImplicitReflectionSerializer::class)
 private suspend fun parseUserResponse(response: Response): User {
     val responseText = response.text().await()
     when {
@@ -100,7 +97,6 @@ private suspend fun parseUserResponse(response: Response): User {
     }
 }
 
-@UseExperimental(ImplicitReflectionSerializer::class)
 private suspend fun parseUserProfileResponse(response: Response): UserProfileResponse {
     val responseText = response.text().await()
     when {
@@ -114,7 +110,6 @@ private suspend fun parseUserProfileResponse(response: Response): UserProfileRes
     }
 }
 
-@UseExperimental(ImplicitReflectionSerializer::class)
 private suspend fun parseSubmissionResponse(response: Response): Submission {
     val responseText = response.text().await()
     when {
