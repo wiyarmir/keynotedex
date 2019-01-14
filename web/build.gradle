@@ -47,6 +47,7 @@ kotlinFrontend {
         devDependency "karma"
         devDependency "style-loader"
         devDependency "source-map-loader"
+        devDependency "html-loader"
     }
 
     webpackBundle {
