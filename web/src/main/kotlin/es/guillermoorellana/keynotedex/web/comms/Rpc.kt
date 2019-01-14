@@ -33,23 +33,22 @@ suspend fun register(
         append("password", password)
         append("displayName", displayName)
         append("email", email)
-    },
-    { parseUserProfileResponse(it).user }
-)
+    }
+) { parseUserProfileResponse(it).user }
 
 suspend fun userProfile(userId: String) =
-    getAndParseResult(Api.V1.Paths.user.replace("{userId}", userId), null, { parseUserProfileResponse(it) })
+    getAndParseResult(Api.V1.Paths.user.replace("{userId}", userId), null) { parseUserProfileResponse(it) }
         .toModel()
 
 suspend fun updateUserProfile(userProfile: UserProfile): UserProfile {
     val userId = userProfile.user.userId
     val body = KJSON.stringify(UserProfileUpdateRequest.serializer(), userProfile.toUpdateRequest())
-    return putAndParseResult(Api.V1.Paths.user.replace("{userId}", userId), body, { parseUserProfileResponse(it) })
+    return putAndParseResult(Api.V1.Paths.user.replace("{userId}", userId), body) { parseUserProfileResponse(it) }
         .toModel()
 }
 
 suspend fun checkSession() =
-    getAndParseResult(Api.V1.Paths.login, null, { parseUserResponse(it) })
+    getAndParseResult(Api.V1.Paths.login, null) { parseUserResponse(it) }
         .toModel()
 
 suspend fun login(userId: String, password: String) =
@@ -58,9 +57,8 @@ suspend fun login(userId: String, password: String) =
         URLSearchParams().apply {
             append("userId", userId)
             append("password", password)
-        },
-        { parseUserResponse(it) }
-    ).toModel()
+        }
+    ) { parseUserResponse(it) }.toModel()
 
 suspend fun logoutUser() =
     window.fetch(
@@ -74,8 +72,8 @@ suspend fun logoutUser() =
 suspend fun getSubmission(submissionId: String) =
     getAndParseResult(
         Api.V1.Paths.submissions.replace("{submissionId}", submissionId),
-        null,
-        { parseSubmissionResponse(it) })
+        null
+    ) { parseSubmissionResponse(it) }
         .toModel()
 
 private suspend fun parseUserResponse(response: Response): User {
