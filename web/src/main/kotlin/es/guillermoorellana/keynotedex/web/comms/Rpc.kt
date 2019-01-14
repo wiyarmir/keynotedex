@@ -2,10 +2,12 @@ package es.guillermoorellana.keynotedex.web.comms
 
 import es.guillermoorellana.keynotedex.api.ApiPaths
 import es.guillermoorellana.keynotedex.dto.Submission
+import es.guillermoorellana.keynotedex.dto.User
 import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import es.guillermoorellana.keynotedex.responses.SubmissionResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
+import es.guillermoorellana.keynotedex.responses.UserResponse
 import es.guillermoorellana.keynotedex.web.model.UserProfile
 import es.guillermoorellana.keynotedex.web.model.toModel
 import es.guillermoorellana.keynotedex.web.model.toUpdateRequest
@@ -19,6 +21,26 @@ import kotlin.browser.window
 import kotlin.js.json
 import kotlinx.serialization.json.JSON as KJSON
 
+suspend fun register(
+    userId: String,
+    password: String,
+    displayName: String,
+    email: String
+): User = postAndParseResult(
+    ApiPaths.register,
+    URLSearchParams().apply {
+        append("userId", userId)
+        append("password", password)
+        append("displayName", displayName)
+        append("email", email)
+    },
+    { parseUserProfileResponse(it).user }
+)
+
+suspend fun user(userId: String) =
+    getAndParseResult(ApiPaths.user.replace("{userId}", userId), null, { parseUserResponse(it) })
+        .toModel()
+
 suspend fun userProfile(userId: String) =
     getAndParseResult(ApiPaths.user.replace("{userId}", userId), null, { parseUserProfileResponse(it) })
         .toModel()
@@ -29,6 +51,20 @@ suspend fun updateUserProfile(userProfile: UserProfile): UserProfile {
     return putAndParseResult(ApiPaths.user.replace("{userId}", userId), body, { parseUserProfileResponse(it) })
         .toModel()
 }
+
+suspend fun checkSession() =
+    getAndParseResult(ApiPaths.login, null, { parseUserResponse(it) })
+        .toModel()
+
+suspend fun login(userId: String, password: String) =
+    postAndParseResult(
+        ApiPaths.login,
+        URLSearchParams().apply {
+            append("userId", userId)
+            append("password", password)
+        },
+        { parseUserResponse(it) }
+    ).toModel()
 
 suspend fun logoutUser() =
     window.fetch(
@@ -45,6 +81,20 @@ suspend fun getSubmission(submissionId: String) =
         null,
         { parseSubmissionResponse(it) })
         .toModel()
+
+private suspend fun parseUserResponse(response: Response): User {
+    val responseText = response.text().await()
+    when {
+        response.ok -> {
+            val userResponse: UserResponse = KJSON.parse(UserResponse.serializer(), responseText)
+            return userResponse.user
+        }
+        else -> {
+            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), responseText)
+            throw LoginOrRegisterFailedException(errorResponse)
+        }
+    }
+}
 
 private suspend fun parseUserProfileResponse(response: Response): UserProfileResponse {
     val responseText = response.text().await()

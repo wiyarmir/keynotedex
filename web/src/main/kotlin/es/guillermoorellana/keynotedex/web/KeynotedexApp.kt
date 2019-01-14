@@ -1,33 +1,20 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.web.components.navigation
-import es.guillermoorellana.keynotedex.web.external.browserRouter
-import es.guillermoorellana.keynotedex.web.external.route
-import es.guillermoorellana.keynotedex.web.external.switch
-import es.guillermoorellana.keynotedex.web.model.User
-import es.guillermoorellana.keynotedex.web.screens.ComingSoonScreen
-import es.guillermoorellana.keynotedex.web.screens.HomeScreen
-import es.guillermoorellana.keynotedex.web.screens.NotFoundScreen
-import es.guillermoorellana.keynotedex.web.screens.RegisterScreen
-import es.guillermoorellana.keynotedex.web.screens.SubmissionScreen
-import es.guillermoorellana.keynotedex.web.screens.UserScreen
-import es.guillermoorellana.keynotedex.web.screens.login
-import es.guillermoorellana.keynotedex.web.screens.logout
-import kotlinx.html.main
-import react.RBuilder
-import react.RComponent
-import react.RHandler
-import react.RProps
-import react.RState
-import react.dom.div
-import react.dom.footer
-import react.dom.p
-import react.setState
+import es.guillermoorellana.keynotedex.web.comms.*
+import es.guillermoorellana.keynotedex.web.components.*
+import es.guillermoorellana.keynotedex.web.external.*
+import es.guillermoorellana.keynotedex.web.model.*
+import es.guillermoorellana.keynotedex.web.screens.*
+import kotlinx.coroutines.*
+import kotlinx.html.*
+import react.*
+import react.dom.*
 
 class Application : RComponent<RProps, ApplicationPageState>() {
 
     override fun ApplicationPageState.init() {
         currentUser = null
+        checkUserSession()
     }
 
     override fun RBuilder.render() {
@@ -74,6 +61,20 @@ class Application : RComponent<RProps, ApplicationPageState>() {
     private fun userLoggedIn(user: User) {
         setState {
             currentUser = user
+        }
+    }
+
+    private fun checkUserSession() {
+        GlobalScope.promise {
+            val user = checkSession()
+            setState {
+                currentUser = user
+            }
+        }.catch {
+            console.error(it)
+            setState {
+                currentUser = null
+            }
         }
     }
 }
