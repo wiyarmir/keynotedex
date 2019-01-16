@@ -4,8 +4,18 @@ import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.html.ButtonType
 import kotlinx.html.id
-import react.*
-import react.dom.*
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
+import react.ReactDsl
+import react.dom.button
+import react.dom.div
+import react.dom.li
+import react.dom.nav
+import react.dom.span
+import react.dom.ul
 
 class NavBarComponent : RComponent<NavigationProps, RState>() {
     override fun RBuilder.render() {
@@ -47,7 +57,7 @@ class NavBarComponent : RComponent<NavigationProps, RState>() {
                 div("nav navbar-nav navbar-right mt-2 mt-lg-0") {
                     val user = props.currentUser
                     when (user) {
-                        null -> routeLink("/login") {
+                        null -> routeLink("/signin") {
                             attrs { className = "btn btn-outline-success" }
                             +"Login"
                         }

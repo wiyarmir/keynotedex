@@ -1,10 +1,16 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.components.submissions.*
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
-import react.*
-import react.dom.*
+import es.guillermoorellana.keynotedex.web.components.submissions.submissionPreview
+import es.guillermoorellana.keynotedex.web.external.routeLink
+import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.SubmissionVisibility
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.div
+import react.dom.h1
+import react.dom.p
 
 class HomeScreen : RComponent<RProps, RState>() {
 
@@ -19,11 +25,11 @@ class HomeScreen : RComponent<RProps, RState>() {
                     h1("display-3") { +jumboHeading }
                     p("lead") { +lead }
                     p {
-                        routeLink(to = "/register") {
+                        routeLink(to = "/signup") {
                             attrs {
                                 className = "btn btn-primary btn-lg"
                             }
-                            +"Join"
+                            +"Sign Up"
                         }
                     }
                 }

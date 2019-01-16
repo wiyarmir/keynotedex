@@ -21,20 +21,18 @@ import kotlin.browser.window
 import kotlin.js.json
 import kotlinx.serialization.json.JSON as KJSON
 
-suspend fun register(
-    userId: String,
-    password: String,
-    displayName: String,
-    email: String
-): User = postAndParseResult(
-    Api.V1.Paths.register,
-    URLSearchParams().apply {
-        append("userId", userId)
-        append("password", password)
-        append("displayName", displayName)
-        append("email", email)
-    }
-) { parseUserProfileResponse(it).user }
+suspend fun register(userId: String, password: String, displayName: String, email: String) =
+    postAndParseResult(
+        Api.V1.Paths.register,
+        URLSearchParams().apply {
+            append("userId", userId)
+            append("password", password)
+            append("displayName", displayName)
+            append("email", email)
+        }
+    )
+    { parseUserProfileResponse(it).user }
+        .toModel()
 
 suspend fun userProfile(userId: String) =
     getAndParseResult(Api.V1.Paths.user.replace("{userId}", userId), null) { parseUserProfileResponse(it) }

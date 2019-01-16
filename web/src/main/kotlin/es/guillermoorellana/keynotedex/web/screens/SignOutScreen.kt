@@ -11,7 +11,7 @@ import react.RHandler
 import react.RProps
 import react.RState
 
-class LogoutScreen : RComponent<LogoutProps, RState>() {
+class SignOutScreen : RComponent<LogoutProps, RState>() {
 
     override fun componentDidMount() {
         GlobalScope.launch {
@@ -30,4 +30,4 @@ external interface LogoutProps : RProps {
     var nukeCurrentUser: () -> Unit
 }
 
-fun RBuilder.logout(handler: RHandler<LogoutProps>) = child(LogoutScreen::class, handler)
+fun RBuilder.signOut(handler: RHandler<LogoutProps>) = child(SignOutScreen::class, handler)

@@ -1,18 +1,23 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.backend.data.*
-import es.guillermoorellana.keynotedex.backend.data.conferences.*
-import es.guillermoorellana.keynotedex.backend.data.submissions.*
-import es.guillermoorellana.keynotedex.backend.data.users.*
-import io.ktor.application.*
-import io.ktor.http.*
-import io.ktor.locations.*
-import io.ktor.request.*
-import io.ktor.response.*
-import org.jetbrains.squash.connection.*
-import org.jetbrains.squash.statements.*
-import java.net.*
-import java.sql.*
+import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
+import es.guillermoorellana.keynotedex.backend.data.conferences.ConferencesTable
+import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionsTable
+import es.guillermoorellana.keynotedex.backend.data.users.UsersTable
+import io.ktor.application.Application
+import io.ktor.application.ApplicationCall
+import io.ktor.application.feature
+import io.ktor.http.HttpHeaders
+import io.ktor.locations.Locations
+import io.ktor.request.header
+import io.ktor.request.host
+import io.ktor.request.port
+import io.ktor.response.respondRedirect
+import org.jetbrains.squash.connection.transaction
+import org.jetbrains.squash.statements.insertInto
+import org.jetbrains.squash.statements.values
+import java.net.URI
+import java.sql.SQLException
 
 fun ApplicationCall.refererHost() = request.header(HttpHeaders.Referrer)?.let { URI.create(it).host }
 
@@ -25,9 +30,6 @@ fun ApplicationCall.redirectString(location: Any): String {
 
     return "http://$address${application.feature(Locations).href(location)}"
 }
-
-private val userIdPattern = "[a-zA-Z0-9_.]+".toRegex()
-internal fun userNameValid(userId: String) = userId.matches(userIdPattern)
 
 internal fun KeynotedexDatabase.mockData(application: Application) {
     try {

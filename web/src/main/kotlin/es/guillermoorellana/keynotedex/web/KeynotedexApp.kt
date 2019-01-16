@@ -10,12 +10,12 @@ import es.guillermoorellana.keynotedex.web.screens.ComingSoonScreen
 import es.guillermoorellana.keynotedex.web.screens.HomeScreen
 import es.guillermoorellana.keynotedex.web.screens.NotFoundScreen
 import es.guillermoorellana.keynotedex.web.screens.PrivacyPolicyScreen
-import es.guillermoorellana.keynotedex.web.screens.RegisterScreen
 import es.guillermoorellana.keynotedex.web.screens.SubmissionScreen
 import es.guillermoorellana.keynotedex.web.screens.TOSScreen
 import es.guillermoorellana.keynotedex.web.screens.UserScreen
-import es.guillermoorellana.keynotedex.web.screens.login
-import es.guillermoorellana.keynotedex.web.screens.logout
+import es.guillermoorellana.keynotedex.web.screens.signIn
+import es.guillermoorellana.keynotedex.web.screens.signOut
+import es.guillermoorellana.keynotedex.web.screens.signUp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import kotlinx.html.main
@@ -47,16 +47,24 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                     attrs { role = "main" }
                     switch {
                         route("/", HomeScreen::class, exact = true)
-                        route("/logout", exact = true) {
-                            logout {
+                        route("/signout", exact = true) {
+                            signOut {
                                 attrs {
                                     currentUser = state.currentUser
                                     nukeCurrentUser = { setState { currentUser = null } }
                                 }
                             }
                         }
-                        route("/login", exact = true) {
-                            login {
+                        route("/signin", exact = true) {
+                            signIn {
+                                attrs {
+                                    currentUser = state.currentUser
+                                    onUserLoggedIn = { user -> userLoggedIn(user) }
+                                }
+                            }
+                        }
+                        route("/signup", exact = true) {
+                            signUp {
                                 attrs {
                                     currentUser = state.currentUser
                                     onUserLoggedIn = { user -> userLoggedIn(user) }
@@ -66,7 +74,6 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                         route("/privacy", PrivacyPolicyScreen::class)
                         route("/terms", TOSScreen::class)
                         route("/conferences", ComingSoonScreen::class)
-                        route("/register", RegisterScreen::class)
                         route("/speakers", ComingSoonScreen::class)
                         route("/:userId/:submissionId", SubmissionScreen::class, exact = true)
                         route("/:userId", UserScreen::class, exact = true)

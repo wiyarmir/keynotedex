@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend
 
+import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import freemarker.cache.ClassTemplateLoader
@@ -57,7 +58,7 @@ fun Application.keynotedex() {
 
     install(Sessions) {
         cookie<Session>("SESSION") {
-            cookie.path = "/"
+            cookie.path = Api.loc
             transform(SessionTransportTransformerMessageAuthentication(sessionKey()))
         }
     }

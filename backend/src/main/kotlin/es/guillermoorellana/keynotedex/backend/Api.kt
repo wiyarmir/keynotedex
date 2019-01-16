@@ -24,6 +24,7 @@ import io.ktor.application.application
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.Parameters
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.get
 import io.ktor.locations.post
@@ -45,9 +46,9 @@ fun Route.api(dao: KeynotedexStorage) {
     apiGetSubmission(dao, dao)
     apiGetUser(dao, dao)
 
-    apiPostLogin(dao)
-    apiPostLogout()
-    apiPostRegister(dao)
+    apiPostSignIn(dao)
+    apiPostSignOut()
+    apiPostSignUp(dao)
 
     apiPutUser(dao, dao)
 }
@@ -136,7 +137,7 @@ private fun Route.apiPutUser(userStorage: UserStorage, submissionStorage: Submis
     }
 }
 
-private fun Route.apiPostLogin(userStorage: UserStorage) {
+private fun Route.apiPostSignIn(userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
         post<LoginEndpoint> {
             val params = call.receiveParameters()
@@ -146,7 +147,7 @@ private fun Route.apiPostLogin(userStorage: UserStorage) {
             val login = when {
                 userId.length < 4 -> null
                 password.length < 6 -> null
-                !userNameValid(userId) -> null
+                !userId.isValidUserId() -> null
                 else -> {
                     userStorage.retrieveUser(userId, application.hashPassword(password))
                 }
@@ -166,7 +167,7 @@ private fun Route.apiPostLogin(userStorage: UserStorage) {
     }
 }
 
-private fun Route.apiPostLogout() {
+private fun Route.apiPostSignOut() {
     accept(ContentType.Application.Json) {
         post<LogoutEndpoint> {
             call.sessions.set<Session>(null)
@@ -175,23 +176,28 @@ private fun Route.apiPostLogout() {
     }
 }
 
-private fun Route.apiPostRegister(userStorage: UserStorage) {
+private fun Route.apiPostSignUp(userStorage: UserStorage) {
 
-    fun passwordNotValid(password: String) = password.length < 6
-    fun userIdShort(userId: String) = userId.length < 4
-    fun userNameNotValid(userName: String) = !userNameValid(userName)
-    fun userInDatabase(dao: UserStorage, userId: String) = dao.retrieveUser(userId) != null
+    fun passwordNotValid(password: String?) = password?.let { it.length < 6 } ?: true
+    fun userIdShort(userId: String?) = userId?.let { it.length < 4 } ?: true
+    fun userNameNotValid(userName: String?) = userName?.isValidUserId()?.not() ?: true
+    fun userInDatabase(dao: UserStorage, userId: String?) = userId?.let { dao.retrieveUser(it) != null } ?: false
 
     post<RegisterEndpoint> {
         val user = getCurrentLoggedUser(userStorage)
         if (user != null) {
-            val dtoUser = user.toDto()
-            call.redirect(UserEndpoint(dtoUser.userId))
+            call.respond(
+                HttpStatusCode.MethodNotAllowed,
+                ErrorResponse(message = "You are already logged in")
+            )
             return@post
         }
 
-        val userId = it.userId
-        val password = it.password
+        val params = call.receive<Parameters>()
+        val userId = params["userId"]
+        val password = params["password"]
+        val email = params["email"]
+        val displayName = params["displayName"]
 
         when {
             passwordNotValid(password) -> {
@@ -211,14 +217,15 @@ private fun Route.apiPostRegister(userStorage: UserStorage) {
             userNameNotValid(userId) -> {
                 call.respond(
                     HttpStatusCode.PreconditionFailed,
-                    ErrorResponse(message = "Login should be consists of digits, letters, dots or underscores")
+                    ErrorResponse(message = "Login should consist of digits, letters, dots or underscores")
                 )
                 return@post
             }
         }
 
-        val hash = application.hashPassword(password)
-        val newUser = User(userId = userId, passwordHash = hash)
+        val hash = application.hashPassword(requireNotNull(password))
+        val newUser =
+            User(userId = requireNotNull(userId), passwordHash = hash, displayName = displayName, email = email)
 
         try {
             userStorage.createUser(newUser)
@@ -264,3 +271,6 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.doUserProfileResponse
         )
     )
 }
+
+private val userIdPattern = "[a-zA-Z0-9_.]+".toRegex()
+private fun String.isValidUserId() = matches(userIdPattern)

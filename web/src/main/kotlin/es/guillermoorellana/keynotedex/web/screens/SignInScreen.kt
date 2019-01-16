@@ -1,15 +1,33 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.*
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.coroutines.*
-import kotlinx.html.*
-import kotlinx.html.js.*
-import org.w3c.dom.*
-import org.w3c.dom.events.*
-import react.*
-import react.dom.*
+import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
+import es.guillermoorellana.keynotedex.web.comms.login
+import es.guillermoorellana.keynotedex.web.external.redirect
+import es.guillermoorellana.keynotedex.web.external.routeLink
+import es.guillermoorellana.keynotedex.web.model.User
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.promise
+import kotlinx.html.ButtonType
+import kotlinx.html.InputType
+import kotlinx.html.id
+import kotlinx.html.js.onChangeFunction
+import kotlinx.html.js.onSubmitFunction
+import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.HTMLTextAreaElement
+import org.w3c.dom.events.Event
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
+import react.dom.button
+import react.dom.div
+import react.dom.form
+import react.dom.h2
+import react.dom.input
+import react.dom.label
+import react.dom.style
+import react.setState
 
 //language=CSS
 private const val css = """
@@ -44,9 +62,9 @@ private const val css = """
 }
 """
 
-class LoginScreen : RComponent<LoginProps, LoginState>() {
+class SignInScreen : RComponent<SignInProps, SignInState>() {
 
-    override fun LoginState.init() {
+    override fun SignInState.init() {
         disabled = false
         login = ""
         password = ""
@@ -67,6 +85,9 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
                 }
             }
             h2("form-signin-heading") { +"Welcome back!" }
+            state.errorMessage?.let { message ->
+                div("alert alert-danger") { +message }
+            }
             label(classes = "sr-only") {
                 attrs { htmlFor = "inputEmail" }
                 +"Email address"
@@ -105,14 +126,14 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
                     }
                 }
             }
-            button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign in" }
-            routeLink("/register") {
+            button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign In" }
+            routeLink("/signup") {
                 attrs {
                     className = "btn btn-lg btn-secondary btn-block"
                 }
-                +"Register"
+                +"Sign Up"
             }
-//            a(href = "/login/github", classes = "btn btn-lg btn-dark btn-block") {
+//            a(href = "/signin/github", classes = "btn btn-lg btn-dark btn-block") {
 //                +"Login via GitHub"
 //            }
         }
@@ -123,9 +144,12 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
             disabled = true
         }
         GlobalScope.promise {
-            val user = login(state.login, state.password)
+            login(state.login, state.password)
+        }.then { user ->
             loggedIn(user)
-        }.catch { err -> loginFailed(err) }
+        }.catch { err ->
+            loginFailed(err)
+        }
     }
 
     private fun loggedIn(user: User) {
@@ -150,12 +174,12 @@ class LoginScreen : RComponent<LoginProps, LoginState>() {
     private fun isUserLoggedIn() = props.currentUser != null
 }
 
-external interface LoginProps : RProps {
+external interface SignInProps : RProps {
     var currentUser: User?
     var onUserLoggedIn: (User) -> Unit
 }
 
-external interface LoginState : RState {
+external interface SignInState : RState {
     var login: String
     var password: String
     var disabled: Boolean
@@ -165,4 +189,4 @@ external interface LoginState : RState {
 internal val Event.inputValue: String
     get() = (target as? HTMLInputElement)?.value ?: (target as? HTMLTextAreaElement)?.value ?: ""
 
-fun RBuilder.login(handler: RHandler<LoginProps>) = child(LoginScreen::class, handler)
+fun RBuilder.signIn(handler: RHandler<SignInProps>) = child(SignInScreen::class, handler)
