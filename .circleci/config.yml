@@ -113,7 +113,11 @@ workflows:
     jobs:
       - lint
       - build
+        requires:
+          - lint
       - tests
+        requires:
+          - lint
       - deploy:
           requires:
             - build
