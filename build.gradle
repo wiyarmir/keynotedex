@@ -1,23 +1,25 @@
-group = 'es.guillermoorellana.keynotedex'
+buildscript {
+    repositories {
+        google()
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$Versions.kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:$Versions.kotlinFrontendPlugin"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$Versions.detekt"
+    }
+}
+
+group = "es.guillermoorellana.keynotedex"
 version = keynotedexVersion
 
-subprojects { p ->
-    p.buildscript {
-
-        repositories {
-            mavenLocal()
-            jcenter()
-            google()
-            maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
-            maven { url "https://kotlin.bintray.com/kotlinx" }
-        }
-
-        dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
-            classpath "org.jetbrains.kotlin:kotlin-serialization:$Versions.kotlin"
-            classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:$Versions.kotlinFrontendPlugin"
-        }
-    }
+subprojects {
     repositories {
         mavenLocal()
         jcenter()
@@ -27,6 +29,17 @@ subprojects { p ->
         maven { url "http://dl.bintray.com/kotlin/ktor" }
         maven { url "https://dl.bintray.com/kotlin/squash" }
         maven { url "https://kotlin.bintray.com/kotlin-js-wrappers" }
+    }
+
+    apply plugin: "io.gitlab.arturbosch.detekt"
+
+    detekt {
+        toolVersion = Versions.detekt
+        filters = ".*/resources/.*,.*/build/.*"
+        config = files("$rootDir/detekt.yml")
+    }
+    dependencies {
+        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$Versions.detekt"
     }
 }
 

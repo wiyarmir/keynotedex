@@ -1,4 +1,5 @@
 object Versions {
+    const val detekt = "1.0.0-RC12"
     const val ehcache = "3.6.1"
     const val fuel = "1.11.0"
     const val gson = "2.8.0"
