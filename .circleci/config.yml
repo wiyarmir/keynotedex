@@ -13,6 +13,30 @@ download_gradle_dependencies: &download_gradle_dependencies
 
 version: 2
 jobs:
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
+      - run: *download_gradle_dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
+      - run:
+          name: Lint project
+          command: ./gradlew detekt
+      - run:
+      name: Save detekt results
+      command: |
+        mkdir -p ~/detekt/
+        find . -type f -regex ".*/build/reports/detekt/*" -exec cp {} ~/detekt/ \;
+      when: always
+        - store_test_results:
+            path: ~/detekt
+      - store_artifacts:
+          path: ~/detekt
   build:
     <<: *defaults
     steps:
@@ -27,6 +51,7 @@ jobs:
       - run:
           name: Build project
           command: ./gradlew stage --stacktrace
+      - store_test_results:
       - store_artifacts:
           path: backend/build/libs
 
@@ -87,6 +112,7 @@ workflows:
   version: 2
   pr-checks:
     jobs:
+      - lint
       - build
       - tests
       - deploy:
