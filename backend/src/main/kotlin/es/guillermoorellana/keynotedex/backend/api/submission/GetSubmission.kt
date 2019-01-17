@@ -1,6 +1,7 @@
-package es.guillermoorellana.keynotedex.backend.api
+package es.guillermoorellana.keynotedex.backend.api.submission
 
 import es.guillermoorellana.keynotedex.backend.SubmissionsEndpoint
+import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
 import es.guillermoorellana.keynotedex.backend.data.submissions.toDto
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage

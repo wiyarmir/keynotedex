@@ -1,7 +1,9 @@
-package es.guillermoorellana.keynotedex.backend.api
+package es.guillermoorellana.keynotedex.backend.api.signup
 
-import es.guillermoorellana.keynotedex.backend.RegisterEndpoint
 import es.guillermoorellana.keynotedex.backend.Session
+import es.guillermoorellana.keynotedex.backend.SignUpEndpoint
+import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
+import es.guillermoorellana.keynotedex.backend.api.isValidUserId
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.data.users.toDto
@@ -27,7 +29,7 @@ fun Route.PostSignUp(userStorage: UserStorage) {
     fun userNameNotValid(userName: String?) = userName?.isValidUserId()?.not() ?: true
     fun userInDatabase(dao: UserStorage, userId: String?) = userId?.let { dao.retrieveUser(it) != null } ?: false
 
-    post<RegisterEndpoint> {
+    post<SignUpEndpoint> {
         val user = getCurrentLoggedUser(userStorage)
         if (user != null) {
             call.respond(

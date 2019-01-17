@@ -13,15 +13,10 @@ data class SubmissionsEndpoint(val submissionId: String)
 data class ConferenceEndpoint(val conferenceId: String?)
 
 @Location(Api.V1.Paths.register)
-data class RegisterEndpoint(
-    val userId: String = "",
-    val password: String = "",
-    val email: String = "",
-    val displayName: String = ""
-)
+class SignUpEndpoint
 
 @Location(Api.V1.Paths.login)
-data class LoginEndpoint(val userId: String = "", val password: String = "")
+class SignInEndpoint
 
 @Location(Api.V1.Paths.logout)
-class LogoutEndpoint
+class SignOutEndpoint

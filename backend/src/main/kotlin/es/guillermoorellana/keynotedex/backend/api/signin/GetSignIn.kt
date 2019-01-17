@@ -1,6 +1,7 @@
-package es.guillermoorellana.keynotedex.backend.api
+package es.guillermoorellana.keynotedex.backend.api.signin
 
-import es.guillermoorellana.keynotedex.backend.LoginEndpoint
+import es.guillermoorellana.keynotedex.backend.SignInEndpoint
+import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.data.users.toDto
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
@@ -13,9 +14,9 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 
-fun Route.GetLogin(userStorage: UserStorage) {
+fun Route.GetSignIn(userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
-        get<LoginEndpoint> {
+        get<SignInEndpoint> {
             val user = getCurrentLoggedUser(userStorage)
             when (user) {
                 null -> call.respond(

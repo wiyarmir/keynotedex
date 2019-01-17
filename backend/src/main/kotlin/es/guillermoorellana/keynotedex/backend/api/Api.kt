@@ -3,6 +3,14 @@
 package es.guillermoorellana.keynotedex.backend.api
 
 import es.guillermoorellana.keynotedex.backend.Session
+import es.guillermoorellana.keynotedex.backend.api.conference.GetConference
+import es.guillermoorellana.keynotedex.backend.api.signin.GetSignIn
+import es.guillermoorellana.keynotedex.backend.api.signin.PostSignIn
+import es.guillermoorellana.keynotedex.backend.api.signout.PostSignOut
+import es.guillermoorellana.keynotedex.backend.api.signup.PostSignUp
+import es.guillermoorellana.keynotedex.backend.api.submission.GetSubmission
+import es.guillermoorellana.keynotedex.backend.api.user.GetUser
+import es.guillermoorellana.keynotedex.backend.api.user.PutUser
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.submissions.Submission
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
@@ -22,7 +30,7 @@ import io.ktor.util.pipeline.PipelineContext
 
 fun Route.api(dao: KeynotedexStorage) {
     GetConference(dao)
-    GetLogin(dao)
+    GetSignIn(dao)
     GetSubmission(dao, dao)
     GetUser(dao, dao)
 

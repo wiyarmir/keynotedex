@@ -1,7 +1,8 @@
-package es.guillermoorellana.keynotedex.backend.api
+package es.guillermoorellana.keynotedex.backend.api.signin
 
-import es.guillermoorellana.keynotedex.backend.LoginEndpoint
 import es.guillermoorellana.keynotedex.backend.Session
+import es.guillermoorellana.keynotedex.backend.SignInEndpoint
+import es.guillermoorellana.keynotedex.backend.api.isValidUserId
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.data.users.toDto
 import es.guillermoorellana.keynotedex.backend.hashPassword
@@ -21,7 +22,7 @@ import io.ktor.sessions.set
 
 fun Route.PostSignIn(userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
-        post<LoginEndpoint> {
+        post<SignInEndpoint> {
             val params = call.receiveParameters()
             val userId = params["userId"] ?: ""
             val password = params["password"] ?: ""
