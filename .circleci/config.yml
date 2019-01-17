@@ -28,13 +28,13 @@ jobs:
           name: Lint project
           command: ./gradlew detekt
       - run:
-      name: Save detekt results
-      command: |
-        mkdir -p ~/detekt/
-        find . -type f -regex ".*/build/reports/detekt/*" -exec cp {} ~/detekt/ \;
-      when: always
-        - store_test_results:
-            path: ~/detekt
+          name: Save detekt results
+          command: |
+            mkdir -p ~/detekt/
+            find . -type f -regex ".*/build/reports/detekt/*" -exec cp {} ~/detekt/ \;
+          when: always
+      - store_test_results:
+          path: ~/detekt
       - store_artifacts:
           path: ~/detekt
   build:
