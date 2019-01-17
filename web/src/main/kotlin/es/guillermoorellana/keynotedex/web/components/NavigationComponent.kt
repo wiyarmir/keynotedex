@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web.components
 
+import es.guillermoorellana.keynotedex.web.UserContext
 import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.html.ButtonType
 import kotlinx.html.id
 import react.RBuilder
@@ -17,7 +17,7 @@ import react.dom.nav
 import react.dom.span
 import react.dom.ul
 
-class NavBarComponent : RComponent<NavigationProps, RState>() {
+class NavBarComponent : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         nav("navbar navbar-expand-md navbar-dark fixed-top bg-dark") {
             routeLink("/") {
@@ -55,15 +55,16 @@ class NavBarComponent : RComponent<NavigationProps, RState>() {
                     }
                 }
                 div("nav navbar-nav navbar-right mt-2 mt-lg-0") {
-                    val user = props.currentUser
-                    when (user) {
-                        null -> routeLink("/signin") {
-                            attrs { className = "btn btn-outline-success" }
-                            +"Login"
-                        }
-                        else -> routeLink("/${user.userId}") {
-                            attrs { className = "btn btn-outline-light" }
-                            +user.displayName
+                    UserContext.Consumer { user ->
+                        when (user) {
+                            null -> routeLink("/signin") {
+                                attrs { className = "btn btn-outline-success" }
+                                +"Login"
+                            }
+                            else -> routeLink("/${user.userId}") {
+                                attrs { className = "btn btn-outline-light" }
+                                +user.displayName
+                            }
                         }
                     }
                 }
@@ -72,9 +73,5 @@ class NavBarComponent : RComponent<NavigationProps, RState>() {
     }
 }
 
-external interface NavigationProps : RProps {
-    var currentUser: User?
-}
-
 @ReactDsl
-fun RBuilder.navigation(handler: RHandler<NavigationProps>) = child(NavBarComponent::class, handler)
+fun RBuilder.navigation(handler: RHandler<RProps>) = child(NavBarComponent::class, handler)

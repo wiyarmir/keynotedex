@@ -1,12 +1,13 @@
 package es.guillermoorellana.keynotedex.web.screens
 
+import es.guillermoorellana.keynotedex.web.UserContext
 import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
 import es.guillermoorellana.keynotedex.web.comms.login
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
+import kotlinx.coroutines.launch
 import kotlinx.html.ButtonType
 import kotlinx.html.InputType
 import kotlinx.html.id
@@ -73,10 +74,6 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
 
     override fun RBuilder.render() {
         style { +css }
-        if (isUserLoggedIn()) {
-            redirect("/${props.currentUser!!.userId}") {}
-            return
-        }
         form(classes = "form-signin") {
             attrs {
                 onSubmitFunction = {
@@ -136,6 +133,11 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
 //            a(href = "/signin/github", classes = "btn btn-lg btn-dark btn-block") {
 //                +"Login via GitHub"
 //            }
+            UserContext.Consumer { user ->
+                user?.let {
+                    redirect("/${it.userId}") {}
+                }
+            }
         }
     }
 
@@ -143,39 +145,31 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
         setState {
             disabled = true
         }
-        GlobalScope.promise {
-            login(state.login, state.password)
-        }.then { user ->
-            loggedIn(user)
-        }.catch { err ->
-            loginFailed(err)
-        }
-    }
-
-    private fun loggedIn(user: User) {
-        props.onUserLoggedIn(user)
-    }
-
-    private fun loginFailed(err: Throwable) {
-        if (err is LoginOrRegisterFailedException) {
-            setState {
-                disabled = false
-                errorMessage = err.message
-            }
-        } else {
-            console.error("Login failed", err)
-            setState {
-                disabled = false
-                errorMessage = "Login failed: please reload page and try again"
+        GlobalScope.launch {
+            try {
+                val user = login(state.login, state.password)
+                props.onUserLoggedIn(user)
+            } catch (err: Throwable) {
+                if (err is LoginOrRegisterFailedException) {
+                    setState {
+                        errorMessage = err.message
+                    }
+                } else {
+                    console.error("Login failed", err)
+                    setState {
+                        errorMessage = "Login failed: please reload page and try again"
+                    }
+                }
+            } finally {
+                setState {
+                    disabled = false
+                }
             }
         }
     }
-
-    private fun isUserLoggedIn() = props.currentUser != null
 }
 
 external interface SignInProps : RProps {
-    var currentUser: User?
     var onUserLoggedIn: (User) -> Unit
 }
 

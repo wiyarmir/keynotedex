@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
+import es.guillermoorellana.keynotedex.web.UserContext
 import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
 import es.guillermoorellana.keynotedex.web.comms.register
 import es.guillermoorellana.keynotedex.web.external.redirect
@@ -53,10 +54,6 @@ private const val css = """
 class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
     override fun RBuilder.render() {
         style { +css }
-        if (isUserLoggedIn()) {
-            redirect("/${props.currentUser!!.userId}") {}
-            return
-        }
         form(classes = "form-signup") {
             attrs {
                 onSubmitFunction = {
@@ -154,9 +151,13 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
                 +"Sign In"
             }
         }
+        UserContext.Consumer { user ->
+            console.log(user)
+            user?.let {
+                redirect("/${it.userId}") {}
+            }
+        }
     }
-
-    private fun isUserLoggedIn() = props.currentUser != null
 
     private fun doRegister() {
         setState {
@@ -180,7 +181,6 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
 }
 
 external interface SignUpProps : RProps {
-    var currentUser: User?
     var onUserLoggedIn: (User) -> Unit
 }
 

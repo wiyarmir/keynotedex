@@ -1,8 +1,8 @@
 package es.guillermoorellana.keynotedex.web.screens
 
+import es.guillermoorellana.keynotedex.web.UserContext
 import es.guillermoorellana.keynotedex.web.comms.logoutUser
 import es.guillermoorellana.keynotedex.web.external.redirect
-import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.RBuilder
@@ -21,12 +21,13 @@ class SignOutScreen : RComponent<LogoutProps, RState>() {
     }
 
     override fun RBuilder.render() {
-        if (props.currentUser == null) redirect(to = "/") { }
+        UserContext.Consumer { user ->
+            if (user == null) redirect(to = "/") { }
+        }
     }
 }
 
 external interface LogoutProps : RProps {
-    var currentUser: User?
     var nukeCurrentUser: () -> Unit
 }
 
