@@ -1,6 +1,7 @@
 package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.api.Api
+import es.guillermoorellana.keynotedex.backend.api.api
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import freemarker.cache.ClassTemplateLoader
