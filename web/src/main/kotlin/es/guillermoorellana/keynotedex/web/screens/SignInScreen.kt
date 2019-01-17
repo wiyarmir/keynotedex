@@ -1,8 +1,8 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.UserContext
 import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
 import es.guillermoorellana.keynotedex.web.comms.login
+import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.model.User

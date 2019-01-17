@@ -2,6 +2,7 @@ package es.guillermoorellana.keynotedex.web
 
 import es.guillermoorellana.keynotedex.web.comms.checkSession
 import es.guillermoorellana.keynotedex.web.components.navigation
+import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.browserRouter
 import es.guillermoorellana.keynotedex.web.external.route
 import es.guillermoorellana.keynotedex.web.external.switch
@@ -25,15 +26,12 @@ import react.RComponent
 import react.RHandler
 import react.RProps
 import react.RState
-import react.createContext
 import react.dom.RDOMBuilder
 import react.dom.a
 import react.dom.div
 import react.dom.footer
 import react.dom.p
 import react.setState
-
-val UserContext = createContext<User?>(null)
 
 class Application : RComponent<RProps, ApplicationPageState>() {
 

@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.components
 
-import es.guillermoorellana.keynotedex.web.UserContext
+import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import kotlinx.html.ButtonType
 import kotlinx.html.id

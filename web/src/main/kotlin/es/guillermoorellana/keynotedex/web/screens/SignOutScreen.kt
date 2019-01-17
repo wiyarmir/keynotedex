@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.UserContext
 import es.guillermoorellana.keynotedex.web.comms.logoutUser
+import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
