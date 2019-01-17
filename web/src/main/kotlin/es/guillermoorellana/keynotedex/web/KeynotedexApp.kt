@@ -107,8 +107,8 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             setState {
                 currentUser = user
             }
-        }.catch {
-            console.error(it)
+        }.catch { throwable ->
+            console.error(throwable)
             setState {
                 currentUser = null
             }

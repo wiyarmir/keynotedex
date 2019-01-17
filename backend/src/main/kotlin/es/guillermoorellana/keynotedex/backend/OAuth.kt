@@ -1,16 +1,27 @@
 package es.guillermoorellana.keynotedex.backend
 
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.client.*
-import io.ktor.client.engine.apache.*
-import io.ktor.locations.*
-import io.ktor.routing.*
-import io.ktor.sessions.*
+import io.ktor.application.Application
+import io.ktor.application.ApplicationStopping
+import io.ktor.application.call
+import io.ktor.auth.Authentication
+import io.ktor.auth.OAuthAccessTokenResponse
+import io.ktor.auth.OAuthServerSettings
+import io.ktor.auth.authenticate
+import io.ktor.auth.oauth
+import io.ktor.auth.principal
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.apache.Apache
+import io.ktor.locations.location
+import io.ktor.routing.Routing
+import io.ktor.routing.param
+import io.ktor.sessions.sessions
+import io.ktor.sessions.set
 
 fun Application.configureOAuth(authConf: Authentication.Configuration) = authConf.oauth("oauth") {
     val config = environment.config.config("keynotedex.oauth.github")
-    client = HttpClient(Apache).apply { environment.monitor.subscribe(ApplicationStopping) { close() } }
+    client = HttpClient(Apache).also {
+        environment.monitor.subscribe(ApplicationStopping) { client.close() }
+    }
     providerLookup = {
         OAuthServerSettings.OAuth2ServerSettings(
             name = "github",

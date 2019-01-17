@@ -1,6 +1,11 @@
 package es.guillermoorellana.keynotedex.backend.data.submissions
 
-import org.jetbrains.squash.definition.*
+import org.jetbrains.squash.definition.TableDefinition
+import org.jetbrains.squash.definition.bool
+import org.jetbrains.squash.definition.index
+import org.jetbrains.squash.definition.nullable
+import org.jetbrains.squash.definition.primaryKey
+import org.jetbrains.squash.definition.varchar
 
 object SubmissionsTable : TableDefinition() {
     val id = varchar("id", 20).primaryKey()
@@ -9,4 +14,3 @@ object SubmissionsTable : TableDefinition() {
     val title = varchar("title", 200)
     val abstract = varchar("abstract", 2000).nullable()
 }
-

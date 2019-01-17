@@ -1,6 +1,10 @@
 package es.guillermoorellana.keynotedex.backend.data.users
 
-import org.jetbrains.squash.definition.*
+import org.jetbrains.squash.definition.TableDefinition
+import org.jetbrains.squash.definition.nullable
+import org.jetbrains.squash.definition.primaryKey
+import org.jetbrains.squash.definition.uniqueIndex
+import org.jetbrains.squash.definition.varchar
 
 object UsersTable : TableDefinition() {
     val id = varchar("id", 20).primaryKey()

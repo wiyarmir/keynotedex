@@ -27,7 +27,7 @@ import react.dom.label
 import react.dom.style
 import react.setState
 
-//language=CSS
+// language=CSS
 private const val css = """
 .form-signup {
   max-width: 330px;
@@ -56,8 +56,8 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
         style { +css }
         form(classes = "form-signup") {
             attrs {
-                onSubmitFunction = {
-                    it.preventDefault()
+                onSubmitFunction = { event ->
+                    event.preventDefault()
                     doRegister()
                 }
             }

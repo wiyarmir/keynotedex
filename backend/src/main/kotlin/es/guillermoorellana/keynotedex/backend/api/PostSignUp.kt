@@ -18,6 +18,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.sessions.sessions
 import io.ktor.sessions.set
+import org.h2.message.DbException
 
 fun Route.PostSignUp(userStorage: UserStorage) {
 
@@ -35,7 +36,6 @@ fun Route.PostSignUp(userStorage: UserStorage) {
             )
             return@post
         }
-
         val params = call.receive<Parameters>()
         val userId = params["userId"]
         val password = params["password"]
@@ -64,6 +64,13 @@ fun Route.PostSignUp(userStorage: UserStorage) {
                 )
                 return@post
             }
+            userInDatabase(userStorage, userId) -> {
+                call.respond(
+                    HttpStatusCode.Conflict,
+                    ErrorResponse(message = "User with the following login is already registered")
+                )
+                return@post
+            }
         }
 
         val hash = application.hashPassword(requireNotNull(password))
@@ -76,19 +83,17 @@ fun Route.PostSignUp(userStorage: UserStorage) {
 
         try {
             userStorage.createUser(newUser)
-        } catch (e: Throwable) {
+        } catch (e: DbException) {
             application.environment.log.error("Failed to register user", e)
             when {
                 userInDatabase(userStorage, userId) -> call.respond(
                     HttpStatusCode.Conflict,
                     ErrorResponse(message = "User with the following login is already registered")
                 )
-                else -> {
-                    call.respond(
-                        HttpStatusCode.InternalServerError,
-                        ErrorResponse(message = "Failed to register")
-                    )
-                }
+                else -> call.respond(
+                    HttpStatusCode.InternalServerError,
+                    ErrorResponse(message = "Failed to register")
+                )
             }
             return@post
         }

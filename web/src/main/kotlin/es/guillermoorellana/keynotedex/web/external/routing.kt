@@ -2,7 +2,11 @@
 
 package es.guillermoorellana.keynotedex.web.external
 
-import react.*
+import react.Component
+import react.RClass
+import react.RProps
+import react.RState
+import react.ReactElement
 
 @JsName("HashRouter")
 external class HashRouterComponent : Component<RProps, RState> {

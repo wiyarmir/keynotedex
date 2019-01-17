@@ -1,7 +1,11 @@
 package es.guillermoorellana.keynotedex.web.components.submissions
 
 import es.guillermoorellana.keynotedex.web.model.Submission
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
 import react.dom.div
 import react.dom.h2
 import react.dom.hr
@@ -12,18 +16,15 @@ class Submissions : RComponent<SubmissionsProps, RState>() {
         h2 { +"Submissions" }
         hr { }
         div("row") {
-            props.submissions
-                .apply {
-                    if (isEmpty()) {
-                        p { +"No submissions yet" }
-                    } else {
-                        forEach {
-                            submissionCard {
-                                attrs { submission = it }
-                            }
-                        }
+            if (props.submissions.isEmpty()) {
+                p { +"No submissions yet" }
+            } else {
+                props.submissions.forEach { sub ->
+                    submissionCard {
+                        attrs { submission = sub }
                     }
                 }
+            }
         }
     }
 }

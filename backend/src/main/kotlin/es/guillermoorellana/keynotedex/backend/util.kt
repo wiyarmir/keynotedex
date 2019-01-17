@@ -36,38 +36,38 @@ internal fun KeynotedexDatabase.mockData(application: Application) {
         db.transaction {
             for (i in 1..10) {
                 insertInto(ConferencesTable)
-                    .values {
-                        it[id] = "$i"
-                        it[name] = "Conference$i"
+                    .values { statement ->
+                        statement[id] = "$i"
+                        statement[name] = "Conference$i"
                     }
                     .execute()
 
                 insertInto(UsersTable)
-                    .values {
-                        it[id] = "user$i"
-                        it[displayName] = "User #$i"
-                        it[email] = if (i % 2 == 0) "userId$i@keynotedex.co" else null
-                        it[passwordHash] = application.hashPassword("user$i!")
+                    .values { statement ->
+                        statement[id] = "user$i"
+                        statement[displayName] = "User #$i"
+                        statement[email] = if (i % 2 == 0) "userId$i@keynotedex.co" else null
+                        statement[passwordHash] = application.hashPassword("user$i!")
                     }
                     .execute()
 
                 insertInto(SubmissionsTable)
-                    .values {
-                        it[id] = "$i"
-                        it[public] = i % 2 == 0
-                        it[submitter] = "user1"
-                        it[title] = "My talk $i"
-                        it[abstract] = "This talk is about talks.\nSo it is a meta talk."
+                    .values { statement ->
+                        statement[id] = "$i"
+                        statement[public] = i % 2 == 0
+                        statement[submitter] = "user1"
+                        statement[title] = "My talk $i"
+                        statement[abstract] = "This talk is about talks.\nSo it is a meta talk."
                     }
                     .execute()
 
                 insertInto(SubmissionsTable)
-                    .values {
-                        it[id] = "2$i"
-                        it[public] = i % 2 == 0
-                        it[submitter] = "user2"
-                        it[title] = "My talk $i"
-                        it[abstract] = "This talk is about talks.\nSo it is a meta talk."
+                    .values { statement ->
+                        statement[id] = "2$i"
+                        statement[public] = i % 2 == 0
+                        statement[submitter] = "user2"
+                        statement[title] = "My talk $i"
+                        statement[abstract] = "This talk is about talks.\nSo it is a meta talk."
                     }
                     .execute()
             }

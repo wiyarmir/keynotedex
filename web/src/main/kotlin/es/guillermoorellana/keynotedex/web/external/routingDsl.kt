@@ -1,6 +1,12 @@
 package es.guillermoorellana.keynotedex.web.external
 
-import react.*
+import react.Component
+import react.RBuilder
+import react.RClass
+import react.RHandler
+import react.RProps
+import react.ReactDsl
+import react.ReactElement
 import kotlin.reflect.KClass
 
 @ReactDsl

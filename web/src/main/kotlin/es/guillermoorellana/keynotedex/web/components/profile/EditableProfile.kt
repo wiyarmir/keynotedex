@@ -16,7 +16,7 @@ import react.RState
 import react.dom.div
 import react.dom.style
 
-//language=CSS
+// language=CSS
 private const val profileStyle = """
 .loading {
     color: grey;

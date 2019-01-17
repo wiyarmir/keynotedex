@@ -6,7 +6,7 @@ import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Location
 
 @Location("/{trail...}")
-class IndexPage(val trail: List<String>)
+data class IndexPage(val trail: List<String>)
 
 @Location("/login")
 class LoginPage

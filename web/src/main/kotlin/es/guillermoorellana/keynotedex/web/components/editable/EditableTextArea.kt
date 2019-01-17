@@ -1,6 +1,10 @@
 package es.guillermoorellana.keynotedex.web.components.editable
 
-import kotlinx.html.js.*
+import kotlinx.html.js.onBlurFunction
+import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.onFocusFunction
+import kotlinx.html.js.onInputFunction
+import kotlinx.html.js.onKeyDownFunction
 import kotlinx.html.tabIndex
 import org.w3c.dom.HTMLTextAreaElement
 import org.w3c.dom.events.Event
@@ -46,7 +50,6 @@ class EditableTextArea : EditableElement<HTMLTextAreaElement>() {
             ref { refs = it as HTMLTextAreaElement? }
         }
     }
-
 
     override fun keyDown(event: Event) {
         when (event.keyCode) {

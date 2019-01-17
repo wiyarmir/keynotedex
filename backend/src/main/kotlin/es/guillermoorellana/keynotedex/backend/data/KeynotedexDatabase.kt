@@ -1,16 +1,26 @@
 package es.guillermoorellana.keynotedex.backend.data
 
-import es.guillermoorellana.keynotedex.backend.data.conferences.*
-import es.guillermoorellana.keynotedex.backend.data.submissions.*
-import es.guillermoorellana.keynotedex.backend.data.users.*
-import org.jetbrains.squash.connection.*
-import org.jetbrains.squash.dialects.h2.*
-import org.jetbrains.squash.expressions.*
-import org.jetbrains.squash.query.*
-import org.jetbrains.squash.results.*
-import org.jetbrains.squash.schema.*
-import org.jetbrains.squash.statements.*
-import java.io.*
+import es.guillermoorellana.keynotedex.backend.data.conferences.ConferencesTable
+import es.guillermoorellana.keynotedex.backend.data.conferences.transformConference
+import es.guillermoorellana.keynotedex.backend.data.submissions.Submission
+import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionsTable
+import es.guillermoorellana.keynotedex.backend.data.submissions.transformSubmission
+import es.guillermoorellana.keynotedex.backend.data.users.User
+import es.guillermoorellana.keynotedex.backend.data.users.UsersTable
+import es.guillermoorellana.keynotedex.backend.data.users.transformUser
+import org.jetbrains.squash.connection.DatabaseConnection
+import org.jetbrains.squash.connection.transaction
+import org.jetbrains.squash.dialects.h2.H2Connection
+import org.jetbrains.squash.expressions.eq
+import org.jetbrains.squash.query.from
+import org.jetbrains.squash.query.where
+import org.jetbrains.squash.results.get
+import org.jetbrains.squash.schema.create
+import org.jetbrains.squash.statements.insertInto
+import org.jetbrains.squash.statements.set
+import org.jetbrains.squash.statements.update
+import org.jetbrains.squash.statements.values
+import java.io.File
 
 class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryConnection()) : KeynotedexStorage {
     constructor(dir: File) : this(H2Connection.create("jdbc:h2:file:${dir.canonicalFile.absolutePath}"))
@@ -29,9 +39,9 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
         from(UsersTable)
             .where { UsersTable.id eq userId }
             .execute()
-            .mapNotNull {
-                if (hash == null || it[UsersTable.passwordHash] == hash) {
-                    transformUser(it)
+            .mapNotNull { row ->
+                if (hash == null || row[UsersTable.passwordHash] == hash) {
+                    transformUser(row)
                 } else {
                     null
                 }
@@ -49,20 +59,20 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
 
     override fun createUser(user: User) = db.transaction {
         insertInto(UsersTable)
-            .values {
-                it[id] = user.userId
-                it[displayName] = user.displayName
-                it[email] = user.email
-                it[passwordHash] = user.passwordHash
+            .values { values ->
+                values[id] = user.userId
+                values[displayName] = user.displayName
+                values[email] = user.email
+                values[passwordHash] = user.passwordHash
             }
             .execute()
     }
 
     override fun updateUser(user: User) = db.transaction {
         update(UsersTable)
-            .set {
-                it[displayName] = user.displayName
-                it[bio] = user.bio
+            .set { statement ->
+                statement[displayName] = user.displayName
+                statement[bio] = user.bio
             }
             .where { UsersTable.id eq user.userId }
             .execute()

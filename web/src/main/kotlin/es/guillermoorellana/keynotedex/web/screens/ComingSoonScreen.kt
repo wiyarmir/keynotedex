@@ -12,7 +12,7 @@ import react.dom.style
 class ComingSoonScreen : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         style {
-            //language=CSS
+            // language=CSS
             +".error-template {padding: 40px 15px;text-align: center;}"
         }
         div("row") {

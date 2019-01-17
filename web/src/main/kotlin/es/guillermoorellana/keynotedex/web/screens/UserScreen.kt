@@ -1,20 +1,25 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.*
-import es.guillermoorellana.keynotedex.web.comms.*
-import es.guillermoorellana.keynotedex.web.components.profile.*
-import es.guillermoorellana.keynotedex.web.external.*
-import es.guillermoorellana.keynotedex.web.model.*
-import kotlinx.coroutines.*
-import react.*
-import react.dom.*
+import es.guillermoorellana.keynotedex.web.comms.updateUserProfile
+import es.guillermoorellana.keynotedex.web.comms.userProfile
+import es.guillermoorellana.keynotedex.web.components.profile.editableProfile
+import es.guillermoorellana.keynotedex.web.external.RouteResultProps
+import es.guillermoorellana.keynotedex.web.loading
+import es.guillermoorellana.keynotedex.web.model.UserProfile
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.promise
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.div
+import react.setState
 
 class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
 
     override fun UserState.init() {
         userProfile = null
     }
-
 
     override fun componentDidMount() {
         fetchUserProfileFromProps(props)
@@ -26,15 +31,14 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
         }
     }
 
-
     override fun RBuilder.render() {
         div("row justify-content-center") {
             div("col-10 col-offset-1 col-sm-9 col-xl-8") {
-                loading(state.userProfile) {
+                loading(state.userProfile) { profile ->
                     editableProfile {
                         attrs {
-                            editable = it.editable
-                            userProfile = it
+                            editable = profile.editable
+                            userProfile = profile
                             onUserProfileUpdated = { postUserProfile(it) }
                         }
                     }
@@ -50,8 +54,8 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
             setState {
                 this.userProfile = user
             }
-        }.catch {
-            console.error(it)
+        }.catch { throwable ->
+            console.error(throwable)
         }
     }
 
@@ -61,8 +65,8 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
             setState {
                 this.userProfile = updatedUserProfile
             }
-        }.catch {
-            console.error(it)
+        }.catch { throwable ->
+            console.error(throwable)
         }
     }
 }

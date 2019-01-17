@@ -16,8 +16,8 @@ import io.ktor.routing.accept
 
 fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
-        get<SubmissionsEndpoint> { endpoint ->
-            val submission = submissionStorage.submissionById(endpoint.submissionId)
+        get<SubmissionsEndpoint> { (submissionId) ->
+            val submission = submissionStorage.submissionById(submissionId)
             if (submission == null) {
                 call.respond(
                     HttpStatusCode.NotFound,

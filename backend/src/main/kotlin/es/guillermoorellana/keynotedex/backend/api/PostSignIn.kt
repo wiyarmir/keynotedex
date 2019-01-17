@@ -30,9 +30,7 @@ fun Route.PostSignIn(userStorage: UserStorage) {
                 userId.length < 4 -> null
                 password.length < 6 -> null
                 !userId.isValidUserId() -> null
-                else -> {
-                    userStorage.retrieveUser(userId, application.hashPassword(password))
-                }
+                else -> userStorage.retrieveUser(userId, application.hashPassword(password))
             }
 
             when (login) {

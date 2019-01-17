@@ -30,7 +30,7 @@ import react.dom.label
 import react.dom.style
 import react.setState
 
-//language=CSS
+// language=CSS
 private const val css = """
 .form-signin {
   max-width: 330px;
@@ -76,8 +76,8 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
         style { +css }
         form(classes = "form-signin") {
             attrs {
-                onSubmitFunction = {
-                    it.preventDefault()
+                onSubmitFunction = { event ->
+                    event.preventDefault()
                     doLogin()
                 }
             }
@@ -146,25 +146,19 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
             disabled = true
         }
         GlobalScope.launch {
-            try {
-                val user = login(state.login, state.password)
-                props.onUserLoggedIn(user)
-            } catch (err: Throwable) {
-                if (err is LoginOrRegisterFailedException) {
-                    setState {
-                        errorMessage = err.message
-                    }
-                } else {
-                    console.error("Login failed", err)
-                    setState {
-                        errorMessage = "Login failed: please reload page and try again"
-                    }
+            val user = try {
+                login(state.login, state.password)
+            } catch (err: LoginOrRegisterFailedException) {
+                setState {
+                    errorMessage = err.message
                 }
+                null
             } finally {
                 setState {
                     disabled = false
                 }
             }
+            user?.let { props.onUserLoggedIn(it) }
         }
     }
 }

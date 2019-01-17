@@ -30,8 +30,7 @@ suspend fun register(userId: String, password: String, displayName: String, emai
             append("displayName", displayName)
             append("email", email)
         }
-    )
-    { parseUserProfileResponse(it).user }
+    ) { parseUserProfileResponse(it).user }
         .toModel()
 
 suspend fun userProfile(userId: String) =
@@ -88,16 +87,11 @@ private suspend fun parseUserResponse(response: Response): User {
     }
 }
 
-private suspend fun parseUserProfileResponse(response: Response): UserProfileResponse {
-    val responseText = response.text().await()
-    when {
-        response.ok -> {
-            return KJSON.parse(UserProfileResponse.serializer(), responseText)
-        }
-        else -> {
-            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), responseText)
-            throw LoginOrRegisterFailedException(errorResponse)
-        }
+private suspend fun parseUserProfileResponse(response: Response): UserProfileResponse = when {
+    response.ok -> KJSON.parse(UserProfileResponse.serializer(), response.text().await())
+    else -> {
+        val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
+        throw LoginOrRegisterFailedException(errorResponse)
     }
 }
 
@@ -128,15 +122,20 @@ suspend fun <T> getAndParseResult(url: String, body: dynamic, parse: suspend (Re
 
 suspend fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: suspend (Response) -> T): T {
     val headers =
-        mutableListOf("Accept" to "application/json")
-            // TODO rewrite, so ugly
-            .apply { if (body != null && body !is URLSearchParams) add("Content-Type" to "application/json") }
-            .toTypedArray()
+        if (body == null || body is URLSearchParams) {
+            listOf("Accept" to "application/json")
+        } else {
+            listOf(
+                "Accept" to "application/json",
+                "Content-Type" to "application/json"
+            )
+        }
+
     val request: RequestInit = object : RequestInit {
         override var method: String? = method
         override var body: dynamic = body
         override var credentials: RequestCredentials? = RequestCredentials.SAME_ORIGIN
-        override var headers: dynamic = json(*headers)
+        override var headers: dynamic = json(*headers.toTypedArray())
     }
     val response = window.fetch(url, request).await()
     return parse(response)

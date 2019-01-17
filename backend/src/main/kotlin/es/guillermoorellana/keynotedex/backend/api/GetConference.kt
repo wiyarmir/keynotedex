@@ -14,11 +14,11 @@ import io.ktor.routing.accept
 
 fun Route.GetConference(conferenceStorage: ConferenceStorage) {
     accept(ContentType.Application.Json) {
-        get<ConferenceEndpoint> { endpoint ->
-            endpoint.conferenceId?.let { conferenceId ->
+        get<ConferenceEndpoint> { (conferenceId) ->
+            conferenceId?.let { conferenceId ->
                 val conference = conferenceStorage.conference(conferenceId)
                 when (conference) {
-                    null -> call.respond(ErrorResponse("Can't find conference with id ${endpoint.conferenceId}"))
+                    null -> call.respond(ErrorResponse("Can't find conference with id $conferenceId"))
                     else -> call.respond(ConferenceResponse(conference.toDto()))
                 }
             }

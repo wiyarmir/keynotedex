@@ -14,8 +14,7 @@ import io.ktor.routing.accept
 
 fun Route.GetUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
     accept(ContentType.Application.Json) {
-        get<UserEndpoint> {
-            val userId = it.userId
+        get<UserEndpoint> { (userId) ->
             val user = userStorage.retrieveUser(userId)
             if (user == null) {
                 call.respond(

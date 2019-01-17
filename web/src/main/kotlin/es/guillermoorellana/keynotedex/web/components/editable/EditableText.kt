@@ -1,6 +1,10 @@
 package es.guillermoorellana.keynotedex.web.components.editable
 
-import kotlinx.html.js.*
+import kotlinx.html.js.onBlurFunction
+import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.onFocusFunction
+import kotlinx.html.js.onInputFunction
+import kotlinx.html.js.onKeyDownFunction
 import kotlinx.html.tabIndex
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -35,7 +39,6 @@ open class EditableText : EditableElement<HTMLInputElement>() {
             ref { refs = it as HTMLInputElement? }
         }
     }
-
 }
 
 fun RBuilder.editableText(handler: RHandler<EditableElementProps>) = child(EditableText::class, handler)

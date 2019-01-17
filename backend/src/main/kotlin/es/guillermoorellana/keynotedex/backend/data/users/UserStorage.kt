@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.data.users
 
-import java.io.*
+import java.io.Closeable
 
 interface UserStorage : Closeable {
     fun createUser(user: User)

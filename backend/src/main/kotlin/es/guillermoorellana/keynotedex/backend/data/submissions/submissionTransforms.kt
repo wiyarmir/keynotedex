@@ -1,7 +1,9 @@
 package es.guillermoorellana.keynotedex.backend.data.submissions
 
-import es.guillermoorellana.keynotedex.dto.SubmissionVisibility.*
-import org.jetbrains.squash.results.*
+import es.guillermoorellana.keynotedex.dto.SubmissionVisibility.PRIVATE
+import es.guillermoorellana.keynotedex.dto.SubmissionVisibility.PUBLIC
+import org.jetbrains.squash.results.ResultRow
+import org.jetbrains.squash.results.get
 import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
 
 fun transformSubmission(it: ResultRow): Submission =
