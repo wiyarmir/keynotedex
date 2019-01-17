@@ -112,12 +112,12 @@ workflows:
   pr-checks:
     jobs:
       - lint
-      - build
-        requires:
-          - lint
-      - tests
-        requires:
-          - lint
+      - build:
+          requires:
+            - lint
+      - tests:
+          requires:
+            - lint
       - deploy:
           requires:
             - build
