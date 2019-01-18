@@ -8,6 +8,7 @@ import es.guillermoorellana.keynotedex.backend.data.submissions.transformSubmiss
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.UsersTable
 import es.guillermoorellana.keynotedex.backend.data.users.transformUser
+import org.hashids.Hashids
 import org.jetbrains.squash.connection.DatabaseConnection
 import org.jetbrains.squash.connection.transaction
 import org.jetbrains.squash.dialects.h2.H2Connection
@@ -21,6 +22,8 @@ import org.jetbrains.squash.statements.set
 import org.jetbrains.squash.statements.update
 import org.jetbrains.squash.statements.values
 import java.io.File
+
+val hashids = Hashids(salt = "KeynotedexIsGreat", length = 10)
 
 class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryConnection()) : KeynotedexStorage {
     constructor(dir: File) : this(H2Connection.create("jdbc:h2:file:${dir.canonicalFile.absolutePath}"))
@@ -95,7 +98,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
 
     override fun submissionById(submissionId: String): Submission? = db.transaction {
         from(SubmissionsTable)
-            .where { SubmissionsTable.id eq submissionId }
+            .where { SubmissionsTable.id eq hashids.decode(submissionId).first() }
             .execute()
             .map(::transformSubmission)
             .singleOrNull()
@@ -114,6 +117,17 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .execute()
             .map(::transformSubmission)
             .toList()
+    }
+
+    override fun create(submission: Submission) = db.transaction {
+        insertInto(SubmissionsTable)
+            .values { values ->
+                values[submitter] = submission.submitterId
+                values[title] = submission.title
+                values[abstract] = submission.abstract
+                values[public] = submission.isPublic
+            }
+            .execute()
     }
 
     override fun close() {

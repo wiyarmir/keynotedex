@@ -15,7 +15,7 @@ class SubmissionCard : RComponent<SubmissionProps, RState>() {
     override fun RBuilder.render() {
         with(props.submission) {
             div("col-12 col-sm-6 col-xl-4") {
-                routeLink(to = "/$userId/$submissionId") { h3 { +title } }
+                routeLink(to = "/$userId/$submissionSlug-$submissionId") { h3 { +title } }
                 abstract.let { if (it.isNotEmpty()) p { +it } }
                 type.let { if (it.isNotEmpty()) p { +"Type $it" } }
                 submittedTo.let { if (it.isNotEmpty()) p { +"Submitted to $it" } }
@@ -23,6 +23,12 @@ class SubmissionCard : RComponent<SubmissionProps, RState>() {
         }
     }
 }
+
+private val Submission.submissionSlug: String
+    get() = title
+        .replace(' ', '-')
+        .toLowerCase()
+        .replace(Regex("((?!([a-z0-9\\-])).)"), "")
 
 external interface SubmissionProps : RProps {
     var submission: Submission

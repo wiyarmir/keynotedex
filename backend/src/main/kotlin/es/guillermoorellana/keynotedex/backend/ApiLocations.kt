@@ -7,10 +7,10 @@ import io.ktor.locations.Location
 data class UserEndpoint(val userId: String)
 
 @Location(Api.V1.Paths.submissions)
-data class SubmissionsEndpoint(val submissionId: String)
+data class SubmissionsEndpoint(val submissionId: String? = null)
 
 @Location(Api.V1.Paths.conferences)
-data class ConferenceEndpoint(val conferenceId: String?)
+data class ConferenceEndpoint(val conferenceId: String? = null)
 
 @Location(Api.V1.Paths.register)
 class SignUpEndpoint

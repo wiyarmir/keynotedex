@@ -68,10 +68,16 @@ suspend fun logoutUser() =
 
 suspend fun getSubmission(submissionId: String) =
     getAndParseResult(
-        Api.V1.Paths.submissions.replace("{submissionId}", submissionId),
+        Api.V1.Paths.submissions.replace("{submissionId?}", submissionId),
         null
     ) { parseSubmissionResponse(it) }
         .toModel()
+
+suspend fun postSubmission(submission: Submission) =
+    postAndParseResult(
+        Api.V1.Paths.submissions.replace("{submissionId?}", ""),
+        submission
+    ) { Unit }
 
 private suspend fun parseUserResponse(response: Response): User {
     val responseText = response.text().await()

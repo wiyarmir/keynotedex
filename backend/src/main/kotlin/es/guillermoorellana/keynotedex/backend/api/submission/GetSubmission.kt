@@ -18,12 +18,10 @@ import io.ktor.routing.accept
 fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
     accept(ContentType.Application.Json) {
         get<SubmissionsEndpoint> { (submissionId) ->
-            val submission = submissionStorage.submissionById(submissionId)
+            val submission = submissionId
+                ?.let { submissionStorage.submissionById(it) }
             if (submission == null) {
-                call.respond(
-                    HttpStatusCode.NotFound,
-                    ErrorResponse("Not found")
-                )
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
                 return@get
             }
             if (submission.isPublic) {
@@ -42,3 +40,4 @@ fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserS
         }
     }
 }
+

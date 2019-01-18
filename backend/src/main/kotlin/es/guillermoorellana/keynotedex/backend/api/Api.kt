@@ -9,6 +9,7 @@ import es.guillermoorellana.keynotedex.backend.api.signin.PostSignIn
 import es.guillermoorellana.keynotedex.backend.api.signout.PostSignOut
 import es.guillermoorellana.keynotedex.backend.api.signup.PostSignUp
 import es.guillermoorellana.keynotedex.backend.api.submission.GetSubmission
+import es.guillermoorellana.keynotedex.backend.api.submission.PostSubmission
 import es.guillermoorellana.keynotedex.backend.api.user.GetUser
 import es.guillermoorellana.keynotedex.backend.api.user.PutUser
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
@@ -30,15 +31,18 @@ import io.ktor.util.pipeline.PipelineContext
 
 fun Route.api(dao: KeynotedexStorage) {
     GetConference(dao)
-    GetSignIn(dao)
-    GetSubmission(dao, dao)
-    GetUser(dao, dao)
 
+    GetSubmission(dao, dao)
+    PostSubmission(dao, dao)
+
+    GetUser(dao, dao)
+    PutUser(dao, dao)
+
+    GetSignIn(dao)
     PostSignIn(dao)
+
     PostSignOut()
     PostSignUp(dao)
-
-    PutUser(dao, dao)
 }
 
 fun PipelineContext<Unit, ApplicationCall>.getCurrentLoggedUser(userStorage: UserStorage) =

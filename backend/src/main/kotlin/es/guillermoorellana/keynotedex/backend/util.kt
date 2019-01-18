@@ -53,7 +53,6 @@ internal fun KeynotedexDatabase.mockData(application: Application) {
 
                 insertInto(SubmissionsTable)
                     .values { statement ->
-                        statement[id] = "$i"
                         statement[public] = i % 2 == 0
                         statement[submitter] = "user1"
                         statement[title] = "My talk $i"
@@ -63,7 +62,6 @@ internal fun KeynotedexDatabase.mockData(application: Application) {
 
                 insertInto(SubmissionsTable)
                     .values { statement ->
-                        statement[id] = "2$i"
                         statement[public] = i % 2 == 0
                         statement[submitter] = "user2"
                         statement[title] = "My talk $i"

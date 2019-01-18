@@ -77,7 +77,8 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
 
     private fun fetchSubmission() {
         GlobalScope.promise {
-            val submission = getSubmission(idFromRoute(props.match.params.submissionId))
+            val submissionId = cleanupSubmissionId(props.match.params.submissionId)
+            val submission = getSubmission(submissionId)
             setState {
                 this.submission = submission
             }
@@ -87,7 +88,7 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
     }
 }
 
-private fun idFromRoute(submissionRoute: String) = submissionRoute.substringBefore('-')
+private fun cleanupSubmissionId(id: String): String = id.split('-').last()
 
 external interface SubmissionRouteProps : RProps {
     val userId: String

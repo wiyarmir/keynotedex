@@ -101,6 +101,6 @@ fun Route.PostSignUp(userStorage: UserStorage) {
         }
 
         call.sessions.set(Session(newUser.userId))
-        call.respond(UserProfileResponse(newUser.toDto()))
+        call.respond(HttpStatusCode.Created, UserProfileResponse(newUser.toDto()))
     }
 }

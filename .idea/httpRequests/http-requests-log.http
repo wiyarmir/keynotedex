@@ -1,0 +1,531 @@
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+<> 2019-01-17T110355.500.json
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "userId": "abc",
+    "submissionId": "abc",
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+    "userId":"abc",
+    "submissionId":"abc",
+    "title":"abc",
+    "abstract":"abc",
+    "type":"abc",
+    "submittedTo":"abc",
+    "visibility":"PUBLIC"
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+    "userId":"abc",
+    "submissionId":"abc",
+    "title":"abc",
+    "abstract":"abc",
+    "type":"abc",
+    "submittedTo":"abc",
+    "visibility":"abc"
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+    "userId":"abc"
+    "submissionId":"abc"
+    "title":"abc"
+    "abstract":"abc"
+    "type":"abc"
+    "submittedTo":"abc"
+    "visibility":"abc"
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value"
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value"
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value"
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value"
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+"key":"value
+}
+
+###
+
+GET http://localhost:9090/api/v1/submissions/2
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2019-01-17T102315.200.json
+
+###
+
+GET http://localhost:9090/api/v1/submissions/1
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2019-01-17T102245.404.json
+
+###
+
+GET http://localhost:9090/api/v1/submissions/1
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2019-01-17T102110.404.json
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions/
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2019-01-17T102046.404.json
+
+###
+
+GET http://localhost:9090/api/v1/submissions/1
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2019-01-17T102034.404.json
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions/1
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions/1
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions-1
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+Accept: application/json
+
+###
+
+POST http://localhost:9090/api/v1/submissions
+
+###
+
+GET http://localhost:9090
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/user/user1/submission/a
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2018-02-03T040142.404.json
+
+###
+
+GET http://localhost:8080/user/user1/submission/a
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/user/user1/submission/a
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/user/user1/submission/a
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
