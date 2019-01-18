@@ -21,17 +21,20 @@ fun Route.PostSubmission(submissionStorage: SubmissionStorage, userStorage: User
     accept(ContentType.Application.Json) {
         post<SubmissionsEndpoint> {
             val user = getCurrentLoggedUser(userStorage)
-//            if (user == null) {
-//                call.respond(HttpStatusCode.Unauthorized)
-//                return@post
-//            }
+            if (user == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@post
+            }
 
             val incompleteSubmission = call.receive<SubmissionCreateRequest>().submission
-            val submission = incompleteSubmission.copy(userId = user?.userId ?: "")
+            val submission = incompleteSubmission.copy(userId = user.userId)
             try {
                 submissionStorage.create(submission.toDao())
-            } catch (exception: SQLException) {
-                call.respond(HttpStatusCode.InternalServerError, ErrorResponse(message = "Failed to create Submission"))
+            } catch (e: SQLException) {
+                call.respond(
+                    HttpStatusCode.InternalServerError,
+                    ErrorResponse(message = "Failed to create submission: ${e.message}")
+                )
             }
             call.respond(HttpStatusCode.Created)
         }

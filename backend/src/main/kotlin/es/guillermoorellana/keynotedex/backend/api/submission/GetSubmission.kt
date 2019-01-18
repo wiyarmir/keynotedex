@@ -40,4 +40,3 @@ fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserS
         }
     }
 }
-

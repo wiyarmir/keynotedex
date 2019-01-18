@@ -77,7 +77,7 @@ suspend fun postSubmission(submission: Submission) =
     postAndParseResult(
         Api.V1.Paths.submissions.replace("{submissionId?}", ""),
         submission
-    ) { Unit }
+    ) {}
 
 private suspend fun parseUserResponse(response: Response): User {
     val responseText = response.text().await()

@@ -1,6 +1,6 @@
 package org.hashids
 
-import java.util.*
+import java.util.ArrayList
 import java.util.regex.Pattern
 
 /**
@@ -50,7 +50,7 @@ class Hashids(
 
         seps = consistentShuffle(seps, this.salt)
 
-        if ((seps == "") || ((this.alphabet.length / seps.length) > sepsDiv)) {
+        if (seps == "" || this.alphabet.length / seps.length > sepsDiv) {
             var sepsCount = getCount(this.alphabet.length, sepsDiv)
 
             if (sepsCount == 1)
@@ -116,7 +116,7 @@ class Hashids(
             retString += last
 
             if (i + 1 < numbers.size) {
-                num %= (last.toCharArray()[0].toInt() + i)
+                num %= last.toCharArray()[0].toInt() + i
                 sepsIndex = (num % seps.length).toInt()
                 retString += seps.toCharArray()[sepsIndex]
             }
@@ -306,9 +306,7 @@ class Hashids(
         return number
     }
 
-    fun getVersion(): String {
-        return "1.0.0"
-    }
+    fun getVersion(): String = "1.0.0"
 
     fun kotlin.String.unique(): kotlin.String {
         var unique = ""
