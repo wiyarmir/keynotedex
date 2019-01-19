@@ -17,6 +17,11 @@ enum class SubmissionVisibility {
     PUBLIC, PRIVATE
 }
 
+fun SubmissionVisibility.flip() = when (this) {
+    SubmissionVisibility.PUBLIC -> SubmissionVisibility.PRIVATE
+    SubmissionVisibility.PRIVATE -> SubmissionVisibility.PUBLIC
+}
+
 fun SubmissionVisibility.string() = when (this) {
     SubmissionVisibility.PUBLIC -> "public"
     SubmissionVisibility.PRIVATE -> "private"

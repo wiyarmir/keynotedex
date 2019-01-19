@@ -9,11 +9,13 @@ import es.guillermoorellana.keynotedex.web.components.editable.get
 import es.guillermoorellana.keynotedex.web.external.RouteResultProps
 import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.flip
 import es.guillermoorellana.keynotedex.web.model.string
 import es.guillermoorellana.keynotedex.web.model.toDto
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.promise
+import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -41,10 +43,6 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
         style { +css }
         div("container") {
             loading(state.submission) { sub ->
-                legend { +"This talk is ${sub.visibility.string()}." }
-                button(classes = "btn btn-primary btn-lg") { +"Make not ${sub.visibility.string()}" }
-
-                hr { }
                 h3 {
                     editableText {
                         attrs {
@@ -63,8 +61,27 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
                 }
                 sub.type.let { if (it.isNotEmpty()) p { +"Type $it" } }
                 sub.submittedTo.let { if (it.isNotEmpty()) p { +"Submitted to $it" } }
+
+                hr { }
+
+                legend { +"This talk is ${sub.visibility.string()}." }
+                button(classes = "btn btn-primary btn-lg") {
+                    +"Make not ${sub.visibility.string()}"
+                    attrs {
+                        onClickFunction = { onVisibilityChanged() }
+                    }
+                }
             }
         }
+    }
+
+    private fun onVisibilityChanged() {
+        val submission = state.submission ?: return
+        val updated = submission.copy(visibility = submission.visibility.flip())
+        setState {
+            this.submission = updated
+        }
+        updateSubmission(updated)
     }
 
     private fun onChangeEvent(chg: ChangeEvent) {
@@ -81,6 +98,13 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
         if (submission != state.submission) updateSubmission(submission)
     }
 
+    private fun updateSubmission(submission: Submission) {
+        GlobalScope.launch {
+            updateSubmission(submission.toDto())
+            fetchSubmission()
+        }
+    }
+
     private fun fetchSubmission() {
         GlobalScope.promise {
             val submissionId = cleanupSubmissionId(props.match.params.submissionId)
@@ -90,13 +114,6 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
             }
         }.catch {
             console.error(it)
-        }
-    }
-
-    private fun updateSubmission(submission: Submission) {
-        GlobalScope.launch {
-            updateSubmission(submission.toDto())
-            fetchSubmission()
         }
     }
 }
