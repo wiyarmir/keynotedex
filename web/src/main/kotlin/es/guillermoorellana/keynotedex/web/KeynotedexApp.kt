@@ -8,7 +8,6 @@ import es.guillermoorellana.keynotedex.web.external.route
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.external.switch
 import es.guillermoorellana.keynotedex.web.model.User
-import es.guillermoorellana.keynotedex.web.screens.ComingSoonScreen
 import es.guillermoorellana.keynotedex.web.screens.HomeScreen
 import es.guillermoorellana.keynotedex.web.screens.NotFoundScreen
 import es.guillermoorellana.keynotedex.web.screens.PrivacyPolicyScreen
@@ -81,8 +80,8 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             }
             route("/privacy", PrivacyPolicyScreen::class, exact = true)
             route("/terms", TOSScreen::class, exact = true)
-            route("/conferences", ComingSoonScreen::class, exact = true)
-            route("/speakers", ComingSoonScreen::class, exact = true)
+            route("/events", NotFoundScreen::class, exact = true)
+            route("/sessions", NotFoundScreen::class, exact = true)
             route("/:userId/:submissionId", SubmissionScreen::class, exact = true)
             route("/:userId", UserScreen::class, exact = true)
             route(NotFoundScreen::class)

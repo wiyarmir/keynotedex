@@ -42,15 +42,15 @@ class NavBarComponent : RComponent<RProps, RState>() {
                 attrs { id = "navbar" }
                 ul("nav navbar-nav mr-auto mt-2 mt-lg-0") {
                     li("nav-item") {
-                        routeLink("/conferences") {
+                        routeLink("/sessions") {
                             attrs { className = "nav-link" }
-                            +"Conferences"
+                            +"Sessions"
                         }
                     }
                     li("nav-item") {
-                        routeLink("/speakers") {
+                        routeLink("/events") {
                             attrs { className = "nav-link" }
-                            +"Speakers"
+                            +"Events"
                         }
                     }
                 }
