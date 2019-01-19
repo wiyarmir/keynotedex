@@ -9,7 +9,7 @@ defaults: &defaults
 
 download_gradle_dependencies: &download_gradle_dependencies
   name: Download dependencies
-  command: ./gradlew dependencies
+  command: ./gradlew -PbuildAndroid=false dependencies
 
 version: 2
 jobs:
@@ -26,7 +26,7 @@ jobs:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Lint project
-          command: ./gradlew detekt
+          command: ./gradlew -PbuildAndroid=false detekt
       - run:
           name: Save detekt results
           command: |
@@ -37,7 +37,56 @@ jobs:
           path: ~/detekt
       - store_artifacts:
           path: ~/detekt
-  build:
+
+  build-android:
+    <<: *defaults
+    docker:
+      - image: circleci/android:api-28-alpha
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew -PbuildAndroid=true dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
+      - run:
+          name: Run Tests
+          command: ./gradlew -PbuildAndroid=true :android:assemble
+      - store_artifacts:
+          path: android/build/reports
+          destination: reports
+      - store_test_results:
+          path: android/build/test-results
+
+  test-android:
+    <<: *defaults
+    docker:
+      - image: circleci/android:api-28-alpha
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew -PbuildAndroid=true dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
+      - run:
+          name: Run Tests
+          command: ./gradlew -PbuildAndroid=true :android:lint :android:test
+      - store_artifacts:
+          path: android/build/reports
+          destination: reports
+      - store_test_results:
+          path: android/build/test-results
+
+  build-backend:
     <<: *defaults
     steps:
       - checkout
@@ -50,7 +99,24 @@ jobs:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Build project
-          command: ./gradlew stage --stacktrace
+          command: ./gradlew -PbuildAndroid=false :backend:assemble --stacktrace
+      - store_artifacts:
+          path: backend/build/libs
+
+  build-web:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
+      - run: *download_gradle_dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
+      - run:
+          name: Build project
+          command: ./gradlew -PbuildAndroid=false :web:assemble --stacktrace
       - store_artifacts:
           path: backend/build/libs
 
@@ -67,7 +133,7 @@ jobs:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew test --stacktrace
+          command: ./gradlew -PbuildAndroid=false test --stacktrace
       - run:
           name: Save test results
           command: |
@@ -78,7 +144,7 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit
-  deploy:
+  deploy-backend:
     docker:
       - image: buildpack-deps:trusty
     steps:
@@ -89,38 +155,28 @@ jobs:
             ssh-keyscan -H dev.wiyarmir.es >> ~/.ssh/known_hosts
             git push $HEROKU_URL master
 
-#  ktlint:
-#    <<: *defaults
-#    steps:
-#      - checkout
-#      - restore_cache:
-#          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-#      - run: *download_gradle_dependencies
-#      - save_cache:
-#          paths:
-#            - ~/.gradle
-#          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-#      - run:
-#          name: Run ktlint
-#          command: ./gradlew ktlint --stacktrace -PdisablePreDex
-#      - store_artifacts:
-#          path: app/build/reports
-#          destination: reports
-
 workflows:
   version: 2
   pr-checks:
     jobs:
       - lint
-      - build:
+      - test-android
+      - build-android:
+          requires:
+            - test-android
+      - build-backend:
+          requires:
+            - lint
+      - build-web:
           requires:
             - lint
       - tests:
           requires:
             - lint
-      - deploy:
+      - deploy-backend:
           requires:
-            - build
+            - build-backend
+            - build-web
             - tests
           filters:
             branches:

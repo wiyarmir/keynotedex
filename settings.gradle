@@ -1,4 +1,9 @@
 rootProject.name = 'keynotedex'
+
+if (buildAndroid.toBoolean()) {
+    include 'android'
+}
+
 include 'common'
 include 'common-jvm'
 include 'common-js'

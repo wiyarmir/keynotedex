@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$Versions.kotlin"
+        classpath "com.android.tools.build:gradle:3.3.0"
+    }
+}
+
+apply plugin: "com.android.application"
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "es.guillermoorellana.keynotedex.app"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "0.0.1"
+    }
+
+    signingConfigs {}
+
+    buildTypes {
+        release {}
+
+        debug {}
+    }
+}
