@@ -5,6 +5,7 @@ import es.guillermoorellana.keynotedex.web.components.navigation
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.browserRouter
 import es.guillermoorellana.keynotedex.web.external.route
+import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.external.switch
 import es.guillermoorellana.keynotedex.web.model.User
 import es.guillermoorellana.keynotedex.web.screens.ComingSoonScreen
@@ -27,7 +28,6 @@ import react.RHandler
 import react.RProps
 import react.RState
 import react.dom.RDOMBuilder
-import react.dom.a
 import react.dom.div
 import react.dom.footer
 import react.dom.p
@@ -79,10 +79,10 @@ class Application : RComponent<RProps, ApplicationPageState>() {
                     }
                 }
             }
-            route("/privacy", PrivacyPolicyScreen::class)
-            route("/terms", TOSScreen::class)
-            route("/conferences", ComingSoonScreen::class)
-            route("/speakers", ComingSoonScreen::class)
+            route("/privacy", PrivacyPolicyScreen::class, exact = true)
+            route("/terms", TOSScreen::class, exact = true)
+            route("/conferences", ComingSoonScreen::class, exact = true)
+            route("/speakers", ComingSoonScreen::class, exact = true)
             route("/:userId/:submissionId", SubmissionScreen::class, exact = true)
             route("/:userId", UserScreen::class, exact = true)
             route(NotFoundScreen::class)
@@ -94,9 +94,9 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             p {
                 +"© Keynotedex ${js("new Date().getFullYear()")}"
                 +" "
-                a(href = "/terms") { +"Terms of Service" }
+                routeLink(to = "/terms") { +"Terms of Service" }
                 +" "
-                a(href = "/privacy") { +"Privacy Policy" }
+                routeLink(to = "/privacy") { +"Privacy Policy" }
             }
         }
     }
