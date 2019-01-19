@@ -27,9 +27,12 @@ import react.RHandler
 import react.RProps
 import react.RState
 import react.dom.RDOMBuilder
+import react.dom.a
 import react.dom.div
 import react.dom.footer
+import react.dom.hr
 import react.dom.p
+import react.dom.style
 import react.setState
 
 class Application : RComponent<RProps, ApplicationPageState>() {
@@ -89,12 +92,24 @@ class Application : RComponent<RProps, ApplicationPageState>() {
     }
 
     private fun RDOMBuilder<MAIN>.footer() {
+        style {
+            // language=CSS
+            +"""
+            footer {
+                margin-top: 2em;
+            }
+            """.trimIndent()
+        }
         footer("container") {
+            hr { }
             p {
-                +"© Keynotedex ${js("new Date().getFullYear()")}"
-                +" "
+                +"Keynotedex, an "
+                a(href = "https://github.com/wiyarmir/keynotedex", target = "blank") { +"OpenSource" }
+                +" initiative by "
+                a(href = "https://guillermoorellana.es", target = "blank") { +"Guillermo Orellana" }
+                +" — "
                 routeLink(to = "/terms") { +"Terms of Service" }
-                +" "
+                +" — "
                 routeLink(to = "/privacy") { +"Privacy Policy" }
             }
         }
