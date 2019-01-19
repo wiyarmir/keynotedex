@@ -1,7 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.LoginOrRegisterFailedException
-import es.guillermoorellana.keynotedex.web.comms.register
+import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink
@@ -165,9 +164,9 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
         }
         GlobalScope.launch {
             try {
-                val user = register(state.username, state.password, state.username, state.email)
+                val user = NetworkDataSource.register(state.username, state.password, state.username, state.email)
                 props.onUserLoggedIn(user)
-            } catch (exception: LoginOrRegisterFailedException) {
+            } catch (exception: NetworkDataSource.LoginOrRegisterFailedException) {
                 setState {
                     errorMessage = exception.message.toString()
                 }

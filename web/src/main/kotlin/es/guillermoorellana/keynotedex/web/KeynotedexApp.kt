@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.web.comms.checkSession
+import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource.checkSession
 import es.guillermoorellana.keynotedex.web.components.navigation
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.browserRouter

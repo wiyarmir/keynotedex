@@ -1,7 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.getSubmission
-import es.guillermoorellana.keynotedex.web.comms.updateSubmission
+import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
 import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
@@ -100,7 +99,7 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
 
     private fun updateSubmission(submission: Submission) {
         GlobalScope.launch {
-            updateSubmission(submission.toDto())
+            NetworkDataSource.updateSubmission(submission.toDto())
             fetchSubmission()
         }
     }
@@ -108,7 +107,7 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
     private fun fetchSubmission() {
         GlobalScope.promise {
             val submissionId = cleanupSubmissionId(props.match.params.submissionId)
-            val submission = getSubmission(submissionId)
+            val submission = NetworkDataSource.getSubmission(submissionId)
             setState {
                 this.submission = submission
             }

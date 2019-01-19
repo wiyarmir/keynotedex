@@ -1,12 +1,14 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.updateUserProfile
-import es.guillermoorellana.keynotedex.web.comms.userProfile
+import arrow.core.Try.Failure
+import arrow.core.Try.Success
+import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
 import es.guillermoorellana.keynotedex.web.components.profile.editableProfile
 import es.guillermoorellana.keynotedex.web.external.RouteResultProps
 import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.UserProfile
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.promise
 import react.RBuilder
 import react.RComponent
@@ -49,19 +51,20 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
 
     private fun fetchUserProfileFromProps(props: RouteResultProps<UserProps>) {
         val userId = props.match.params.userId
-        GlobalScope.promise {
-            val user = userProfile(userId)
+        GlobalScope.launch {
+            val user = when (val req = NetworkDataSource.userProfile(userId)) {
+                is Success -> req.value
+                is Failure -> null
+            }
             setState {
                 this.userProfile = user
             }
-        }.catch { throwable ->
-            console.error(throwable)
         }
     }
 
     private fun postUserProfile(userProfile: UserProfile) {
         GlobalScope.promise {
-            val updatedUserProfile = updateUserProfile(userProfile)
+            val updatedUserProfile = NetworkDataSource.updateUserProfile(userProfile)
             setState {
                 this.userProfile = updatedUserProfile
             }

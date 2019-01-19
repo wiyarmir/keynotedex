@@ -25,3 +25,5 @@ class NotFoundScreen : RComponent<RProps, RState>() {
         }
     }
 }
+
+fun RBuilder.notFound() = child(NotFoundScreen::class) {}

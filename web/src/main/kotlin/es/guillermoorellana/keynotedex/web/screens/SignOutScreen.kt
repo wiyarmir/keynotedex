@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.logoutUser
+import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import kotlinx.coroutines.GlobalScope
@@ -15,7 +15,7 @@ class SignOutScreen : RComponent<LogoutProps, RState>() {
 
     override fun componentDidMount() {
         GlobalScope.launch {
-            logoutUser()
+            NetworkDataSource.logoutUser()
             props.nukeCurrentUser()
         }
     }
