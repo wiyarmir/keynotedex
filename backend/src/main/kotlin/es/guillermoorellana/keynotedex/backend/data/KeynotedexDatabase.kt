@@ -96,7 +96,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .singleOrNull()
     }
 
-    override fun submissionById(submissionId: String): Submission? = db.transaction {
+    override fun getById(submissionId: String): Submission? = db.transaction {
         from(SubmissionsTable)
             .where { SubmissionsTable.id eq hashids.decode(submissionId).first() }
             .execute()
@@ -104,7 +104,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .singleOrNull()
     }
 
-    override fun submissionsByUserId(userId: String): List<Submission> = db.transaction {
+    override fun allByUserId(userId: String): List<Submission> = db.transaction {
         from(SubmissionsTable)
             .where { SubmissionsTable.submitter eq userId }
             .execute()
@@ -112,7 +112,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .toList()
     }
 
-    override fun submissions(): List<Submission> = db.transaction {
+    override fun all(): List<Submission> = db.transaction {
         from(ConferencesTable)
             .execute()
             .map(::transformSubmission)
@@ -130,6 +130,16 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .execute()
     }
 
-    override fun close() {
+    override fun update(submission: Submission) = db.transaction {
+        update(SubmissionsTable)
+            .set { statement ->
+                statement[title] = submission.title
+                statement[abstract] = submission.abstract
+                statement[public] = submission.isPublic
+            }
+            .where { SubmissionsTable.id eq submission.id }
+            .execute()
     }
+
+    override fun close() = Unit
 }

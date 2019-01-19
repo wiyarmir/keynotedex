@@ -1,10 +1,11 @@
 package es.guillermoorellana.keynotedex.backend.data.submissions
 
+import es.guillermoorellana.keynotedex.backend.data.hashids
 import es.guillermoorellana.keynotedex.dto.SubmissionVisibility
 import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
 
 data class Submission(
-    val id: String,
+    val id: Long,
     val title: String,
     val abstract: String?,
     val isPublic: Boolean,
@@ -12,7 +13,7 @@ data class Submission(
 )
 
 fun DtoSubmission.toDao(): Submission = Submission(
-    id = submissionId,
+    id = hashids.decode(submissionId).first(),
     submitterId = userId,
     title = title,
     abstract = abstract,

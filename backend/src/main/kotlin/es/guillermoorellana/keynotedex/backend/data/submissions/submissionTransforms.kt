@@ -9,7 +9,7 @@ import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
 
 fun transformSubmission(it: ResultRow): Submission =
     Submission(
-        id = hashids.encode(it[SubmissionsTable.id]),
+        id = it[SubmissionsTable.id],
         submitterId = it[SubmissionsTable.submitter],
         isPublic = it[SubmissionsTable.public],
         title = it[SubmissionsTable.title],
@@ -17,7 +17,7 @@ fun transformSubmission(it: ResultRow): Submission =
     )
 
 fun Submission.toDto() = DtoSubmission(
-    submissionId = id,
+    submissionId = hashids.encode(id),
     title = title,
     abstract = abstract,
     userId = submitterId,

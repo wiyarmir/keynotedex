@@ -19,7 +19,7 @@ fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserS
     accept(ContentType.Application.Json) {
         get<SubmissionsEndpoint> { (submissionId) ->
             val submission = submissionId
-                ?.let { submissionStorage.submissionById(it) }
+                ?.let { submissionStorage.getById(it) }
             if (submission == null) {
                 call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
                 return@get

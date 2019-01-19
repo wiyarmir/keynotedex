@@ -10,6 +10,7 @@ import es.guillermoorellana.keynotedex.backend.api.signout.PostSignOut
 import es.guillermoorellana.keynotedex.backend.api.signup.PostSignUp
 import es.guillermoorellana.keynotedex.backend.api.submission.GetSubmission
 import es.guillermoorellana.keynotedex.backend.api.submission.PostSubmission
+import es.guillermoorellana.keynotedex.backend.api.submission.PutSubmission
 import es.guillermoorellana.keynotedex.backend.api.user.GetUser
 import es.guillermoorellana.keynotedex.backend.api.user.PutUser
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
@@ -34,6 +35,7 @@ fun Route.api(dao: KeynotedexStorage) {
 
     GetSubmission(dao, dao)
     PostSubmission(dao, dao)
+    PutSubmission(dao, dao)
 
     GetUser(dao, dao)
     PutUser(dao, dao)
@@ -53,7 +55,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.doUserProfileResponse(
     submissionStorage: SubmissionStorage,
     currentUser: User?
 ) {
-    val submissions = submissionStorage.submissionsByUserId(user.userId)
+    val submissions = submissionStorage.allByUserId(user.userId)
         .filter { it.isPublic || currentUser?.userId == it.submitterId }
 
     call.respond(

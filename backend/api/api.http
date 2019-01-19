@@ -50,6 +50,22 @@ Cache-Control: no-cache
 
 ###
 
+PUT http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "submission": {
+    "title": "abc",
+    "abstract": "abc",
+    "type": "abc",
+    "submittedTo": "abc",
+    "visibility": "PUBLIC"
+  }
+}
+
+###
+
 ###
 # CONFERENCE
 ###
