@@ -48,13 +48,13 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
 
     override fun RBuilder.render() {
         style(content = profileStyle)
-        props.userProfile.also { profile ->
+        props.userProfile.also { (user, submissions) ->
             div("profile-container") {
                 editableText {
                     attrs {
                         editable = props.editable
                         propName = "displayName"
-                        value = profile.user.displayName
+                        value = user.displayName
                         change = { event -> onChange(event) }
                         className = "displayNameInput"
                         classLoading = "loading"
@@ -64,14 +64,14 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
                     attrs {
                         editable = props.editable
                         propName = "bio"
-                        value = profile.user.bio ?: "Introduce yourself"
+                        value = user.bio ?: "Introduce yourself"
                         change = { event -> onChange(event) }
                         className = "bioTextArea"
                         classLoading = "loading"
                     }
                 }
             }
-            submissions { attrs { submissions = profile.submissions } }
+            submissions { attrs { this.submissions = submissions } }
             routeLink(to = "/signout") {
                 attrs {
                     className = "btn btn-primary btn-lg"

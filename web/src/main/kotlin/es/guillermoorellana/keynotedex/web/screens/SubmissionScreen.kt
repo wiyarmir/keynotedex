@@ -1,6 +1,7 @@
 package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.web.comms.getSubmission
+import es.guillermoorellana.keynotedex.web.comms.updateSubmission
 import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
@@ -9,7 +10,9 @@ import es.guillermoorellana.keynotedex.web.external.RouteResultProps
 import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.Submission
 import es.guillermoorellana.keynotedex.web.model.string
+import es.guillermoorellana.keynotedex.web.model.toDto
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.promise
 import react.RBuilder
 import react.RComponent
@@ -65,14 +68,17 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
     }
 
     private fun onChangeEvent(chg: ChangeEvent) {
-        setState {
-            chg["abstract"]?.let { abstract ->
-                submission = submission?.copy(abstract = abstract)
-            }
-            chg["title"]?.let { title ->
-                submission = submission?.copy(title = title)
-            }
+        var submission = state.submission ?: return
+        chg["abstract"]?.let { abstract ->
+            submission = submission.copy(abstract = abstract)
         }
+        chg["title"]?.let { title ->
+            submission = submission.copy(title = title)
+        }
+        setState {
+            this.submission = submission
+        }
+        if (submission != state.submission) updateSubmission(submission)
     }
 
     private fun fetchSubmission() {
@@ -84,6 +90,13 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
             }
         }.catch {
             console.error(it)
+        }
+    }
+
+    private fun updateSubmission(submission: Submission) {
+        GlobalScope.launch {
+            updateSubmission(submission.toDto())
+            fetchSubmission()
         }
     }
 }

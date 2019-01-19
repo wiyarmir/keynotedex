@@ -36,3 +36,16 @@ fun DtoSubmission.toModel() = Submission(
 )
 
 fun List<DtoSubmission>.toModel(): List<Submission> = map(DtoSubmission::toModel)
+
+fun Submission.toDto() = DtoSubmission(
+    submissionId = submissionId,
+    userId = userId,
+    title = title,
+    abstract = abstract,
+    type = type,
+    submittedTo = submittedTo,
+    visibility = when (visibility) {
+        SubmissionVisibility.PRIVATE -> DtoSubmissionVisibility.PRIVATE
+        SubmissionVisibility.PUBLIC -> DtoSubmissionVisibility.PUBLIC
+    }
+)

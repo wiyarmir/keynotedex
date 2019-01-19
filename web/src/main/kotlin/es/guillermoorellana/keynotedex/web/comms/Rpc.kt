@@ -3,6 +3,7 @@ package es.guillermoorellana.keynotedex.web.comms
 import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.dto.Submission
 import es.guillermoorellana.keynotedex.dto.User
+import es.guillermoorellana.keynotedex.requests.SubmissionUpdateRequest
 import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import es.guillermoorellana.keynotedex.responses.SubmissionResponse
@@ -77,6 +78,12 @@ suspend fun postSubmission(submission: Submission) =
     postAndParseResult(
         Api.V1.Paths.submissions.replace("{submissionId?}", ""),
         submission
+    ) {}
+
+suspend fun updateSubmission(submission: Submission) =
+    putAndParseResult(
+        Api.V1.Paths.submissions.replace("{submissionId?}", ""),
+        KJSON.stringify(SubmissionUpdateRequest.serializer(), SubmissionUpdateRequest(submission))
     ) {}
 
 private suspend fun parseUserResponse(response: Response): User {
