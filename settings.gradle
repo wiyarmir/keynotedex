@@ -1,6 +1,6 @@
 rootProject.name = 'keynotedex'
 
-if (buildAndroid.toBoolean()) {
+if (properties['org.gradle.project.buildAndroid'].toBoolean()) {
     include 'android'
 }
 

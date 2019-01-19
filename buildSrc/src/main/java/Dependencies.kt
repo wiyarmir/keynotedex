@@ -1,4 +1,5 @@
 object Versions {
+    const val androidGradlePlugin = "3.3.0"
     const val detekt = "1.0.0-RC12"
     const val ehcache = "3.6.1"
     const val fuel = "1.11.0"
@@ -37,9 +38,12 @@ object Libs {
     const val kotlinTestJunit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
     const val kotlinxCoroutinesCoreJs = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.kotlinxCoroutines}"
     const val kotlinxHtmlJs = "org.jetbrains.kotlinx:kotlinx-html-js:${Versions.html}"
-    const val kotlinxSerializationRuntime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
-    const val kotlinxSerializationRuntimeCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serialization}"
-    const val kotlinxSerializationRuntimeJs = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
+    const val kotlinxSerializationRuntime =
+        "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
+    const val kotlinxSerializationRuntimeCommon =
+        "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serialization}"
+    const val kotlinxSerializationRuntimeJs =
+        "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
     const val ktorClientApache = "io.ktor:ktor-client-apache:${Versions.ktor}"
     const val ktorFreemaker = "io.ktor:ktor-freemarker:${Versions.ktor}"
     const val ktorGson = "io.ktor:ktor-gson:${Versions.ktor}"

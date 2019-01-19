@@ -6,7 +6,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$Versions.kotlin"
-        classpath "com.android.tools.build:gradle:3.3.0"
+        classpath "com.android.tools.build:gradle:$Versions.androidGradlePlugin"
     }
 }
 
@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "es.guillermoorellana.keynotedex.app"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "0.0.1"
@@ -27,7 +27,10 @@ android {
 
     buildTypes {
         release {}
-
         debug {}
     }
+}
+
+dependencies{
+    implementation project(":common-jvm")
 }

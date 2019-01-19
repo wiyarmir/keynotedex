@@ -9,7 +9,7 @@ defaults: &defaults
 
 download_gradle_dependencies: &download_gradle_dependencies
   name: Download dependencies
-  command: ./gradlew -PbuildAndroid=false dependencies
+  command: ./gradlew -Porg.gradle.project.buildAndroid=false dependencies
 
 version: 2
 jobs:
@@ -26,7 +26,7 @@ jobs:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Lint project
-          command: ./gradlew -PbuildAndroid=false detekt
+          command: ./gradlew -Porg.gradle.project.buildAndroid=false detekt
       - run:
           name: Save detekt results
           command: |
@@ -48,14 +48,14 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
       - run:
           name: Download Dependencies
-          command: ./gradlew -PbuildAndroid=true dependencies
+          command: ./gradlew -Porg.gradle.project.buildAndroid=true dependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew -PbuildAndroid=true :android:assemble
+          command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:assemble
       - store_artifacts:
           path: android/build/reports
           destination: reports
@@ -72,14 +72,14 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
       - run:
           name: Download Dependencies
-          command: ./gradlew -PbuildAndroid=true dependencies
+          command: ./gradlew -Porg.gradle.project.buildAndroid=true dependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew -PbuildAndroid=true :android:lint :android:test
+          command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:detekt :android:lint :android:test
       - store_artifacts:
           path: android/build/reports
           destination: reports
@@ -99,7 +99,7 @@ jobs:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Build project
-          command: ./gradlew -PbuildAndroid=false :backend:assemble --stacktrace
+          command: ./gradlew -Porg.gradle.project.buildAndroid=false :backend:assemble --stacktrace
       - store_artifacts:
           path: backend/build/libs
 
@@ -116,7 +116,7 @@ jobs:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Build project
-          command: ./gradlew -PbuildAndroid=false :web:assemble --stacktrace
+          command: ./gradlew -Porg.gradle.project.buildAndroid=false :web:assemble --stacktrace
       - store_artifacts:
           path: backend/build/libs
 
@@ -133,7 +133,7 @@ jobs:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew -PbuildAndroid=false test --stacktrace
+          command: ./gradlew -Porg.gradle.project.buildAndroid=false test --stacktrace
       - run:
           name: Save test results
           command: |
