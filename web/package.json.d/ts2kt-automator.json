@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "ts2kt": "ts2kt-automator --dest=types "
+  }
+}

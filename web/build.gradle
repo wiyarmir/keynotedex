@@ -48,6 +48,7 @@ kotlinFrontend {
         devDependency "style-loader"
         devDependency "source-map-loader"
         devDependency "html-loader"
+        devDependency "@jetbrains/ts2kt-automator"
     }
 
     webpackBundle {
