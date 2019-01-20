@@ -50,7 +50,6 @@ dependencies {
     compile Libs.kotlinReflect
 
     compile Libs.ktorLocations
-    compile Libs.ktorGson
     compile Libs.ktorFreemaker
     compile Libs.ktorHtmlBuilder
     compile Libs.ktorServerNetty
@@ -66,7 +65,6 @@ dependencies {
     testCompile Libs.ktorServerTestHost
     testCompile Libs.jsoup
 
-    compile Libs.gson
     compile Libs.logbackClassic
     compile Libs.fuel
 }

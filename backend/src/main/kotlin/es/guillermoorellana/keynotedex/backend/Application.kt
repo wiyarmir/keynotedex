@@ -4,6 +4,7 @@ import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.backend.api.api
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
+import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -18,7 +19,6 @@ import io.ktor.features.PartialContent
 import io.ktor.features.StatusPages
 import io.ktor.freemarker.FreeMarker
 import io.ktor.freemarker.FreeMarkerContent
-import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resource
@@ -65,9 +65,8 @@ fun Application.keynotedex() {
     }
 
     install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
-            serializeNulls()
+        serializable {
+            register(ErrorResponse.serializer())
         }
     }
 

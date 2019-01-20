@@ -22,7 +22,6 @@ object Versions {
 object Libs {
     const val ehcache = "org.ehcache:ehcache:${Versions.ehcache}"
     const val fuel = "com.github.kittinunf.fuel:fuel:${Versions.fuel}"
-    const val gson = "com.google.code.gson:gson:${Versions.gson}"
     const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
     const val junit = "junit:junit:${Versions.junit}"
     const val kotlinExtensions = "org.jetbrains:kotlin-extensions:${Versions.kotlinJsExt}"
@@ -46,7 +45,6 @@ object Libs {
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
     const val ktorClientApache = "io.ktor:ktor-client-apache:${Versions.ktor}"
     const val ktorFreemaker = "io.ktor:ktor-freemarker:${Versions.ktor}"
-    const val ktorGson = "io.ktor:ktor-gson:${Versions.ktor}"
     const val ktorHtmlBuilder = "io.ktor:ktor-html-builder:${Versions.ktor}"
     const val ktorLocations = "io.ktor:ktor-locations:${Versions.ktor}"
     const val ktorServerNetty = "io.ktor:ktor-server-netty:${Versions.ktor}"
