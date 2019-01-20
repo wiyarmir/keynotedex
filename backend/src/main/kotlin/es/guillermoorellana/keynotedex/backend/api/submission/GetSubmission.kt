@@ -3,6 +3,7 @@ package es.guillermoorellana.keynotedex.backend.api.submission
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.SubmissionsEndpoint
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
+import es.guillermoorellana.keynotedex.backend.data.hashids
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
 import es.guillermoorellana.keynotedex.backend.data.submissions.toDto
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
@@ -23,6 +24,7 @@ fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserS
     accept(ContentType.Application.Json) {
         get<SubmissionsEndpoint> { (submissionId) ->
             val submission = submissionId
+                ?.let { hashids.decode(it).firstOrNull() }
                 ?.let { submissionStorage.getById(it) }
             if (submission == null) {
                 call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))

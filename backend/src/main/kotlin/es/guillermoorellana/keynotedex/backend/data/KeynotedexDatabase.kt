@@ -96,9 +96,9 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .singleOrNull()
     }
 
-    override fun getById(submissionId: String): Submission? = db.transaction {
+    override fun getById(submissionId: Long): Submission? = db.transaction {
         from(SubmissionsTable)
-            .where { SubmissionsTable.id eq hashids.decode(submissionId).first() }
+            .where { SubmissionsTable.id eq submissionId }
             .execute()
             .map(::transformSubmission)
             .singleOrNull()
