@@ -12,30 +12,20 @@ import kotlin.js.json
 
 object NetworkService {
 
-    suspend fun <T> postAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): Try<T> =
-        requestAndParseResult("POST", url, body, parse)
+    suspend fun post(url: String, body: dynamic) = request("POST", url, body)
 
-    suspend fun <T> putAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): Try<T> =
-        requestAndParseResult("PUT", url, body, parse)
+    suspend fun put(url: String, body: dynamic) = request("PUT", url, body)
 
-    suspend fun <T> getAndParseResult(url: String, body: dynamic, parse: suspend (Response) -> T): Try<T> =
-        requestAndParseResult("GET", url, body, parse)
+    suspend fun get(url: String, body: dynamic) = request("GET", url, body)
 
-    private suspend fun <T> requestAndParseResult(
-        method: String,
-        url: String,
-        body: dynamic,
-        parse: suspend (Response) -> T
-    ): Try<T> {
-        val headers =
-            if (body == null || body is URLSearchParams) {
-                listOf("Accept" to "application/json")
-            } else {
-                listOf(
-                    "Accept" to "application/json",
-                    "Content-Type" to "application/json"
-                )
-            }
+    private suspend fun request(method: String, url: String, body: dynamic): Try<Response> {
+        val headers = when (body) {
+            null, is URLSearchParams -> listOf("Accept" to "application/json")
+            else -> listOf(
+                "Accept" to "application/json",
+                "Content-Type" to "application/json"
+            )
+        }
 
         val request: RequestInit = object : RequestInit {
             override var method: String? = method
@@ -46,6 +36,6 @@ object NetworkService {
 
         return Try {
             window.fetch(url, request).await()
-        }.map { parse(it) }
+        }
     }
 }
