@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.api.signup
 
+import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.Session
 import es.guillermoorellana.keynotedex.backend.SignUpEndpoint
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
@@ -24,10 +25,7 @@ import org.h2.message.DbException
 
 fun Route.PostSignUp(userStorage: UserStorage) {
 
-    fun passwordNotValid(password: String?) = password?.let { it.length < 6 } ?: true
-    fun userIdShort(userId: String?) = userId?.let { it.length < 4 } ?: true
-    fun userNameNotValid(userName: String?) = userName?.isValidUserId()?.not() ?: true
-    fun userInDatabase(dao: UserStorage, userId: String?) = userId?.let { dao.retrieveUser(it) != null } ?: false
+    JsonSerializableConverter.register(UserProfileResponse.serializer())
 
     post<SignUpEndpoint> {
         val user = getCurrentLoggedUser(userStorage)
@@ -104,3 +102,11 @@ fun Route.PostSignUp(userStorage: UserStorage) {
         call.respond(HttpStatusCode.Created, UserProfileResponse(newUser.toDto()))
     }
 }
+
+private fun passwordNotValid(password: String?) = password?.let { it.length < 6 } ?: true
+
+private fun userIdShort(userId: String?) = userId?.let { it.length < 4 } ?: true
+
+private fun userNameNotValid(userName: String?) = userName?.isValidUserId()?.not() ?: true
+
+private fun userInDatabase(dao: UserStorage, userId: String?) = userId?.let { dao.retrieveUser(it) != null } ?: false

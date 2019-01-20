@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.api.submission
 
+import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.SubmissionsEndpoint
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
@@ -18,6 +19,9 @@ import io.ktor.routing.accept
 import java.sql.SQLException
 
 fun Route.PostSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
+
+    JsonSerializableConverter.register(SubmissionCreateRequest.serializer())
+
     accept(ContentType.Application.Json) {
         post<SubmissionsEndpoint> {
             val user = getCurrentLoggedUser(userStorage)

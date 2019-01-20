@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.api.signin
 
+import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.Session
 import es.guillermoorellana.keynotedex.backend.SignInEndpoint
 import es.guillermoorellana.keynotedex.backend.api.isValidUserId
@@ -21,6 +22,9 @@ import io.ktor.sessions.sessions
 import io.ktor.sessions.set
 
 fun Route.PostSignIn(userStorage: UserStorage) {
+
+    JsonSerializableConverter.register(LoginResponse.serializer())
+
     accept(ContentType.Application.Json) {
         post<SignInEndpoint> {
             val params = call.receiveParameters()

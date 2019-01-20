@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.api.submission
 
+import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.SubmissionsEndpoint
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
@@ -16,6 +17,9 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 
 fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
+
+    JsonSerializableConverter.register(SubmissionResponse.serializer())
+
     accept(ContentType.Application.Json) {
         get<SubmissionsEndpoint> { (submissionId) ->
             val submission = submissionId
@@ -32,10 +36,7 @@ fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserS
             if (user?.userId == submission.submitterId) {
                 call.respond(SubmissionResponse(submission.toDto()))
             } else {
-                call.respond(
-                    HttpStatusCode.NotFound,
-                    ErrorResponse("Not found")
-                )
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
             }
         }
     }

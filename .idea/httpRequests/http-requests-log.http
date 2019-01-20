@@ -1,3 +1,17 @@
+GET http://localhost:9090/api/v1/submissions
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2019-01-20T011330.404.json
+
+###
+
+GET http://localhost:9090/api/v1/users/user1
+Accept: application/json
+Cache-Control: no-cache
+
+###
+
 PUT http://localhost:9090/api/v1/submissions
 Accept: application/json
 Cache-Control: no-cache
@@ -524,18 +538,6 @@ Accept: application/json
 Cache-Control: no-cache
 
 <> 2018-02-03T040142.404.json
-
-###
-
-GET http://localhost:8080/user/user1/submission/a
-Accept: application/json
-Cache-Control: no-cache
-
-###
-
-GET http://localhost:8080/user/user1/submission/a
-Accept: application/json
-Cache-Control: no-cache
 
 ###
 
