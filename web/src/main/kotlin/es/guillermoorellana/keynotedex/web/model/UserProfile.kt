@@ -5,13 +5,13 @@ import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 
 data class UserProfile(
     val user: User,
-    val submissions: List<Submission>,
+    val sessions: List<Session>,
     val editable: Boolean
 )
 
 fun UserProfileResponse.toModel() = UserProfile(
     user = user.toModel(),
-    submissions = submissions.toModel(),
+    sessions = submissions.toModel(),
     editable = editable
 )
 

@@ -1,9 +1,9 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.components.submissions.submissionPreview
+import es.guillermoorellana.keynotedex.web.components.submissions.sessionPreview
 import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.Submission
-import es.guillermoorellana.keynotedex.web.model.SubmissionVisibility
+import es.guillermoorellana.keynotedex.web.model.Session
+import es.guillermoorellana.keynotedex.web.model.SessionVisibility
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -36,13 +36,13 @@ class HomeScreen : RComponent<RProps, RState>() {
             }
             div("container") {
                 div("row") {
-                    submissionPreview {
+                    sessionPreview {
                         attrs { submission = submission() }
                     }
-                    submissionPreview {
+                    sessionPreview {
                         attrs { submission = submission() }
                     }
-                    submissionPreview {
+                    sessionPreview {
                         attrs { submission = submission() }
                     }
                 }
@@ -51,12 +51,12 @@ class HomeScreen : RComponent<RProps, RState>() {
     }
 }
 
-private fun submission() = Submission(
+private fun submission() = Session(
     userId = "user1",
-    submissionId = "1",
+    sessionId = "1",
     title = "Subheading",
     abstract = "Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.",
     type = "",
     submittedTo = "",
-    visibility = SubmissionVisibility.PUBLIC
+    visibility = SessionVisibility.PUBLIC
 )

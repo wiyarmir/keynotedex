@@ -8,10 +8,11 @@ import es.guillermoorellana.keynotedex.web.external.route
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.external.switch
 import es.guillermoorellana.keynotedex.web.model.User
+import es.guillermoorellana.keynotedex.web.screens.AddSessionScreen
 import es.guillermoorellana.keynotedex.web.screens.HomeScreen
 import es.guillermoorellana.keynotedex.web.screens.NotFoundScreen
 import es.guillermoorellana.keynotedex.web.screens.PrivacyPolicyScreen
-import es.guillermoorellana.keynotedex.web.screens.SubmissionScreen
+import es.guillermoorellana.keynotedex.web.screens.SessionScreen
 import es.guillermoorellana.keynotedex.web.screens.TOSScreen
 import es.guillermoorellana.keynotedex.web.screens.UserScreen
 import es.guillermoorellana.keynotedex.web.screens.signIn
@@ -85,7 +86,8 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             route("/terms", TOSScreen::class, exact = true)
             route("/events", NotFoundScreen::class, exact = true)
             route("/sessions", NotFoundScreen::class, exact = true)
-            route("/:userId/:submissionId", SubmissionScreen::class, exact = true)
+            route("/sessions/add", AddSessionScreen::class, exact = true)
+            route("/:userId/:sessionId", SessionScreen::class, exact = true)
             route("/:userId", UserScreen::class, exact = true)
             route(NotFoundScreen::class)
         }

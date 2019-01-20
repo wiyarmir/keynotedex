@@ -7,7 +7,7 @@ import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
 import es.guillermoorellana.keynotedex.web.components.editable.get
 import es.guillermoorellana.keynotedex.web.external.RouteResultProps
 import es.guillermoorellana.keynotedex.web.loading
-import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.Session
 import es.guillermoorellana.keynotedex.web.model.flip
 import es.guillermoorellana.keynotedex.web.model.string
 import es.guillermoorellana.keynotedex.web.model.toDto
@@ -28,11 +28,12 @@ import react.dom.p
 import react.dom.style
 import react.setState
 
+// language=CSS
 private const val css = """
 
 """
 
-class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, SubmissionViewState>() {
+class SessionScreen : RComponent<RouteResultProps<SessionRouteProps>, SessionScreenState>() {
 
     override fun componentDidMount() {
         fetchSubmission()
@@ -41,7 +42,7 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
     override fun RBuilder.render() {
         style { +css }
         div("container") {
-            loading(state.submission) { sub ->
+            loading(state.session) { sub ->
                 h3 {
                     editableText {
                         attrs {
@@ -75,41 +76,41 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
     }
 
     private fun onVisibilityChanged() {
-        val submission = state.submission ?: return
-        val updated = submission.copy(visibility = submission.visibility.flip())
+        val session = state.session ?: return
+        val updated = session.copy(visibility = session.visibility.flip())
         setState {
-            this.submission = updated
+            this.session = updated
         }
-        updateSubmission(updated)
+        updateSession(updated)
     }
 
     private fun onChangeEvent(chg: ChangeEvent) {
-        var submission = state.submission ?: return
+        var session = state.session ?: return
         chg["abstract"]?.let { abstract ->
-            submission = submission.copy(abstract = abstract)
+            session = session.copy(abstract = abstract)
         }
         chg["title"]?.let { title ->
-            submission = submission.copy(title = title)
+            session = session.copy(title = title)
         }
         setState {
-            this.submission = submission
+            this.session = session
         }
-        if (submission != state.submission) updateSubmission(submission)
+        if (session != state.session) updateSession(session)
     }
 
-    private fun updateSubmission(submission: Submission) {
+    private fun updateSession(session: Session) {
         GlobalScope.launch {
-            NetworkDataSource.updateSubmission(submission.toDto())
+            NetworkDataSource.updateSubmission(session.toDto())
             fetchSubmission()
         }
     }
 
     private fun fetchSubmission() {
         GlobalScope.promise {
-            val submissionId = cleanupSubmissionId(props.match.params.submissionId)
-            val submission = NetworkDataSource.getSubmission(submissionId)
+            val sessionId = cleanupSubmissionId(props.match.params.sessionId)
+            val session = NetworkDataSource.getSubmission(sessionId)
             setState {
-                this.submission = submission
+                this.session = session
             }
         }.catch {
             console.error(it)
@@ -119,11 +120,11 @@ class SubmissionScreen : RComponent<RouteResultProps<SubmissionRouteProps>, Subm
 
 private fun cleanupSubmissionId(id: String): String = id.split('-').last()
 
-external interface SubmissionRouteProps : RProps {
+external interface SessionRouteProps : RProps {
     val userId: String
-    val submissionId: String
+    val sessionId: String
 }
 
-external interface SubmissionViewState : RState {
-    var submission: Submission?
+external interface SessionScreenState : RState {
+    var session: Session?
 }

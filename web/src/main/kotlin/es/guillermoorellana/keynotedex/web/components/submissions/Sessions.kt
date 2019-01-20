@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.components.submissions
 
-import es.guillermoorellana.keynotedex.web.model.Submission
+import es.guillermoorellana.keynotedex.web.model.Session
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -11,16 +11,16 @@ import react.dom.h2
 import react.dom.hr
 import react.dom.p
 
-class Submissions : RComponent<SubmissionsProps, RState>() {
+class Sessions : RComponent<SessionsProps, RState>() {
     override fun RBuilder.render() {
-        h2 { +"Submissions" }
+        h2 { +"Sessions" }
         hr { }
         div("row") {
             if (props.submissions.isEmpty()) {
-                p { +"No submissions yet" }
+                p { +"No sessions yet" }
             } else {
                 props.submissions.forEach { sub ->
-                    submissionCard {
+                    sessionCard {
                         attrs { submission = sub }
                     }
                 }
@@ -29,8 +29,8 @@ class Submissions : RComponent<SubmissionsProps, RState>() {
     }
 }
 
-external interface SubmissionsProps : RProps {
-    var submissions: List<Submission>
+external interface SessionsProps : RProps {
+    var submissions: List<Session>
 }
 
-fun RBuilder.submissions(handler: RHandler<SubmissionsProps>) = child(Submissions::class, handler)
+fun RBuilder.sessions(handler: RHandler<SessionsProps>) = child(Sessions::class, handler)

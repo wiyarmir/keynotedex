@@ -4,7 +4,7 @@ import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
 import es.guillermoorellana.keynotedex.web.components.editable.get
-import es.guillermoorellana.keynotedex.web.components.submissions.submissions
+import es.guillermoorellana.keynotedex.web.components.submissions.sessions
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.model.User
 import es.guillermoorellana.keynotedex.web.model.UserProfile
@@ -71,12 +71,20 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
                     }
                 }
             }
-            submissions { attrs { this.submissions = submissions } }
-            routeLink(to = "/signout") {
-                attrs {
-                    className = "btn btn-primary btn-lg"
+            sessions { attrs { this.submissions = submissions } }
+            if (props.editable) {
+                routeLink(to = "/signout") {
+                    attrs {
+                        className = "btn btn-primary"
+                    }
+                    +"Log out"
                 }
-                +"Log out"
+                routeLink(to = "/sessions/add") {
+                    attrs {
+                        className = "btn btn-primary"
+                    }
+                    +"New session"
+                }
             }
         }
     }
