@@ -33,6 +33,9 @@ import kotlinx.serialization.stringify
 import kotlin.collections.set
 import kotlin.reflect.KClass
 
+/**
+ * https://github.com/ktorio/ktor/pull/663
+ */
 class SerializableConverter : ContentConverter {
     private val json = JSON.plain
 
