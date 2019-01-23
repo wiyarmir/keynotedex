@@ -1,6 +1,7 @@
 package es.guillermoorellana.keynotedex.web.comms
 
 import arrow.core.Try
+import arrow.core.flatten
 import arrow.core.orNull
 import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.dto.Submission
@@ -67,8 +68,9 @@ object NetworkDataSource {
 
     suspend fun getSubmission(submissionId: String) =
         networkService.get(Api.V1.Paths.submissions.replace("{submissionId?}", submissionId), null)
-            .map { parseSubmissionResponse(it).toModel() }
-            .orNull()
+            .map { parseSubmissionResponse(it) }
+            .flatten()
+            .map { it.toModel() }
 
     suspend fun postSubmission(submissionCreateRequest: SubmissionCreateRequest) =
         networkService.post(
@@ -98,11 +100,13 @@ object NetworkDataSource {
         }
     }
 
-    private suspend fun parseSubmissionResponse(response: Response): Submission = when {
-        response.ok -> KJSON.parse(SubmissionResponse.serializer(), response.text().await()).submission
-        else -> {
-            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
-            throw LoginOrRegisterFailedException(errorResponse)
+    private suspend fun parseSubmissionResponse(response: Response) = Try {
+        when {
+            response.ok -> KJSON.parse(SubmissionResponse.serializer(), response.text().await()).submission
+            else -> {
+                val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
+                throw LoginOrRegisterFailedException(errorResponse)
+            }
         }
     }
 
