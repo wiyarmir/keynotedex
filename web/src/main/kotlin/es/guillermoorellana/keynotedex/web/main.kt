@@ -7,6 +7,7 @@ import kotlin.browser.window
 
 fun main(args: Array<String>) {
     require("narrow-jumbotron.css")
+    require("main.css")
 
     window.onload = {
         render(document.getElementById("content")) {

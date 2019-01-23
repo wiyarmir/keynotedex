@@ -30,10 +30,10 @@ fun Route.PostSubmission(submissionStorage: SubmissionStorage, userStorage: User
                 return@post
             }
 
-            val incompleteSubmission = call.receive<SubmissionCreateRequest>().submission
-            val submission = incompleteSubmission.copy(userId = user.userId)
+            val incompleteSubmission = call.receive<SubmissionCreateRequest>()
+            val submission = incompleteSubmission.toDao(userId = user.userId)
             try {
-                submissionStorage.create(submission.toDao())
+                submissionStorage.create(submission)
             } catch (e: SQLException) {
                 call.respond(
                     HttpStatusCode.InternalServerError,

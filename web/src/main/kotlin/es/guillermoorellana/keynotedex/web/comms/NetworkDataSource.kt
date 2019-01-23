@@ -5,6 +5,7 @@ import arrow.core.orNull
 import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.dto.Submission
 import es.guillermoorellana.keynotedex.dto.User
+import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
 import es.guillermoorellana.keynotedex.requests.SubmissionUpdateRequest
 import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
@@ -69,10 +70,10 @@ object NetworkDataSource {
             .map { parseSubmissionResponse(it).toModel() }
             .orNull()
 
-    suspend fun postSubmission(submission: Submission) =
+    suspend fun postSubmission(submissionCreateRequest: SubmissionCreateRequest) =
         networkService.post(
             Api.V1.Paths.submissions.replace("{submissionId?}", ""),
-            KJSON.stringify(SubmissionUpdateRequest.serializer(), SubmissionUpdateRequest(submission))
+            KJSON.stringify(SubmissionCreateRequest.serializer(), submissionCreateRequest)
         )
 
     suspend fun updateSubmission(submission: Submission) =

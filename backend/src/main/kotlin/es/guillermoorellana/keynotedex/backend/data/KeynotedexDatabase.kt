@@ -14,6 +14,7 @@ import org.jetbrains.squash.connection.transaction
 import org.jetbrains.squash.dialects.h2.H2Connection
 import org.jetbrains.squash.expressions.eq
 import org.jetbrains.squash.query.from
+import org.jetbrains.squash.query.orderByDescending
 import org.jetbrains.squash.query.where
 import org.jetbrains.squash.results.get
 import org.jetbrains.squash.schema.create
@@ -107,6 +108,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
     override fun allByUserId(userId: String): List<Submission> = db.transaction {
         from(SubmissionsTable)
             .where { SubmissionsTable.submitter eq userId }
+            .orderByDescending(SubmissionsTable.id)
             .execute()
             .map(::transformSubmission)
             .toList()
