@@ -1,7 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import arrow.core.Try.Failure
-import arrow.core.Try.Success
+import arrow.core.Try
 import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
 import es.guillermoorellana.keynotedex.web.components.profile.editableProfile
 import es.guillermoorellana.keynotedex.web.external.RouteResultProps
@@ -9,7 +8,6 @@ import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.UserProfile
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.promise
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -36,14 +34,21 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
     override fun RBuilder.render() {
         div("row justify-content-center") {
             div("col-10 col-offset-1 col-sm-9 col-xl-8") {
-                loading(state.userProfile) { profile ->
-                    editableProfile {
-                        attrs {
-                            editable = profile.editable
-                            userProfile = profile
-                            onUserProfileUpdated = { postUserProfile(it) }
+                loading(state.userProfile) { result ->
+                    result.fold(
+                        {
+                            notFound()
+                        },
+                        { profile ->
+                            editableProfile {
+                                attrs {
+                                    editable = profile.editable
+                                    userProfile = profile
+                                    onUserProfileUpdated = { postUserProfile(it) }
+                                }
+                            }
                         }
-                    }
+                    )
                 }
             }
         }
@@ -52,10 +57,7 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
     private fun fetchUserProfileFromProps(props: RouteResultProps<UserProps>) {
         val userId = props.match.params.userId
         GlobalScope.launch {
-            val user = when (val req = NetworkDataSource.userProfile(userId)) {
-                is Success -> req.value
-                is Failure -> null
-            }
+            val user = NetworkDataSource.userProfile(userId)
             setState {
                 this.userProfile = user
             }
@@ -63,13 +65,11 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
     }
 
     private fun postUserProfile(userProfile: UserProfile) {
-        GlobalScope.promise {
+        GlobalScope.launch {
             val updatedUserProfile = NetworkDataSource.updateUserProfile(userProfile)
             setState {
                 this.userProfile = updatedUserProfile
             }
-        }.catch { throwable ->
-            console.error(throwable)
         }
     }
 }
@@ -79,5 +79,5 @@ interface UserProps : RProps {
 }
 
 interface UserState : RState {
-    var userProfile: UserProfile?
+    var userProfile: Try<UserProfile>?
 }

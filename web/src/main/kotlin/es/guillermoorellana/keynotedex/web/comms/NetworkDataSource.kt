@@ -35,19 +35,22 @@ object NetworkDataSource {
                 append("email", email)
             }
         )
-            .map { parseUserProfileResponse(it).user.toModel() }
+            .map { parseUserProfileResponse(it).orNull()?.user?.toModel() }
             .orNull()!!
 
     suspend fun userProfile(userId: String): Try<UserProfile> =
         networkService.get(Api.V1.Paths.user.replace("{userId}", userId), null)
-            .map { parseUserProfileResponse(it).toModel() }
+            .map { parseUserProfileResponse(it) }
+            .flatten()
+            .map { it.toModel() }
 
-    suspend fun updateUserProfile(userProfile: UserProfile): UserProfile? {
+    suspend fun updateUserProfile(userProfile: UserProfile): Try<UserProfile> {
         val userId = userProfile.user.userId
         val body = KJSON.stringify(UserProfileUpdateRequest.serializer(), userProfile.toUpdateRequest())
         return networkService.put(Api.V1.Paths.user.replace("{userId}", userId), body)
-            .map { parseUserProfileResponse(it).toModel() }
-            .orNull()
+            .map { parseUserProfileResponse(it) }
+            .flatten()
+            .map { it.toModel() }
     }
 
     suspend fun checkSession() = networkService.get(Api.V1.Paths.login, null)
@@ -92,11 +95,13 @@ object NetworkDataSource {
         }
     }
 
-    private suspend fun parseUserProfileResponse(response: Response): UserProfileResponse = when {
-        response.ok -> KJSON.parse(UserProfileResponse.serializer(), response.text().await())
-        else -> {
-            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
-            throw LoginOrRegisterFailedException(errorResponse)
+    private suspend fun parseUserProfileResponse(response: Response) = Try {
+        when {
+            response.ok -> KJSON.parse(UserProfileResponse.serializer(), response.text().await())
+            else -> {
+                val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
+                throw LoginOrRegisterFailedException(errorResponse)
+            }
         }
     }
 
