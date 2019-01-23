@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web.comms
 
 import arrow.core.Try
-import arrow.core.flatten
+import arrow.core.Try.Failure
 import arrow.core.orNull
 import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.dto.Submission
@@ -35,26 +35,25 @@ object NetworkDataSource {
                 append("email", email)
             }
         )
-            .map { parseUserProfileResponse(it).orNull()?.user?.toModel() }
-            .orNull()!!
+            .flatMap { parseUserProfileResponse(it) }
+            .map { it.user.toModel() }
 
     suspend fun userProfile(userId: String): Try<UserProfile> =
         networkService.get(Api.V1.Paths.user.replace("{userId}", userId), null)
-            .map { parseUserProfileResponse(it) }
-            .flatten()
+            .flatMap { parseUserProfileResponse(it) }
             .map { it.toModel() }
 
     suspend fun updateUserProfile(userProfile: UserProfile): Try<UserProfile> {
         val userId = userProfile.user.userId
         val body = KJSON.stringify(UserProfileUpdateRequest.serializer(), userProfile.toUpdateRequest())
         return networkService.put(Api.V1.Paths.user.replace("{userId}", userId), body)
-            .map { parseUserProfileResponse(it) }
-            .flatten()
+            .flatMap { parseUserProfileResponse(it) }
             .map { it.toModel() }
     }
 
     suspend fun checkSession() = networkService.get(Api.V1.Paths.login, null)
-        .map { parseUserResponse(it).toModel() }
+        .flatMap { parseUserResponse(it) }
+        .map { it.toModel() }
         .orNull()
 
     suspend fun login(userId: String, password: String): es.guillermoorellana.keynotedex.web.model.User? {
@@ -63,7 +62,8 @@ object NetworkDataSource {
             append("password", password)
         }
         return networkService.post(Api.V1.Paths.login, body)
-            .map { parseUserResponse(it).toModel() }
+            .flatMap { parseUserResponse(it) }
+            .map { it.toModel() }
             .orNull()
     }
 
@@ -71,8 +71,7 @@ object NetworkDataSource {
 
     suspend fun getSubmission(submissionId: String) =
         networkService.get(Api.V1.Paths.submissions.replace("{submissionId?}", submissionId), null)
-            .map { parseSubmissionResponse(it) }
-            .flatten()
+            .flatMap { parseSubmissionResponse(it) }
             .map { it.toModel() }
 
     suspend fun postSubmission(submissionCreateRequest: SubmissionCreateRequest) =
@@ -87,33 +86,32 @@ object NetworkDataSource {
             KJSON.stringify(SubmissionUpdateRequest.serializer(), SubmissionUpdateRequest(submission))
         )
 
-    private suspend fun parseUserResponse(response: Response): User = when {
-        response.ok -> KJSON.parse(UserResponse.serializer(), response.text().await()).user
-        else -> {
-            val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
-            throw LoginOrRegisterFailedException(errorResponse)
-        }
-    }
-
-    private suspend fun parseUserProfileResponse(response: Response) = Try {
+    private suspend fun parseUserResponse(response: Response): Try<User> =
         when {
-            response.ok -> KJSON.parse(UserProfileResponse.serializer(), response.text().await())
+            response.ok -> Try { KJSON.parse(UserResponse.serializer(), response.text().await()).user }
             else -> {
                 val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
-                throw LoginOrRegisterFailedException(errorResponse)
+                Failure(LoginOrRegisterFailedException(errorResponse))
             }
         }
-    }
 
-    private suspend fun parseSubmissionResponse(response: Response) = Try {
+    private suspend fun parseUserProfileResponse(response: Response): Try<UserProfileResponse> =
         when {
-            response.ok -> KJSON.parse(SubmissionResponse.serializer(), response.text().await()).submission
+            response.ok -> Try { KJSON.parse(UserProfileResponse.serializer(), response.text().await()) }
             else -> {
                 val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
-                throw LoginOrRegisterFailedException(errorResponse)
+                Failure(LoginOrRegisterFailedException(errorResponse))
             }
         }
-    }
+
+    private suspend fun parseSubmissionResponse(response: Response): Try<Submission> =
+        when {
+            response.ok -> Try { KJSON.parse(SubmissionResponse.serializer(), response.text().await()).submission }
+            else -> {
+                val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
+                Failure(LoginOrRegisterFailedException(errorResponse))
+            }
+        }
 
     class LoginOrRegisterFailedException(message: ErrorResponse) : Throwable(message.message)
 }

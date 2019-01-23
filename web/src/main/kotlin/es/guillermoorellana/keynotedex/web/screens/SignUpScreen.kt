@@ -163,18 +163,18 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
             disabled = true
         }
         GlobalScope.launch {
-            try {
-                val user = NetworkDataSource.register(state.username, state.password, state.username, state.email)
-                props.onUserLoggedIn(user)
-            } catch (exception: NetworkDataSource.LoginOrRegisterFailedException) {
-                setState {
-                    errorMessage = exception.message.toString()
-                }
-            } finally {
-                setState {
-                    disabled = false
-                }
-            }
+            NetworkDataSource.register(state.username, state.password, state.username, state.email)
+                .fold(
+                    { exception ->
+                        setState {
+                            disabled = false
+                            errorMessage = exception.message.toString()
+                        }
+                    },
+                    { user ->
+                        props.onUserLoggedIn(user)
+                    }
+                )
         }
     }
 }
