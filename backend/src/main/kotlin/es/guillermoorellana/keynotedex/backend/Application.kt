@@ -39,8 +39,7 @@ class Keynotedex
 
 data class Session(val userId: String)
 
-fun Application.keynotedex() {
-    val storage: KeynotedexStorage = createStorage()
+fun Application.keynotedex(storage: KeynotedexStorage = createStorage()) {
 
     install(DefaultHeaders)
     install(CallLogging)

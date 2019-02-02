@@ -15,6 +15,7 @@ object Versions {
     const val ktor = "1.1.1"
     const val logback = "1.2.1"
     const val node = "8.11.2"
+    const val mockitoKotlin = "2.1.0"
     const val serialization = "0.9.1"
     const val squash = "0.2.4"
 }
@@ -50,5 +51,6 @@ object Libs {
     const val ktorServerNetty = "io.ktor:ktor-server-netty:${Versions.ktor}"
     const val ktorServerTestHost = "io.ktor:ktor-server-test-host:${Versions.ktor}"
     const val logbackClassic = "ch.qos.logback:logback-classic:${Versions.logback}"
+    const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
     const val squashH2 = "org.jetbrains.squash:squash-h2:${Versions.squash}"
 }

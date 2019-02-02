@@ -64,6 +64,7 @@ dependencies {
     testCompile Libs.kotlinTestJunit
     testCompile Libs.ktorServerTestHost
     testCompile Libs.jsoup
+    testCompile Libs.mockitoKotlin
 
     compile Libs.logbackClassic
     compile Libs.fuel
