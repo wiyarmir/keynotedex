@@ -8,6 +8,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.feature
 import io.ktor.http.HttpHeaders
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Locations
 import io.ktor.request.header
 import io.ktor.request.host
@@ -23,6 +24,7 @@ fun ApplicationCall.refererHost() = request.header(HttpHeaders.Referrer)?.let { 
 
 suspend fun ApplicationCall.redirect(location: Any) = respondRedirect(redirectString(location))
 
+@UseExperimental(KtorExperimentalLocationsAPI::class)
 fun ApplicationCall.redirectString(location: Any): String {
     val host = request.host() ?: "localhost"
     val portSpec = request.port().let { if (it == 80) "" else ":$it" }

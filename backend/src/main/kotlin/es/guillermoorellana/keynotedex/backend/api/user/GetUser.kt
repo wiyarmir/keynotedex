@@ -1,7 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.api.user
 
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
-import es.guillermoorellana.keynotedex.backend.UserEndpoint
 import es.guillermoorellana.keynotedex.backend.api.doUserProfileResponse
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage

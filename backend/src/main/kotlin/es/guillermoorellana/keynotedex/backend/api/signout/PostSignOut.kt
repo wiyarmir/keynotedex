@@ -2,7 +2,6 @@ package es.guillermoorellana.keynotedex.backend.api.signout
 
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.Session
-import es.guillermoorellana.keynotedex.backend.SignOutEndpoint
 import es.guillermoorellana.keynotedex.responses.LogoutResponse
 import io.ktor.application.call
 import io.ktor.http.ContentType

@@ -1,6 +1,5 @@
 package es.guillermoorellana.keynotedex.backend.api.conference
 
-import es.guillermoorellana.keynotedex.backend.ConferenceEndpoint
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.data.conferences.ConferenceStorage
 import es.guillermoorellana.keynotedex.backend.data.conferences.toDto

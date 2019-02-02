@@ -2,7 +2,6 @@ package es.guillermoorellana.keynotedex.backend.api.signup
 
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.Session
-import es.guillermoorellana.keynotedex.backend.SignUpEndpoint
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.api.isValidUserId
 import es.guillermoorellana.keynotedex.backend.data.users.User
