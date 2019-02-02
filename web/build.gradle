@@ -52,7 +52,7 @@ kotlinFrontend {
         dependency "react-markdown"
         dependency "jquery"
 
-        devDependency "webpack", "4"
+        devDependency "webpack", "4.25.1"
         devDependency "babel-loader", "7"
         devDependency "babel-core", "6"
         devDependency "css-loader"
