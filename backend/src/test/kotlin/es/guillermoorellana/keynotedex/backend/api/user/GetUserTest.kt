@@ -25,7 +25,6 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Ignore
 import org.junit.Test
-import java.nio.charset.Charset
 
 class GetUserTest {
 
@@ -40,7 +39,7 @@ class GetUserTest {
     @Test
     fun `when requesting with no headers and no userId then it returns html`() = testApp {
         handleRequest(HttpMethod.Get, endpoint("")).apply {
-            assertThat(response.contentType(), equalTo(ContentType.Text.Html.withCharset(Charset.defaultCharset())))
+            assertThat(response.contentType(), equalTo(ContentType.Text.Html.withCharset(Charsets.UTF_8)))
         }
     }
 
