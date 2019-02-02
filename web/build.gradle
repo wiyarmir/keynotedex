@@ -1,5 +1,5 @@
 buildscript {
-    repositories{
+    repositories {
         maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
@@ -52,6 +52,7 @@ kotlinFrontend {
         dependency "react-markdown"
         dependency "jquery"
 
+        devDependency "webpack", "4"
         devDependency "babel-loader", "7"
         devDependency "babel-core", "6"
         devDependency "css-loader"
