@@ -10,7 +10,10 @@ import org.w3c.fetch.SAME_ORIGIN
 import kotlin.browser.window
 import kotlin.js.json
 
-class NetworkService {
+class NetworkService(
+    private val sessionsStorage: SessionStorage,
+    private val authHeadersProvider: (SessionStorage) -> List<Pair<String, String>> = headersProvider
+) {
 
     suspend fun post(url: String, body: dynamic) = request("POST", url, body)
 
@@ -25,7 +28,7 @@ class NetworkService {
                 "Accept" to "application/json",
                 "Content-Type" to "application/json"
             )
-        }
+        } + authHeadersProvider(sessionsStorage)
 
         val request: RequestInit = object : RequestInit {
             override var method: String? = method
@@ -38,4 +41,8 @@ class NetworkService {
             window.fetch(url, request).await()
         }
     }
+}
+
+private val headersProvider = { sessionStorage: SessionStorage ->
+    sessionStorage.get()?.let { listOf("Authorization" to "Bearer $it") } ?: emptyList()
 }

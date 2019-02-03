@@ -1,11 +1,10 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
+import es.guillermoorellana.keynotedex.responses.LoginResponse
 import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.ButtonType
@@ -129,9 +128,6 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
                 }
                 +"Sign Up"
             }
-//            a(href = "/signin/github", classes = "btn btn-lg btn-dark btn-block") {
-//                +"Login via GitHub"
-//            }
             UserContext.Consumer { user ->
                 user?.let {
                     redirect("/${it.userId}") {}
@@ -145,25 +141,22 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
             disabled = true
         }
         GlobalScope.launch {
-            val user = try {
-                props.networkDataSource.login(state.login, state.password)
-            } catch (err: NetworkDataSource.LoginOrRegisterFailedException) {
-                setState {
-                    errorMessage = err.message
-                }
-                null
-            } finally {
-                setState {
-                    disabled = false
-                }
-            }
-            user?.let { props.onUserLoggedIn(it) }
+            props.networkDataSource.login(state.login, state.password)
+                .fold(
+                    { err ->
+                        setState {
+                            errorMessage = err.message
+                            disabled = false
+                        }
+                    },
+                    { response -> props.onUserLoggedIn(response) }
+                )
         }
     }
 }
 
 external interface SignInProps : WithNetworkDataSource {
-    var onUserLoggedIn: (User) -> Unit
+    var onUserLoggedIn: (LoginResponse) -> Unit
 }
 
 external interface SignInState : RState {

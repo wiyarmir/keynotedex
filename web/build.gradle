@@ -51,6 +51,7 @@ kotlinFrontend {
         dependency "react-router-dom"
         dependency "react-markdown"
         dependency "jquery"
+        dependency "jwt-decode"
 
         devDependency "webpack", "4.25.1"
         devDependency "babel-loader", "7"

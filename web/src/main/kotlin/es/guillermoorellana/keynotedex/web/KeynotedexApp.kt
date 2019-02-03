@@ -1,10 +1,13 @@
 package es.guillermoorellana.keynotedex.web
 
+import es.guillermoorellana.keynotedex.responses.LoginResponse
 import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
-import es.guillermoorellana.keynotedex.web.comms.NetworkService
+import es.guillermoorellana.keynotedex.web.comms.SessionStorage
 import es.guillermoorellana.keynotedex.web.components.navigation
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.browserRouter
+import es.guillermoorellana.keynotedex.web.external.getClaim
+import es.guillermoorellana.keynotedex.web.external.jwtDecode
 import es.guillermoorellana.keynotedex.web.external.route
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.external.switch
@@ -22,15 +25,13 @@ import es.guillermoorellana.keynotedex.web.screens.signOut
 import es.guillermoorellana.keynotedex.web.screens.signUp
 import es.guillermoorellana.keynotedex.web.screens.userScreen
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
-import kotlinx.html.MAIN
+import kotlinx.coroutines.launch
 import kotlinx.html.main
 import react.RBuilder
 import react.RComponent
 import react.RHandler
 import react.RProps
 import react.RState
-import react.dom.RDOMBuilder
 import react.dom.a
 import react.dom.div
 import react.dom.footer
@@ -39,13 +40,10 @@ import react.dom.p
 import react.dom.style
 import react.setState
 
-class Application : RComponent<RProps, ApplicationPageState>() {
-
-    private val networkDataSource = NetworkDataSource(NetworkService())
+class Application : RComponent<ApplicationProps, ApplicationPageState>() {
 
     override fun ApplicationPageState.init() {
         currentUser = null
-        checkUserSession()
     }
 
     override fun RBuilder.render() {
@@ -63,13 +61,13 @@ class Application : RComponent<RProps, ApplicationPageState>() {
         }
     }
 
-    private fun RDOMBuilder<MAIN>.navigationSwitch() {
+    private fun RBuilder.navigationSwitch() {
         switch {
             route("/", HomeScreen::class, exact = true)
             route("/signout", exact = true) {
                 signOut {
                     attrs {
-                        networkDataSource = this@Application.networkDataSource
+                        networkDataSource = props.networkDataSource
                         nukeCurrentUser = { setState { currentUser = null } }
                     }
                 }
@@ -77,16 +75,16 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             route("/signin", exact = true) {
                 signIn {
                     attrs {
-                        networkDataSource = this@Application.networkDataSource
-                        onUserLoggedIn = { user -> setState { currentUser = user } }
+                        networkDataSource = props.networkDataSource
+                        onUserLoggedIn = ::onUserLoggedIn
                     }
                 }
             }
             route("/signup", exact = true) {
                 signUp {
                     attrs {
-                        networkDataSource = this@Application.networkDataSource
-                        onUserLoggedIn = { user -> setState { currentUser = user } }
+                        networkDataSource = props.networkDataSource
+                        onUserLoggedIn = ::onUserLoggedIn
                     }
                 }
             }
@@ -97,24 +95,24 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             route("/sessions/add", exact = true) {
                 addSession {
                     attrs {
-                        networkDataSource = this@Application.networkDataSource
+                        networkDataSource = props.networkDataSource
                     }
                 }
             }
-            route<SessionRouteProps>("/:userId/:sessionId", exact = true) { props ->
+            route<SessionRouteProps>("/:userId/:sessionId", exact = true) { routeProps ->
                 sessionScreen {
                     attrs {
-                        userId = props.match.params.userId
-                        sessionId = props.match.params.sessionId
-                        networkDataSource = this@Application.networkDataSource
+                        userId = routeProps.match.params.userId
+                        sessionId = routeProps.match.params.sessionId
+                        networkDataSource = props.networkDataSource
                     }
                 }
             }
-            route<UserProps>("/:userId", exact = true) { props ->
+            route<UserProps>("/:userId", exact = true) { routeProps ->
                 userScreen {
                     attrs {
-                        userId = props.match.params.userId
-                        networkDataSource = this@Application.networkDataSource
+                        userId = routeProps.match.params.userId
+                        networkDataSource = props.networkDataSource
                     }
                 }
             }
@@ -122,7 +120,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
         }
     }
 
-    private fun RDOMBuilder<MAIN>.footer() {
+    private fun RBuilder.footer() {
         style {
             // language=CSS
             +"""
@@ -146,21 +144,31 @@ class Application : RComponent<RProps, ApplicationPageState>() {
         }
     }
 
-    private fun checkUserSession() {
-        GlobalScope.promise {
-            val user = null
-            setState {
-                currentUser = user
-            }
-        }.catch { throwable ->
-            console.error(throwable)
-            setState {
-                currentUser = null
-            }
+    private fun onUserLoggedIn(response: LoginResponse) {
+        props.sessionStorage.put(response.jwtToken)
+        val decoded = jwtDecode(response.jwtToken)
+        val userId = decoded.getClaim("id")
+        GlobalScope.launch {
+            props.networkDataSource.userProfile(userId)
+                .map { it.user }
+                .fold(
+                    { console.error(it) },
+                    { user ->
+                        setState {
+                            currentUser = user
+                        }
+                    })
         }
     }
 }
 
-class ApplicationPageState(var currentUser: User?) : RState
+external interface ApplicationProps : RProps {
+    var networkDataSource: NetworkDataSource
+    var sessionStorage: SessionStorage
+}
 
-fun RBuilder.keynotedexApp(handler: RHandler<RProps>) = child(Application::class, handler)
+external interface ApplicationPageState : RState {
+    var currentUser: User?
+}
+
+fun RBuilder.keynotedexApp(handler: RHandler<ApplicationProps>) = child(Application::class, handler)
