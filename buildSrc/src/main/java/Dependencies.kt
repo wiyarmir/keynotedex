@@ -44,6 +44,7 @@ object Libs {
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serialization}"
     const val kotlinxSerializationRuntimeJs =
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
+    const val ktorAuthJwt = "io.ktor:ktor-auth-jwt:${Versions.ktor}"
     const val ktorClientApache = "io.ktor:ktor-client-apache:${Versions.ktor}"
     const val ktorFreemaker = "io.ktor:ktor-freemarker:${Versions.ktor}"
     const val ktorHtmlBuilder = "io.ktor:ktor-html-builder:${Versions.ktor}"

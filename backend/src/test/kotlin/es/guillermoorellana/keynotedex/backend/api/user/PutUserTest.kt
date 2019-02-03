@@ -4,6 +4,8 @@ import com.nhaarman.mockitokotlin2.anyOrNull
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
+import es.guillermoorellana.keynotedex.backend.addAuthHeader
+import es.guillermoorellana.keynotedex.backend.auth.JwtConfig
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.toDto
@@ -53,32 +55,33 @@ class PutUserTest {
     }
 
     @Test
-    fun `when requesting with headers and no body then it returns server error`() = testApp {
+    fun `when requesting with auth and no body then it returns server error`() = testApp {
         handleRequest(HttpMethod.Put, endpoint(testId)) {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            addAuthHeader(JwtConfig(application.environment), testId)
         }.apply {
             assertThat(response.status(), equalTo(HttpStatusCode.InternalServerError))
         }
     }
 
     @Test
-    fun `when requesting with headers and invalid credentials then it returns forbidden`() = testApp {
+    fun `when requesting with headers and invalid credentials then it returns unauthorized`() = testApp {
         handleRequest(HttpMethod.Put, endpoint(testId)) {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             setBody(JSON.stringify(UserProfileUpdateRequest.serializer(), UserProfileUpdateRequest(testUser.toDto())))
         }.apply {
-            assertThat(response.status(), equalTo(HttpStatusCode.Forbidden))
+            assertThat(response.status(), equalTo(HttpStatusCode.Unauthorized))
         }
     }
 
     @Test
-    @Ignore("Need to move the auth out of session cookies")
     fun `when requesting with headers and valid userId then it is accepted`() = testApp(validUserStorage) {
         handleRequest(HttpMethod.Put, endpoint(testId)) {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            addAuthHeader(JwtConfig(application.environment), testId)
             setBody(JSON.stringify(UserProfileUpdateRequest.serializer(), UserProfileUpdateRequest(testUser.toDto())))
         }.apply {
             assertThat(response.status(), equalTo(HttpStatusCode.Accepted))
@@ -86,11 +89,11 @@ class PutUserTest {
     }
 
     @Test
-    @Ignore("Need to move the auth out of session cookies")
     fun `when requesting with headers and valid userId then it returns such user`() = testApp(validUserStorage) {
         handleRequest(HttpMethod.Put, endpoint(testId)) {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            addAuthHeader(JwtConfig(application.environment), testId)
             setBody(JSON.stringify(UserProfileUpdateRequest.serializer(), UserProfileUpdateRequest(testUser.toDto())))
         }.apply {
             assertThat(JSON.parse(UserProfileResponse.serializer(), response.content!!).user, equalTo(testUser.toDto()))

@@ -54,6 +54,7 @@ dependencies {
     compile Libs.ktorHtmlBuilder
     compile Libs.ktorServerNetty
     compile Libs.ktorClientApache
+    compile Libs.ktorAuthJwt
 
     compile Libs.ehcache
 

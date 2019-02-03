@@ -7,6 +7,3 @@ import io.ktor.locations.Location
 
 @Location("/{trail...}")
 data class IndexPage(val trail: List<String>)
-
-@Location("/login")
-class LoginPage

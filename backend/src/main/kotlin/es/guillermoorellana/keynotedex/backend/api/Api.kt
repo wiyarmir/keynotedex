@@ -2,9 +2,7 @@
 
 package es.guillermoorellana.keynotedex.backend.api
 
-import es.guillermoorellana.keynotedex.backend.Session
 import es.guillermoorellana.keynotedex.backend.api.conference.GetConference
-import es.guillermoorellana.keynotedex.backend.api.signin.GetSignIn
 import es.guillermoorellana.keynotedex.backend.api.signin.PostSignIn
 import es.guillermoorellana.keynotedex.backend.api.signout.PostSignOut
 import es.guillermoorellana.keynotedex.backend.api.signup.PostSignUp
@@ -13,6 +11,8 @@ import es.guillermoorellana.keynotedex.backend.api.submission.PostSubmission
 import es.guillermoorellana.keynotedex.backend.api.submission.PutSubmission
 import es.guillermoorellana.keynotedex.backend.api.user.GetUser
 import es.guillermoorellana.keynotedex.backend.api.user.PutUser
+import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
+import es.guillermoorellana.keynotedex.backend.auth.UserPrincipal
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.submissions.Submission
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
@@ -23,14 +23,13 @@ import es.guillermoorellana.keynotedex.backend.data.users.toDto
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
+import io.ktor.auth.authentication
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.response.respond
 import io.ktor.routing.Route
-import io.ktor.sessions.get
-import io.ktor.sessions.sessions
 import io.ktor.util.pipeline.PipelineContext
 
-fun Route.api(dao: KeynotedexStorage) {
+fun Route.api(dao: KeynotedexStorage, jwtTokenProvider: JwtTokenProvider) {
     GetConference(dao)
 
     GetSubmission(dao, dao)
@@ -40,15 +39,15 @@ fun Route.api(dao: KeynotedexStorage) {
     GetUser(dao, dao)
     PutUser(dao, dao)
 
-    GetSignIn(dao)
-    PostSignIn(dao)
+    PostSignIn(dao, jwtTokenProvider)
 
     PostSignOut()
-    PostSignUp(dao)
+
+    PostSignUp(dao, jwtTokenProvider)
 }
 
 fun PipelineContext<Unit, ApplicationCall>.getCurrentLoggedUser(userStorage: UserStorage) =
-    call.sessions.get<Session>()?.let { userStorage.retrieveUser(it.userId) }
+    call.authentication.principal<UserPrincipal>()?.let { userStorage.retrieveUser(it.userId) }
 
 suspend fun PipelineContext<Unit, ApplicationCall>.doUserProfileResponse(
     user: User,

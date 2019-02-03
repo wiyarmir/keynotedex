@@ -1,7 +1,8 @@
 package es.guillermoorellana.keynotedex.backend
 
-import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.backend.api.api
+import es.guillermoorellana.keynotedex.backend.auth.JwtConfig
+import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
@@ -10,6 +11,7 @@ import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
+import io.ktor.auth.jwt.jwt
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
 import io.ktor.features.ConditionalHeaders
@@ -29,17 +31,16 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.Routing
 import io.ktor.routing.accept
-import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
-import io.ktor.sessions.Sessions
-import io.ktor.sessions.cookie
 import io.ktor.util.error
 import java.io.File
 
 class Keynotedex
 
-data class Session(val userId: String)
-
-fun Application.keynotedex(storage: KeynotedexStorage = createStorage()) {
+fun Application.keynotedex(
+    storage: KeynotedexStorage = createStorage(),
+    jwtConfig: JwtConfig = createJwtConfig(),
+    jwtTokenProvider: JwtTokenProvider = createJwtTokenProvider(jwtConfig)
+) {
 
     install(DefaultHeaders)
     install(CallLogging)
@@ -54,12 +55,9 @@ fun Application.keynotedex(storage: KeynotedexStorage = createStorage()) {
         }
     }
 
-    notInProduction { install(Authentication) { configureOAuth(this) } }
-
-    install(Sessions) {
-        cookie<Session>("SESSION") {
-            cookie.path = Api.loc
-            transform(SessionTransportTransformerMessageAuthentication(sessionKey()))
+    install(Authentication) {
+        jwt {
+            jwtConfig.applyJwtConfig(this)
         }
     }
 
@@ -74,11 +72,12 @@ fun Application.keynotedex(storage: KeynotedexStorage = createStorage()) {
     }
 
     install(Routing) {
-        notInProduction { oauth() }
-        api(storage)
+        api(storage, jwtTokenProvider)
         index()
     }
 }
+
+fun createJwtTokenProvider(jwtConfig: JwtConfig): JwtTokenProvider = { userId -> jwtConfig.makeToken(userId) }
 
 private fun Route.index() {
     static("frontend") {
@@ -94,6 +93,8 @@ private fun Route.index() {
     }
 }
 
+fun Application.createJwtConfig() = JwtConfig(environment)
+
 private fun Application.createStorage(): KeynotedexDatabase =
     when {
         isDevelopment() -> KeynotedexDatabase(File("build/db"))
@@ -105,7 +106,3 @@ private fun Application.createStorage(): KeynotedexDatabase =
 
 fun Application.isDevelopment() =
     environment.config.propertyOrNull("ktor.deployment.environment")?.getString() == "development"
-
-fun Application.notInProduction(block: () -> Unit) {
-    if (isDevelopment()) block()
-}

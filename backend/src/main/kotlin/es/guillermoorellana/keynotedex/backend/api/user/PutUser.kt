@@ -11,6 +11,7 @@ import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 import io.ktor.application.call
+import io.ktor.auth.authenticate
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.put
@@ -27,16 +28,18 @@ fun Route.PutUser(userStorage: UserStorage, submissionStorage: SubmissionStorage
 
     accept(ContentType.Application.Json) {
         contentType(ContentType.Application.Json) {
-            put<UserEndpoint> {
-                val request: UserProfileUpdateRequest = call.receive()
-                val sessionUser = getCurrentLoggedUser(userStorage)
-                if (request.user.userId != sessionUser?.userId) {
-                    call.respond(HttpStatusCode.Forbidden, ErrorResponse("Nope"))
+            authenticate {
+                put<UserEndpoint> {
+                    val request: UserProfileUpdateRequest = call.receive()
+                    val sessionUser = getCurrentLoggedUser(userStorage)
+                    if (request.user.userId != sessionUser?.userId) {
+                        call.respond(HttpStatusCode.Forbidden, ErrorResponse("Nope"))
+                    }
+                    userStorage.updateUser(request.user.toDao())
+                    val updatedUser = userStorage.retrieveUser(request.user.userId)!!
+                    doUserProfileResponse(updatedUser, submissionStorage, sessionUser)
+                    call.respond(HttpStatusCode.Accepted, UserProfileResponse(updatedUser.toDto()))
                 }
-                userStorage.updateUser(request.user.toDao())
-                val updatedUser = userStorage.retrieveUser(request.user.userId)!!
-                doUserProfileResponse(updatedUser, submissionStorage, sessionUser)
-                call.respond(HttpStatusCode.Accepted, UserProfileResponse(updatedUser.toDto()))
             }
         }
     }

@@ -8,6 +8,7 @@ import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.requests.SubmissionUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import io.ktor.application.call
+import io.ktor.auth.authenticate
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.put
@@ -22,26 +23,28 @@ fun Route.PutSubmission(submissionStorage: SubmissionStorage, userStorage: UserS
     JsonSerializableConverter.register(SubmissionUpdateRequest.serializer())
 
     accept(ContentType.Application.Json) {
-        put<SubmissionsEndpoint> {
-            val user = getCurrentLoggedUser(userStorage)
-            if (user == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@put
+        authenticate {
+            put<SubmissionsEndpoint> {
+                val user = getCurrentLoggedUser(userStorage)
+                if (user == null) {
+                    call.respond(HttpStatusCode.Unauthorized)
+                    return@put
+                }
+                val submission = call.receive<SubmissionUpdateRequest>().submission
+                if (submission.userId != user.userId) {
+                    call.respond(HttpStatusCode.Unauthorized)
+                    return@put
+                }
+                try {
+                    submissionStorage.update(submission.toDao())
+                } catch (e: SQLException) {
+                    call.respond(
+                        HttpStatusCode.InternalServerError,
+                        ErrorResponse(message = "Failed to create submission: ${e.message}")
+                    )
+                }
+                call.respond(HttpStatusCode.Created)
             }
-            val submission = call.receive<SubmissionUpdateRequest>().submission
-            if (submission.userId != user.userId) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@put
-            }
-            try {
-                submissionStorage.update(submission.toDao())
-            } catch (e: SQLException) {
-                call.respond(
-                    HttpStatusCode.InternalServerError,
-                    ErrorResponse(message = "Failed to create submission: ${e.message}")
-                )
-            }
-            call.respond(HttpStatusCode.Created)
         }
     }
 }
