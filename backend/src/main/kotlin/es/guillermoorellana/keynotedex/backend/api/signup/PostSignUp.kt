@@ -20,10 +20,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import org.h2.message.DbException
 
-fun Route.PostSignUp(
-    userStorage: UserStorage,
-    jwtTokenProvider: JwtTokenProvider
-) {
+fun Route.postSignUp(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvider) {
 
     JsonSerializableConverter.register(UserProfileResponse.serializer())
 

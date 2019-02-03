@@ -17,7 +17,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 
-fun Route.PostSignIn(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvider) {
+fun Route.postSignIn(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvider) {
 
     JsonSerializableConverter.register(LoginResponse.serializer())
 

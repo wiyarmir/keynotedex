@@ -18,7 +18,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 import java.sql.SQLException
 
-fun Route.PutSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
+fun Route.putSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
 
     JsonSerializableConverter.register(SubmissionUpdateRequest.serializer())
 

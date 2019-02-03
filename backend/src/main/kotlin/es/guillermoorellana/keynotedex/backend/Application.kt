@@ -3,6 +3,8 @@ package es.guillermoorellana.keynotedex.backend
 import es.guillermoorellana.keynotedex.backend.api.api
 import es.guillermoorellana.keynotedex.backend.auth.JwtConfig
 import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
+import es.guillermoorellana.keynotedex.backend.auth.createJwtConfig
+import es.guillermoorellana.keynotedex.backend.auth.createJwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
@@ -38,7 +40,7 @@ class Keynotedex
 
 fun Application.keynotedex(
     storage: KeynotedexStorage = createStorage(),
-    jwtConfig: JwtConfig = createJwtConfig(),
+    jwtConfig: JwtConfig = createJwtConfig(environment),
     jwtTokenProvider: JwtTokenProvider = createJwtTokenProvider(jwtConfig)
 ) {
 
@@ -56,9 +58,7 @@ fun Application.keynotedex(
     }
 
     install(Authentication) {
-        jwt {
-            jwtConfig.applyJwtConfig(this)
-        }
+        jwt { jwtConfig.applyJwtConfig(this) }
     }
 
     install(ContentNegotiation) {
@@ -77,8 +77,6 @@ fun Application.keynotedex(
     }
 }
 
-fun createJwtTokenProvider(jwtConfig: JwtConfig): JwtTokenProvider = { userId -> jwtConfig.makeToken(userId) }
-
 private fun Route.index() {
     static("frontend") {
         resource("web.bundle.js")
@@ -92,8 +90,6 @@ private fun Route.index() {
         }
     }
 }
-
-fun Application.createJwtConfig() = JwtConfig(environment)
 
 private fun Application.createStorage(): KeynotedexDatabase =
     when {

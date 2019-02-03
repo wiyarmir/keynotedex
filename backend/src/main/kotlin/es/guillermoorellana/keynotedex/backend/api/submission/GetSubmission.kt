@@ -17,7 +17,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 
-fun Route.GetSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
+fun Route.getSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
 
     JsonSerializableConverter.register(SubmissionResponse.serializer())
 

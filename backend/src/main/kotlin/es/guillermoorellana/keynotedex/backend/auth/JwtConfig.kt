@@ -8,13 +8,17 @@ import io.ktor.auth.jwt.JWTAuthenticationProvider
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
-typealias JwtTokenProvider = (String) -> String
+typealias JwtTokenProvider = (userId: String) -> String
+
+fun createJwtConfig(environment: ApplicationEnvironment) = JwtConfig(environment)
+
+fun createJwtTokenProvider(jwtConfig: JwtConfig): JwtTokenProvider = { userId -> jwtConfig.makeToken(userId) }
 
 class JwtConfig(
     environment: ApplicationEnvironment,
     secret: String = environment.config.propertyOrNull("jwt.secret")?.getString() ?: "deadbeef",
-    val audience: String = environment.config.property("jwt.audience").getString(),
-    val realm: String = environment.config.property("jwt.realm").getString(),
+    private val audience: String = environment.config.property("jwt.audience").getString(),
+    private val realm: String = environment.config.property("jwt.realm").getString(),
     private val issuer: String = environment.config.property("jwt.domain").getString(),
     private val validityInMs: Long = TimeUnit.MILLISECONDS.convert(10, TimeUnit.HOURS),
     private val algorithm: Algorithm = Algorithm.HMAC512(secret)
@@ -25,7 +29,7 @@ class JwtConfig(
         .build()
 
     fun makeToken(userId: String): String = JWT.create()
-        .withSubject("Authentication")
+        .withSubject("$userId@keynotedex.local")
         .withIssuer(issuer)
         .withClaim("id", userId)
         .withExpiresAt(getExpiration())

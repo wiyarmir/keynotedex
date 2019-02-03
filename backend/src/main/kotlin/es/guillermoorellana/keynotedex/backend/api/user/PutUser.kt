@@ -21,7 +21,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 import io.ktor.routing.contentType
 
-fun Route.PutUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
+fun Route.putUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
 
     JsonSerializableConverter.register(UserProfileUpdateRequest.serializer())
     JsonSerializableConverter.register(UserProfileResponse.serializer())

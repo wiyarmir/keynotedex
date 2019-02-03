@@ -8,6 +8,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.users.User
+import es.guillermoorellana.keynotedex.backend.jwtConfig
 import es.guillermoorellana.keynotedex.backend.testApp
 import es.guillermoorellana.keynotedex.responses.LoginResponse
 import io.ktor.http.ContentType
@@ -21,6 +22,7 @@ import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import kotlinx.serialization.json.JSON
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
@@ -67,10 +69,22 @@ class PostSignInTest {
             addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
             setBody(listOf("userId" to testId, "password" to testPassword).formUrlEncode())
         }.apply {
-            assertThat(
-                JSON.parse(LoginResponse.serializer(), response.content!!),
-                equalTo(LoginResponse(testToken))
-            )
+            val response = JSON.parse(LoginResponse.serializer(), response.content!!)
+            assertThat(response, equalTo(LoginResponse(testToken)))
+        }
+    }
+
+    @Test
+    fun `when logging in with valid user then jwt token is valid`() = testApp(mockStorage) {
+        whenever(mockStorage.retrieveUser(eq(testId), any())) doReturn testUser
+        handleRequest(HttpMethod.Post, endpoint) {
+            addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
+            addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
+            setBody(listOf("userId" to testId, "password" to testPassword).formUrlEncode())
+        }.apply {
+            val response = JSON.parse(LoginResponse.serializer(), response.content!!)
+            val decoded = jwtConfig.verifier.verify(response.jwtToken)
+            assertThat(decoded, notNullValue())
         }
     }
 }

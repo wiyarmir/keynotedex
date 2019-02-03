@@ -9,7 +9,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 
-fun Route.PostSignOut() {
+fun Route.postSignOut() {
 
     JsonSerializableConverter.register(LogoutResponse.serializer())
 
