@@ -48,15 +48,14 @@ Cache-Control: no-cache
 POST http://localhost:9090/api/v1/submissions
 Accept: application/json
 Cache-Control: no-cache
+Authorization: Bearer
 
 {
-  "submission": {
     "title": "abc",
     "abstract": "abc",
     "type": "abc",
     "submittedTo": "abc",
     "visibility": "PUBLIC"
-  }
 }
 
 ###

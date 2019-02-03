@@ -10,14 +10,17 @@ import java.util.concurrent.TimeUnit
 
 typealias JwtTokenProvider = (userId: String) -> String
 
-fun createJwtConfig(environment: ApplicationEnvironment) = JwtConfig(environment)
+fun createJwtConfig(environment: ApplicationEnvironment) = JwtConfig(environment = environment)
 
-fun createJwtTokenProvider(jwtConfig: JwtConfig): JwtTokenProvider = { userId -> jwtConfig.makeToken(userId) }
+fun createJwtTokenProvider(jwtConfig: JwtConfig): JwtTokenProvider = { userId -> jwtConfig.makeUserToken(userId) }
+
+enum class JwtAudience(val audienceName: String) {
+    USER("user")
+}
 
 class JwtConfig(
     environment: ApplicationEnvironment,
     secret: String = environment.config.propertyOrNull("jwt.secret")?.getString() ?: "deadbeef",
-    private val audience: String = environment.config.property("jwt.audience").getString(),
     private val realm: String = environment.config.property("jwt.realm").getString(),
     private val issuer: String = environment.config.property("jwt.domain").getString(),
     private val validityInMs: Long = TimeUnit.MILLISECONDS.convert(10, TimeUnit.HOURS),
@@ -28,12 +31,12 @@ class JwtConfig(
         .withIssuer(issuer)
         .build()
 
-    fun makeToken(userId: String): String = JWT.create()
+    fun makeUserToken(userId: String): String = JWT.create()
         .withSubject("$userId@keynotedex.local")
         .withIssuer(issuer)
         .withClaim("id", userId)
         .withExpiresAt(getExpiration())
-        .withAudience(audience)
+        .withAudience(JwtAudience.USER.audienceName)
         .sign(algorithm)
 
     private fun getExpiration() = Date(System.currentTimeMillis() + validityInMs)
@@ -42,9 +45,12 @@ class JwtConfig(
         realm = this@JwtConfig.realm
         verifier(verifier)
         validate { credential ->
-            if (credential.payload.audience.contains(audience))
-                UserPrincipal(credential.payload.getClaim("id").asString())
-            else null
+            val supportedAudiences = JwtAudience.values().map { it.audienceName }
+            if ((supportedAudiences intersect credential.payload.audience).isEmpty()) {
+                return@validate null
+            }
+            val userId = credential.payload.getClaim("id").asString()
+            UserPrincipal(userId)
         }
     }
 }

@@ -53,7 +53,7 @@ var TestApplicationEngine.jwtConfig: JwtConfig
     }
 
 fun TestApplicationRequest.addAuthHeader(jwtConfig: JwtConfig, userId: String) {
-    addHeader(HttpHeaders.Authorization, "Bearer " + jwtConfig.makeToken(userId))
+    addHeader(HttpHeaders.Authorization, "Bearer " + jwtConfig.makeUserToken(userId))
 }
 
 private fun testStorage(): KeynotedexStorage = mock { }
