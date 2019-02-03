@@ -45,7 +45,7 @@ kotlinFrontend {
         replaceVersion "kotlinx-html-shared", Versions.kotlin
         replaceVersion "kotlin-js-library", Versions.kotlin
 
-        dependency "react", "16.3.1"
+        dependency "react", Versions.react
         dependency "react-dom"
         dependency "react-router"
         dependency "react-router-dom"

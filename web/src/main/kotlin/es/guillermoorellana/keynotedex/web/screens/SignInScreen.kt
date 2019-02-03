@@ -1,6 +1,7 @@
 package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
+import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink
@@ -18,7 +19,6 @@ import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
 import react.RHandler
-import react.RProps
 import react.RState
 import react.dom.button
 import react.dom.div
@@ -146,7 +146,7 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
         }
         GlobalScope.launch {
             val user = try {
-                NetworkDataSource.login(state.login, state.password)
+                props.networkDataSource.login(state.login, state.password)
             } catch (err: NetworkDataSource.LoginOrRegisterFailedException) {
                 setState {
                     errorMessage = err.message
@@ -162,7 +162,7 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
     }
 }
 
-external interface SignInProps : RProps {
+external interface SignInProps : WithNetworkDataSource {
     var onUserLoggedIn: (User) -> Unit
 }
 

@@ -8,9 +8,10 @@ object Versions {
     const val jsoup = "1.9.1"
     const val junit = "4.12"
     const val kotlin = "1.3.11"
+    const val react = "16.6.0"
     const val kotlinFrontendPlugin = "0.0.37"
     const val kotlinJsExt = "1.0.1-pre.61-kotlin-1.3.0"
-    const val kotlinWrapper = "16.6.0-pre.61-kotlin-1.3.0"
+    const val kotlinWrapper = "$react-pre.61-kotlin-1.3.0"
     const val kotlinxCoroutines = "1.0.1"
     const val ktor = "1.1.1"
     const val logback = "1.2.1"
@@ -18,6 +19,8 @@ object Versions {
     const val mockitoKotlin = "2.1.0"
     const val serialization = "0.9.1"
     const val squash = "0.2.4"
+    const val reactRouterDom = "4.3.1"
+    const val kotlinReactRouterDom = "$reactRouterDom-pre.68-kotlin-1.3.20"
 }
 
 object Libs {
@@ -28,6 +31,7 @@ object Libs {
     const val kotlinExtensions = "org.jetbrains:kotlin-extensions:${Versions.kotlinJsExt}"
     const val kotlinReact = "org.jetbrains:kotlin-react:${Versions.kotlinWrapper}"
     const val kotlinReactDom = "org.jetbrains:kotlin-react-dom:${Versions.kotlinWrapper}"
+    const val kotlinReactRouterDom = "org.jetbrains:kotlin-react-router-dom:${Versions.kotlinReactRouterDom}"
     const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
     const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val kotlinStdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.kotlin}"

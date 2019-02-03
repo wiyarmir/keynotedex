@@ -1,6 +1,7 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource.checkSession
+import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
+import es.guillermoorellana.keynotedex.web.comms.NetworkService
 import es.guillermoorellana.keynotedex.web.components.navigation
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.browserRouter
@@ -8,16 +9,18 @@ import es.guillermoorellana.keynotedex.web.external.route
 import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.external.switch
 import es.guillermoorellana.keynotedex.web.model.User
-import es.guillermoorellana.keynotedex.web.screens.AddSessionScreen
 import es.guillermoorellana.keynotedex.web.screens.HomeScreen
 import es.guillermoorellana.keynotedex.web.screens.NotFoundScreen
 import es.guillermoorellana.keynotedex.web.screens.PrivacyPolicyScreen
-import es.guillermoorellana.keynotedex.web.screens.SessionScreen
+import es.guillermoorellana.keynotedex.web.screens.SessionRouteProps
 import es.guillermoorellana.keynotedex.web.screens.TOSScreen
-import es.guillermoorellana.keynotedex.web.screens.UserScreen
+import es.guillermoorellana.keynotedex.web.screens.UserProps
+import es.guillermoorellana.keynotedex.web.screens.addSession
+import es.guillermoorellana.keynotedex.web.screens.sessionScreen
 import es.guillermoorellana.keynotedex.web.screens.signIn
 import es.guillermoorellana.keynotedex.web.screens.signOut
 import es.guillermoorellana.keynotedex.web.screens.signUp
+import es.guillermoorellana.keynotedex.web.screens.userScreen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import kotlinx.html.MAIN
@@ -37,6 +40,8 @@ import react.dom.style
 import react.setState
 
 class Application : RComponent<RProps, ApplicationPageState>() {
+
+    private val networkDataSource = NetworkDataSource(NetworkService())
 
     override fun ApplicationPageState.init() {
         currentUser = null
@@ -64,6 +69,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             route("/signout", exact = true) {
                 signOut {
                     attrs {
+                        networkDataSource = this@Application.networkDataSource
                         nukeCurrentUser = { setState { currentUser = null } }
                     }
                 }
@@ -71,6 +77,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             route("/signin", exact = true) {
                 signIn {
                     attrs {
+                        networkDataSource = this@Application.networkDataSource
                         onUserLoggedIn = { user -> setState { currentUser = user } }
                     }
                 }
@@ -78,6 +85,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             route("/signup", exact = true) {
                 signUp {
                     attrs {
+                        networkDataSource = this@Application.networkDataSource
                         onUserLoggedIn = { user -> setState { currentUser = user } }
                     }
                 }
@@ -86,9 +94,30 @@ class Application : RComponent<RProps, ApplicationPageState>() {
             route("/terms", TOSScreen::class, exact = true)
             route("/events", NotFoundScreen::class, exact = true)
             route("/sessions", NotFoundScreen::class, exact = true)
-            route("/sessions/add", AddSessionScreen::class, exact = true)
-            route("/:userId/:sessionId", SessionScreen::class, exact = true)
-            route("/:userId", UserScreen::class, exact = true)
+            route("/sessions/add", exact = true) {
+                addSession {
+                    attrs {
+                        networkDataSource = this@Application.networkDataSource
+                    }
+                }
+            }
+            route<SessionRouteProps>("/:userId/:sessionId", exact = true) { props ->
+                sessionScreen {
+                    attrs {
+                        userId = props.match.params.userId
+                        sessionId = props.match.params.sessionId
+                        networkDataSource = this@Application.networkDataSource
+                    }
+                }
+            }
+            route<UserProps>("/:userId", exact = true) { props ->
+                userScreen {
+                    attrs {
+                        userId = props.match.params.userId
+                        networkDataSource = this@Application.networkDataSource
+                    }
+                }
+            }
             route(NotFoundScreen::class)
         }
     }
@@ -119,7 +148,7 @@ class Application : RComponent<RProps, ApplicationPageState>() {
 
     private fun checkUserSession() {
         GlobalScope.promise {
-            val user = checkSession()
+            val user = null
             setState {
                 currentUser = user
             }

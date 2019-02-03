@@ -10,7 +10,7 @@ import org.w3c.fetch.SAME_ORIGIN
 import kotlin.browser.window
 import kotlin.js.json
 
-object NetworkService {
+class NetworkService {
 
     suspend fun post(url: String, body: dynamic) = request("POST", url, body)
 

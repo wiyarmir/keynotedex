@@ -1,34 +1,27 @@
 package es.guillermoorellana.keynotedex.web.screens
 
 import arrow.core.Try
-import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
+import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.components.profile.editableProfile
-import es.guillermoorellana.keynotedex.web.external.RouteResultProps
 import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.UserProfile
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.RBuilder
 import react.RComponent
-import react.RProps
+import react.RHandler
 import react.RState
 import react.dom.div
 import react.setState
 
-class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
+class UserScreen : RComponent<UserProps, UserState>() {
 
     override fun UserState.init() {
         userProfile = null
     }
 
     override fun componentDidMount() {
-        fetchUserProfileFromProps(props)
-    }
-
-    override fun componentWillReceiveProps(nextProps: RouteResultProps<UserProps>) {
-        if (nextProps.match.params != props.match.params) {
-            fetchUserProfileFromProps(nextProps)
-        }
+        fetchUserProfile(props.userId)
     }
 
     override fun RBuilder.render() {
@@ -54,10 +47,9 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
         }
     }
 
-    private fun fetchUserProfileFromProps(props: RouteResultProps<UserProps>) {
-        val userId = props.match.params.userId
+    private fun fetchUserProfile(userId: String) {
         GlobalScope.launch {
-            val user = NetworkDataSource.userProfile(userId)
+            val user = props.networkDataSource.userProfile(userId)
             setState {
                 this.userProfile = user
             }
@@ -66,7 +58,7 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
 
     private fun postUserProfile(userProfile: UserProfile) {
         GlobalScope.launch {
-            val updatedUserProfile = NetworkDataSource.updateUserProfile(userProfile)
+            val updatedUserProfile = props.networkDataSource.updateUserProfile(userProfile)
             setState {
                 this.userProfile = updatedUserProfile
             }
@@ -74,10 +66,12 @@ class UserScreen : RComponent<RouteResultProps<UserProps>, UserState>() {
     }
 }
 
-interface UserProps : RProps {
+interface UserProps : WithNetworkDataSource {
     var userId: String
 }
 
 interface UserState : RState {
     var userProfile: Try<UserProfile>?
 }
+
+fun RBuilder.userScreen(builder: RHandler<UserProps>) = child(UserScreen::class, builder)
