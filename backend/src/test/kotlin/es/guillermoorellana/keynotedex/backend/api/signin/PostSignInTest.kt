@@ -5,9 +5,10 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.users.User
-import es.guillermoorellana.keynotedex.backend.data.users.toDto
+import es.guillermoorellana.keynotedex.backend.jwtConfig
 import es.guillermoorellana.keynotedex.backend.testApp
 import es.guillermoorellana.keynotedex.responses.LoginResponse
 import io.ktor.http.ContentType
@@ -29,8 +30,10 @@ class PostSignInTest {
 
     private val testId = "testId"
     private val testPassword = "longTestPassword"
+    private val testToken = "testToken"
     private val testUser = User(testId)
     private val mockStorage: KeynotedexStorage = mock { }
+    private val mockJwtProvider: JwtTokenProvider = mock {}
     private val TestApplicationEngine.endpoint
         get() = application.locations.href(SignInEndpoint())
 
@@ -58,29 +61,30 @@ class PostSignInTest {
     }
 
     @Test
-    fun `when logging in with valid user then session is set`() = testApp(mockStorage) {
+    fun `when logging in with valid user then jwt token is set`() = testApp(mockStorage, mockJwtProvider) {
         whenever(mockStorage.retrieveUser(eq(testId), any())) doReturn testUser
+        whenever(mockJwtProvider.invoke(eq(testId))) doReturn testToken
         handleRequest(HttpMethod.Post, endpoint) {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
             setBody(listOf("userId" to testId, "password" to testPassword).formUrlEncode())
         }.apply {
-            assertThat(response.cookies["SESSION"], notNullValue())
+            val response = JSON.parse(LoginResponse.serializer(), response.content!!)
+            assertThat(response, equalTo(LoginResponse(testToken)))
         }
     }
 
     @Test
-    fun `when logging in with valid user then response is valid`() = testApp(mockStorage) {
+    fun `when logging in with valid user then jwt token is valid`() = testApp(mockStorage) {
         whenever(mockStorage.retrieveUser(eq(testId), any())) doReturn testUser
         handleRequest(HttpMethod.Post, endpoint) {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
             setBody(listOf("userId" to testId, "password" to testPassword).formUrlEncode())
         }.apply {
-            assertThat(
-                JSON.parse(LoginResponse.serializer(), response.content!!),
-                equalTo(LoginResponse(testUser.toDto()))
-            )
+            val response = JSON.parse(LoginResponse.serializer(), response.content!!)
+            val decoded = jwtConfig.verifier.verify(response.jwtToken)
+            assertThat(decoded, notNullValue())
         }
     }
 }

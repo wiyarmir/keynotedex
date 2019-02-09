@@ -1,14 +1,14 @@
 package es.guillermoorellana.keynotedex.backend.api.signup
 
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
-import es.guillermoorellana.keynotedex.backend.Session
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.api.isValidUserId
+import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
-import es.guillermoorellana.keynotedex.backend.data.users.toDto
 import es.guillermoorellana.keynotedex.backend.hashPassword
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.responses.LoginResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 import io.ktor.application.application
 import io.ktor.application.call
@@ -18,11 +18,9 @@ import io.ktor.locations.post
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.Route
-import io.ktor.sessions.sessions
-import io.ktor.sessions.set
 import org.h2.message.DbException
 
-fun Route.PostSignUp(userStorage: UserStorage) {
+fun Route.postSignUp(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvider) {
 
     JsonSerializableConverter.register(UserProfileResponse.serializer())
 
@@ -97,8 +95,7 @@ fun Route.PostSignUp(userStorage: UserStorage) {
             return@post
         }
 
-        call.sessions.set(Session(newUser.userId))
-        call.respond(HttpStatusCode.Created, UserProfileResponse(newUser.toDto()))
+        call.respond(HttpStatusCode.Created, LoginResponse(jwtTokenProvider(newUser.userId)))
     }
 }
 

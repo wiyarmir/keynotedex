@@ -12,7 +12,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 
-fun Route.GetConference(conferenceStorage: ConferenceStorage) {
+fun Route.getConference(conferenceStorage: ConferenceStorage) {
 
     JsonSerializableConverter.register(ConferenceResponse.serializer())
 

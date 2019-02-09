@@ -2,30 +2,27 @@ package es.guillermoorellana.keynotedex.web.comms
 
 import arrow.core.Try
 import arrow.core.Try.Failure
-import arrow.core.orNull
 import es.guillermoorellana.keynotedex.api.Api
 import es.guillermoorellana.keynotedex.dto.Submission
-import es.guillermoorellana.keynotedex.dto.User
 import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
 import es.guillermoorellana.keynotedex.requests.SubmissionUpdateRequest
 import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.responses.LoginResponse
 import es.guillermoorellana.keynotedex.responses.SubmissionResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
-import es.guillermoorellana.keynotedex.responses.UserResponse
 import es.guillermoorellana.keynotedex.web.model.UserProfile
 import es.guillermoorellana.keynotedex.web.model.toModel
 import es.guillermoorellana.keynotedex.web.model.toUpdateRequest
 import kotlinx.coroutines.await
 import org.w3c.dom.url.URLSearchParams
 import org.w3c.fetch.Response
+import react.RProps
 import kotlinx.serialization.json.JSON as KJSON
 
-object NetworkDataSource {
+class NetworkDataSource(private val networkService: NetworkService) {
 
-    private val networkService = NetworkService
-
-    suspend fun register(userId: String, password: String, displayName: String, email: String) =
+    suspend fun register(userId: String, password: String, displayName: String, email: String): Try<LoginResponse> =
         networkService.post(
             Api.V1.Paths.register,
             URLSearchParams().apply {
@@ -33,10 +30,8 @@ object NetworkDataSource {
                 append("password", password)
                 append("displayName", displayName)
                 append("email", email)
-            }
-        )
-            .flatMap { parseUserProfileResponse(it) }
-            .map { it.user.toModel() }
+            })
+            .flatMap { parseLoginResponse(it) }
 
     suspend fun userProfile(userId: String): Try<UserProfile> =
         networkService.get(Api.V1.Paths.user.replace("{userId}", userId), null)
@@ -51,20 +46,13 @@ object NetworkDataSource {
             .map { it.toModel() }
     }
 
-    suspend fun checkSession() = networkService.get(Api.V1.Paths.login, null)
-        .flatMap { parseUserResponse(it) }
-        .map { it.toModel() }
-        .orNull()
-
-    suspend fun login(userId: String, password: String): es.guillermoorellana.keynotedex.web.model.User? {
+    suspend fun login(userId: String, password: String): Try<LoginResponse> {
         val body = URLSearchParams().apply {
             append("userId", userId)
             append("password", password)
         }
         return networkService.post(Api.V1.Paths.login, body)
-            .flatMap { parseUserResponse(it) }
-            .map { it.toModel() }
-            .orNull()
+            .flatMap { parseLoginResponse(it) }
     }
 
     suspend fun logoutUser() = networkService.post(Api.V1.Paths.logout, null)
@@ -86,9 +74,9 @@ object NetworkDataSource {
             KJSON.stringify(SubmissionUpdateRequest.serializer(), SubmissionUpdateRequest(submission))
         )
 
-    private suspend fun parseUserResponse(response: Response): Try<User> =
+    private suspend fun parseLoginResponse(response: Response): Try<LoginResponse> =
         when {
-            response.ok -> Try { KJSON.parse(UserResponse.serializer(), response.text().await()).user }
+            response.ok -> Try { KJSON.parse(LoginResponse.serializer(), response.text().await()) }
             else -> {
                 val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
                 Failure(LoginOrRegisterFailedException(errorResponse))
@@ -114,4 +102,8 @@ object NetworkDataSource {
         }
 
     class LoginOrRegisterFailedException(message: ErrorResponse) : Throwable(message.message)
+}
+
+external interface WithNetworkDataSource : RProps {
+    var networkDataSource: NetworkDataSource
 }

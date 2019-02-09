@@ -1,10 +1,10 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
+import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.ButtonType
@@ -15,7 +15,6 @@ import kotlinx.html.js.onSubmitFunction
 import react.RBuilder
 import react.RComponent
 import react.RHandler
-import react.RProps
 import react.RState
 import react.dom.button
 import react.dom.div
@@ -163,7 +162,7 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
             disabled = true
         }
         GlobalScope.launch {
-            NetworkDataSource.register(state.username, state.password, state.username, state.email)
+            props.networkDataSource.register(state.username, state.password, state.username, state.email)
                 .fold(
                     { exception ->
                         setState {
@@ -171,16 +170,16 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
                             errorMessage = exception.message.toString()
                         }
                     },
-                    { user ->
-                        props.onUserLoggedIn(user)
+                    { response ->
+                        props.onUserLoggedIn(response)
                     }
                 )
         }
     }
 }
 
-external interface SignUpProps : RProps {
-    var onUserLoggedIn: (User) -> Unit
+external interface SignUpProps : WithNetworkDataSource {
+    var onUserLoggedIn: (LoginResponse) -> Unit
 }
 
 external interface SignUpState : RState {

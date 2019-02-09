@@ -19,16 +19,20 @@ fun RBuilder.browserRouter(handler: RHandler<RProps>) = child(BrowserRouterCompo
 fun RBuilder.switch(handler: RHandler<RProps>) = child(SwitchComponent::class, handler)
 
 @ReactDsl
-fun RBuilder.route(component: KClass<out Component<*, *>>) =
-    child(RouteComponent::class) {
+fun RBuilder.route(component: KClass<out Component<*, *>>): ReactElement =
+    child<RouteProps<RProps>, RouteComponent<RProps>> {
         attrs {
             this.component = component.js.unsafeCast<RClass<RProps>>()
         }
     }
 
 @ReactDsl
-fun RBuilder.route(path: String, component: KClass<out Component<*, *>>, exact: Boolean = false) =
-    child(RouteComponent::class) {
+fun RBuilder.route(
+    path: String,
+    component: KClass<out Component<*, *>>,
+    exact: Boolean = false
+): ReactElement =
+    child<RouteProps<RProps>, RouteComponent<RProps>> {
         attrs {
             this.path = path
             this.exact = exact
@@ -37,12 +41,26 @@ fun RBuilder.route(path: String, component: KClass<out Component<*, *>>, exact: 
     }
 
 @ReactDsl
-fun RBuilder.route(path: String, exact: Boolean = false, render: (props: RouteResultProps<*>) -> ReactElement) =
-    child(RouteComponent::class) {
+fun <T : RProps> RBuilder.route(
+    path: String,
+    exact: Boolean = false,
+    render: (props: RouteResultProps<T>) -> ReactElement?
+): ReactElement =
+    child<RouteProps<T>, RouteComponent<T>> {
         attrs {
             this.path = path
             this.exact = exact
             this.render = render
+        }
+    }
+
+@ReactDsl
+fun RBuilder.route(path: String, exact: Boolean = false, render: () -> ReactElement?): ReactElement =
+    child<RouteProps<RProps>, RouteComponent<RProps>> {
+        attrs {
+            this.path = path
+            this.exact = exact
+            this.render = { render() }
         }
     }
 

@@ -3,12 +3,11 @@ package es.guillermoorellana.keynotedex.web.screens
 import arrow.core.Try
 import arrow.core.Try.Success
 import arrow.core.orNull
-import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
+import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
 import es.guillermoorellana.keynotedex.web.components.editable.get
-import es.guillermoorellana.keynotedex.web.external.RouteResultProps
 import es.guillermoorellana.keynotedex.web.loading
 import es.guillermoorellana.keynotedex.web.model.Session
 import es.guillermoorellana.keynotedex.web.model.flip
@@ -20,7 +19,7 @@ import kotlinx.html.DIV
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
-import react.RProps
+import react.RHandler
 import react.RState
 import react.dom.RDOMBuilder
 import react.dom.button
@@ -37,7 +36,7 @@ private const val css = """
 
 """
 
-class SessionScreen : RComponent<RouteResultProps<SessionRouteProps>, SessionScreenState>() {
+class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
 
     override fun componentDidMount() {
         fetchSubmission()
@@ -115,15 +114,15 @@ class SessionScreen : RComponent<RouteResultProps<SessionRouteProps>, SessionScr
 
     private fun updateSession(session: Session) {
         GlobalScope.launch {
-            NetworkDataSource.updateSubmission(session.toDto())
+            props.networkDataSource.updateSubmission(session.toDto())
             fetchSubmission()
         }
     }
 
     private fun fetchSubmission() {
         GlobalScope.launch {
-            val sessionId = cleanupSubmissionId(props.match.params.sessionId)
-            val result = NetworkDataSource.getSubmission(sessionId)
+            val sessionId = cleanupSubmissionId(props.sessionId)
+            val result = props.networkDataSource.getSubmission(sessionId)
             setState {
                 session = result
             }
@@ -133,11 +132,14 @@ class SessionScreen : RComponent<RouteResultProps<SessionRouteProps>, SessionScr
 
 private fun cleanupSubmissionId(id: String): String = id.split('-').last()
 
-external interface SessionRouteProps : RProps {
-    val userId: String
-    val sessionId: String
+external interface SessionRouteProps : WithNetworkDataSource {
+    var userId: String
+    var sessionId: String
 }
 
 external interface SessionScreenState : RState {
     var session: Try<Session>?
 }
+
+fun RBuilder.sessionScreen(builder: RHandler<SessionRouteProps>) =
+    child(SessionScreen::class, builder)

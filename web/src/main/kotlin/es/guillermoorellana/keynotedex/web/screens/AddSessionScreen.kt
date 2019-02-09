@@ -2,7 +2,7 @@ package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.dto.SubmissionVisibility
 import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
-import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
+import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import kotlinx.coroutines.GlobalScope
@@ -16,7 +16,7 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
-import react.RProps
+import react.RHandler
 import react.RState
 import react.dom.button
 import react.dom.div
@@ -38,7 +38,7 @@ private const val css = """
 }
 """
 
-class AddSessionScreen : RComponent<RProps, AddSessionState>() {
+class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
 
     override fun AddSessionState.init() {
         title = ""
@@ -120,7 +120,7 @@ class AddSessionScreen : RComponent<RProps, AddSessionState>() {
             visibility = if (state.isPrivate) SubmissionVisibility.PRIVATE else SubmissionVisibility.PUBLIC
         )
         GlobalScope.launch {
-            NetworkDataSource.postSubmission(submissionCreateRequest)
+            props.networkDataSource.postSubmission(submissionCreateRequest)
                 .fold(
                     { error ->
                         setState {
@@ -143,6 +143,8 @@ class AddSessionScreen : RComponent<RProps, AddSessionState>() {
     }
 }
 
+external interface AddSessionProps : WithNetworkDataSource
+
 external interface AddSessionState : RState {
     var title: String
     var abstract: String
@@ -152,4 +154,4 @@ external interface AddSessionState : RState {
     var redirectToProfile: Boolean
 }
 
-fun RBuilder.addSession() = child(AddSessionScreen::class) {}
+fun RBuilder.addSession(builder: RHandler<AddSessionProps>) = child(AddSessionScreen::class, builder)
