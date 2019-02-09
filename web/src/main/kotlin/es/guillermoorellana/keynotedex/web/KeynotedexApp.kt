@@ -40,10 +40,14 @@ import react.dom.p
 import react.dom.style
 import react.setState
 
-class Application : RComponent<ApplicationProps, ApplicationPageState>() {
+class Application : RComponent<ApplicationProps, ApplicationState>() {
 
-    override fun ApplicationPageState.init() {
+    override fun ApplicationState.init() {
         currentUser = null
+    }
+
+    override fun componentDidMount() {
+        props.sessionStorage.get()?.let { jwtDecode(it).getClaim("id") }?.let { refreshUser(it) }
     }
 
     override fun RBuilder.render() {
@@ -148,16 +152,17 @@ class Application : RComponent<ApplicationProps, ApplicationPageState>() {
         props.sessionStorage.put(response.jwtToken)
         val decoded = jwtDecode(response.jwtToken)
         val userId = decoded.getClaim("id")
+        refreshUser(userId)
+    }
+
+    private fun refreshUser(userId: String) {
         GlobalScope.launch {
             props.networkDataSource.userProfile(userId)
                 .map { it.user }
                 .fold(
                     { console.error(it) },
-                    { user ->
-                        setState {
-                            currentUser = user
-                        }
-                    })
+                    { user -> setState { currentUser = user } }
+                )
         }
     }
 }
@@ -167,7 +172,7 @@ external interface ApplicationProps : RProps {
     var sessionStorage: SessionStorage
 }
 
-external interface ApplicationPageState : RState {
+external interface ApplicationState : RState {
     var currentUser: User?
 }
 

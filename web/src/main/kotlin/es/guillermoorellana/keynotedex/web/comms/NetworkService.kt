@@ -8,11 +8,14 @@ import org.w3c.fetch.RequestInit
 import org.w3c.fetch.Response
 import org.w3c.fetch.SAME_ORIGIN
 import kotlin.browser.window
+import kotlin.js.Promise
 import kotlin.js.json
 
+typealias Header = Pair<String, String>
+
 class NetworkService(
-    private val sessionsStorage: SessionStorage,
-    private val authHeadersProvider: (SessionStorage) -> List<Pair<String, String>> = headersProvider
+    private val authHeadersProvider: () -> List<Header>,
+    private val fetch: (input: dynamic, init: RequestInit) -> Promise<Response> = window::fetch
 ) {
 
     suspend fun post(url: String, body: dynamic) = request("POST", url, body)
@@ -28,7 +31,7 @@ class NetworkService(
                 "Accept" to "application/json",
                 "Content-Type" to "application/json"
             )
-        } + authHeadersProvider(sessionsStorage)
+        } + authHeadersProvider()
 
         val request: RequestInit = object : RequestInit {
             override var method: String? = method
@@ -37,12 +40,15 @@ class NetworkService(
             override var headers: dynamic = json(*headers.toTypedArray())
         }
 
-        return Try {
-            window.fetch(url, request).await()
-        }
+        return Try { fetch(url, request).await() }
     }
+
+    companion object
 }
 
-private val headersProvider = { sessionStorage: SessionStorage ->
-    sessionStorage.get()?.let { listOf("Authorization" to "Bearer $it") } ?: emptyList()
+private val headersProviderFromStorage = { sessionStorage: SessionStorage ->
+    { sessionStorage.get()?.let { listOf("Authorization" to "Bearer $it") } ?: emptyList() }
 }
+
+fun NetworkService.Companion.create(storage: SessionStorage) =
+    NetworkService(headersProviderFromStorage(storage))
