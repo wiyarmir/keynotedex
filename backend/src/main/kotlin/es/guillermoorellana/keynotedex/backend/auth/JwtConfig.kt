@@ -31,15 +31,16 @@ class JwtConfig(
         .withIssuer(issuer)
         .build()
 
+    private val expiration
+        get() = Date(System.currentTimeMillis() + validityInMs)
+
     fun makeUserToken(userId: String): String = JWT.create()
         .withSubject("$userId@keynotedex.local")
         .withIssuer(issuer)
         .withClaim("id", userId)
-        .withExpiresAt(getExpiration())
+        .withExpiresAt(expiration)
         .withAudience(JwtAudience.USER.audienceName)
         .sign(algorithm)
-
-    private fun getExpiration() = Date(System.currentTimeMillis() + validityInMs)
 
     fun applyJwtConfig(config: JWTAuthenticationProvider) = config.run {
         realm = this@JwtConfig.realm
