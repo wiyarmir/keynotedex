@@ -49,7 +49,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
         UserContext.Provider(state.currentUser) {
             browserRouter {
                 div {
-                    navigation { }
+                    navigation()
                     main("mt-0 mt-md-2 mt-lg-0") {
                         attrs { role = "main" }
                         navigationSwitch()
