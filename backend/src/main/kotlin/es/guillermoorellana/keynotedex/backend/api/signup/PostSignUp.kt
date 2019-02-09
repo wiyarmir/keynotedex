@@ -8,7 +8,7 @@ import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.hashPassword
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
-import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.SignInResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 import io.ktor.application.application
 import io.ktor.application.call
@@ -95,7 +95,7 @@ fun Route.postSignUp(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvide
             return@post
         }
 
-        call.respond(HttpStatusCode.Created, LoginResponse(jwtTokenProvider(newUser.userId)))
+        call.respond(HttpStatusCode.Created, SignInResponse(jwtTokenProvider(newUser.userId)))
     }
 }
 

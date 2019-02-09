@@ -10,7 +10,7 @@ import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.jwtConfig
 import es.guillermoorellana.keynotedex.backend.testApp
-import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.SignInResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
@@ -69,8 +69,8 @@ class PostSignInTest {
             addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
             setBody(listOf("userId" to testId, "password" to testPassword).formUrlEncode())
         }.apply {
-            val response = JSON.parse(LoginResponse.serializer(), response.content!!)
-            assertThat(response, equalTo(LoginResponse(testToken)))
+            val response = JSON.parse(SignInResponse.serializer(), response.content!!)
+            assertThat(response, equalTo(SignInResponse(testToken)))
         }
     }
 
@@ -82,7 +82,7 @@ class PostSignInTest {
             addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
             setBody(listOf("userId" to testId, "password" to testPassword).formUrlEncode())
         }.apply {
-            val response = JSON.parse(LoginResponse.serializer(), response.content!!)
+            val response = JSON.parse(SignInResponse.serializer(), response.content!!)
             val decoded = jwtConfig.verifier.verify(response.jwtToken)
             assertThat(decoded, notNullValue())
         }

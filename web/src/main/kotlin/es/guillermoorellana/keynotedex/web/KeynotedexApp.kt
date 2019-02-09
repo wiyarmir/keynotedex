@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.SignInResponse
 import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
 import es.guillermoorellana.keynotedex.web.comms.SessionStorage
 import es.guillermoorellana.keynotedex.web.components.navigation
@@ -151,7 +151,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
         }
     }
 
-    private fun onUserLoggedIn(response: LoginResponse) {
+    private fun onUserLoggedIn(response: SignInResponse) {
         props.sessionStorage.put(response.jwtToken)
         val decoded = jwtDecode(response.jwtToken)
         val userId = decoded.getClaim("id")

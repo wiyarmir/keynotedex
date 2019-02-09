@@ -6,7 +6,7 @@ import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.hashPassword
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
-import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.SignInResponse
 import io.ktor.application.application
 import io.ktor.application.call
 import io.ktor.http.ContentType
@@ -19,7 +19,7 @@ import io.ktor.routing.accept
 
 fun Route.postSignIn(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvider) {
 
-    JsonSerializableConverter.register(LoginResponse.serializer())
+    JsonSerializableConverter.register(SignInResponse.serializer())
 
     accept(ContentType.Application.Json) {
         post<SignInEndpoint> {
@@ -39,7 +39,7 @@ fun Route.postSignIn(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvide
                     HttpStatusCode.Unauthorized,
                     ErrorResponse(message = "Invalid username or password")
                 )
-                else -> call.respond(LoginResponse(jwtTokenProvider(login.userId)))
+                else -> call.respond(SignInResponse(jwtTokenProvider(login.userId)))
             }
         }
     }

@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.SignInResponse
 import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
@@ -156,7 +156,7 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
 }
 
 external interface SignInProps : WithNetworkDataSource {
-    var onUserLoggedIn: (LoginResponse) -> Unit
+    var onUserLoggedIn: (SignInResponse) -> Unit
 }
 
 external interface SignInState : RState {

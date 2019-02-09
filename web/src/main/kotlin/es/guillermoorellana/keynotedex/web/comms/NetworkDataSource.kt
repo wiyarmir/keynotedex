@@ -8,7 +8,7 @@ import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
 import es.guillermoorellana.keynotedex.requests.SubmissionUpdateRequest
 import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
-import es.guillermoorellana.keynotedex.responses.LoginResponse
+import es.guillermoorellana.keynotedex.responses.SignInResponse
 import es.guillermoorellana.keynotedex.responses.SubmissionResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 import es.guillermoorellana.keynotedex.web.model.UserProfile
@@ -22,9 +22,9 @@ import kotlinx.serialization.json.JSON as KJSON
 
 class NetworkDataSource(private val networkService: NetworkService) {
 
-    suspend fun register(userId: String, password: String, displayName: String, email: String): Try<LoginResponse> =
+    suspend fun register(userId: String, password: String, displayName: String, email: String): Try<SignInResponse> =
         networkService.post(
-            Api.V1.Paths.register,
+            Api.V1.Paths.signUp,
             URLSearchParams().apply {
                 append("userId", userId)
                 append("password", password)
@@ -46,16 +46,16 @@ class NetworkDataSource(private val networkService: NetworkService) {
             .map { it.toModel() }
     }
 
-    suspend fun login(userId: String, password: String): Try<LoginResponse> {
+    suspend fun login(userId: String, password: String): Try<SignInResponse> {
         val body = URLSearchParams().apply {
             append("userId", userId)
             append("password", password)
         }
-        return networkService.post(Api.V1.Paths.login, body)
+        return networkService.post(Api.V1.Paths.signIn, body)
             .flatMap { parseLoginResponse(it) }
     }
 
-    suspend fun logoutUser() = networkService.post(Api.V1.Paths.logout, null)
+    suspend fun logoutUser() = networkService.post(Api.V1.Paths.signOut, null)
 
     suspend fun getSubmission(submissionId: String) =
         networkService.get(Api.V1.Paths.submissions.replace("{submissionId?}", submissionId), null)
@@ -74,9 +74,9 @@ class NetworkDataSource(private val networkService: NetworkService) {
             KJSON.stringify(SubmissionUpdateRequest.serializer(), SubmissionUpdateRequest(submission))
         )
 
-    private suspend fun parseLoginResponse(response: Response): Try<LoginResponse> =
+    private suspend fun parseLoginResponse(response: Response): Try<SignInResponse> =
         when {
-            response.ok -> Try { KJSON.parse(LoginResponse.serializer(), response.text().await()) }
+            response.ok -> Try { KJSON.parse(SignInResponse.serializer(), response.text().await()) }
             else -> {
                 val errorResponse: ErrorResponse = KJSON.parse(ErrorResponse.serializer(), response.text().await())
                 Failure(LoginOrRegisterFailedException(errorResponse))

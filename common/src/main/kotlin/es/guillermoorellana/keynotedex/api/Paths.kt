@@ -10,9 +10,9 @@ object Api {
             const val user = "${V1.loc}/users/{userId}"
             const val submissions = "${V1.loc}/submissions/{submissionId?}"
             const val conferences = "${V1.loc}/conferences/{conferenceId?}"
-            const val register = "${V1.loc}/register"
-            const val login = "${V1.loc}/login"
-            const val logout = "${V1.loc}/logout"
+            const val signUp = "${V1.loc}/register"
+            const val signIn = "${V1.loc}/login"
+            const val signOut = "${V1.loc}/logout"
         }
     }
 }
