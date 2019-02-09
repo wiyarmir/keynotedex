@@ -19,7 +19,9 @@ import es.guillermoorellana.keynotedex.web.screens.SessionRouteProps
 import es.guillermoorellana.keynotedex.web.screens.TOSScreen
 import es.guillermoorellana.keynotedex.web.screens.UserProps
 import es.guillermoorellana.keynotedex.web.screens.addSession
+import es.guillermoorellana.keynotedex.web.screens.eventsScreen
 import es.guillermoorellana.keynotedex.web.screens.sessionScreen
+import es.guillermoorellana.keynotedex.web.screens.sessionsScreen
 import es.guillermoorellana.keynotedex.web.screens.signIn
 import es.guillermoorellana.keynotedex.web.screens.signOut
 import es.guillermoorellana.keynotedex.web.screens.signUp
@@ -92,8 +94,12 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
             }
             route("/privacy", PrivacyPolicyScreen::class, exact = true)
             route("/terms", TOSScreen::class, exact = true)
-            route("/events", NotFoundScreen::class, exact = true)
-            route("/sessions", NotFoundScreen::class, exact = true)
+            route("/events", exact = true) {
+                eventsScreen()
+            }
+            route("/sessions", exact = true) {
+                sessionsScreen()
+            }
             route("/sessions/add", exact = true) {
                 addSession {
                     attrs {
