@@ -6,12 +6,14 @@ import kotlin.browser.sessionStorage
 
 object SessionStorage {
 
+    private val backingStorage = sessionStorage
+
     fun put(value: String?) =
-        value?.let { sessionStorage[KEY_SESSION] = it } ?: sessionStorage.removeItem(KEY_SESSION)
+        value?.let { backingStorage[KEY_SESSION] = it } ?: backingStorage.removeItem(KEY_SESSION)
 
-    fun get(): String? = sessionStorage[KEY_SESSION]
+    fun get(): String? = backingStorage[KEY_SESSION]
 
-    fun clear() = sessionStorage.removeItem(KEY_SESSION)
+    fun clear() = backingStorage.removeItem(KEY_SESSION)
 }
 
-private const val KEY_SESSION = "session"
+private const val KEY_SESSION = "sessionToken"
