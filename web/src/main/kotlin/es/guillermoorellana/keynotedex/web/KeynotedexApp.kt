@@ -72,7 +72,10 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
                 signOut {
                     attrs {
                         networkDataSource = props.networkDataSource
-                        nukeCurrentUser = { setState { currentUser = null } }
+                        nukeCurrentUser = {
+                            props.sessionStorage.clear()
+                            setState { currentUser = null }
+                        }
                     }
                 }
             }

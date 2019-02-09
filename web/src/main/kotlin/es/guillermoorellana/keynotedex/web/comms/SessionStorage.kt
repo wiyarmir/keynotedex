@@ -10,6 +10,8 @@ object SessionStorage {
         value?.let { sessionStorage[KEY_SESSION] = it } ?: sessionStorage.removeItem(KEY_SESSION)
 
     fun get(): String? = sessionStorage[KEY_SESSION]
+
+    fun clear() = sessionStorage.removeItem(KEY_SESSION)
 }
 
 private const val KEY_SESSION = "session"
