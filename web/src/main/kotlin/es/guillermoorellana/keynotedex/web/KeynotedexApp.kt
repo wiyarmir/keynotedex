@@ -3,13 +3,13 @@ package es.guillermoorellana.keynotedex.web
 import es.guillermoorellana.keynotedex.responses.SignInResponse
 import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
 import es.guillermoorellana.keynotedex.web.comms.SessionStorage
+import es.guillermoorellana.keynotedex.web.components.appFooter
 import es.guillermoorellana.keynotedex.web.components.navigation
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.browserRouter
 import es.guillermoorellana.keynotedex.web.external.getClaim
 import es.guillermoorellana.keynotedex.web.external.jwtDecode
 import es.guillermoorellana.keynotedex.web.external.route
-import es.guillermoorellana.keynotedex.web.external.routeLink
 import es.guillermoorellana.keynotedex.web.external.switch
 import es.guillermoorellana.keynotedex.web.model.User
 import es.guillermoorellana.keynotedex.web.screens.HomeScreen
@@ -32,12 +32,7 @@ import react.RComponent
 import react.RHandler
 import react.RProps
 import react.RState
-import react.dom.a
 import react.dom.div
-import react.dom.footer
-import react.dom.hr
-import react.dom.p
-import react.dom.style
 import react.setState
 
 class Application : RComponent<ApplicationProps, ApplicationState>() {
@@ -58,7 +53,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
                     main("mt-0 mt-md-2 mt-lg-0") {
                         attrs { role = "main" }
                         navigationSwitch()
-                        footer()
+                        appFooter()
                     }
                 }
             }
@@ -124,30 +119,6 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
                 }
             }
             route(NotFoundScreen::class)
-        }
-    }
-
-    private fun RBuilder.footer() {
-        style {
-            // language=CSS
-            +"""
-            footer {
-                margin-top: 2em;
-            }
-            """.trimIndent()
-        }
-        footer("container") {
-            hr { }
-            p {
-                +"Keynotedex, an "
-                a(href = "https://github.com/wiyarmir/keynotedex", target = "blank") { +"OpenSource" }
-                +" initiative by "
-                a(href = "https://guillermoorellana.es", target = "blank") { +"Guillermo Orellana" }
-                +" — "
-                routeLink(to = "/terms") { +"Terms of Service" }
-                +" — "
-                routeLink(to = "/privacy") { +"Privacy Policy" }
-            }
         }
     }
 
