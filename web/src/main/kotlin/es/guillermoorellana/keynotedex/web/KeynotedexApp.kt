@@ -36,6 +36,7 @@ import react.RProps
 import react.RState
 import react.dom.div
 import react.setState
+import kotlin.js.Date
 
 class Application : RComponent<ApplicationProps, ApplicationState>() {
 
@@ -44,7 +45,11 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
     }
 
     override fun componentDidMount() {
-        props.sessionStorage.get()?.let { jwtDecode(it).getClaim("id") }?.let { refreshUser(it) }
+        props.sessionStorage.get()
+            ?.let { jwtDecode(it) }
+            ?.takeIf { it.exp.toDouble() > Date().getTime() / 1_000 }
+            ?.let { it.getClaim("id") }
+            ?.let { refreshUser(it) }
     }
 
     override fun RBuilder.render() {

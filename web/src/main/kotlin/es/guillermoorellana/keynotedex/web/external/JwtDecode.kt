@@ -5,7 +5,7 @@ external fun jwtDecode(rawToken: String): JwtParsedToken
 
 external interface JwtParsedToken {
     val aud: String
-    val exp: Long
+    val exp: String
     val iss: String
     val sub: String
 }
