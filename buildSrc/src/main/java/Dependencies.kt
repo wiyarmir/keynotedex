@@ -9,7 +9,7 @@ object Versions {
     const val junit = "4.12"
     const val kotlin = "1.3.31"
     const val react = "16.6.0"
-    const val kotlinFrontendPlugin = "0.0.37"
+    const val kotlinFrontendPlugin = "0.0.45"
     const val kotlinJsExt = "1.0.1-pre.61-kotlin-1.3.0"
     const val kotlinWrapper = "$react-pre.61-kotlin-1.3.0"
     const val kotlinxCoroutines = "1.0.1"

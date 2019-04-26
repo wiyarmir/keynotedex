@@ -1,16 +1,6 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
-        classpath "org.jetbrains.kotlin:kotlin-serialization:$Versions.kotlin"
-        classpath "com.android.tools.build:gradle:$Versions.androidGradlePlugin"
-    }
-}
-
 apply plugin: "com.android.application"
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
@@ -25,12 +15,35 @@ android {
 
     signingConfigs {}
 
+
     buildTypes {
-        release {}
-        debug {}
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        //This is for MultiplatformSettings
+        debug {
+            // MPP libraries don't currently get this resolution automatically
+            matchingFallbacks = ['release']
+        }
     }
 }
 
-dependencies{
-    implementation project(":common-jvm")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(':common')
+            }
+        }
+    }
+
+    targets {
+        fromPreset(presets.android, 'androidApp')
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.0.2'
 }
