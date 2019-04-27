@@ -28,10 +28,6 @@ sourceSets {
     }
 }
 
-configurations {
-    releaseCompile.extendsFrom compile
-}
-
 dependencies {
     implementation project(":common")
 
@@ -39,7 +35,7 @@ dependencies {
     implementation Libs.kotlinReflect
 
     implementation Libs.kotlinxSerializationRuntime
-    
+
     implementation Libs.ktorLocations
     implementation Libs.ktorFreemaker
     implementation Libs.ktorHtmlBuilder
@@ -49,14 +45,14 @@ dependencies {
 
     implementation Libs.ehcache
 
-    implementation(Libs.squashH2){
+    implementation(Libs.squashH2) {
         exclude group: "org.jetbrains.kotlin"
     }
 
-    testCompile Libs.kotlinTestJunit
-    testCompile Libs.ktorServerTestHost
-    testCompile Libs.jsoup
-    testCompile Libs.mockitoKotlin
+    testImplementation Libs.kotlinTestJunit
+    testImplementation Libs.ktorServerTestHost
+    testImplementation Libs.jsoup
+    testImplementation Libs.mockitoKotlin
 
     implementation Libs.logbackClassic
     implementation Libs.fuel
@@ -66,21 +62,16 @@ compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-task releaseJar(type: ShadowJar) {
-    manifest {
-        attributes "Main-Class": mainClassName
-    }
+shadowJar {
     classifier = 'release'
-    from([sourceSets.release.output, sourceSets.main.output])
-    configurations = [project.configurations.compile]
 }
 
 task release() {
     dependsOn('clean')
-    dependsOn('releaseJar')
+    dependsOn('shadowJar')
 }
 
-releaseJar.mustRunAfter clean
+tasks['shadowJar'].mustRunAfter clean
 
 task copyWebBundle(type: Copy) {
     dependsOn(':web:build')
@@ -88,4 +79,4 @@ task copyWebBundle(type: Copy) {
     into('build/resources/release')
 }
 
-processReleaseResources.dependsOn copyWebBundle
+processResources.dependsOn copyWebBundle
