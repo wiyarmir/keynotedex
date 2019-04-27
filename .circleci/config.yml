@@ -43,7 +43,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
       - run:
           name: Run checks
-          command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:check
+          command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:testDebugUnitTest :android:detekt :android:lintDebug
       - run:
           name: Build Application
           command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:assemble
@@ -51,6 +51,9 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
+      - store_artifacts:
+          path: android/build/outputs/apk
+          destination: apk
       - store_artifacts:
           path: android/build/reports
           destination: reports

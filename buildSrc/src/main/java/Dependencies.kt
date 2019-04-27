@@ -24,6 +24,7 @@ object Versions {
 }
 
 object Libs {
+    const val appcompat = "androidx.appcompat:appcompat:1.0.2"
     const val ehcache = "org.ehcache:ehcache:${Versions.ehcache}"
     const val fuel = "com.github.kittinunf.fuel:fuel:${Versions.fuel}"
     const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"

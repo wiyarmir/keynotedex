@@ -45,5 +45,7 @@ kotlin {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation Libs.appcompat
+    testImplementation Libs.junit
+    testImplementation Libs.mockitoKotlin
 }
