@@ -9,8 +9,8 @@ Multiplatform Kotlin implementation of a service to save, track and share confer
 | API      |   ✅   |
 | Backend  |   ✅   |
 | Web      |   ✅   |
-| Android  |   😶   |
-| iOS      |   😶   |
+| Android  |   👷   |
+| iOS      |   👷   |
 
 ### As featured in my talk "Kotlin beyond Android"
 
