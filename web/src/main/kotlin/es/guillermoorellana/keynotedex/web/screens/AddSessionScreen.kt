@@ -2,9 +2,9 @@ package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.dto.SubmissionVisibility
 import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
-import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
+import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.ButtonType
@@ -120,7 +120,7 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
             visibility = if (state.isPrivate) SubmissionVisibility.PRIVATE else SubmissionVisibility.PUBLIC
         )
         GlobalScope.launch {
-            props.networkDataSource.postSubmission(submissionCreateRequest)
+            props.networkRepository.postSubmission(submissionCreateRequest)
                 .fold(
                     { error ->
                         setState {
@@ -143,7 +143,7 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
     }
 }
 
-external interface AddSessionProps : WithNetworkDataSource
+external interface AddSessionProps : WithNetworkRepository
 
 external interface AddSessionState : RState {
     var title: String

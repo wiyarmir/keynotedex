@@ -28,6 +28,10 @@ android {
             matchingFallbacks = ['release']
         }
     }
+
+    packagingOptions {
+        exclude "**/*.kotlin_module"
+    }
 }
 
 kotlin {

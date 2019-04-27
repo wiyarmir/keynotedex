@@ -1,8 +1,6 @@
 package es.guillermoorellana.keynotedex.web
 
 import es.guillermoorellana.keynotedex.responses.SignInResponse
-import es.guillermoorellana.keynotedex.web.comms.NetworkDataSource
-import es.guillermoorellana.keynotedex.web.comms.SessionStorage
 import es.guillermoorellana.keynotedex.web.components.appFooter
 import es.guillermoorellana.keynotedex.web.components.navigation
 import es.guillermoorellana.keynotedex.web.context.UserContext
@@ -12,6 +10,8 @@ import es.guillermoorellana.keynotedex.web.external.jwtDecode
 import es.guillermoorellana.keynotedex.web.external.route
 import es.guillermoorellana.keynotedex.web.external.switch
 import es.guillermoorellana.keynotedex.web.model.User
+import es.guillermoorellana.keynotedex.web.repository.NetworkRepository
+import es.guillermoorellana.keynotedex.web.repository.SessionStorage
 import es.guillermoorellana.keynotedex.web.screens.HomeScreen
 import es.guillermoorellana.keynotedex.web.screens.NotFoundScreen
 import es.guillermoorellana.keynotedex.web.screens.PrivacyPolicyScreen
@@ -73,7 +73,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
             route("/signout", exact = true) {
                 signOut {
                     attrs {
-                        networkDataSource = props.networkDataSource
+                        networkRepository = props.networkRepository
                         nukeCurrentUser = {
                             props.sessionStorage.clear()
                             setState { currentUser = null }
@@ -84,7 +84,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
             route("/signin", exact = true) {
                 signIn {
                     attrs {
-                        networkDataSource = props.networkDataSource
+                        networkRepository = props.networkRepository
                         onUserLoggedIn = ::onUserLoggedIn
                     }
                 }
@@ -92,7 +92,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
             route("/signup", exact = true) {
                 signUp {
                     attrs {
-                        networkDataSource = props.networkDataSource
+                        networkRepository = props.networkRepository
                         onUserLoggedIn = ::onUserLoggedIn
                     }
                 }
@@ -108,7 +108,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
             route("/sessions/add", exact = true) {
                 addSession {
                     attrs {
-                        networkDataSource = props.networkDataSource
+                        networkRepository = props.networkRepository
                     }
                 }
             }
@@ -117,7 +117,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
                     attrs {
                         userId = routeProps.match.params.userId
                         sessionId = routeProps.match.params.sessionId
-                        networkDataSource = props.networkDataSource
+                        networkRepository = props.networkRepository
                     }
                 }
             }
@@ -125,7 +125,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
                 userScreen {
                     attrs {
                         userId = routeProps.match.params.userId
-                        networkDataSource = props.networkDataSource
+                        networkRepository = props.networkRepository
                     }
                 }
             }
@@ -142,7 +142,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
 
     private fun refreshUser(userId: String) {
         GlobalScope.launch {
-            props.networkDataSource.userProfile(userId)
+            props.networkRepository.userProfile(userId)
                 .map { it.user }
                 .fold(
                     { console.error(it) },
@@ -153,7 +153,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
 }
 
 external interface ApplicationProps : RProps {
-    var networkDataSource: NetworkDataSource
+    var networkRepository: NetworkRepository
     var sessionStorage: SessionStorage
 }
 

@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.comms
+package es.guillermoorellana.keynotedex.web.repository
 
 import org.w3c.dom.get
 import org.w3c.dom.set
@@ -17,3 +17,7 @@ object SessionStorage {
 }
 
 private const val KEY_SESSION = "sessionToken"
+
+val sessionStorageTokenProvider = { sessionStorage: SessionStorage ->
+    { sessionStorage.get() }
+}

@@ -1,10 +1,10 @@
 package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.responses.SignInResponse
-import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink
+import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.ButtonType
@@ -162,7 +162,7 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
             disabled = true
         }
         GlobalScope.launch {
-            props.networkDataSource.register(state.username, state.password, state.username, state.email)
+            props.networkRepository.register(state.username, state.password, state.username, state.email)
                 .fold(
                     { exception ->
                         setState {
@@ -178,7 +178,7 @@ class SignUpScreen : RComponent<SignUpProps, SignUpState>() {
     }
 }
 
-external interface SignUpProps : WithNetworkDataSource {
+external interface SignUpProps : WithNetworkRepository {
     var onUserLoggedIn: (SignInResponse) -> Unit
 }
 

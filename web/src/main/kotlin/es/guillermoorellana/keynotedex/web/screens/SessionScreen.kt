@@ -3,7 +3,6 @@ package es.guillermoorellana.keynotedex.web.screens
 import arrow.core.Try
 import arrow.core.Try.Success
 import arrow.core.orNull
-import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
 import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
@@ -13,6 +12,7 @@ import es.guillermoorellana.keynotedex.web.model.Session
 import es.guillermoorellana.keynotedex.web.model.flip
 import es.guillermoorellana.keynotedex.web.model.string
 import es.guillermoorellana.keynotedex.web.model.toDto
+import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.DIV
@@ -114,7 +114,7 @@ class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
 
     private fun updateSession(session: Session) {
         GlobalScope.launch {
-            props.networkDataSource.updateSubmission(session.toDto())
+            props.networkRepository.updateSubmission(session.toDto())
             fetchSubmission()
         }
     }
@@ -122,7 +122,7 @@ class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
     private fun fetchSubmission() {
         GlobalScope.launch {
             val sessionId = cleanupSubmissionId(props.sessionId)
-            val result = props.networkDataSource.getSubmission(sessionId)
+            val result = props.networkRepository.getSubmission(sessionId)
             setState {
                 session = result
             }
@@ -132,7 +132,7 @@ class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
 
 private fun cleanupSubmissionId(id: String): String = id.split('-').last()
 
-external interface SessionRouteProps : WithNetworkDataSource {
+external interface SessionRouteProps : WithNetworkRepository {
     var userId: String
     var sessionId: String
 }
