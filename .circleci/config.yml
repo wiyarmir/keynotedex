@@ -151,9 +151,15 @@ jobs:
           key: 1-gems-{{ checksum "ios/Gemfile.lock" }}
           paths:
             - ios/vendor/bundle
+      - restore_cache:
+          key: gradle-{{ checksum "build.gradle" }}-{{ checksum "common/build.gradle" }}
       - run:
           name: fastlane
           command: cd ios && bundle exec fastlane $FASTLANE_LANE
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-{{ checksum "build.gradle" }}-{{ checksum "common/build.gradle" }}
       - store_artifacts:
           path: output
       - store_test_results:
