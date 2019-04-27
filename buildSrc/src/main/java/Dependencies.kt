@@ -9,7 +9,7 @@ object Versions {
     const val junit = "4.12"
     const val kotlin = "1.3.31"
     const val react = "16.6.0"
-    const val kotlinFrontendPlugin = "0.0.37"
+    const val kotlinFrontendPlugin = "0.0.45"
     const val kotlinJsExt = "1.0.1-pre.61-kotlin-1.3.0"
     const val kotlinWrapper = "$react-pre.61-kotlin-1.3.0"
     const val kotlinxCoroutines = "1.0.1"
@@ -17,13 +17,14 @@ object Versions {
     const val logback = "1.2.1"
     const val node = "8.11.2"
     const val mockitoKotlin = "2.1.0"
-    const val serialization = "0.9.1"
+    const val serialization = "0.11.0"
     const val squash = "0.2.4"
     const val reactRouterDom = "4.3.1"
     const val kotlinReactRouterDom = "$reactRouterDom-pre.68-kotlin-1.3.20"
 }
 
 object Libs {
+    const val appcompat = "androidx.appcompat:appcompat:1.0.2"
     const val ehcache = "org.ehcache:ehcache:${Versions.ehcache}"
     const val fuel = "com.github.kittinunf.fuel:fuel:${Versions.fuel}"
     const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
@@ -48,6 +49,8 @@ object Libs {
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serialization}"
     const val kotlinxSerializationRuntimeJs =
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
+   const val kotlinxSerializationRuntimeNative =
+        "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serialization}"
     const val ktorAuthJwt = "io.ktor:ktor-auth-jwt:${Versions.ktor}"
     const val ktorClientApache = "io.ktor:ktor-client-apache:${Versions.ktor}"
     const val ktorFreemaker = "io.ktor:ktor-freemarker:${Versions.ktor}"

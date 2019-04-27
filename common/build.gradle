@@ -1,19 +1,142 @@
-buildscript{
-    dependencies{
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
-        classpath "org.jetbrains.kotlin:kotlin-serialization:$Versions.kotlin"
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
+apply plugin: 'co.touchlab.kotlinxcodesync'
+
+version = keynotedexVersion
+
+kotlin {
+    targets {
+        def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'ios') {
+            compilations.main.outputKinds("FRAMEWORK")
+            compilations.test.outputKinds("FRAMEWORK")
+        }
+    }
+
+    jvm()
+    js()
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                dependencies {
+                    implementation Libs.kotlinStdlibCommon
+                    implementation Libs.kotlinxSerializationRuntimeCommon
+                }
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation Libs.kotlinTestCommon
+            }
+        }
+
+        iosMain {
+            dependencies {
+                implementation Libs.kotlinxSerializationRuntimeNative
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                implementation Libs.kotlinStdlib
+                implementation Libs.kotlinxSerializationRuntime
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation Libs.junit
+                implementation Libs.kotlinTestJunit
+                implementation Libs.kotlinTest
+            }
+        }
+
+        jsMain {
+            dependencies {
+                implementation Libs.kotlinStdlibJs
+                implementation Libs.kotlinxSerializationRuntimeJs
+            }
+        }
+
+        jsTest {
+            dependencies {
+                implementation Libs.kotlinTestJs
+            }
+        }
+    }
+
+    cocoapods {
+        // Configure fields required by CocoaPods.
+        summary = "Conferences, submissions and speakers"
+        homepage = "https://github.com/wiyarmir/keynotedex"
     }
 }
 
-apply plugin: 'kotlin-platform-common'
-apply plugin: 'kotlinx-serialization'
-
-repositories {
-    mavenCentral()
+configurations {
+    compileClasspath
 }
 
-dependencies {
-    compile Libs.kotlinStdlibCommon
-    compile Libs.kotlinxSerializationRuntimeCommon
-    testCompile Libs.kotlinTestCommon
+xcode {
+    projectPath = "../ios/Keynotedex.xcodeproj"
+    target = "Keynotedex"
+}
+
+
+//noinspection GroovyAssignabilityCheck
+task packForXCode(type: Sync) {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+    final String mode = System.getenv('CONFIGURATION')?.toUpperCase() ?: 'DEBUG'
+
+    inputs.property "mode", mode
+    dependsOn kotlin.targets.ios.compilations.main.linkTaskName("FRAMEWORK", mode)
+
+    from { kotlin.targets.ios.compilations.main.getBinary("FRAMEWORK", mode).parentFile }
+    into frameworkDir
+
+    doLast {
+        new File(frameworkDir, 'gradlew').with {
+            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+            setExecutable(true)
+        }
+    }
+}
+tasks.build.dependsOn packForXCode
+
+//noinspection GroovyAssignabilityCheck
+task packForXCodeTest(type: Sync) {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks-test")
+    final String mode = System.getenv('CONFIGURATION')?.toUpperCase() ?: 'DEBUG'
+
+    inputs.property "mode", mode
+    dependsOn "linkTestDebugFrameworkIos"
+    dependsOn kotlin.targets.ios.compilations.test.linkTaskName("FRAMEWORK", mode)
+
+    from { kotlin.targets.ios.compilations.test.getBinary("FRAMEWORK", mode).parentFile }
+    into frameworkDir
+
+    doLast {
+        new File(frameworkDir, 'gradlew').with {
+            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+            setExecutable(true)
+        }
+    }
+}
+
+//noinspection GroovyAssignabilityCheck
+task iosTest {
+    def device = project.findProperty("iosDevice")?.toString() ?: "iPhone XR"
+    dependsOn 'linkTestDebugExecutableIos'
+    group = JavaBasePlugin.VERIFICATION_GROUP
+    description = "Runs tests for target 'ios' on an iOS simulator"
+
+    doLast {
+        def binary = kotlin.targets.ios.compilations.test.getBinary('EXECUTABLE', 'DEBUG')
+        exec {
+            commandLine 'xcrun', 'simctl', 'spawn', device, binary.absolutePath
+        }
+    }
 }

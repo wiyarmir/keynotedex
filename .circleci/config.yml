@@ -7,10 +7,6 @@ defaults: &defaults
     GRADLE_OPTS: '-Dorg.gradle.daemon=false'
     _JAVA_OPTIONS: "-Xms256m -Xmx1280m -XX:MaxPermSize=350m"
 
-download_gradle_dependencies: &download_gradle_dependencies
-  name: Download dependencies
-  command: ./gradlew -Porg.gradle.project.buildAndroid=false dependencies
-
 version: 2
 jobs:
   lint:
@@ -19,14 +15,13 @@ jobs:
       - checkout
       - restore_cache:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
-      - run: *download_gradle_dependencies
+      - run:
+          name: Lint project
+          command: ./gradlew -Porg.gradle.project.buildAndroid=false detekt
       - save_cache:
           paths:
             - ~/.gradle
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
-      - run:
-          name: Lint project
-          command: ./gradlew -Porg.gradle.project.buildAndroid=false detekt
       - run:
           name: Save detekt results
           command: |
@@ -47,39 +42,18 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
       - run:
-          name: Download Dependencies
-          command: ./gradlew -Porg.gradle.project.buildAndroid=true dependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
+          name: Run checks
+          command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:testDebugUnitTest :android:detekt :android:lintDebug
       - run:
-          name: Run Tests
+          name: Build Application
           command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:assemble
-      - store_artifacts:
-          path: android/build/reports
-          destination: reports
-      - store_test_results:
-          path: android/build/test-results
-
-  test-android:
-    <<: *defaults
-    docker:
-      - image: circleci/android:api-28-alpha
-    steps:
-      - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
-      - run:
-          name: Download Dependencies
-          command: ./gradlew -Porg.gradle.project.buildAndroid=true dependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "android/build.gradle" }}
-      - run:
-          name: Run Tests
-          command: ./gradlew -Porg.gradle.project.buildAndroid=true :android:detekt :android:lint :android:test
+      - store_artifacts:
+          path: android/build/outputs/apk
+          destination: apk
       - store_artifacts:
           path: android/build/reports
           destination: reports
@@ -91,17 +65,29 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
-      - run: *download_gradle_dependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
+          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}
       - run:
           name: Build project
           command: ./gradlew -Porg.gradle.project.buildAndroid=false :backend:assemble --stacktrace
       - store_artifacts:
           path: backend/build/libs
+      - run:
+          name: Run Tests
+          command: ./gradlew -Porg.gradle.project.buildAndroid=false :backend:test --stacktrace
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+          when: always
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}
+      - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit
 
   build-web:
     <<: *defaults
@@ -109,31 +95,18 @@ jobs:
       - checkout
       - restore_cache:
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
-      - run: *download_gradle_dependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
       - run:
           name: Build project
           command: ./gradlew -Porg.gradle.project.buildAndroid=false :web:assemble --stacktrace
-      - store_artifacts:
-          path: backend/build/libs
-
-  tests:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
-      - run: *download_gradle_dependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars--{{ checksum "build.gradle" }}-{{ checksum  "backend/build.gradle" }}-{{ checksum  "web/build.gradle" }}
+      - store_artifacts:
+          path: web/build/libs
       - run:
           name: Run Tests
-          command: ./gradlew -Porg.gradle.project.buildAndroid=false test --stacktrace
+          command: ./gradlew -Porg.gradle.project.buildAndroid=false :web:test --stacktrace
       - run:
           name: Save test results
           command: |
@@ -144,6 +117,7 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit
+
   deploy-backend:
     docker:
       - image: buildpack-deps:trusty
@@ -155,29 +129,66 @@ jobs:
             ssh-keyscan -H dev.wiyarmir.es >> ~/.ssh/known_hosts
             git push $HEROKU_URL master
 
+  build-ios:
+    macos:
+      xcode: "10.1.0"
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: tests
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout
+      - restore_cache:
+          key: 1-gems-{{ checksum "ios/Gemfile.lock" }}
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat ios/Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            sudo gem install bundler
+      - run: cd ios && bundle check || bundle install --path vendor/bundle
+      - save_cache:
+          key: 1-gems-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor/bundle
+      - restore_cache:
+          key: gradle-{{ checksum "build.gradle" }}-{{ checksum "common/build.gradle" }}
+      - run:
+          name: fastlane
+          command: cd ios && bundle exec fastlane $FASTLANE_LANE
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-{{ checksum "build.gradle" }}-{{ checksum "common/build.gradle" }}
+      - store_artifacts:
+          path: output
+      - store_test_results:
+          path: output/scan
+  swiftlint:
+    docker:
+      - image: dantoml/swiftlint:latest
+    steps:
+      - checkout
+      - run: swiftlint lint --reporter junit | tee result.xml
+      - store_artifacts:
+          path: result.xml
+      - store_test_results:
+          path: result.xml
+
 workflows:
   version: 2
   pr-checks:
     jobs:
       - lint
-      - test-android
-      - build-android:
-          requires:
-            - test-android
-      - build-backend:
-          requires:
-            - lint
-      - build-web:
-          requires:
-            - lint
-      - tests:
-          requires:
-            - lint
+      #      - swiftlint
+      - build-android
+      - build-ios
+      - build-backend
+      - build-web
       - deploy-backend:
           requires:
             - build-backend
             - build-web
-            - tests
           filters:
             branches:
               only: master

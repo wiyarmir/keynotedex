@@ -1,0 +1,797 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1465D3BF8837F9BFA28E0E41 /* SubmissionUpdateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		20FC39FD8D91DE22A6F98FBD /* Submission.kt in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D15664C663B9D4AFC0452 /* Submission.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		2A5A014AA731DF861FF614F5 /* UserProfileResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		39EBD6BFEFCEF83451354005 /* SignInResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = CD7F4718D50746C30A378D66 /* SignInResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		4A0AB68E052485179DAD0A08 /* Paths.kt in Sources */ = {isa = PBXBuildFile; fileRef = B759B16F6776CBABF9D8A7FB /* Paths.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		4B9D6CA8F1C1FC874D8E4BC3 /* Conference.kt in Sources */ = {isa = PBXBuildFile; fileRef = A62E5862E0227A8B29D9C243 /* Conference.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		90C964C0866EFE4C0BAA899D /* SubmissionResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		9722FD6CACD98D96123AB589 /* libPods-Keynotedex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C87C0025E846D2BC48A85D19 /* libPods-Keynotedex.a */; };
+		ADB51605701B0771862D8844 /* User.kt in Sources */ = {isa = PBXBuildFile; fileRef = 35CEBE1B93E93490133C360A /* User.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		ADB9BB1BA6310BBC79A78C05 /* ErrorResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 6547263808137162AC2525C6 /* ErrorResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		C28E48929C6AD6296162E30F /* ConferenceResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		C2A4E5FD3B4FA72973FDB158 /* Try.kt in Sources */ = {isa = PBXBuildFile; fileRef = F6D10AAE26DD0BE945EBEABD /* Try.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		CEF5FDC014DFE5740FD3A347 /* UserResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 96878178FA42FF24BB8D632A /* UserResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		D891B4504F4598267FE4546D /* SignOutResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		E2B3C9BF2CE6F350360E1D8F /* SubmissionCreateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		EF03DBA3756358926D7F46C5 /* UserProfileUpdateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		FAB5AA262273D1190095C309 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA252273D1190095C309 /* AppDelegate.swift */; };
+		FAB5AA282273D1190095C309 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA272273D1190095C309 /* ViewController.swift */; };
+		FAB5AA2B2273D1190095C309 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA292273D1190095C309 /* Main.storyboard */; };
+		FAB5AA2D2273D11A0095C309 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA2C2273D11A0095C309 /* Assets.xcassets */; };
+		FAB5AA302273D11A0095C309 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA2E2273D11A0095C309 /* LaunchScreen.storyboard */; };
+		FAB5AA3B2273D11A0095C309 /* KeynotedexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA3A2273D11A0095C309 /* KeynotedexTests.swift */; };
+		FAB5AA462273D11A0095C309 /* KeynotedexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA452273D11A0095C309 /* KeynotedexUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FAB5AA372273D11A0095C309 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAB5AA1A2273D1190095C309 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAB5AA212273D1190095C309;
+			remoteInfo = Keynotedex;
+		};
+		FAB5AA422273D11A0095C309 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAB5AA1A2273D1190095C309 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAB5AA212273D1190095C309;
+			remoteInfo = Keynotedex;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConferenceResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ConferenceResponse.kt; sourceTree = "<group>"; };
+		35CEBE1B93E93490133C360A /* User.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = User.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/User.kt; sourceTree = "<group>"; };
+		3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserProfileResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserProfileResponse.kt; sourceTree = "<group>"; };
+		5E9D15664C663B9D4AFC0452 /* Submission.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Submission.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Submission.kt; sourceTree = "<group>"; };
+		6547263808137162AC2525C6 /* ErrorResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ErrorResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ErrorResponse.kt; sourceTree = "<group>"; };
+		7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserProfileUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/UserProfileUpdateRequest.kt; sourceTree = "<group>"; };
+		96878178FA42FF24BB8D632A /* UserResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserResponse.kt; sourceTree = "<group>"; };
+		A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionUpdateRequest.kt; sourceTree = "<group>"; };
+		A62E5862E0227A8B29D9C243 /* Conference.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Conference.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Conference.kt; sourceTree = "<group>"; };
+		A88AE4890C534AAC02CE6847 /* Pods-Keynotedex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Keynotedex.release.xcconfig"; path = "Target Support Files/Pods-Keynotedex/Pods-Keynotedex.release.xcconfig"; sourceTree = "<group>"; };
+		ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SignOutResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignOutResponse.kt; sourceTree = "<group>"; };
+		B759B16F6776CBABF9D8A7FB /* Paths.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Paths.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/api/Paths.kt; sourceTree = "<group>"; };
+		C87C0025E846D2BC48A85D19 /* libPods-Keynotedex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Keynotedex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7F4718D50746C30A378D66 /* SignInResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SignInResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignInResponse.kt; sourceTree = "<group>"; };
+		D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SubmissionResponse.kt; sourceTree = "<group>"; };
+		EAA4DB25672AAFAA467A6A46 /* Pods-Keynotedex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Keynotedex.debug.xcconfig"; path = "Target Support Files/Pods-Keynotedex/Pods-Keynotedex.debug.xcconfig"; sourceTree = "<group>"; };
+		F6D10AAE26DD0BE945EBEABD /* Try.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Try.kt; path = ../common/src/commonMain/kotlin/arrow/core/Try.kt; sourceTree = "<group>"; };
+		FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionCreateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionCreateRequest.kt; sourceTree = "<group>"; };
+		FAB5AA222273D1190095C309 /* Keynotedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keynotedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAB5AA252273D1190095C309 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FAB5AA272273D1190095C309 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FAB5AA2A2273D1190095C309 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FAB5AA2C2273D11A0095C309 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FAB5AA2F2273D11A0095C309 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FAB5AA312273D11A0095C309 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAB5AA362273D11A0095C309 /* KeynotedexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeynotedexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAB5AA3A2273D11A0095C309 /* KeynotedexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynotedexTests.swift; sourceTree = "<group>"; };
+		FAB5AA3C2273D11A0095C309 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAB5AA412273D11A0095C309 /* KeynotedexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeynotedexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAB5AA452273D11A0095C309 /* KeynotedexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynotedexUITests.swift; sourceTree = "<group>"; };
+		FAB5AA472273D11A0095C309 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FAB5AA1F2273D1190095C309 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9722FD6CACD98D96123AB589 /* libPods-Keynotedex.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAB5AA332273D11A0095C309 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAB5AA3E2273D11A0095C309 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		140B7FD4E4D5AF95782FDB6D /* api */ = {
+			isa = PBXGroup;
+			children = (
+				B759B16F6776CBABF9D8A7FB /* Paths.kt */,
+			);
+			name = api;
+			sourceTree = "<group>";
+		};
+		23B685E8F6BCFB505400B9F6 /* requests */ = {
+			isa = PBXGroup;
+			children = (
+				7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */,
+				FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */,
+				A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */,
+			);
+			name = requests;
+			sourceTree = "<group>";
+		};
+		3D73C4042E53477322085B37 /* dto */ = {
+			isa = PBXGroup;
+			children = (
+				A62E5862E0227A8B29D9C243 /* Conference.kt */,
+				35CEBE1B93E93490133C360A /* User.kt */,
+				5E9D15664C663B9D4AFC0452 /* Submission.kt */,
+			);
+			name = dto;
+			sourceTree = "<group>";
+		};
+		42F857AD1EC672D7037CB898 /* keynotedex */ = {
+			isa = PBXGroup;
+			children = (
+				3D73C4042E53477322085B37 /* dto */,
+				D96F75BDCB7B699265D25AE9 /* responses */,
+				23B685E8F6BCFB505400B9F6 /* requests */,
+				140B7FD4E4D5AF95782FDB6D /* api */,
+			);
+			name = keynotedex;
+			sourceTree = "<group>";
+		};
+		6F11096D8E9F862E1F1F93AE /* core */ = {
+			isa = PBXGroup;
+			children = (
+				F6D10AAE26DD0BE945EBEABD /* Try.kt */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		92C3D2B980B3306CFCCCAFD2 /* arrow */ = {
+			isa = PBXGroup;
+			children = (
+				6F11096D8E9F862E1F1F93AE /* core */,
+			);
+			name = arrow;
+			sourceTree = "<group>";
+		};
+		A28885A9A92A130A50813450 /* kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				92C3D2B980B3306CFCCCAFD2 /* arrow */,
+				A8C316B56147F670F63FE44A /* es */,
+			);
+			name = kotlin;
+			sourceTree = "<group>";
+		};
+		A8C316B56147F670F63FE44A /* es */ = {
+			isa = PBXGroup;
+			children = (
+				BA4328D72495906EDD457DF7 /* guillermoorellana */,
+			);
+			name = es;
+			sourceTree = "<group>";
+		};
+		B8B761FA9AF9058FEA79426C /* Kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				DE977F2CD6437ACCD5A9E56B /* commonMain */,
+			);
+			name = Kotlin;
+			sourceTree = "<group>";
+		};
+		BA4328D72495906EDD457DF7 /* guillermoorellana */ = {
+			isa = PBXGroup;
+			children = (
+				42F857AD1EC672D7037CB898 /* keynotedex */,
+			);
+			name = guillermoorellana;
+			sourceTree = "<group>";
+		};
+		D746DFDD63567F5994850DED /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EAA4DB25672AAFAA467A6A46 /* Pods-Keynotedex.debug.xcconfig */,
+				A88AE4890C534AAC02CE6847 /* Pods-Keynotedex.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D96F75BDCB7B699265D25AE9 /* responses */ = {
+			isa = PBXGroup;
+			children = (
+				3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */,
+				ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */,
+				15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */,
+				6547263808137162AC2525C6 /* ErrorResponse.kt */,
+				96878178FA42FF24BB8D632A /* UserResponse.kt */,
+				D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */,
+				CD7F4718D50746C30A378D66 /* SignInResponse.kt */,
+			);
+			name = responses;
+			sourceTree = "<group>";
+		};
+		DE977F2CD6437ACCD5A9E56B /* commonMain */ = {
+			isa = PBXGroup;
+			children = (
+				A28885A9A92A130A50813450 /* kotlin */,
+			);
+			name = commonMain;
+			sourceTree = "<group>";
+		};
+		F1E284C6D5D30FFD2B57BD03 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C87C0025E846D2BC48A85D19 /* libPods-Keynotedex.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FAB5AA192273D1190095C309 = {
+			isa = PBXGroup;
+			children = (
+				FAB5AA242273D1190095C309 /* Keynotedex */,
+				FAB5AA392273D11A0095C309 /* KeynotedexTests */,
+				FAB5AA442273D11A0095C309 /* KeynotedexUITests */,
+				FAB5AA232273D1190095C309 /* Products */,
+				B8B761FA9AF9058FEA79426C /* Kotlin */,
+				D746DFDD63567F5994850DED /* Pods */,
+				F1E284C6D5D30FFD2B57BD03 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FAB5AA232273D1190095C309 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAB5AA222273D1190095C309 /* Keynotedex.app */,
+				FAB5AA362273D11A0095C309 /* KeynotedexTests.xctest */,
+				FAB5AA412273D11A0095C309 /* KeynotedexUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FAB5AA242273D1190095C309 /* Keynotedex */ = {
+			isa = PBXGroup;
+			children = (
+				FAB5AA252273D1190095C309 /* AppDelegate.swift */,
+				FAB5AA272273D1190095C309 /* ViewController.swift */,
+				FAB5AA292273D1190095C309 /* Main.storyboard */,
+				FAB5AA2C2273D11A0095C309 /* Assets.xcassets */,
+				FAB5AA2E2273D11A0095C309 /* LaunchScreen.storyboard */,
+				FAB5AA312273D11A0095C309 /* Info.plist */,
+			);
+			path = Keynotedex;
+			sourceTree = "<group>";
+		};
+		FAB5AA392273D11A0095C309 /* KeynotedexTests */ = {
+			isa = PBXGroup;
+			children = (
+				FAB5AA3A2273D11A0095C309 /* KeynotedexTests.swift */,
+				FAB5AA3C2273D11A0095C309 /* Info.plist */,
+			);
+			path = KeynotedexTests;
+			sourceTree = "<group>";
+		};
+		FAB5AA442273D11A0095C309 /* KeynotedexUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FAB5AA452273D11A0095C309 /* KeynotedexUITests.swift */,
+				FAB5AA472273D11A0095C309 /* Info.plist */,
+			);
+			path = KeynotedexUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FAB5AA212273D1190095C309 /* Keynotedex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAB5AA4A2273D11A0095C309 /* Build configuration list for PBXNativeTarget "Keynotedex" */;
+			buildPhases = (
+				55959D9A6DF26D08894B1535 /* [CP] Check Pods Manifest.lock */,
+				FAB5AA1E2273D1190095C309 /* Sources */,
+				FAB5AA1F2273D1190095C309 /* Frameworks */,
+				FAB5AA202273D1190095C309 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Keynotedex;
+			productName = Keynotedex;
+			productReference = FAB5AA222273D1190095C309 /* Keynotedex.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FAB5AA352273D11A0095C309 /* KeynotedexTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAB5AA4D2273D11A0095C309 /* Build configuration list for PBXNativeTarget "KeynotedexTests" */;
+			buildPhases = (
+				FAB5AA322273D11A0095C309 /* Sources */,
+				FAB5AA332273D11A0095C309 /* Frameworks */,
+				FAB5AA342273D11A0095C309 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAB5AA382273D11A0095C309 /* PBXTargetDependency */,
+			);
+			name = KeynotedexTests;
+			productName = KeynotedexTests;
+			productReference = FAB5AA362273D11A0095C309 /* KeynotedexTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FAB5AA402273D11A0095C309 /* KeynotedexUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAB5AA502273D11A0095C309 /* Build configuration list for PBXNativeTarget "KeynotedexUITests" */;
+			buildPhases = (
+				FAB5AA3D2273D11A0095C309 /* Sources */,
+				FAB5AA3E2273D11A0095C309 /* Frameworks */,
+				FAB5AA3F2273D11A0095C309 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAB5AA432273D11A0095C309 /* PBXTargetDependency */,
+			);
+			name = KeynotedexUITests;
+			productName = KeynotedexUITests;
+			productReference = FAB5AA412273D11A0095C309 /* KeynotedexUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FAB5AA1A2273D1190095C309 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Guillermo Orellana";
+				TargetAttributes = {
+					FAB5AA212273D1190095C309 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					FAB5AA352273D11A0095C309 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = FAB5AA212273D1190095C309;
+					};
+					FAB5AA402273D11A0095C309 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = FAB5AA212273D1190095C309;
+					};
+				};
+			};
+			buildConfigurationList = FAB5AA1D2273D1190095C309 /* Build configuration list for PBXProject "Keynotedex" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FAB5AA192273D1190095C309;
+			productRefGroup = FAB5AA232273D1190095C309 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FAB5AA212273D1190095C309 /* Keynotedex */,
+				FAB5AA352273D11A0095C309 /* KeynotedexTests */,
+				FAB5AA402273D11A0095C309 /* KeynotedexUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FAB5AA202273D1190095C309 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB5AA302273D11A0095C309 /* LaunchScreen.storyboard in Resources */,
+				FAB5AA2D2273D11A0095C309 /* Assets.xcassets in Resources */,
+				FAB5AA2B2273D1190095C309 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAB5AA342273D11A0095C309 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAB5AA3F2273D11A0095C309 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		55959D9A6DF26D08894B1535 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Keynotedex-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FAB5AA1E2273D1190095C309 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB5AA282273D1190095C309 /* ViewController.swift in Sources */,
+				FAB5AA262273D1190095C309 /* AppDelegate.swift in Sources */,
+				C2A4E5FD3B4FA72973FDB158 /* Try.kt in Sources */,
+				4B9D6CA8F1C1FC874D8E4BC3 /* Conference.kt in Sources */,
+				ADB51605701B0771862D8844 /* User.kt in Sources */,
+				20FC39FD8D91DE22A6F98FBD /* Submission.kt in Sources */,
+				2A5A014AA731DF861FF614F5 /* UserProfileResponse.kt in Sources */,
+				D891B4504F4598267FE4546D /* SignOutResponse.kt in Sources */,
+				C28E48929C6AD6296162E30F /* ConferenceResponse.kt in Sources */,
+				ADB9BB1BA6310BBC79A78C05 /* ErrorResponse.kt in Sources */,
+				CEF5FDC014DFE5740FD3A347 /* UserResponse.kt in Sources */,
+				90C964C0866EFE4C0BAA899D /* SubmissionResponse.kt in Sources */,
+				39EBD6BFEFCEF83451354005 /* SignInResponse.kt in Sources */,
+				EF03DBA3756358926D7F46C5 /* UserProfileUpdateRequest.kt in Sources */,
+				E2B3C9BF2CE6F350360E1D8F /* SubmissionCreateRequest.kt in Sources */,
+				1465D3BF8837F9BFA28E0E41 /* SubmissionUpdateRequest.kt in Sources */,
+				4A0AB68E052485179DAD0A08 /* Paths.kt in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAB5AA322273D11A0095C309 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB5AA3B2273D11A0095C309 /* KeynotedexTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAB5AA3D2273D11A0095C309 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB5AA462273D11A0095C309 /* KeynotedexUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FAB5AA382273D11A0095C309 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAB5AA212273D1190095C309 /* Keynotedex */;
+			targetProxy = FAB5AA372273D11A0095C309 /* PBXContainerItemProxy */;
+		};
+		FAB5AA432273D11A0095C309 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAB5AA212273D1190095C309 /* Keynotedex */;
+			targetProxy = FAB5AA422273D11A0095C309 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FAB5AA292273D1190095C309 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAB5AA2A2273D1190095C309 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FAB5AA2E2273D11A0095C309 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAB5AA2F2273D11A0095C309 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FAB5AA482273D11A0095C309 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FAB5AA492273D11A0095C309 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FAB5AA4B2273D11A0095C309 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAA4DB25672AAFAA467A6A46 /* Pods-Keynotedex.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Keynotedex/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = es.guillermoorellana.Keynotedex;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FAB5AA4C2273D11A0095C309 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A88AE4890C534AAC02CE6847 /* Pods-Keynotedex.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Keynotedex/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = es.guillermoorellana.Keynotedex;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FAB5AA4E2273D11A0095C309 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = KeynotedexTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = es.guillermoorellana.KeynotedexTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Keynotedex.app/Keynotedex";
+			};
+			name = Debug;
+		};
+		FAB5AA4F2273D11A0095C309 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = KeynotedexTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = es.guillermoorellana.KeynotedexTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Keynotedex.app/Keynotedex";
+			};
+			name = Release;
+		};
+		FAB5AA512273D11A0095C309 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = KeynotedexUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = es.guillermoorellana.KeynotedexUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Keynotedex;
+			};
+			name = Debug;
+		};
+		FAB5AA522273D11A0095C309 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = KeynotedexUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = es.guillermoorellana.KeynotedexUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Keynotedex;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FAB5AA1D2273D1190095C309 /* Build configuration list for PBXProject "Keynotedex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAB5AA482273D11A0095C309 /* Debug */,
+				FAB5AA492273D11A0095C309 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAB5AA4A2273D11A0095C309 /* Build configuration list for PBXNativeTarget "Keynotedex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAB5AA4B2273D11A0095C309 /* Debug */,
+				FAB5AA4C2273D11A0095C309 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAB5AA4D2273D11A0095C309 /* Build configuration list for PBXNativeTarget "KeynotedexTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAB5AA4E2273D11A0095C309 /* Debug */,
+				FAB5AA4F2273D11A0095C309 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAB5AA502273D11A0095C309 /* Build configuration list for PBXNativeTarget "KeynotedexUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAB5AA512273D11A0095C309 /* Debug */,
+				FAB5AA522273D11A0095C309 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FAB5AA1A2273D1190095C309 /* Project object */;
+}
