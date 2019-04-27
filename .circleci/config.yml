@@ -156,7 +156,7 @@ jobs:
             git push $HEROKU_URL master
   build-ios:
     macos:
-      xcode: "10.2.0"
+      xcode: "10.1.0"
     environment:
       FL_OUTPUT_DIR: output
       SDK_NAME: iphoneos
