@@ -48,7 +48,7 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
         props.sessionStorage.get()
             ?.let { jwtDecode(it) }
             ?.takeIf { it.exp.toDouble() > Date().getTime() / 1_000 }
-            ?.let { it.getClaim("id") }
+            ?.getClaim("id")
             ?.let { refreshUser(it) }
     }
 
