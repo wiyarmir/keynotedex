@@ -171,7 +171,8 @@ jobs:
           command: cd ios && pod install --verbose
       - run:
           name: Build
-          command: xcodebuild -workspace ios/Keynotedex.xcworkspace -scheme Keynotedex clean archive -configuration debug -sdk iphoneos -archivePath output/Keynotedex.xcarchive
+          command: |
+            xcodebuild -workspace ios/Keynotedex.xcworkspace -scheme Keynotedex clean build -configuration release -sdk iphonesimulator12.1
       - store_artifacts:
           path: output
 
