@@ -3,6 +3,8 @@ apply plugin: 'kotlin-multiplatform'
 apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
 apply plugin: 'co.touchlab.kotlinxcodesync'
 
+version = keynotedexVersion
+
 kotlin {
     targets {
         def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") ? presets.iosArm64 : presets.iosX64
@@ -34,6 +36,7 @@ kotlin {
 
         iosMain {
             dependencies {
+                implementation Libs.kotlinxSerializationRuntimeNative
             }
         }
 
@@ -78,8 +81,8 @@ configurations {
 }
 
 xcode {
-    projectPath = "../ios/keynotedex.xcodeproj"
-    target = "ios"
+    projectPath = "../ios/Keynotedex.xcodeproj"
+    target = "Keynotedex"
 }
 
 

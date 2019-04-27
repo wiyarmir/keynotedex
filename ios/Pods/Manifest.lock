@@ -1,0 +1,16 @@
+PODS:
+  - common (0.0.1-SNAPSHOT)
+
+DEPENDENCIES:
+  - common (from `/Users/guillermoorellana/dev/keynotedex/common`)
+
+EXTERNAL SOURCES:
+  common:
+    :path: "/Users/guillermoorellana/dev/keynotedex/common"
+
+SPEC CHECKSUMS:
+  common: 5e5f10ac9bb9a5e255e6b4d1f4fe7f2d5a257b95
+
+PODFILE CHECKSUM: 488a8643f516524ebe2d4d236898ef33665a51df
+
+COCOAPODS: 1.6.1

@@ -1,0 +1,3 @@
+target 'Keynotedex' do
+    pod 'common', :path => '/Users/guillermoorellana/dev/keynotedex/common'
+end

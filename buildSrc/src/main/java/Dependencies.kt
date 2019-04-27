@@ -17,7 +17,7 @@ object Versions {
     const val logback = "1.2.1"
     const val node = "8.11.2"
     const val mockitoKotlin = "2.1.0"
-    const val serialization = "0.9.1"
+    const val serialization = "0.11.0"
     const val squash = "0.2.4"
     const val reactRouterDom = "4.3.1"
     const val kotlinReactRouterDom = "$reactRouterDom-pre.68-kotlin-1.3.20"
@@ -48,6 +48,8 @@ object Libs {
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serialization}"
     const val kotlinxSerializationRuntimeJs =
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
+   const val kotlinxSerializationRuntimeNative =
+        "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serialization}"
     const val ktorAuthJwt = "io.ktor:ktor-auth-jwt:${Versions.ktor}"
     const val ktorClientApache = "io.ktor:ktor-client-apache:${Versions.ktor}"
     const val ktorFreemaker = "io.ktor:ktor-freemarker:${Versions.ktor}"
