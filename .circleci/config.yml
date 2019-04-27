@@ -165,6 +165,12 @@ jobs:
       - checkout
       - restore_cache:
           key: 1-gems-{{ checksum "ios/Gemfile.lock" }}
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat ios/Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            sudo gem install bundler
       - run: cd ios && bundle check || bundle install --path vendor/bundle
       - save_cache:
           key: 1-gems-{{ checksum "ios/Gemfile.lock" }}
