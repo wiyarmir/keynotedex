@@ -16,7 +16,14 @@ kotlin {
     }
 
     jvm()
-    js()
+    js {
+        compileKotlinJs {
+            kotlinOptions.metaInfo = true
+            kotlinOptions.sourceMap = true
+            kotlinOptions.moduleKind = "commonjs"
+            kotlinOptions.main = "call"
+        }
+    }
 
     sourceSets {
         commonMain {
