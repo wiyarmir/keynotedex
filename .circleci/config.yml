@@ -172,7 +172,9 @@ jobs:
       - run:
           name: Build
           command: |
-            xcodebuild -workspace ios/Keynotedex.xcworkspace -scheme Keynotedex clean build -configuration release -sdk iphonesimulator12.1
+            cd ios
+            xcodebuild -workspace Keynotedex.xcworkspace -scheme common -configuration release -sdk iphonesimulator12.1 clean build
+            xcodebuild -workspace Keynotedex.xcworkspace -scheme Keynotedex -configuration release -sdk iphonesimulator12.1 clean build
       - store_artifacts:
           path: output
   swiftlint:

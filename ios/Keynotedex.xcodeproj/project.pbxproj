@@ -50,24 +50,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = ConferenceResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ConferenceResponse.kt; sourceTree = "<group>"; };
-		35CEBE1B93E93490133C360A /* User.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = User.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/User.kt; sourceTree = "<group>"; };
-		3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = UserProfileResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserProfileResponse.kt; sourceTree = "<group>"; };
-		5E9D15664C663B9D4AFC0452 /* Submission.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Submission.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Submission.kt; sourceTree = "<group>"; };
-		6547263808137162AC2525C6 /* ErrorResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = ErrorResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ErrorResponse.kt; sourceTree = "<group>"; };
-		7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = UserProfileUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/UserProfileUpdateRequest.kt; sourceTree = "<group>"; };
-		96878178FA42FF24BB8D632A /* UserResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = UserResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserResponse.kt; sourceTree = "<group>"; };
-		A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SubmissionUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionUpdateRequest.kt; sourceTree = "<group>"; };
-		A62E5862E0227A8B29D9C243 /* Conference.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Conference.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Conference.kt; sourceTree = "<group>"; };
+		15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConferenceResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ConferenceResponse.kt; sourceTree = "<group>"; };
+		35CEBE1B93E93490133C360A /* User.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = User.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/User.kt; sourceTree = "<group>"; };
+		3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserProfileResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserProfileResponse.kt; sourceTree = "<group>"; };
+		5E9D15664C663B9D4AFC0452 /* Submission.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Submission.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Submission.kt; sourceTree = "<group>"; };
+		6547263808137162AC2525C6 /* ErrorResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ErrorResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ErrorResponse.kt; sourceTree = "<group>"; };
+		7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserProfileUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/UserProfileUpdateRequest.kt; sourceTree = "<group>"; };
+		96878178FA42FF24BB8D632A /* UserResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserResponse.kt; sourceTree = "<group>"; };
+		A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionUpdateRequest.kt; sourceTree = "<group>"; };
+		A62E5862E0227A8B29D9C243 /* Conference.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Conference.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Conference.kt; sourceTree = "<group>"; };
 		A88AE4890C534AAC02CE6847 /* Pods-Keynotedex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Keynotedex.release.xcconfig"; path = "Target Support Files/Pods-Keynotedex/Pods-Keynotedex.release.xcconfig"; sourceTree = "<group>"; };
-		ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SignOutResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignOutResponse.kt; sourceTree = "<group>"; };
-		B759B16F6776CBABF9D8A7FB /* Paths.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Paths.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/api/Paths.kt; sourceTree = "<group>"; };
+		ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SignOutResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignOutResponse.kt; sourceTree = "<group>"; };
+		B759B16F6776CBABF9D8A7FB /* Paths.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Paths.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/api/Paths.kt; sourceTree = "<group>"; };
 		C87C0025E846D2BC48A85D19 /* libPods-Keynotedex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Keynotedex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD7F4718D50746C30A378D66 /* SignInResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SignInResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignInResponse.kt; sourceTree = "<group>"; };
-		D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SubmissionResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SubmissionResponse.kt; sourceTree = "<group>"; };
+		CD7F4718D50746C30A378D66 /* SignInResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SignInResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignInResponse.kt; sourceTree = "<group>"; };
+		D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SubmissionResponse.kt; sourceTree = "<group>"; };
 		EAA4DB25672AAFAA467A6A46 /* Pods-Keynotedex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Keynotedex.debug.xcconfig"; path = "Target Support Files/Pods-Keynotedex/Pods-Keynotedex.debug.xcconfig"; sourceTree = "<group>"; };
-		F6D10AAE26DD0BE945EBEABD /* Try.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Try.kt; path = ../common/src/commonMain/kotlin/arrow/core/Try.kt; sourceTree = "<group>"; };
-		FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SubmissionCreateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionCreateRequest.kt; sourceTree = "<group>"; };
+		F6D10AAE26DD0BE945EBEABD /* Try.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Try.kt; path = ../common/src/commonMain/kotlin/arrow/core/Try.kt; sourceTree = "<group>"; };
+		FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionCreateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionCreateRequest.kt; sourceTree = "<group>"; };
 		FAB5AA222273D1190095C309 /* Keynotedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keynotedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB5AA252273D1190095C309 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAB5AA272273D1190095C309 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -203,7 +203,6 @@
 				EAA4DB25672AAFAA467A6A46 /* Pods-Keynotedex.debug.xcconfig */,
 				A88AE4890C534AAC02CE6847 /* Pods-Keynotedex.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
