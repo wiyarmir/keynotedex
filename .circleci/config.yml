@@ -154,6 +154,25 @@ jobs:
           command: |
             ssh-keyscan -H dev.wiyarmir.es >> ~/.ssh/known_hosts
             git push $HEROKU_URL master
+  build-ios:
+    macos:
+      xcode: "10.2.0"
+    environment:
+      FL_OUTPUT_DIR: output
+    steps:
+      - checkout
+      - run:
+          name: Fetch CocoaPods Specs
+          command: |
+            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+      - run:
+          name: Install CocoaPods
+          command: cd ios && pod install --verbose
+      - run:
+          name: Build
+          command: xcodebuild -workspace ios/Keynotedex.xcworkspace -scheme Keynotedex clean archive -configuration release -sdk iphoneos -archivePath output/Keynotedex.xcarchive
+      - store_artifacts:
+          path: output
 
 workflows:
   version: 2
@@ -171,6 +190,9 @@ workflows:
           requires:
             - lint
       - tests:
+          requires:
+            - lint
+      - build-ios:
           requires:
             - lint
       - deploy-backend:
