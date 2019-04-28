@@ -6,7 +6,6 @@ import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.data.users.toDao
-import es.guillermoorellana.keynotedex.backend.data.users.toDto
 import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
 import es.guillermoorellana.keynotedex.responses.ErrorResponse
 import es.guillermoorellana.keynotedex.responses.UserProfileResponse
@@ -37,8 +36,7 @@ fun Route.putUser(userStorage: UserStorage, submissionStorage: SubmissionStorage
                     }
                     userStorage.updateUser(request.user.toDao())
                     val updatedUser = userStorage.retrieveUser(request.user.userId)!!
-                    doUserProfileResponse(updatedUser, submissionStorage, sessionUser)
-                    call.respond(HttpStatusCode.Accepted, UserProfileResponse(updatedUser.toDto()))
+                    doUserProfileResponse(HttpStatusCode.Accepted, updatedUser, submissionStorage, sessionUser)
                 }
             }
         }

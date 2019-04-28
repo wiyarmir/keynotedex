@@ -24,6 +24,7 @@ import es.guillermoorellana.keynotedex.responses.UserProfileResponse
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.auth.authentication
+import io.ktor.http.HttpStatusCode
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.response.respond
 import io.ktor.routing.Route
@@ -50,6 +51,7 @@ fun PipelineContext<Unit, ApplicationCall>.getCurrentLoggedUser(userStorage: Use
     call.authentication.principal<UserPrincipal>()?.let { userStorage.retrieveUser(it.userId) }
 
 suspend fun PipelineContext<Unit, ApplicationCall>.doUserProfileResponse(
+    httpStatusCode: HttpStatusCode,
     user: User,
     submissionStorage: SubmissionStorage,
     currentUser: User?
@@ -58,6 +60,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.doUserProfileResponse(
         .filter { it.isPublic || currentUser?.userId == it.submitterId }
 
     call.respond(
+        httpStatusCode,
         UserProfileResponse(
             user = user.toDto(),
             submissions = submissions.map(Submission::toDto),

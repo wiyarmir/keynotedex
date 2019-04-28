@@ -32,7 +32,7 @@ fun Route.getUser(userStorage: UserStorage, submissionStorage: SubmissionStorage
                     return@get
                 }
                 val currentUser = getCurrentLoggedUser(userStorage)
-                doUserProfileResponse(user, submissionStorage, currentUser)
+                doUserProfileResponse(HttpStatusCode.OK, user, submissionStorage, currentUser)
             }
         }
     }
