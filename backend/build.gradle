@@ -68,10 +68,9 @@ shadowJar {
 
 task release() {
     dependsOn('clean')
+    dependsOn('copyWebBundle')
     dependsOn('shadowJar')
 }
-
-tasks['shadowJar'].mustRunAfter clean
 
 task copyWebBundle(type: Copy) {
     dependsOn(':web:build')
@@ -79,4 +78,5 @@ task copyWebBundle(type: Copy) {
     into('build/resources/release')
 }
 
-processResources.dependsOn copyWebBundle
+tasks['shadowJar'].dependsOn copyWebBundle
+tasks['shadowJar'].mustRunAfter clean
