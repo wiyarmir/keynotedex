@@ -1,4 +1,4 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import java.nio.file.Paths
 
 group = 'es.guillermoorellana.keynotedex'
 version = keynotedexVersion
@@ -13,20 +13,6 @@ sourceCompatibility = 1.8
 
 compileKotlin.kotlinOptions.jvmTarget = '1.8'
 compileTestKotlin.kotlinOptions.jvmTarget = '1.8'
-
-sourceSets {
-    release {
-        kotlin {
-            srcDirs += sourceSets.main.kotlin.srcDirs
-        }
-        resources {
-            srcDirs += sourceSets.main.resources.srcDirs
-        }
-
-        compileClasspath += sourceSets.main.compileClasspath
-        runtimeClasspath += sourceSets.main.runtimeClasspath
-    }
-}
 
 dependencies {
     implementation project(":common")
@@ -63,20 +49,15 @@ compileKotlin {
 }
 
 shadowJar {
-    classifier = 'release'
+    archiveClassifier.set('release')
+    from({ Paths.get(project(':web').buildDir.path, 'bundle') })
 }
+
+tasks['shadowJar'].mustRunAfter clean
+tasks['processResources'].mustRunAfter ':web:bundle'
 
 task release() {
     dependsOn('clean')
-    dependsOn('copyWebBundle')
+    dependsOn(':web:bundle')
     dependsOn('shadowJar')
 }
-
-task copyWebBundle(type: Copy) {
-    dependsOn(':web:build')
-    from('../web/build/bundle')
-    into('build/resources/release')
-}
-
-tasks['shadowJar'].dependsOn copyWebBundle
-tasks['shadowJar'].mustRunAfter clean
