@@ -1,6 +1,9 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.responses.SignInResponse
+import es.guillermoorellana.keynotedex.datasource.SessionStorage
+import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
+import es.guillermoorellana.keynotedex.repository.NetworkRepository
+import es.guillermoorellana.keynotedex.repository.model.User
 import es.guillermoorellana.keynotedex.web.components.appFooter
 import es.guillermoorellana.keynotedex.web.components.navigation
 import es.guillermoorellana.keynotedex.web.context.UserContext
@@ -9,9 +12,6 @@ import es.guillermoorellana.keynotedex.web.external.getClaim
 import es.guillermoorellana.keynotedex.web.external.jwtDecode
 import es.guillermoorellana.keynotedex.web.external.route
 import es.guillermoorellana.keynotedex.web.external.switch
-import es.guillermoorellana.keynotedex.web.model.User
-import es.guillermoorellana.keynotedex.web.repository.NetworkRepository
-import es.guillermoorellana.keynotedex.web.repository.SessionStorage
 import es.guillermoorellana.keynotedex.web.screens.HomeScreen
 import es.guillermoorellana.keynotedex.web.screens.NotFoundScreen
 import es.guillermoorellana.keynotedex.web.screens.PrivacyPolicyScreen

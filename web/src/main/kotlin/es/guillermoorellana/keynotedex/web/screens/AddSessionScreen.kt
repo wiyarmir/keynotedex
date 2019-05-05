@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.dto.SubmissionVisibility
-import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
+import es.guillermoorellana.keynotedex.datasource.dto.SubmissionVisibility
+import es.guillermoorellana.keynotedex.datasource.requests.SubmissionCreateRequest
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
@@ -122,7 +122,7 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
         GlobalScope.launch {
             props.networkRepository.postSubmission(submissionCreateRequest)
                 .fold(
-                    { error ->
+                    {
                         setState {
                             // todo
                             disabled = false

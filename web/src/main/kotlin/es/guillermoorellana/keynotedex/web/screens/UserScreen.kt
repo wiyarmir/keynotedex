@@ -1,9 +1,9 @@
 package es.guillermoorellana.keynotedex.web.screens
 
 import arrow.core.Try
+import es.guillermoorellana.keynotedex.repository.model.UserProfile
 import es.guillermoorellana.keynotedex.web.components.profile.editableProfile
 import es.guillermoorellana.keynotedex.web.loading
-import es.guillermoorellana.keynotedex.web.model.UserProfile
 import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

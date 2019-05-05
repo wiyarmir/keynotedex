@@ -1,9 +1,9 @@
 package es.guillermoorellana.keynotedex.backend.data.submissions
 
 import es.guillermoorellana.keynotedex.backend.data.hashids
-import es.guillermoorellana.keynotedex.dto.SubmissionVisibility
-import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
-import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
+import es.guillermoorellana.keynotedex.datasource.dto.SubmissionVisibility
+import es.guillermoorellana.keynotedex.datasource.requests.SubmissionCreateRequest
+import es.guillermoorellana.keynotedex.datasource.dto.Submission as DtoSubmission
 
 data class Submission(
     val id: Long,

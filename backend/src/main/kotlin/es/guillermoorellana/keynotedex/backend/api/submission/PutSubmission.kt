@@ -5,12 +5,13 @@ import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
 import es.guillermoorellana.keynotedex.backend.data.submissions.toDao
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
-import es.guillermoorellana.keynotedex.requests.SubmissionUpdateRequest
-import es.guillermoorellana.keynotedex.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.datasource.requests.SubmissionUpdateRequest
+import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.put
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -18,6 +19,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 import java.sql.SQLException
 
+@UseExperimental(KtorExperimentalLocationsAPI::class)
 fun Route.putSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
 
     JsonSerializableConverter.register(SubmissionUpdateRequest.serializer())

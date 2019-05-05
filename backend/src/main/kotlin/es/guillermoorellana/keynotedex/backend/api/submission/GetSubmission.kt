@@ -6,17 +6,19 @@ import es.guillermoorellana.keynotedex.backend.data.hashids
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
 import es.guillermoorellana.keynotedex.backend.data.submissions.toDto
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
-import es.guillermoorellana.keynotedex.responses.ErrorResponse
-import es.guillermoorellana.keynotedex.responses.SubmissionResponse
+import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.datasource.responses.SubmissionResponse
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.get
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.accept
 
+@UseExperimental(KtorExperimentalLocationsAPI::class)
 fun Route.getSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
 
     JsonSerializableConverter.register(SubmissionResponse.serializer())

@@ -20,7 +20,7 @@ import es.guillermoorellana.keynotedex.backend.data.submissions.toDto
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.data.users.toDto
-import es.guillermoorellana.keynotedex.responses.UserProfileResponse
+import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.auth.authentication

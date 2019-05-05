@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.components.submissions
 
-import es.guillermoorellana.keynotedex.web.model.Session
+import es.guillermoorellana.keynotedex.repository.model.Session
 import react.RBuilder
 import react.RComponent
 import react.RHandler

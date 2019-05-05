@@ -6,13 +6,14 @@ import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.data.users.toDao
-import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
-import es.guillermoorellana.keynotedex.responses.ErrorResponse
-import es.guillermoorellana.keynotedex.responses.UserProfileResponse
+import es.guillermoorellana.keynotedex.datasource.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.put
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -20,6 +21,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 import io.ktor.routing.contentType
 
+@UseExperimental(KtorExperimentalLocationsAPI::class)
 fun Route.putUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
 
     JsonSerializableConverter.register(UserProfileUpdateRequest.serializer())

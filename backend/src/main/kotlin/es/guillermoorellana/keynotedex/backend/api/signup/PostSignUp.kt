@@ -7,19 +7,21 @@ import es.guillermoorellana.keynotedex.backend.auth.JwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.hashPassword
-import es.guillermoorellana.keynotedex.responses.ErrorResponse
-import es.guillermoorellana.keynotedex.responses.SignInResponse
-import es.guillermoorellana.keynotedex.responses.UserProfileResponse
+import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
+import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
 import io.ktor.application.application
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.post
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import org.h2.message.DbException
 
+@UseExperimental(KtorExperimentalLocationsAPI::class)
 fun Route.postSignUp(userStorage: UserStorage, jwtTokenProvider: JwtTokenProvider) {
 
     JsonSerializableConverter.register(UserProfileResponse.serializer())

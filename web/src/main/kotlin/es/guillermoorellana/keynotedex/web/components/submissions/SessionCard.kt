@@ -1,9 +1,9 @@
 package es.guillermoorellana.keynotedex.web.components.submissions
 
+import es.guillermoorellana.keynotedex.repository.model.Session
+import es.guillermoorellana.keynotedex.repository.model.SessionVisibility.PRIVATE
+import es.guillermoorellana.keynotedex.repository.model.SessionVisibility.PUBLIC
 import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.Session
-import es.guillermoorellana.keynotedex.web.model.SessionVisibility.PRIVATE
-import es.guillermoorellana.keynotedex.web.model.SessionVisibility.PUBLIC
 import react.RBuilder
 import react.RComponent
 import react.RHandler

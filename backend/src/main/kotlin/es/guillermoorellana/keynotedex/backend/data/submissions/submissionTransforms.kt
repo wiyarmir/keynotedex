@@ -1,11 +1,11 @@
 package es.guillermoorellana.keynotedex.backend.data.submissions
 
 import es.guillermoorellana.keynotedex.backend.data.hashids
-import es.guillermoorellana.keynotedex.dto.SubmissionVisibility.PRIVATE
-import es.guillermoorellana.keynotedex.dto.SubmissionVisibility.PUBLIC
+import es.guillermoorellana.keynotedex.datasource.dto.SubmissionVisibility.PRIVATE
+import es.guillermoorellana.keynotedex.datasource.dto.SubmissionVisibility.PUBLIC
 import org.jetbrains.squash.results.ResultRow
 import org.jetbrains.squash.results.get
-import es.guillermoorellana.keynotedex.dto.Submission as DtoSubmission
+import es.guillermoorellana.keynotedex.datasource.dto.Submission as DtoSubmission
 
 fun transformSubmission(it: ResultRow): Submission =
     Submission(

@@ -1,9 +1,9 @@
 package es.guillermoorellana.keynotedex.web.screens
 
+import es.guillermoorellana.keynotedex.repository.model.SessionPreview
 import es.guillermoorellana.keynotedex.web.components.signUpPromo
 import es.guillermoorellana.keynotedex.web.components.submissions.sessionPreview
 import es.guillermoorellana.keynotedex.web.context.UserContext
-import es.guillermoorellana.keynotedex.web.model.SessionPreview
 import kotlinx.html.id
 import react.RBuilder
 import react.RComponent

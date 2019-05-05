@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web.components.submissions
 
+import es.guillermoorellana.keynotedex.repository.model.SessionPreview
 import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.SessionPreview
 import react.RBuilder
 import react.RComponent
 import react.RHandler

@@ -7,7 +7,7 @@ import es.guillermoorellana.keynotedex.backend.auth.createJwtConfig
 import es.guillermoorellana.keynotedex.backend.auth.createJwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
-import es.guillermoorellana.keynotedex.responses.ErrorResponse
+import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -27,17 +27,20 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resource
 import io.ktor.http.content.static
+import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Locations
 import io.ktor.locations.get
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.Routing
 import io.ktor.routing.accept
+import io.ktor.util.KtorExperimentalAPI
 import io.ktor.util.error
 import java.io.File
 
 class Keynotedex
 
+@UseExperimental(KtorExperimentalLocationsAPI::class)
 fun Application.keynotedex(
     storage: KeynotedexStorage = createStorage(),
     jwtConfig: JwtConfig = createJwtConfig(environment),
@@ -77,6 +80,7 @@ fun Application.keynotedex(
     }
 }
 
+@UseExperimental(KtorExperimentalLocationsAPI::class)
 private fun Route.index() {
     static("frontend") {
         resource("web.bundle.js")
@@ -100,5 +104,6 @@ private fun Application.createStorage(): KeynotedexDatabase =
         mockData(this@createStorage)
     }
 
+@UseExperimental(KtorExperimentalAPI::class)
 fun Application.isDevelopment() =
     environment.config.propertyOrNull("ktor.deployment.environment")?.getString() == "development"

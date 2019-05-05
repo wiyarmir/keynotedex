@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.responses.SignInResponse
+import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.external.routeLink

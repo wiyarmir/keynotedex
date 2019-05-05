@@ -10,7 +10,7 @@ import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.jwtConfig
 import es.guillermoorellana.keynotedex.backend.testApp
-import es.guillermoorellana.keynotedex.responses.SignInResponse
+import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod

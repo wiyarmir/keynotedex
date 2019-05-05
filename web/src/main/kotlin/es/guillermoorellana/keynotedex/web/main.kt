@@ -1,9 +1,8 @@
 package es.guillermoorellana.keynotedex.web
 
 import es.guillermoorellana.keynotedex.NetworkDataSource
-import es.guillermoorellana.keynotedex.web.repository.NetworkRepository
-import es.guillermoorellana.keynotedex.web.repository.SessionStorage
-import es.guillermoorellana.keynotedex.web.repository.sessionStorageTokenProvider
+import es.guillermoorellana.keynotedex.datasource.SessionStorage
+import es.guillermoorellana.keynotedex.repository.NetworkRepository
 import kotlinext.js.require
 import react.dom.render
 import kotlin.browser.document
@@ -11,10 +10,12 @@ import kotlin.browser.window
 
 fun main() {
     val globalState = object {
-        val sessionStorage = SessionStorage
+        val sessionStorage = SessionStorage()
         val networkDataSource = NetworkRepository(
             NetworkDataSource(
-                tokenProvider = sessionStorageTokenProvider(sessionStorage)
+                tokenProvider = {
+                    ""
+                }
             )
         )
     }
