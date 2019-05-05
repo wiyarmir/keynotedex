@@ -1,8 +1,8 @@
 package es.guillermoorellana.keynotedex.web.screens
 
 import es.guillermoorellana.keynotedex.repository.model.SessionPreview
+import es.guillermoorellana.keynotedex.web.components.sessions.sessionPreview
 import es.guillermoorellana.keynotedex.web.components.signUpPromo
-import es.guillermoorellana.keynotedex.web.components.submissions.sessionPreview
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import kotlinx.html.id
 import react.RBuilder
@@ -20,10 +20,10 @@ class HomeScreen : RComponent<RProps, RState>() {
         div {
             UserContext.Consumer { user ->
                 if (user == null) signUpPromo {}
-                else style { +"#recent-submissions{ margin-top: 2rem; }" }
+                else style { +"#recent-sessions{ margin-top: 2rem; }" }
             }
             div("container") {
-                attrs { id = "recent-submissions" }
+                attrs { id = "recent-sessions" }
                 div("row") {
                     previews.forEach {
                         sessionPreview { attrs { preview = it } }

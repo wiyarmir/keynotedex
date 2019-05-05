@@ -1,9 +1,9 @@
-package es.guillermoorellana.keynotedex.backend.api.submission
+package es.guillermoorellana.keynotedex.backend.api.sessions
 
 import es.guillermoorellana.keynotedex.api.Api
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Location
 
 @UseExperimental(KtorExperimentalLocationsAPI::class)
-@Location(Api.V1.Paths.submissions)
-data class SubmissionsEndpoint(val submissionId: String? = null)
+@Location(Api.V1.Paths.sessions)
+data class SessionsEndpoint(val sessionId: String? = null)

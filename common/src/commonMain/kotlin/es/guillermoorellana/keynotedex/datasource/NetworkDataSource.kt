@@ -2,12 +2,12 @@ package es.guillermoorellana.keynotedex.datasource
 
 import arrow.core.Try
 import es.guillermoorellana.keynotedex.api.Api.V1.Paths
-import es.guillermoorellana.keynotedex.datasource.dto.Submission
-import es.guillermoorellana.keynotedex.datasource.requests.SubmissionCreateRequest
-import es.guillermoorellana.keynotedex.datasource.requests.SubmissionUpdateRequest
+import es.guillermoorellana.keynotedex.datasource.dto.Session
+import es.guillermoorellana.keynotedex.datasource.requests.SessionCreateRequest
+import es.guillermoorellana.keynotedex.datasource.requests.SessionUpdateRequest
 import es.guillermoorellana.keynotedex.datasource.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.datasource.responses.SessionResponse
 import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
-import es.guillermoorellana.keynotedex.datasource.responses.SubmissionResponse
 import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.features.defaultRequest
@@ -28,6 +28,7 @@ import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.UnitDescriptor
+import kotlinx.serialization.json.Json
 
 class NetworkDataSource(
     sessionStorage: SessionStorage,
@@ -76,23 +77,23 @@ class NetworkDataSource(
         )
     }
 
-    suspend fun getSubmission(submissionId: String): Try<Submission> = Try {
-        httpClient.get<Submission>(
-            path = Paths.submissions.replace("{submissionId?}", submissionId)
+    suspend fun getSubmission(submissionId: String): Try<SessionResponse> = Try {
+        httpClient.get<SessionResponse>(
+            path = Paths.sessions.replace("{sessionId?}", submissionId)
         )
     }
 
-    suspend fun postSubmission(submissionCreateRequest: SubmissionCreateRequest): Try<Unit> = Try {
+    suspend fun postSubmission(sessionCreateRequest: SessionCreateRequest): Try<Unit> = Try {
         httpClient.post<Unit>(
-            path = Paths.submissions.replace("{submissionId?}", ""),
-            body = submissionCreateRequest
+            path = Paths.sessions.replace("{sessionId?}", ""),
+            body = sessionCreateRequest
         )
     }
 
-    suspend fun updateSubmission(submission: Submission): Try<Unit> = Try {
+    suspend fun updateSubmission(session: Session): Try<Unit> = Try {
         httpClient.put<Unit>(
-            path = Paths.submissions.replace("{submissionId?}", ""),
-            body = submission
+            path = Paths.sessions.replace("{sessionId?}", ""),
+            body = session
         )
     }
 }
@@ -110,12 +111,12 @@ private fun makeHttpClient(
         }
     }
     install(JsonFeature) {
-        serializer = KotlinxSerializer().apply {
+        serializer = KotlinxSerializer(json = Json.nonstrict).apply {
             register<SignInResponse>()
             register<UserProfileResponse>()
-            register<SubmissionResponse>()
-            register<SubmissionCreateRequest>()
-            register<SubmissionUpdateRequest>()
+            register<SessionResponse>()
+            register<SessionCreateRequest>()
+            register<SessionUpdateRequest>()
             register(EmptyContentSerializer)
         }
     }

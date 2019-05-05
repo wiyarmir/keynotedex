@@ -29,9 +29,7 @@ class UserScreen : RComponent<UserProps, UserState>() {
             div("col-10 col-offset-1 col-sm-9 col-xl-8") {
                 loading(state.userProfile) { result ->
                     result.fold(
-                        {
-                            notFound()
-                        },
+                        { notFound() },
                         { profile ->
                             editableProfile {
                                 attrs {

@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.components.submissions
+package es.guillermoorellana.keynotedex.web.components.sessions
 
 import es.guillermoorellana.keynotedex.repository.model.Session
 import react.RBuilder
@@ -16,12 +16,12 @@ class Sessions : RComponent<SessionsProps, RState>() {
         h2 { +"Sessions" }
         hr { }
         div("row") {
-            if (props.submissions.isEmpty()) {
+            if (props.sessions.isEmpty()) {
                 p { +"No sessions yet" }
             } else {
-                props.submissions.forEach { sub ->
+                props.sessions.forEach { sub ->
                     sessionCard {
-                        attrs { submission = sub }
+                        attrs { session = sub }
                     }
                 }
             }
@@ -30,7 +30,7 @@ class Sessions : RComponent<SessionsProps, RState>() {
 }
 
 external interface SessionsProps : RProps {
-    var submissions: List<Session>
+    var sessions: List<Session>
 }
 
 fun RBuilder.sessions(handler: RHandler<SessionsProps>) = child(Sessions::class, handler)

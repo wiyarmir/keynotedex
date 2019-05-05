@@ -3,7 +3,7 @@ package es.guillermoorellana.keynotedex.backend.api.user
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.api.doUserProfileResponse
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
-import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
+import es.guillermoorellana.keynotedex.backend.data.sessions.SessionStorage
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.backend.data.users.toDao
 import es.guillermoorellana.keynotedex.datasource.requests.UserProfileUpdateRequest
@@ -22,7 +22,7 @@ import io.ktor.routing.accept
 import io.ktor.routing.contentType
 
 @UseExperimental(KtorExperimentalLocationsAPI::class)
-fun Route.putUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
+fun Route.putUser(userStorage: UserStorage, sessionStorage: SessionStorage) {
 
     JsonSerializableConverter.register(UserProfileUpdateRequest.serializer())
     JsonSerializableConverter.register(UserProfileResponse.serializer())
@@ -38,7 +38,7 @@ fun Route.putUser(userStorage: UserStorage, submissionStorage: SubmissionStorage
                     }
                     userStorage.updateUser(request.user.toDao())
                     val updatedUser = userStorage.retrieveUser(request.user.userId)!!
-                    doUserProfileResponse(HttpStatusCode.Accepted, updatedUser, submissionStorage, sessionUser)
+                    doUserProfileResponse(HttpStatusCode.Accepted, updatedUser, sessionStorage, sessionUser)
                 }
             }
         }

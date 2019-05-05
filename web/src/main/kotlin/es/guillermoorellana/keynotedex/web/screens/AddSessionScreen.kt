@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.datasource.dto.SubmissionVisibility
-import es.guillermoorellana.keynotedex.datasource.requests.SubmissionCreateRequest
+import es.guillermoorellana.keynotedex.datasource.dto.SessionVisibility
+import es.guillermoorellana.keynotedex.datasource.requests.SessionCreateRequest
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
 import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
@@ -76,7 +76,7 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
             val inputId = "isVisible"
             label("form-check-label") {
                 attrs { set("htmlFor", inputId) }
-                +"Check this box to keep your submission private."
+                +"Check this box to keep your session private."
             }
             input(classes = "form-check-input", type = InputType.checkBox) {
                 attrs {
@@ -131,13 +131,13 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
 
     private fun submitNewSession() {
         setState { disabled = true }
-        val submissionCreateRequest = SubmissionCreateRequest(
+        val sessionCreateRequest = SessionCreateRequest(
             title = state.title,
             abstract = state.abstract,
-            visibility = if (state.isPrivate) SubmissionVisibility.PRIVATE else SubmissionVisibility.PUBLIC
+            visibility = if (state.isPrivate) SessionVisibility.PRIVATE else SessionVisibility.PUBLIC
         )
         GlobalScope.launch {
-            props.networkRepository.postSubmission(submissionCreateRequest)
+            props.networkRepository.postSession(sessionCreateRequest)
                 .fold(
                     {
                         // todo

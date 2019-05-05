@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.web.components.submissions
+package es.guillermoorellana.keynotedex.web.components.sessions
 
 import es.guillermoorellana.keynotedex.repository.model.SessionPreview
 import es.guillermoorellana.keynotedex.web.external.routeLink

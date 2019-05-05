@@ -3,16 +3,16 @@ package es.guillermoorellana.keynotedex.datasource.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Submission(
+data class Session(
     val userId: String = "",
-    val submissionId: String = "",
+    val sessionId: String = "",
     val title: String,
     val abstract: String? = null,
     val type: String? = null,
     val submittedTo: String? = null,
-    val visibility: SubmissionVisibility
+    val visibility: SessionVisibility
 )
 
-enum class SubmissionVisibility {
+enum class SessionVisibility {
     PRIVATE, PUBLIC
 }

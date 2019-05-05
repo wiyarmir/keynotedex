@@ -1,11 +1,11 @@
-package es.guillermoorellana.keynotedex.backend.api.submission
+package es.guillermoorellana.keynotedex.backend.api.sessions
 
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
-import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
-import es.guillermoorellana.keynotedex.backend.data.submissions.toDao
+import es.guillermoorellana.keynotedex.backend.data.sessions.SessionStorage
+import es.guillermoorellana.keynotedex.backend.data.sessions.toDao
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
-import es.guillermoorellana.keynotedex.datasource.requests.SubmissionCreateRequest
+import es.guillermoorellana.keynotedex.datasource.requests.SessionCreateRequest
 import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
 import io.ktor.application.call
 import io.ktor.auth.authenticate
@@ -20,27 +20,27 @@ import io.ktor.routing.accept
 import java.sql.SQLException
 
 @UseExperimental(KtorExperimentalLocationsAPI::class)
-fun Route.postSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
+fun Route.postSession(sessionStorage: SessionStorage, userStorage: UserStorage) {
 
-    JsonSerializableConverter.register(SubmissionCreateRequest.serializer())
+    JsonSerializableConverter.register(SessionCreateRequest.serializer())
 
     accept(ContentType.Application.Json) {
         authenticate {
-            post<SubmissionsEndpoint> {
+            post<SessionsEndpoint> {
                 val user = getCurrentLoggedUser(userStorage)
                 if (user == null) {
                     call.respond(HttpStatusCode.Unauthorized)
                     return@post
                 }
 
-                val incompleteSubmission = call.receive<SubmissionCreateRequest>()
-                val submission = incompleteSubmission.toDao(userId = user.userId)
+                val incompleteSession = call.receive<SessionCreateRequest>()
+                val session = incompleteSession.toDao(userId = user.userId)
                 try {
-                    submissionStorage.create(submission)
+                    sessionStorage.create(session)
                 } catch (e: SQLException) {
                     call.respond(
                         HttpStatusCode.InternalServerError,
-                        ErrorResponse(message = "Failed to create submission: ${e.message}")
+                        ErrorResponse(message = "Failed to create session: ${e.message}")
                     )
                 }
                 call.respond(HttpStatusCode.Created)

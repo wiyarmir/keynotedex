@@ -3,7 +3,7 @@ package es.guillermoorellana.keynotedex.backend.api.user
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.api.doUserProfileResponse
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
-import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
+import es.guillermoorellana.keynotedex.backend.data.sessions.SessionStorage
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
 import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
@@ -18,7 +18,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 
 @UseExperimental(KtorExperimentalLocationsAPI::class)
-fun Route.getUser(userStorage: UserStorage, submissionStorage: SubmissionStorage) {
+fun Route.getUser(userStorage: UserStorage, sessionStorage: SessionStorage) {
 
     JsonSerializableConverter.register(UserProfileResponse.serializer())
 
@@ -34,7 +34,7 @@ fun Route.getUser(userStorage: UserStorage, submissionStorage: SubmissionStorage
                     return@get
                 }
                 val currentUser = getCurrentLoggedUser(userStorage)
-                doUserProfileResponse(HttpStatusCode.OK, user, submissionStorage, currentUser)
+                doUserProfileResponse(HttpStatusCode.OK, user, sessionStorage, currentUser)
             }
         }
     }

@@ -8,7 +8,7 @@ object Api {
 
         object Paths {
             const val user = "$loc/users/{userId}"
-            const val submissions = "$loc/submissions/{submissionId?}"
+            const val sessions = "$loc/sessions/{sessionId?}"
             const val conferences = "$loc/conferences/{conferenceId?}"
             const val signUp = "$loc/register"
             const val signIn = "$loc/login"

@@ -1,7 +1,8 @@
 package es.guillermoorellana.keynotedex.repository.model
 
-import es.guillermoorellana.keynotedex.datasource.dto.Submission as DtoSession
-import es.guillermoorellana.keynotedex.datasource.dto.SubmissionVisibility as DtoSessionVisibility
+import es.guillermoorellana.keynotedex.datasource.responses.SessionResponse
+import es.guillermoorellana.keynotedex.datasource.dto.Session as DtoSession
+import es.guillermoorellana.keynotedex.datasource.dto.SessionVisibility as DtoSessionVisibility
 
 data class Session(
     val sessionId: String,
@@ -27,8 +28,10 @@ fun SessionVisibility.string() = when (this) {
     SessionVisibility.PRIVATE -> "private"
 }
 
-fun DtoSession.toModel() = Session(
-    sessionId = submissionId,
+fun SessionResponse.toModel() = session.toModel()
+
+private fun DtoSession.toModel() = Session(
+    sessionId = sessionId,
     userId = userId,
     title = title,
     abstract = abstract ?: "",
@@ -43,7 +46,7 @@ fun DtoSession.toModel() = Session(
 fun List<DtoSession>.toModel(): List<Session> = map(DtoSession::toModel)
 
 fun Session.toDto() = DtoSession(
-    submissionId = sessionId,
+    sessionId = sessionId,
     userId = userId,
     title = title,
     abstract = abstract,

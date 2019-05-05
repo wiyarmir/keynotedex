@@ -2,9 +2,9 @@ package es.guillermoorellana.keynotedex.backend.data
 
 import es.guillermoorellana.keynotedex.backend.data.conferences.ConferencesTable
 import es.guillermoorellana.keynotedex.backend.data.conferences.transformConference
-import es.guillermoorellana.keynotedex.backend.data.submissions.Submission
-import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionsTable
-import es.guillermoorellana.keynotedex.backend.data.submissions.transformSubmission
+import es.guillermoorellana.keynotedex.backend.data.sessions.Session
+import es.guillermoorellana.keynotedex.backend.data.sessions.SessionsTable
+import es.guillermoorellana.keynotedex.backend.data.sessions.transformSession
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.UsersTable
 import es.guillermoorellana.keynotedex.backend.data.users.transformUser
@@ -34,7 +34,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             databaseSchema().create(
                 ConferencesTable,
                 UsersTable,
-                SubmissionsTable
+                SessionsTable
             )
         }
     }
@@ -97,49 +97,49 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .singleOrNull()
     }
 
-    override fun getById(submissionId: Long): Submission? = db.transaction {
-        from(SubmissionsTable)
-            .where { SubmissionsTable.id eq submissionId }
+    override fun getById(sessionId: Long): Session? = db.transaction {
+        from(SessionsTable)
+            .where { SessionsTable.id eq sessionId }
             .execute()
-            .map(::transformSubmission)
+            .map(::transformSession)
             .singleOrNull()
     }
 
-    override fun allByUserId(userId: String): List<Submission> = db.transaction {
-        from(SubmissionsTable)
-            .where { SubmissionsTable.submitter eq userId }
-            .orderByDescending(SubmissionsTable.id)
+    override fun allByUserId(userId: String): List<Session> = db.transaction {
+        from(SessionsTable)
+            .where { SessionsTable.submitter eq userId }
+            .orderByDescending(SessionsTable.id)
             .execute()
-            .map(::transformSubmission)
+            .map(::transformSession)
             .toList()
     }
 
-    override fun all(): List<Submission> = db.transaction {
+    override fun all(): List<Session> = db.transaction {
         from(ConferencesTable)
             .execute()
-            .map(::transformSubmission)
+            .map(::transformSession)
             .toList()
     }
 
-    override fun create(submission: Submission) = db.transaction {
-        insertInto(SubmissionsTable)
+    override fun create(session: Session) = db.transaction {
+        insertInto(SessionsTable)
             .values { values ->
-                values[submitter] = submission.submitterId
-                values[title] = submission.title
-                values[abstract] = submission.abstract
-                values[public] = submission.isPublic
+                values[submitter] = session.submitterId
+                values[title] = session.title
+                values[abstract] = session.abstract
+                values[public] = session.isPublic
             }
             .execute()
     }
 
-    override fun update(submission: Submission) = db.transaction {
-        update(SubmissionsTable)
+    override fun update(session: Session) = db.transaction {
+        update(SessionsTable)
             .set { statement ->
-                statement[title] = submission.title
-                statement[abstract] = submission.abstract
-                statement[public] = submission.isPublic
+                statement[title] = session.title
+                statement[abstract] = session.abstract
+                statement[public] = session.isPublic
             }
-            .where { SubmissionsTable.id eq submission.id }
+            .where { SessionsTable.id eq session.id }
             .execute()
     }
 

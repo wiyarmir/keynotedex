@@ -1,13 +1,13 @@
-package es.guillermoorellana.keynotedex.backend.api.submission
+package es.guillermoorellana.keynotedex.backend.api.sessions
 
 import es.guillermoorellana.keynotedex.backend.JsonSerializableConverter
 import es.guillermoorellana.keynotedex.backend.api.getCurrentLoggedUser
 import es.guillermoorellana.keynotedex.backend.data.hashids
-import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionStorage
-import es.guillermoorellana.keynotedex.backend.data.submissions.toDto
+import es.guillermoorellana.keynotedex.backend.data.sessions.SessionStorage
+import es.guillermoorellana.keynotedex.backend.data.sessions.toDto
 import es.guillermoorellana.keynotedex.backend.data.users.UserStorage
 import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
-import es.guillermoorellana.keynotedex.datasource.responses.SubmissionResponse
+import es.guillermoorellana.keynotedex.datasource.responses.SessionResponse
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.http.ContentType
@@ -19,27 +19,27 @@ import io.ktor.routing.Route
 import io.ktor.routing.accept
 
 @UseExperimental(KtorExperimentalLocationsAPI::class)
-fun Route.getSubmission(submissionStorage: SubmissionStorage, userStorage: UserStorage) {
+fun Route.getSession(sessionStorage: SessionStorage, userStorage: UserStorage) {
 
-    JsonSerializableConverter.register(SubmissionResponse.serializer())
+    JsonSerializableConverter.register(SessionResponse.serializer())
 
     accept(ContentType.Application.Json) {
         authenticate(optional = true) {
-            get<SubmissionsEndpoint> { (submissionId) ->
-                val submission = submissionId
+            get<SessionsEndpoint> { (sessionId) ->
+                val session = sessionId
                     ?.let { hashids.decode(it).firstOrNull() }
-                    ?.let { submissionStorage.getById(it) }
-                if (submission == null) {
+                    ?.let { sessionStorage.getById(it) }
+                if (session == null) {
                     call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
                     return@get
                 }
-                if (submission.isPublic) {
-                    call.respond(SubmissionResponse(submission.toDto()))
+                if (session.isPublic) {
+                    call.respond(SessionResponse(session.toDto()))
                     return@get
                 }
                 val user = getCurrentLoggedUser(userStorage)
-                if (user?.userId == submission.submitterId) {
-                    call.respond(SubmissionResponse(submission.toDto()))
+                if (user?.userId == session.submitterId) {
+                    call.respond(SessionResponse(session.toDto()))
                 } else {
                     call.respond(HttpStatusCode.NotFound, ErrorResponse("Not found"))
                 }

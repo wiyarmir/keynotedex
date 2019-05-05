@@ -2,8 +2,8 @@ package es.guillermoorellana.keynotedex.repository
 
 import arrow.core.Try
 import es.guillermoorellana.keynotedex.datasource.NetworkDataSource
-import es.guillermoorellana.keynotedex.datasource.dto.Submission
-import es.guillermoorellana.keynotedex.datasource.requests.SubmissionCreateRequest
+import es.guillermoorellana.keynotedex.datasource.dto.Session
+import es.guillermoorellana.keynotedex.datasource.requests.SessionCreateRequest
 import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
 import es.guillermoorellana.keynotedex.repository.model.UserProfile
 import es.guillermoorellana.keynotedex.repository.model.toModel
@@ -30,13 +30,13 @@ class NetworkRepository(
     suspend fun logoutUser() =
         dataSource.logoutUser()
 
-    suspend fun getSubmission(submissionId: String) =
+    suspend fun getSession(submissionId: String) =
         dataSource.getSubmission(submissionId)
             .map { it.toModel() }
 
-    suspend fun postSubmission(submissionCreateRequest: SubmissionCreateRequest) =
-        dataSource.postSubmission(submissionCreateRequest)
+    suspend fun postSession(sessionCreateRequest: SessionCreateRequest) =
+        dataSource.postSubmission(sessionCreateRequest)
 
-    suspend fun updateSubmission(submission: Submission) =
-        dataSource.updateSubmission(submission)
+    suspend fun updateSession(session: Session) =
+        dataSource.updateSubmission(session)
 }

@@ -11,7 +11,7 @@ data class UserProfile(
 
 fun UserProfileResponse.toModel() = UserProfile(
     user = user.toModel(),
-    sessions = submissions.toModel(),
+    sessions = sessions.toModel(),
     editable = editable
 )
 

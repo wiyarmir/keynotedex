@@ -38,7 +38,7 @@ private const val css = """
 
 class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
 
-    override fun componentDidMount() = fetchSubmission()
+    override fun componentDidMount() = fetchSession()
 
     override fun RBuilder.render() {
         style { +css }
@@ -100,21 +100,21 @@ class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
 
     private fun updateSession(session: Session) {
         GlobalScope.launch {
-            props.networkRepository.updateSubmission(session.toDto())
-            fetchSubmission()
+            props.networkRepository.updateSession(session.toDto())
+            fetchSession()
         }
     }
 
-    private fun fetchSubmission() {
+    private fun fetchSession() {
         GlobalScope.launch {
-            val sessionId = cleanupSubmissionId(props.sessionId)
-            val result = props.networkRepository.getSubmission(sessionId)
+            val sessionId = cleanupSessionId(props.sessionId)
+            val result = props.networkRepository.getSession(sessionId)
             setState { session = result }
         }
     }
 }
 
-private fun cleanupSubmissionId(id: String): String = id.split('-').last()
+private fun cleanupSessionId(id: String): String = id.split('-').last()
 
 external interface SessionRouteProps : WithNetworkRepository {
     var userId: String

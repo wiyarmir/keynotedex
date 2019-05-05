@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.backend.data.submissions
+package es.guillermoorellana.keynotedex.backend.data.sessions
 
 import org.jetbrains.squash.definition.TableDefinition
 import org.jetbrains.squash.definition.autoIncrement
@@ -9,7 +9,7 @@ import org.jetbrains.squash.definition.nullable
 import org.jetbrains.squash.definition.primaryKey
 import org.jetbrains.squash.definition.varchar
 
-object SubmissionsTable : TableDefinition() {
+object SessionsTable : TableDefinition() {
     val id = long("id").primaryKey().autoIncrement()
     val public = bool("public")
     val submitter = varchar("submitter", 20).index()
