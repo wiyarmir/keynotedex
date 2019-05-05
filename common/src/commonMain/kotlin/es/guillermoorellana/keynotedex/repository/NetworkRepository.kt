@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.repository
 
 import arrow.core.Try
-import es.guillermoorellana.keynotedex.NetworkDataSource
+import es.guillermoorellana.keynotedex.datasource.NetworkDataSource
 import es.guillermoorellana.keynotedex.datasource.dto.Submission
 import es.guillermoorellana.keynotedex.datasource.requests.SubmissionCreateRequest
 import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse

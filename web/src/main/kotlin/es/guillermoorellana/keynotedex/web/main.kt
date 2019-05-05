@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.web
 
-import es.guillermoorellana.keynotedex.NetworkDataSource
+import es.guillermoorellana.keynotedex.datasource.NetworkDataSource
 import es.guillermoorellana.keynotedex.datasource.SessionStorage
 import es.guillermoorellana.keynotedex.repository.NetworkRepository
 import kotlinext.js.require
@@ -11,13 +11,7 @@ import kotlin.browser.window
 fun main() {
     val globalState = object {
         val sessionStorage = SessionStorage()
-        val networkDataSource = NetworkRepository(
-            NetworkDataSource(
-                tokenProvider = {
-                    ""
-                }
-            )
-        )
+        val networkRepository = makeRepository(sessionStorage)
     }
 
     require("narrow-jumbotron.css")
@@ -27,10 +21,17 @@ fun main() {
         render(document.getElementById("content")) {
             keynotedexApp {
                 attrs {
-                    networkRepository = globalState.networkDataSource
+                    networkRepository = globalState.networkRepository
                     sessionStorage = globalState.sessionStorage
                 }
             }
         }
     }
 }
+
+private fun makeRepository(sessionStorage: SessionStorage): NetworkRepository =
+    NetworkRepository(
+        dataSource = NetworkDataSource(
+            sessionStorage = sessionStorage
+        )
+    )

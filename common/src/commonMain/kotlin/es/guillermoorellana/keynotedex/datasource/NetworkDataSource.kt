@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex
+package es.guillermoorellana.keynotedex.datasource
 
 import arrow.core.Try
 import es.guillermoorellana.keynotedex.api.Api.V1.Paths
@@ -30,8 +30,8 @@ import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.UnitDescriptor
 
 class NetworkDataSource(
-    private val tokenProvider: () -> String?,
-    private val httpClient: HttpClient = makeHttpClient("localhost", 8080, tokenProvider)
+    sessionStorage: SessionStorage,
+    private val httpClient: HttpClient = makeHttpClient("localhost", 8080, sessionStorage)
 ) {
 
     suspend fun register(userId: String, password: String, displayName: String, email: String): Try<SignInResponse> =
@@ -97,11 +97,17 @@ class NetworkDataSource(
     }
 }
 
-private fun makeHttpClient(apiHost: String, apiPort: Int, tokenProvider: () -> String?): HttpClient = HttpClient {
+private fun makeHttpClient(
+    apiHost: String,
+    apiPort: Int,
+    sessionStorage: SessionStorage
+): HttpClient = HttpClient {
     defaultRequest {
         host = apiHost
         port = apiPort
-        if (tokenProvider() != null) header(HttpHeaders.Authorization, "Bearer ${tokenProvider()}")
+        sessionStorage.get()?.let { token ->
+            header(HttpHeaders.Authorization, "Bearer $token")
+        }
     }
     install(JsonFeature) {
         serializer = KotlinxSerializer().apply {

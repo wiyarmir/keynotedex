@@ -8,6 +8,7 @@ import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.ButtonType
+import kotlinx.html.FORM
 import kotlinx.html.InputType
 import kotlinx.html.id
 import kotlinx.html.js.onChangeFunction
@@ -19,6 +20,7 @@ import react.RBuilder
 import react.RComponent
 import react.RHandler
 import react.RState
+import react.dom.RDOMBuilder
 import react.dom.button
 import react.dom.div
 import react.dom.form
@@ -83,44 +85,8 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
             state.errorMessage?.let { message ->
                 div("alert alert-danger") { +message }
             }
-            label(classes = "sr-only") {
-                attrs { htmlFor = "inputEmail" }
-                +"Email address"
-            }
-            input(type = InputType.text, classes = "form-control") {
-                attrs {
-                    id = "inputEmail"
-                    placeholder = "Email"
-                    required = true
-                    autoFocus = true
-                    value = state.login
-                    disabled = state.disabled
-                    onChangeFunction = { event ->
-                        val value = event.inputValue
-                        setState {
-                            login = value
-                        }
-                    }
-                }
-            }
-            label("sr-only") {
-                attrs { htmlFor = "inputPassword" }
-            }
-            input(type = InputType.password, classes = "form-control") {
-                attrs {
-                    id = "inputPassword"
-                    placeholder = "Password"
-                    required = true
-                    value = state.password
-                    disabled = state.disabled
-                    onChangeFunction = { event ->
-                        val value = event.inputValue
-                        setState {
-                            password = value
-                        }
-                    }
-                }
-            }
+            renderEmailInput()
+            renderPasswordInput()
             button(classes = "btn btn-lg btn-primary btn-block", type = ButtonType.submit) { +"Sign In" }
             routeLink("/signup") {
                 attrs {
@@ -129,17 +95,60 @@ class SignInScreen : RComponent<SignInProps, SignInState>() {
                 +"Sign Up"
             }
             UserContext.Consumer { user ->
-                user?.let {
-                    redirect("/${it.userId}") {}
+                user?.let { redirect("/${it.userId}") {} }
+            }
+        }
+    }
+
+    private fun RDOMBuilder<FORM>.renderPasswordInput() {
+        div("form-group") {
+            val inputId = "inputPassword"
+            label("sr-only") {
+                attrs { htmlFor = inputId }
+                +"Password"
+            }
+            input(type = InputType.password, classes = "form-control") {
+                attrs {
+                    id = inputId
+                    placeholder = "Password"
+                    required = true
+                    value = state.password
+                    disabled = state.disabled
+                    onChangeFunction = { event ->
+                        val value = event.inputValue
+                        setState { password = value }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun RDOMBuilder<FORM>.renderEmailInput() {
+        div("form-group") {
+            val inputId = "inputEmail"
+            label(classes = "sr-only") {
+                attrs { htmlFor = inputId }
+                +"Email address"
+            }
+            input(type = InputType.text, classes = "form-control") {
+                attrs {
+                    id = inputId
+                    placeholder = "Email"
+                    required = true
+                    autoFocus = true
+                    value = state.login
+                    disabled = state.disabled
+                    onChangeFunction = { event ->
+                        val value = event.inputValue
+                        setState { login = value }
+                    }
                 }
             }
         }
     }
 
     private fun doLogin() {
-        setState {
-            disabled = true
-        }
+        setState { disabled = true }
         GlobalScope.launch {
             props.networkRepository.login(state.login, state.password)
                 .fold(

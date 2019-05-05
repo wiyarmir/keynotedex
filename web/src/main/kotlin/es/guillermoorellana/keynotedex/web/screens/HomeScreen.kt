@@ -17,7 +17,6 @@ class HomeScreen : RComponent<RProps, RState>() {
     private val previews = listOf(preview(), preview(), preview())
 
     override fun RBuilder.render() {
-
         div {
             UserContext.Consumer { user ->
                 if (user == null) signUpPromo {}
@@ -27,9 +26,7 @@ class HomeScreen : RComponent<RProps, RState>() {
                 attrs { id = "recent-submissions" }
                 div("row") {
                     previews.forEach {
-                        sessionPreview {
-                            attrs { preview = it }
-                        }
+                        sessionPreview { attrs { preview = it } }
                     }
                 }
             }

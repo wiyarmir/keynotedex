@@ -38,21 +38,15 @@ private const val css = """
 
 class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
 
-    override fun componentDidMount() {
-        fetchSubmission()
-    }
+    override fun componentDidMount() = fetchSubmission()
 
     override fun RBuilder.render() {
         style { +css }
         div("container") {
             loading(state.session, fun(result: Try<Session>) {
                 result.fold(
-                    {
-                        notFound()
-                    },
-                    { sub ->
-                        renderSuccess(sub)
-                    }
+                    { notFound() },
+                    { sub -> renderSuccess(sub) }
                 )
             })
         }
@@ -92,23 +86,15 @@ class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
     private fun onVisibilityChanged() {
         val session = state.session?.orNull() ?: return
         val updated = session.copy(visibility = session.visibility.flip())
-        setState {
-            this.session = Success(updated)
-        }
+        setState { this.session = Success(updated) }
         updateSession(updated)
     }
 
     private fun onChangeEvent(chg: ChangeEvent) {
         var session = state.session?.orNull() ?: return
-        chg["abstract"]?.let { abstract ->
-            session = session.copy(abstract = abstract)
-        }
-        chg["title"]?.let { title ->
-            session = session.copy(title = title)
-        }
-        setState {
-            this.session = Success(session)
-        }
+        chg["abstract"]?.let { abstract -> session = session.copy(abstract = abstract) }
+        chg["title"]?.let { title -> session = session.copy(title = title) }
+        setState { this.session = Success(session) }
         updateSession(session)
     }
 
@@ -123,9 +109,7 @@ class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
         GlobalScope.launch {
             val sessionId = cleanupSubmissionId(props.sessionId)
             val result = props.networkRepository.getSubmission(sessionId)
-            setState {
-                session = result
-            }
+            setState { session = result }
         }
     }
 }
