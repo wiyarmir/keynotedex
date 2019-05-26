@@ -6,4 +6,4 @@ expect class SessionStorage {
     fun clear()
 }
 
-internal const val KEY_SESSION = "sessionToken"
+const val KEY_SESSION = "sessionToken"

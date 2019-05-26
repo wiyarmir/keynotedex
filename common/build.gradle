@@ -2,29 +2,8 @@ apply plugin: 'kotlin-multiplatform'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
 apply plugin: 'co.touchlab.kotlinxcodesync'
-apply plugin: "com.android.library"
 
 version = keynotedexVersion
-
-android {
-    compileSdkVersion 28
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-    }
-
-    buildTypes {
-        debug {
-            // MPP libraries don't currently get this resolution automatically
-            matchingFallbacks = ['release']
-        }
-    }
-
-    packagingOptions {
-        exclude "**/*.kotlin_module"
-    }
-}
 
 kotlin {
     targets {
@@ -34,10 +13,6 @@ kotlin {
             compilations.main.outputKinds("FRAMEWORK")
             compilations.test.outputKinds("FRAMEWORK")
         }
-    }
-
-    android {
-
     }
     
     jvm{
@@ -92,26 +67,6 @@ kotlin {
         }
 
         jvmTest {
-            dependencies {
-                api Libs.junit
-                api Libs.kotlinTestJunit
-                api Libs.kotlinTest
-            }
-        }
-        
-        androidMain {
-            dependencies {
-                api Libs.kotlinStdlib
-                api Libs.kotlinxSerializationRuntime
-                api Libs.ktorClientAndroid
-                api Libs.ktorClientJsonJvm
-                api Libs.ktorClientLoggingJvm
-                api Libs.slf4jApi
-                api Libs.slf4jAndroid
-            }
-        }
-
-        androidTest {
             dependencies {
                 api Libs.junit
                 api Libs.kotlinTestJunit

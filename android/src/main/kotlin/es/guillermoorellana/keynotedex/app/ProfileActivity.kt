@@ -9,7 +9,6 @@ import es.guillermoorellana.keynotedex.usecase.GetUserSessions
 
 class ProfileActivity : AppCompatActivity() {
 
-
     private val view: ProfileView = object : ProfileView {
 
         private val textView: TextView

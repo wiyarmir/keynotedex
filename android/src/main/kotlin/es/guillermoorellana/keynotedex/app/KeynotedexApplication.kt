@@ -26,7 +26,6 @@ class KeynotedexApplication : Application() {
             throwable.printStackTrace()
             throwable?.cause?.printStackTrace()
         }
-
     }
 }
 

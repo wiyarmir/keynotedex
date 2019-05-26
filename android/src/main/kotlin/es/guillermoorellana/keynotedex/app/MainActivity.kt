@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClick(view: View) {
         startActivity(Intent(this, ProfileActivity::class.java))
     }
