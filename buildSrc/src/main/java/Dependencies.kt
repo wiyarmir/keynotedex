@@ -25,6 +25,11 @@ object Versions {
 
 object Libs {
     const val appcompat = "androidx.appcompat:appcompat:1.0.2"
+    const val cardview = "androidx.cardview:cardview:1.0.0"
+    const val recyclerview = "androidx.recyclerview:recyclerview:1.0.0"
+    const val material = "com.google.android.material:material:1.0.0"
+    const val constraintlayout = "com.android.support.constraint:constraint-layout:1.1.3"
+
     const val ehcache = "org.ehcache:ehcache:${Versions.ehcache}"
     const val fuel = "com.github.kittinunf.fuel:fuel:${Versions.fuel}"
     const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
@@ -71,6 +76,7 @@ object Libs {
     const val ktorLocations = "io.ktor:ktor-locations:${Versions.ktor}"
     const val ktorServerNetty = "io.ktor:ktor-server-netty:${Versions.ktor}"
     const val ktorServerTestHost = "io.ktor:ktor-server-test-host:${Versions.ktor}"
+
     const val ktorClientAuth = "io.ktor:ktor-client-auth:${Versions.ktor}"
     const val ktorClientJson = "io.ktor:ktor-client-json:${Versions.ktor}"
     const val ktorClientJsonJvm = "io.ktor:ktor-client-json-jvm:${Versions.ktor}"
@@ -80,6 +86,13 @@ object Libs {
     const val ktorClientAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val ktorClientIos = "io.ktor:ktor-client-ios:${Versions.ktor}"
     const val ktorClientJs = "io.ktor:ktor-client-js:${Versions.ktor}"
+    const val ktorClientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+    const val ktorClientLoggingJvm = "io.ktor:ktor-client-logging-jvm:${Versions.ktor}"
+    const val ktorClientLoggingJs = "io.ktor:ktor-client-logging-js:${Versions.ktor}"
+    const val ktorClientLoggingNative = "io.ktor:ktor-client-logging-native:${Versions.ktor}"
+
+    const val slf4jApi = "org.slf4j:slf4j-api:1.7.25"
+    const val slf4jAndroid = "uk.uuid.slf4j:slf4j-android:1.7.25-1"
 
     const val logbackClassic = "ch.qos.logback:logback-classic:${Versions.logback}"
     const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"

@@ -1,8 +1,8 @@
 package es.guillermoorellana.keynotedex.app
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import es.guillermoorellana.keynotedex.presenter.ProfilePresenter
 import es.guillermoorellana.keynotedex.presenter.ProfileView
 import es.guillermoorellana.keynotedex.usecase.GetUserSessions

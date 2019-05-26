@@ -62,7 +62,7 @@ kotlin {
                 api Libs.ktorClientCore
                 api Libs.ktorClientAuth
                 api Libs.ktorClientJson
-                api "io.ktor:ktor-client-logging:$Versions.ktor"
+                api Libs.ktorClientLogging
             }
         }
 
@@ -78,7 +78,7 @@ kotlin {
                 api Libs.kotlinxSerializationRuntimeNative
                 api Libs.ktorClientIos
                 api Libs.ktorClientJsonNative
-                api "io.ktor:ktor-client-logging-native:$Versions.ktor"
+                api Libs.ktorClientLoggingNative
             }
         }
 
@@ -87,7 +87,7 @@ kotlin {
                 api Libs.kotlinStdlib
                 api Libs.kotlinxSerializationRuntime
                 api Libs.ktorClientJsonJvm
-                api "io.ktor:ktor-client-logging-jvm:$Versions.ktor"
+                api Libs.ktorClientLoggingJvm
             }
         }
 
@@ -105,9 +105,9 @@ kotlin {
                 api Libs.kotlinxSerializationRuntime
                 api Libs.ktorClientAndroid
                 api Libs.ktorClientJsonJvm
-                api "io.ktor:ktor-client-logging-jvm:$Versions.ktor"
-                api 'org.slf4j:slf4j-api:1.7.25'
-                api 'uk.uuid.slf4j:slf4j-android:1.7.25-1'
+                api Libs.ktorClientLoggingJvm
+                api Libs.slf4jApi
+                api Libs.slf4jAndroid
             }
         }
 
@@ -125,7 +125,7 @@ kotlin {
                 api Libs.kotlinxSerializationRuntimeJs
                 api Libs.ktorClientJs
                 api Libs.ktorClientJsonJs
-                api "io.ktor:ktor-client-logging-js:$Versions.ktor"
+                api Libs.ktorClientLoggingJs
             }
         }
 
