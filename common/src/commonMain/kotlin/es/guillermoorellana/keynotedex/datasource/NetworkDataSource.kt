@@ -13,6 +13,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.features.logging.DEFAULT
+import io.ktor.client.features.logging.LogLevel
+import io.ktor.client.features.logging.Logger
+import io.ktor.client.features.logging.Logging
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -21,8 +25,11 @@ import io.ktor.client.request.port
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.utils.EmptyContent
+import io.ktor.http.DEFAULT_PORT
 import io.ktor.http.HttpHeaders
+import io.ktor.http.URLProtocol
 import io.ktor.http.parametersOf
+import io.ktor.http.takeFrom
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
@@ -32,8 +39,10 @@ import kotlinx.serialization.json.Json
 
 class NetworkDataSource(
     sessionStorage: SessionStorage,
-    private val httpClient: HttpClient = makeHttpClient("localhost", 8080, sessionStorage)
+    networkConfig: NetworkConfig = NetworkConfig()
 ) {
+
+    private val httpClient: HttpClient = makeHttpClient(networkConfig, sessionStorage)
 
     suspend fun register(userId: String, password: String, displayName: String, email: String): Try<SignInResponse> =
         Try {
@@ -99,26 +108,30 @@ class NetworkDataSource(
 }
 
 private fun makeHttpClient(
-    apiHost: String,
-    apiPort: Int,
+    networkConfig: NetworkConfig,
     sessionStorage: SessionStorage
 ): HttpClient = HttpClient {
     defaultRequest {
-        host = apiHost
-        port = apiPort
-        sessionStorage.get()?.let { token ->
-            header(HttpHeaders.Authorization, "Bearer $token")
+        url {
+            host = networkConfig.host
+            port = networkConfig.port
+            protocol = if (networkConfig.secure) URLProtocol.HTTPS else URLProtocol.HTTP
         }
+        sessionStorage.get()?.let { token -> header(HttpHeaders.Authorization, "Bearer $token") }
     }
     install(JsonFeature) {
         serializer = KotlinxSerializer(json = Json.nonstrict).apply {
-            register<SignInResponse>()
-            register<UserProfileResponse>()
-            register<SessionResponse>()
-            register<SessionCreateRequest>()
-            register<SessionUpdateRequest>()
+            register(SignInResponse.serializer())
+            register(UserProfileResponse.serializer())
+            register(SessionResponse.serializer())
+            register(SessionCreateRequest.serializer())
+            register(SessionUpdateRequest.serializer())
             register(EmptyContentSerializer)
         }
+    }
+    install(Logging) {
+        logger = Logger.DEFAULT
+        level = LogLevel.INFO
     }
 }
 
@@ -129,3 +142,11 @@ private object EmptyContentSerializer : KSerializer<EmptyContent> {
 
     override fun serialize(encoder: Encoder, obj: EmptyContent) = encoder.encodeUnit()
 }
+
+data class NetworkConfig(
+    val host: String = "keynotedex.wiyarmir.es",
+    val port: Int = DEFAULT_PORT,
+    val secure: Boolean = true
+)
+
+val defaultNetworkConfig = NetworkConfig()

@@ -1,13 +1,16 @@
 package es.guillermoorellana.keynotedex.datasource
 
-actual class SessionStorage {
-    actual fun put(value: String?) {
-    }
+actual class SessionStorage(
+    private val keyValueStorage: KeyValueStorage
+) {
+    actual fun put(value: String?) = keyValueStorage.save(KEY_SESSION, value)
 
-    actual fun get(): String? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    actual fun get(): String? = keyValueStorage.load(KEY_SESSION)
 
-    actual fun clear() {
-    }
+    actual fun clear() = keyValueStorage.save(KEY_SESSION, null)
+}
+
+interface KeyValueStorage {
+    fun save(key: String, value: String?)
+    fun load(key: String): String?
 }

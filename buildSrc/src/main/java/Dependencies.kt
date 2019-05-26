@@ -12,7 +12,7 @@ object Versions {
     const val kotlinFrontendPlugin = "0.0.45"
     const val kotlinJsExt = "1.0.1-pre.61-kotlin-1.3.0"
     const val kotlinWrapper = "$react-pre.61-kotlin-1.3.0"
-    const val kotlinxCoroutines = "1.0.1"
+    const val kotlinxCoroutines = "1.1.0"
     const val ktor = "1.1.5"
     const val logback = "1.2.1"
     const val node = "10.13.0"
@@ -48,6 +48,10 @@ object Libs {
     const val kotlinxCoroutinesCoreCommon =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${Versions.kotlinxCoroutines}"
     const val kotlinxCoroutinesCoreJs = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.kotlinxCoroutines}"
+    const val kotlinxCoroutinesCoreNative =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.kotlinxCoroutines}"
+    const val kotlinxCoroutinesAndroid =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinxCoroutines}"
 
     const val kotlinxHtmlJs = "org.jetbrains.kotlinx:kotlinx-html-js:${Versions.html}"
 

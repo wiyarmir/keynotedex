@@ -2,8 +2,29 @@ apply plugin: 'kotlin-multiplatform'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
 apply plugin: 'co.touchlab.kotlinxcodesync'
+apply plugin: "com.android.library"
 
 version = keynotedexVersion
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+    }
+
+    buildTypes {
+        debug {
+            // MPP libraries don't currently get this resolution automatically
+            matchingFallbacks = ['release']
+        }
+    }
+
+    packagingOptions {
+        exclude "**/*.kotlin_module"
+    }
+}
 
 kotlin {
     targets {
@@ -15,7 +36,14 @@ kotlin {
         }
     }
 
-    jvm()
+    android {
+
+    }
+    
+    jvm{
+        
+    }
+        
     js {
         compileKotlinJs {
             kotlinOptions.metaInfo = true
@@ -34,6 +62,7 @@ kotlin {
                 api Libs.ktorClientCore
                 api Libs.ktorClientAuth
                 api Libs.ktorClientJson
+                api "io.ktor:ktor-client-logging:$Versions.ktor"
             }
         }
 
@@ -45,9 +74,11 @@ kotlin {
 
         iosMain {
             dependencies {
+                api Libs.kotlinxCoroutinesCoreNative
                 api Libs.kotlinxSerializationRuntimeNative
                 api Libs.ktorClientIos
                 api Libs.ktorClientJsonNative
+                api "io.ktor:ktor-client-logging-native:$Versions.ktor"
             }
         }
 
@@ -55,12 +86,32 @@ kotlin {
             dependencies {
                 api Libs.kotlinStdlib
                 api Libs.kotlinxSerializationRuntime
-                api Libs.ktorClientAndroid
                 api Libs.ktorClientJsonJvm
+                api "io.ktor:ktor-client-logging-jvm:$Versions.ktor"
             }
         }
 
         jvmTest {
+            dependencies {
+                api Libs.junit
+                api Libs.kotlinTestJunit
+                api Libs.kotlinTest
+            }
+        }
+        
+        androidMain {
+            dependencies {
+                api Libs.kotlinStdlib
+                api Libs.kotlinxSerializationRuntime
+                api Libs.ktorClientAndroid
+                api Libs.ktorClientJsonJvm
+                api "io.ktor:ktor-client-logging-jvm:$Versions.ktor"
+                api 'org.slf4j:slf4j-api:1.7.25'
+                api 'uk.uuid.slf4j:slf4j-android:1.7.25-1'
+            }
+        }
+
+        androidTest {
             dependencies {
                 api Libs.junit
                 api Libs.kotlinTestJunit
@@ -74,6 +125,7 @@ kotlin {
                 api Libs.kotlinxSerializationRuntimeJs
                 api Libs.ktorClientJs
                 api Libs.ktorClientJsonJs
+                api "io.ktor:ktor-client-logging-js:$Versions.ktor"
             }
         }
 
