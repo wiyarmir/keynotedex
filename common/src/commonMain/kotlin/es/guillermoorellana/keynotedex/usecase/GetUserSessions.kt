@@ -1,7 +1,6 @@
 package es.guillermoorellana.keynotedex.usecase
 
 import es.guillermoorellana.keynotedex.repository.NetworkRepository
-import es.guillermoorellana.keynotedex.repository.model.Session
 
 class GetUserSessions(
     private val networkRepository: NetworkRepository

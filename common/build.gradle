@@ -14,11 +14,11 @@ kotlin {
             compilations.test.outputKinds("FRAMEWORK")
         }
     }
-    
-    jvm{
-        
+
+    jvm {
+
     }
-        
+
     js {
         compileKotlinJs {
             kotlinOptions.metaInfo = true
@@ -161,4 +161,13 @@ task iosTest {
             commandLine 'xcrun', 'simctl', 'spawn', device, binary.absolutePath
         }
     }
+}
+detekt {
+    input = files(
+            "src/commonMain/kotlin",
+            "src/iosMain/kotlin",
+            "src/jsMain/kotlin",
+            "src/jvmMain/kotlin",
+    )
+    
 }
