@@ -4,17 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 
-class SessionStorage(
+class AndroidSessionStorage(
     applicationContext: Context,
     private val prefs: SharedPreferences = applicationContext.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-) {
+) : SessionStorage() {
 
     @SuppressLint("ApplySharedPref")
-    fun put(value: String?) {
+    override fun put(value: String?) {
         prefs.edit().putString(KEY_SESSION, value).commit()
     }
 
-    fun get(): String? = prefs.getString(KEY_SESSION, null)
+    override fun get(): String? = prefs.getString(KEY_SESSION, null)
 
-    fun clear() = put(null)
+    override fun clear() = put(null)
 }

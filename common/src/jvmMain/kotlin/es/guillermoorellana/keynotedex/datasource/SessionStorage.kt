@@ -1,16 +1,9 @@
 package es.guillermoorellana.keynotedex.datasource
 
-actual class SessionStorage(
-    private val keyValueStorage: KeyValueStorage
-) {
-    actual fun put(value: String?) = keyValueStorage.save(KEY_SESSION, value)
+actual open class SessionStorage {
+    actual open fun put(value: String?): Unit = TODO()
 
-    actual fun get(): String? = keyValueStorage.load(KEY_SESSION)
+    actual open fun get(): String? = TODO()
 
-    actual fun clear() = keyValueStorage.save(KEY_SESSION, null)
-}
-
-interface KeyValueStorage {
-    fun save(key: String, value: String?)
-    fun load(key: String): String?
+    actual open fun clear(): Unit = TODO()
 }

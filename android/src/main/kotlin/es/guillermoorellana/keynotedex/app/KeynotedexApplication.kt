@@ -2,13 +2,14 @@ package es.guillermoorellana.keynotedex.app
 
 import android.app.Application
 import android.content.Context
+import es.guillermoorellana.keynotedex.datasource.AndroidSessionStorage
 import es.guillermoorellana.keynotedex.datasource.NetworkDataSource
 import es.guillermoorellana.keynotedex.datasource.SessionStorage
 import es.guillermoorellana.keynotedex.repository.NetworkRepository
 
 class KeynotedexApplication : Application() {
 
-    private fun getSessionStorage() = SessionStorage(applicationContext)
+    private fun getSessionStorage(): SessionStorage = AndroidSessionStorage(applicationContext)
 
     val repository: NetworkRepository by lazy {
         NetworkRepository(
