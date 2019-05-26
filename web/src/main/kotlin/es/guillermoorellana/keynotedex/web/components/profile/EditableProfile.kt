@@ -1,13 +1,13 @@
 package es.guillermoorellana.keynotedex.web.components.profile
 
+import es.guillermoorellana.keynotedex.repository.model.User
+import es.guillermoorellana.keynotedex.repository.model.UserProfile
 import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
 import es.guillermoorellana.keynotedex.web.components.editable.get
-import es.guillermoorellana.keynotedex.web.components.submissions.sessions
+import es.guillermoorellana.keynotedex.web.components.sessions.sessions
 import es.guillermoorellana.keynotedex.web.external.routeLink
-import es.guillermoorellana.keynotedex.web.model.User
-import es.guillermoorellana.keynotedex.web.model.UserProfile
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -48,7 +48,7 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
 
     override fun RBuilder.render() {
         style(content = profileStyle)
-        props.userProfile.also { (user, submissions) ->
+        props.userProfile.also { (user, sessions) ->
             div("profile-container") {
                 editableText {
                     attrs {
@@ -71,7 +71,7 @@ class EditableProfile : RComponent<EditableProfileProps, RState>() {
                     }
                 }
             }
-            sessions { attrs { this.submissions = submissions } }
+            sessions { attrs { this.sessions = sessions } }
             if (props.editable) {
                 routeLink(to = "/signout") {
                     attrs {

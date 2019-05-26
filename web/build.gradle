@@ -43,6 +43,9 @@ kotlinFrontend {
         dependency "jquery"
         dependency "jwt-decode"
 
+        // wont be needed once https://github.com/ktorio/ktor/issues/961 is fixed
+        dependency "text-encoding"
+
         devDependency "webpack", "4.25.1"
         devDependency "babel-loader", "7"
         devDependency "babel-core", "6"

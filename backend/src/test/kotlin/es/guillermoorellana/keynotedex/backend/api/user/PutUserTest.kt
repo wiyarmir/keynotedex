@@ -10,8 +10,8 @@ import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.data.users.User
 import es.guillermoorellana.keynotedex.backend.data.users.toDto
 import es.guillermoorellana.keynotedex.backend.testApp
-import es.guillermoorellana.keynotedex.requests.UserProfileUpdateRequest
-import es.guillermoorellana.keynotedex.responses.UserProfileResponse
+import es.guillermoorellana.keynotedex.datasource.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
@@ -21,6 +21,7 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import kotlinx.serialization.json.JSON
+import kotlinx.serialization.json.Json
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Ignore
@@ -82,7 +83,7 @@ class PutUserTest {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             addAuthHeader(JwtConfig(application.environment), testId)
-            setBody(JSON.stringify(UserProfileUpdateRequest.serializer(), UserProfileUpdateRequest(testUser.toDto())))
+            setBody(Json.stringify(UserProfileUpdateRequest.serializer(), UserProfileUpdateRequest(testUser.toDto())))
         }.apply {
             assertThat(response.status(), equalTo(HttpStatusCode.Accepted))
         }
@@ -94,9 +95,9 @@ class PutUserTest {
             addHeader(HttpHeaders.Accept, ContentType.Application.Json.toString())
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             addAuthHeader(JwtConfig(application.environment), testId)
-            setBody(JSON.stringify(UserProfileUpdateRequest.serializer(), UserProfileUpdateRequest(testUser.toDto())))
+            setBody(Json.stringify(UserProfileUpdateRequest.serializer(), UserProfileUpdateRequest(testUser.toDto())))
         }.apply {
-            assertThat(JSON.parse(UserProfileResponse.serializer(), response.content!!).user, equalTo(testUser.toDto()))
+            assertThat(Json.parse(UserProfileResponse.serializer(), response.content!!).user, equalTo(testUser.toDto()))
         }
     }
 }

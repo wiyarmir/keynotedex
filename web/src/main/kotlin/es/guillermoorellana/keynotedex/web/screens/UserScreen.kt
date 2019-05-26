@@ -1,10 +1,10 @@
 package es.guillermoorellana.keynotedex.web.screens
 
 import arrow.core.Try
-import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
+import es.guillermoorellana.keynotedex.repository.model.UserProfile
 import es.guillermoorellana.keynotedex.web.components.profile.editableProfile
 import es.guillermoorellana.keynotedex.web.loading
-import es.guillermoorellana.keynotedex.web.model.UserProfile
+import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.RBuilder
@@ -29,9 +29,7 @@ class UserScreen : RComponent<UserProps, UserState>() {
             div("col-10 col-offset-1 col-sm-9 col-xl-8") {
                 loading(state.userProfile) { result ->
                     result.fold(
-                        {
-                            notFound()
-                        },
+                        { notFound() },
                         { profile ->
                             editableProfile {
                                 attrs {
@@ -49,7 +47,7 @@ class UserScreen : RComponent<UserProps, UserState>() {
 
     private fun fetchUserProfile(userId: String) {
         GlobalScope.launch {
-            val user = props.networkDataSource.userProfile(userId)
+            val user = props.networkRepository.userProfile(userId)
             setState {
                 this.userProfile = user
             }
@@ -58,7 +56,7 @@ class UserScreen : RComponent<UserProps, UserState>() {
 
     private fun postUserProfile(userProfile: UserProfile) {
         GlobalScope.launch {
-            val updatedUserProfile = props.networkDataSource.updateUserProfile(userProfile)
+            val updatedUserProfile = props.networkRepository.updateUserProfile(userProfile)
             setState {
                 this.userProfile = updatedUserProfile
             }
@@ -66,7 +64,7 @@ class UserScreen : RComponent<UserProps, UserState>() {
     }
 }
 
-interface UserProps : WithNetworkDataSource {
+interface UserProps : WithNetworkRepository {
     var userId: String
 }
 

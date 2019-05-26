@@ -8,6 +8,6 @@ fun transformConference(it: ResultRow): Conference =
         name = it[ConferencesTable.name]
     )
 
-fun Conference.toDto() = es.guillermoorellana.keynotedex.dto.Conference(
+fun Conference.toDto() = es.guillermoorellana.keynotedex.datasource.dto.Conference(
     name = name
 )

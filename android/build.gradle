@@ -1,6 +1,5 @@
-apply plugin: "com.android.application"
 apply plugin: 'kotlin-multiplatform'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: "com.android.application"
 
 android {
     compileSdkVersion 28
@@ -28,6 +27,10 @@ android {
             matchingFallbacks = ['release']
         }
     }
+
+    packagingOptions {
+        exclude "**/*.kotlin_module"
+    }
 }
 
 kotlin {
@@ -37,15 +40,46 @@ kotlin {
                 implementation project(':common')
             }
         }
+        
+        androidMain {
+            dependencies {
+                implementation Libs.kotlinStdlib
+                implementation Libs.kotlinxSerializationRuntime
+                implementation Libs.ktorClientAndroid
+                implementation Libs.ktorClientJsonJvm
+                implementation Libs.ktorClientLoggingJvm
+                implementation Libs.slf4jApi
+                implementation Libs.slf4jAndroid
+            }
+        }
     }
 
-    targets {
-        fromPreset(presets.android, 'androidApp')
+    android {
+
     }
+}
+
+repositories {
+    google()
+    mavenCentral()
 }
 
 dependencies {
     implementation Libs.appcompat
+    implementation Libs.cardview
+    implementation Libs.recyclerview
+    implementation Libs.material
+    implementation Libs.constraintlayout
+
+    implementation Libs.kotlinStdlib
+
+    implementation Libs.kotlinxCoroutinesAndroid
+
+    implementation Libs.ktorClientAndroid
+    implementation Libs.ktorClientJsonJvm
+
+    testImplementation Libs.kotlinTest
+    testImplementation Libs.kotlinTestJunit
     testImplementation Libs.junit
     testImplementation Libs.mockitoKotlin
 }

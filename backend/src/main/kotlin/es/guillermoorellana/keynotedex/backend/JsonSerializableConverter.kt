@@ -11,11 +11,13 @@ import io.ktor.http.charset
 import io.ktor.http.withCharset
 import io.ktor.request.ApplicationReceiveRequest
 import io.ktor.request.contentType
+import io.ktor.util.KtorExperimentalAPI
 import io.ktor.util.pipeline.PipelineContext
 import kotlinx.coroutines.io.ByteReadChannel
 import kotlinx.coroutines.io.jvm.javaio.toInputStream
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.internal.BooleanSerializer
 import kotlinx.serialization.internal.ByteSerializer
 import kotlinx.serialization.internal.CharSerializer
@@ -26,7 +28,7 @@ import kotlinx.serialization.internal.LongSerializer
 import kotlinx.serialization.internal.ShortSerializer
 import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.internal.UnitSerializer
-import kotlinx.serialization.json.JSON
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import kotlin.collections.set
 import kotlin.reflect.KClass
@@ -34,8 +36,9 @@ import kotlin.reflect.KClass
 /**
  * https://github.com/ktorio/ktor/pull/663
  */
+@UseExperimental(KtorExperimentalAPI::class, UnstableDefault::class)
 object JsonSerializableConverter : ContentConverter {
-    private val json = JSON.plain
+    private val json = Json.plain
 
     @Suppress("UNCHECKED_CAST")
     private val serializers = mutableMapOf(

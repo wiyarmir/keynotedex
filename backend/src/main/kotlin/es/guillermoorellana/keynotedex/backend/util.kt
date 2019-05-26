@@ -2,7 +2,7 @@ package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.conferences.ConferencesTable
-import es.guillermoorellana.keynotedex.backend.data.submissions.SubmissionsTable
+import es.guillermoorellana.keynotedex.backend.data.sessions.SessionsTable
 import es.guillermoorellana.keynotedex.backend.data.users.UsersTable
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -53,7 +53,7 @@ internal fun KeynotedexDatabase.mockData(application: Application) {
                     }
                     .execute()
 
-                insertInto(SubmissionsTable)
+                insertInto(SessionsTable)
                     .values { statement ->
                         statement[public] = i % 2 == 0
                         statement[submitter] = "user1"
@@ -62,7 +62,7 @@ internal fun KeynotedexDatabase.mockData(application: Application) {
                     }
                     .execute()
 
-                insertInto(SubmissionsTable)
+                insertInto(SessionsTable)
                     .values { statement ->
                         statement[public] = i % 2 == 0
                         statement[submitter] = "user2"

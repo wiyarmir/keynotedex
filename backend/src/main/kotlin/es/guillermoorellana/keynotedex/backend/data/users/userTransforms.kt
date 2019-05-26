@@ -2,7 +2,7 @@ package es.guillermoorellana.keynotedex.backend.data.users
 
 import org.jetbrains.squash.results.ResultRow
 import org.jetbrains.squash.results.get
-import es.guillermoorellana.keynotedex.dto.User as DtoUser
+import es.guillermoorellana.keynotedex.datasource.dto.User as DtoUser
 
 fun transformUser(it: ResultRow): User =
     User(

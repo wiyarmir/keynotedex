@@ -24,7 +24,7 @@
 		E2B3C9BF2CE6F350360E1D8F /* SubmissionCreateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EF03DBA3756358926D7F46C5 /* UserProfileUpdateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
 		FAB5AA262273D1190095C309 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA252273D1190095C309 /* AppDelegate.swift */; };
-		FAB5AA282273D1190095C309 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA272273D1190095C309 /* ViewController.swift */; };
+		FAB5AA282273D1190095C309 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA272273D1190095C309 /* MainViewController.swift */; };
 		FAB5AA2B2273D1190095C309 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA292273D1190095C309 /* Main.storyboard */; };
 		FAB5AA2D2273D11A0095C309 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA2C2273D11A0095C309 /* Assets.xcassets */; };
 		FAB5AA302273D11A0095C309 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA2E2273D11A0095C309 /* LaunchScreen.storyboard */; };
@@ -70,7 +70,7 @@
 		FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionCreateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionCreateRequest.kt; sourceTree = "<group>"; };
 		FAB5AA222273D1190095C309 /* Keynotedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keynotedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB5AA252273D1190095C309 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FAB5AA272273D1190095C309 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FAB5AA272273D1190095C309 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		FAB5AA2A2273D1190095C309 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FAB5AA2C2273D11A0095C309 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAB5AA2F2273D11A0095C309 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				FAB5AA252273D1190095C309 /* AppDelegate.swift */,
-				FAB5AA272273D1190095C309 /* ViewController.swift */,
+				FAB5AA272273D1190095C309 /* MainViewController.swift */,
 				FAB5AA292273D1190095C309 /* Main.storyboard */,
 				FAB5AA2C2273D11A0095C309 /* Assets.xcassets */,
 				FAB5AA2E2273D11A0095C309 /* LaunchScreen.storyboard */,
@@ -447,7 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAB5AA282273D1190095C309 /* ViewController.swift in Sources */,
+				FAB5AA282273D1190095C309 /* MainViewController.swift in Sources */,
 				FAB5AA262273D1190095C309 /* AppDelegate.swift in Sources */,
 				C2A4E5FD3B4FA72973FDB158 /* Try.kt in Sources */,
 				4B9D6CA8F1C1FC874D8E4BC3 /* Conference.kt in Sources */,

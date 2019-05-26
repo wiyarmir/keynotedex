@@ -3,16 +3,16 @@ package es.guillermoorellana.keynotedex.web.screens
 import arrow.core.Try
 import arrow.core.Try.Success
 import arrow.core.orNull
-import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
+import es.guillermoorellana.keynotedex.repository.model.Session
+import es.guillermoorellana.keynotedex.repository.model.flip
+import es.guillermoorellana.keynotedex.repository.model.string
+import es.guillermoorellana.keynotedex.repository.model.toDto
 import es.guillermoorellana.keynotedex.web.components.editable.ChangeEvent
 import es.guillermoorellana.keynotedex.web.components.editable.editableText
 import es.guillermoorellana.keynotedex.web.components.editable.editableTextArea
 import es.guillermoorellana.keynotedex.web.components.editable.get
 import es.guillermoorellana.keynotedex.web.loading
-import es.guillermoorellana.keynotedex.web.model.Session
-import es.guillermoorellana.keynotedex.web.model.flip
-import es.guillermoorellana.keynotedex.web.model.string
-import es.guillermoorellana.keynotedex.web.model.toDto
+import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.DIV
@@ -38,21 +38,15 @@ private const val css = """
 
 class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
 
-    override fun componentDidMount() {
-        fetchSubmission()
-    }
+    override fun componentDidMount() = fetchSession()
 
     override fun RBuilder.render() {
         style { +css }
         div("container") {
             loading(state.session, fun(result: Try<Session>) {
                 result.fold(
-                    {
-                        notFound()
-                    },
-                    { sub ->
-                        renderSuccess(sub)
-                    }
+                    { notFound() },
+                    { sub -> renderSuccess(sub) }
                 )
             })
         }
@@ -92,47 +86,37 @@ class SessionScreen : RComponent<SessionRouteProps, SessionScreenState>() {
     private fun onVisibilityChanged() {
         val session = state.session?.orNull() ?: return
         val updated = session.copy(visibility = session.visibility.flip())
-        setState {
-            this.session = Success(updated)
-        }
+        setState { this.session = Success(updated) }
         updateSession(updated)
     }
 
     private fun onChangeEvent(chg: ChangeEvent) {
         var session = state.session?.orNull() ?: return
-        chg["abstract"]?.let { abstract ->
-            session = session.copy(abstract = abstract)
-        }
-        chg["title"]?.let { title ->
-            session = session.copy(title = title)
-        }
-        setState {
-            this.session = Success(session)
-        }
+        chg["abstract"]?.let { abstract -> session = session.copy(abstract = abstract) }
+        chg["title"]?.let { title -> session = session.copy(title = title) }
+        setState { this.session = Success(session) }
         updateSession(session)
     }
 
     private fun updateSession(session: Session) {
         GlobalScope.launch {
-            props.networkDataSource.updateSubmission(session.toDto())
-            fetchSubmission()
+            props.networkRepository.updateSession(session.toDto())
+            fetchSession()
         }
     }
 
-    private fun fetchSubmission() {
+    private fun fetchSession() {
         GlobalScope.launch {
-            val sessionId = cleanupSubmissionId(props.sessionId)
-            val result = props.networkDataSource.getSubmission(sessionId)
-            setState {
-                session = result
-            }
+            val sessionId = cleanupSessionId(props.sessionId)
+            val result = props.networkRepository.getSession(sessionId)
+            setState { session = result }
         }
     }
 }
 
-private fun cleanupSubmissionId(id: String): String = id.split('-').last()
+private fun cleanupSessionId(id: String): String = id.split('-').last()
 
-external interface SessionRouteProps : WithNetworkDataSource {
+external interface SessionRouteProps : WithNetworkRepository {
     var userId: String
     var sessionId: String
 }

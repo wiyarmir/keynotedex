@@ -11,8 +11,10 @@ import io.ktor.http.HttpHeaders
 import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.TestApplicationRequest
 import io.ktor.server.testing.withTestApplication
+import io.ktor.util.KtorExperimentalAPI
 import java.nio.file.Files
 
+@UseExperimental(KtorExperimentalAPI::class)
 fun testApp(
     storage: KeynotedexStorage = testStorage(),
     jwtTokenProvider: JwtTokenProvider? = null,

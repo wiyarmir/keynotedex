@@ -1,13 +1,14 @@
 package es.guillermoorellana.keynotedex.web.screens
 
-import es.guillermoorellana.keynotedex.dto.SubmissionVisibility
-import es.guillermoorellana.keynotedex.requests.SubmissionCreateRequest
-import es.guillermoorellana.keynotedex.web.comms.WithNetworkDataSource
+import es.guillermoorellana.keynotedex.datasource.dto.SessionVisibility
+import es.guillermoorellana.keynotedex.datasource.requests.SessionCreateRequest
 import es.guillermoorellana.keynotedex.web.context.UserContext
 import es.guillermoorellana.keynotedex.web.external.redirect
+import es.guillermoorellana.keynotedex.web.repository.WithNetworkRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.html.ButtonType
+import kotlinx.html.FORM
 import kotlinx.html.InputType
 import kotlinx.html.id
 import kotlinx.html.js.onChangeFunction
@@ -18,6 +19,7 @@ import react.RBuilder
 import react.RComponent
 import react.RHandler
 import react.RState
+import react.dom.RDOMBuilder
 import react.dom.button
 import react.dom.div
 import react.dom.form
@@ -58,51 +60,10 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
                         submitNewSession()
                     }
                 }
-                div("form-group") {
-                    input(classes = "form-control input-title", type = InputType.text) {
-                        attrs {
-                            id = "input-title"
-                            disabled = state.disabled
-                            required = true
-                            placeholder = "Session title"
-                            onChangeFunction = readInput { value -> title = value }
-                        }
-                    }
-                }
-                div("form-group") {
-                    textArea(classes = "form-control") {
-                        attrs {
-                            id = "input-abstract"
-                            disabled = state.disabled
-                            required = true
-                            placeholder = "What's your session about?"
-                            onChangeFunction = readInput { value -> abstract = value }
-                        }
-                    }
-                }
-                div("form-check") {
-                    input(classes = "form-check-input", type = InputType.checkBox) {
-                        attrs {
-                            id = "isVisible"
-                            disabled = state.disabled
-                            onChangeFunction = { event ->
-                                val checked = event.target?.let { it as? HTMLInputElement }?.checked ?: false
-                                setState {
-                                    isPrivate = checked
-                                }
-                            }
-                        }
-                    }
-                    label("form-check-label") {
-                        attrs {
-                            set("htmlFor", "isVisible")
-                        }
-                        +"Check this box to keep your submission private."
-                    }
-                }
-                button(classes = "btn btn-primary", type = ButtonType.submit) {
-                    +"Ship it!"
-                }
+                renderTitleInput()
+                renderAbstractInput()
+                renderVisibilityInput()
+                button(classes = "btn btn-primary", type = ButtonType.submit) { +"Ship it!" }
             }
         }
         if (state.redirectToProfile) UserContext.Consumer { user ->
@@ -110,28 +71,80 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
         }
     }
 
-    private fun submitNewSession() {
-        setState {
-            disabled = true
+    private fun RDOMBuilder<FORM>.renderVisibilityInput() {
+        div("form-check") {
+            val inputId = "isVisible"
+            label("form-check-label") {
+                attrs { set("htmlFor", inputId) }
+                +"Check this box to keep your session private."
+            }
+            input(classes = "form-check-input", type = InputType.checkBox) {
+                attrs {
+                    id = inputId
+                    disabled = state.disabled
+                    onChangeFunction = { event ->
+                        val checked = event.target?.let { it as? HTMLInputElement }?.checked ?: false
+                        setState { isPrivate = checked }
+                    }
+                }
+            }
         }
-        val submissionCreateRequest = SubmissionCreateRequest(
+    }
+
+    private fun RDOMBuilder<FORM>.renderAbstractInput() {
+        div("form-group") {
+            val inputId = "input-abstract"
+            label("form-check-label") {
+                attrs { set("htmlFor", inputId) }
+                +"Abstract"
+            }
+            textArea(classes = "form-control") {
+                attrs {
+                    id = inputId
+                    disabled = state.disabled
+                    required = true
+                    placeholder = "What's your session about?"
+                    onChangeFunction = readInput { value -> abstract = value }
+                }
+            }
+        }
+    }
+
+    private fun RDOMBuilder<FORM>.renderTitleInput() {
+        div("form-group") {
+            val inputId = "input-title"
+            label("form-check-label") {
+                attrs { set("htmlFor", inputId) }
+                +"Title"
+            }
+            input(classes = "form-control input-title", type = InputType.text) {
+                attrs {
+                    id = inputId
+                    disabled = state.disabled
+                    required = true
+                    placeholder = "Session title"
+                    onChangeFunction = readInput { value -> title = value }
+                }
+            }
+        }
+    }
+
+    private fun submitNewSession() {
+        setState { disabled = true }
+        val sessionCreateRequest = SessionCreateRequest(
             title = state.title,
             abstract = state.abstract,
-            visibility = if (state.isPrivate) SubmissionVisibility.PRIVATE else SubmissionVisibility.PUBLIC
+            visibility = if (state.isPrivate) SessionVisibility.PRIVATE else SessionVisibility.PUBLIC
         )
         GlobalScope.launch {
-            props.networkDataSource.postSubmission(submissionCreateRequest)
+            props.networkRepository.postSession(sessionCreateRequest)
                 .fold(
-                    { error ->
-                        setState {
-                            // todo
-                            disabled = false
-                        }
+                    {
+                        // todo
+                        setState { disabled = false }
                     },
                     {
-                        setState {
-                            redirectToProfile = true
-                        }
+                        setState { redirectToProfile = true }
                     }
                 )
         }
@@ -143,7 +156,7 @@ class AddSessionScreen : RComponent<AddSessionProps, AddSessionState>() {
     }
 }
 
-external interface AddSessionProps : WithNetworkDataSource
+external interface AddSessionProps : WithNetworkRepository
 
 external interface AddSessionState : RState {
     var title: String

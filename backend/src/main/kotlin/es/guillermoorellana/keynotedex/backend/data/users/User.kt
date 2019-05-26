@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.data.users
 
-import es.guillermoorellana.keynotedex.dto.User as DtoUser
+import es.guillermoorellana.keynotedex.datasource.dto.User as DtoUser
 
 data class User(
     val userId: String,
