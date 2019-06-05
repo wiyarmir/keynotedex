@@ -92,8 +92,7 @@ kotlin {
     }
 
     cocoapods {
-        // Configure fields required by CocoaPods.
-        summary = "Conferences, submissions and speakers"
+        summary = "Keynotedex common module"
         homepage = "https://github.com/wiyarmir/keynotedex"
     }
 }
