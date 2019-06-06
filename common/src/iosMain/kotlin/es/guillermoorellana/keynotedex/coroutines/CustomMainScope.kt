@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.datasource
+package es.guillermoorellana.keynotedex.coroutines
 
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineDispatcher
@@ -76,7 +76,9 @@ private fun logError(label: String, message: String, throwable: Throwable) {
     throwable.printStackTrace()
 }
 
-internal class CustomMainScope : CoroutineScope {
+internal actual fun CustomMainScope(): CoroutineScope = CustomMainScopeImpl()
+
+internal class CustomMainScopeImpl : CoroutineScope {
     private val dispatcher = MainDispatcher()
     private val job = Job()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->

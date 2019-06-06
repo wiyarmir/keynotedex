@@ -1,10 +1,21 @@
 package es.guillermoorellana.keynotedex.datasource
 
-@Suppress("NotImplementedDeclaration", "OptionalUnit")
-actual open class SessionStorage {
-    actual open fun put(value: String?): Unit = TODO()
+actual class SessionStorage {
+    var proxy: SessionStorageProxy =
+        @Suppress("NotImplementedDeclaration")
+        object : SessionStorageProxy {
+            override fun put(value: String?) = TODO()
+            override fun get(): String? = TODO()
+            override fun clear() = TODO()
+        }
 
-    actual open fun get(): String? = TODO()
+    actual fun put(value: String?) = proxy.put(value)
+    actual fun get(): String? = proxy.get()
+    actual fun clear() = proxy.clear()
+}
 
-    actual open fun clear(): Unit = TODO()
+interface SessionStorageProxy {
+    fun put(value: String?)
+    fun get(): String?
+    fun clear()
 }

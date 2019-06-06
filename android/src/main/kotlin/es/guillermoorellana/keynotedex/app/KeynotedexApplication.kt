@@ -2,26 +2,15 @@ package es.guillermoorellana.keynotedex.app
 
 import android.app.Application
 import android.content.Context
-import es.guillermoorellana.keynotedex.datasource.AndroidSessionStorage
-import es.guillermoorellana.keynotedex.datasource.NetworkDataSource
-import es.guillermoorellana.keynotedex.datasource.SessionStorage
-import es.guillermoorellana.keynotedex.repository.NetworkRepository
+import es.guillermoorellana.keynotedex.di.NotDagger
 
 class KeynotedexApplication : Application() {
 
-    private fun getSessionStorage(): SessionStorage = AndroidSessionStorage(applicationContext)
-
-    val repository: NetworkRepository by lazy {
-        NetworkRepository(
-            dataSource = NetworkDataSource(
-                sessionStorage = getSessionStorage()
-            )
-        )
-    }
+    val notDagger = NotDagger()
 
     override fun onCreate() {
         super.onCreate()
-
+        notDagger.sessionStorage.proxy = AndroidSessionStorage(applicationContext)
         Thread.setDefaultUncaughtExceptionHandler { _, throwable ->
             println(throwable)
             throwable.printStackTrace()

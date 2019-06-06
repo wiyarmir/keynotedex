@@ -2,14 +2,33 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="match_parent"
+        android:id="@+id/rootView"
+        android:orientation="vertical"
         android:layout_width="match_parent">
 
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mainText"
-            style="@style/TextAppearance.MaterialComponents.Headline1"
-            tools:text="test text"
+            android:id="@+id/userName"
+            android:padding="8dp"
+            style="@style/TextAppearance.MaterialComponents.Headline2"
+            tools:text="User numero uno"
+            />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userDescription"
+            android:padding="8dp"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            tools:text="This is my description it can be very long.\nIt can also span over\nmultiple\nlines."
+            />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sessionsList"
+            tools:listitem="@layout/item_session"
             />
 
 </LinearLayout>

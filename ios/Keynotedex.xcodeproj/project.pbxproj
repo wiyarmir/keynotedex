@@ -7,22 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1465D3BF8837F9BFA28E0E41 /* SubmissionUpdateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		20FC39FD8D91DE22A6F98FBD /* Submission.kt in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D15664C663B9D4AFC0452 /* Submission.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		2A5A014AA731DF861FF614F5 /* UserProfileResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		39EBD6BFEFCEF83451354005 /* SignInResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = CD7F4718D50746C30A378D66 /* SignInResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		4A0AB68E052485179DAD0A08 /* Paths.kt in Sources */ = {isa = PBXBuildFile; fileRef = B759B16F6776CBABF9D8A7FB /* Paths.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		4B9D6CA8F1C1FC874D8E4BC3 /* Conference.kt in Sources */ = {isa = PBXBuildFile; fileRef = A62E5862E0227A8B29D9C243 /* Conference.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		90C964C0866EFE4C0BAA899D /* SubmissionResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		1120BD404085AA70098E21A2 /* CustomMainScope.kt in Sources */ = {isa = PBXBuildFile; fileRef = 494E170F76ECD67DF2CFDF52 /* CustomMainScope.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		17128D8CD63B4B75B26D17E3 /* SessionStorage.kt in Sources */ = {isa = PBXBuildFile; fileRef = E5A53389CBC11BCF84F54C41 /* SessionStorage.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		2424794AA7D96F57455DFF63 /* NetworkRepository.kt in Sources */ = {isa = PBXBuildFile; fileRef = 6EEDBAE541295AF03D80301F /* NetworkRepository.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		29D97F9198CB076979020B53 /* UserProfile.kt in Sources */ = {isa = PBXBuildFile; fileRef = 7B86D9EC7936DFFD4F621C41 /* UserProfile.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		2FC8A9C10CD0746D0BD8F394 /* GetUserProfile.kt in Sources */ = {isa = PBXBuildFile; fileRef = 16E90242F212EE5EDA193FE5 /* GetUserProfile.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		31DB70FAC2357B0589CB754E /* CustomMainScope.kt in Sources */ = {isa = PBXBuildFile; fileRef = 9A00B3BB86355A538C0D6F26 /* CustomMainScope.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		3A792B0ECD692011020C36B2 /* SignOutResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = B905777DB7CD522A2549A257 /* SignOutResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		3C48F47D1B2641FD5E3083DE /* CustomMainScope.kt in Sources */ = {isa = PBXBuildFile; fileRef = D33A5E525F6DA92CADF532CF /* CustomMainScope.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		47493B079EA916025C44985B /* NotDagger.kt in Sources */ = {isa = PBXBuildFile; fileRef = A58E4121F088616AB7699830 /* NotDagger.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		552D3970533AD2F13AC8C73A /* Session.kt in Sources */ = {isa = PBXBuildFile; fileRef = 5E8F044EFE2C6050E82E3ED6 /* Session.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		64674320A45708979B6B37A3 /* Session.kt in Sources */ = {isa = PBXBuildFile; fileRef = 986EE667469D5005C6E5BB75 /* Session.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		68FD410CE276DE48CEF51720 /* SessionResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 6103DBBE71B75BB4DD67145C /* SessionResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		6C83062F4F3DBFD590490F0C /* NetworkDataSource.kt in Sources */ = {isa = PBXBuildFile; fileRef = A79CAF2A1156761B47445061 /* NetworkDataSource.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		70DD7619F5D6D421AAE42932 /* SessionCreateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = AD224B34B787005FF1128262 /* SessionCreateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		741486DDAB9532E8A5EDBD66 /* SignInResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = CDF385DA8A6AA066824E47EE /* SignInResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		7618086F99F7B19DD62999D2 /* SessionPreview.kt in Sources */ = {isa = PBXBuildFile; fileRef = 2B7172968D732BB53089870D /* SessionPreview.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		78799A8BA3EE1705B0DEE96C /* User.kt in Sources */ = {isa = PBXBuildFile; fileRef = F7D4AF0C6784610CEF269012 /* User.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		951C67F73F34D8CA5D1F1D1B /* GetUserSessions.kt in Sources */ = {isa = PBXBuildFile; fileRef = 14039CE34415D2F56A1BF1BA /* GetUserSessions.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
 		9722FD6CACD98D96123AB589 /* libPods-Keynotedex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C87C0025E846D2BC48A85D19 /* libPods-Keynotedex.a */; };
-		ADB51605701B0771862D8844 /* User.kt in Sources */ = {isa = PBXBuildFile; fileRef = 35CEBE1B93E93490133C360A /* User.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		ADB9BB1BA6310BBC79A78C05 /* ErrorResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 6547263808137162AC2525C6 /* ErrorResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		C28E48929C6AD6296162E30F /* ConferenceResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		C2A4E5FD3B4FA72973FDB158 /* Try.kt in Sources */ = {isa = PBXBuildFile; fileRef = F6D10AAE26DD0BE945EBEABD /* Try.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		CEF5FDC014DFE5740FD3A347 /* UserResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 96878178FA42FF24BB8D632A /* UserResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		D891B4504F4598267FE4546D /* SignOutResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		E2B3C9BF2CE6F350360E1D8F /* SubmissionCreateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EF03DBA3756358926D7F46C5 /* UserProfileUpdateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		AA1EF9EED4AC0C4AE9A64FB6 /* Try.kt in Sources */ = {isa = PBXBuildFile; fileRef = 60053FDE64D1F1CCD894D4D1 /* Try.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		B1D925D36993CA8A3C68A43B /* ConferenceResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 54E7158877CBB822AA1542AB /* ConferenceResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		BE505531CBD54A0393568555 /* SessionUpdateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = 76A1614DD4CC0401A6DDDC01 /* SessionUpdateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		BEFAEDF467B358556BF46AD7 /* SessionStorage.kt in Sources */ = {isa = PBXBuildFile; fileRef = 6AD81DE1A1A43695C2A9BE3D /* SessionStorage.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		C7A5796FB678F9B645FF0D8C /* ErrorResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = C59A48DF74639E6169617715 /* ErrorResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		CC2D577B0F6D5049CEF7DBEF /* ProfilePresenter.kt in Sources */ = {isa = PBXBuildFile; fileRef = 45EB87ABB070E67E6E6530AE /* ProfilePresenter.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		CDC915866C0B47FD89B40BEC /* SessionStorage.kt in Sources */ = {isa = PBXBuildFile; fileRef = A7532F2C13A19CA2469A5B66 /* SessionStorage.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		DA101BA136ED61131564A13E /* SessionStorage.kt in Sources */ = {isa = PBXBuildFile; fileRef = F4A743958EC2B9D6A7D1AA79 /* SessionStorage.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		DA76A607895C5AC1343743F4 /* CustomMainScope.kt in Sources */ = {isa = PBXBuildFile; fileRef = ACCA20A1382F5D9CB14A9404 /* CustomMainScope.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		DAB7EDCDCD4CD8E12D7203A2 /* Paths.kt in Sources */ = {isa = PBXBuildFile; fileRef = 3905B0EA284E155755EC72AD /* Paths.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		DAE49BD38E5CC3385325E4F0 /* UserProfileUpdateRequest.kt in Sources */ = {isa = PBXBuildFile; fileRef = ABC349FF0AEDD602160F0261 /* UserProfileUpdateRequest.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		DE8C669196D0A3D2642FBEB8 /* UserResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = A7E1C1F7A02ED0CB03A2DA1A /* UserResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		E3E96A3CE0408F803A82448E /* UserProfileResponse.kt in Sources */ = {isa = PBXBuildFile; fileRef = 63119DBDB6155602D057B85C /* UserProfileResponse.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
+		E7B0AADDAB120F3CCBBE9269 /* User.kt in Sources */ = {isa = PBXBuildFile; fileRef = 951F0A9ECF92866052638C5F /* User.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
 		FAB5AA262273D1190095C309 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA252273D1190095C309 /* AppDelegate.swift */; };
 		FAB5AA282273D1190095C309 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA272273D1190095C309 /* MainViewController.swift */; };
 		FAB5AA2B2273D1190095C309 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA292273D1190095C309 /* Main.storyboard */; };
@@ -30,6 +47,8 @@
 		FAB5AA302273D11A0095C309 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB5AA2E2273D11A0095C309 /* LaunchScreen.storyboard */; };
 		FAB5AA3B2273D11A0095C309 /* KeynotedexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA3A2273D11A0095C309 /* KeynotedexTests.swift */; };
 		FAB5AA462273D11A0095C309 /* KeynotedexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA452273D11A0095C309 /* KeynotedexUITests.swift */; };
+		FAF4602F22A01331009B36E4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4602E22A01331009B36E4 /* ProfileViewController.swift */; };
+		FD448A59BB64D0B517BDD8F7 /* Conference.kt in Sources */ = {isa = PBXBuildFile; fileRef = F28EB884DAFD51E1F92FEADB /* Conference.kt */; settings = {COMPILER_FLAGS = "-w"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,24 +69,42 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConferenceResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ConferenceResponse.kt; sourceTree = "<group>"; };
-		35CEBE1B93E93490133C360A /* User.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = User.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/User.kt; sourceTree = "<group>"; };
-		3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserProfileResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserProfileResponse.kt; sourceTree = "<group>"; };
-		5E9D15664C663B9D4AFC0452 /* Submission.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Submission.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Submission.kt; sourceTree = "<group>"; };
-		6547263808137162AC2525C6 /* ErrorResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ErrorResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/ErrorResponse.kt; sourceTree = "<group>"; };
-		7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserProfileUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/UserProfileUpdateRequest.kt; sourceTree = "<group>"; };
-		96878178FA42FF24BB8D632A /* UserResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = UserResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/UserResponse.kt; sourceTree = "<group>"; };
-		A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionUpdateRequest.kt; sourceTree = "<group>"; };
-		A62E5862E0227A8B29D9C243 /* Conference.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Conference.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/dto/Conference.kt; sourceTree = "<group>"; };
+		14039CE34415D2F56A1BF1BA /* GetUserSessions.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = GetUserSessions.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/usecase/GetUserSessions.kt; sourceTree = "<group>"; };
+		16E90242F212EE5EDA193FE5 /* GetUserProfile.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = GetUserProfile.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/usecase/GetUserProfile.kt; sourceTree = "<group>"; };
+		2B7172968D732BB53089870D /* SessionPreview.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionPreview.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/repository/model/SessionPreview.kt; sourceTree = "<group>"; };
+		3905B0EA284E155755EC72AD /* Paths.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Paths.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/api/Paths.kt; sourceTree = "<group>"; };
+		45EB87ABB070E67E6E6530AE /* ProfilePresenter.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = ProfilePresenter.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/presenter/ProfilePresenter.kt; sourceTree = "<group>"; };
+		494E170F76ECD67DF2CFDF52 /* CustomMainScope.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = CustomMainScope.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/coroutines/CustomMainScope.kt; sourceTree = "<group>"; };
+		54E7158877CBB822AA1542AB /* ConferenceResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = ConferenceResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/responses/ConferenceResponse.kt; sourceTree = "<group>"; };
+		5E8F044EFE2C6050E82E3ED6 /* Session.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Session.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/dto/Session.kt; sourceTree = "<group>"; };
+		60053FDE64D1F1CCD894D4D1 /* Try.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Try.kt; path = ../common/src/commonMain/kotlin/arrow/core/Try.kt; sourceTree = "<group>"; };
+		6103DBBE71B75BB4DD67145C /* SessionResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/responses/SessionResponse.kt; sourceTree = "<group>"; };
+		63119DBDB6155602D057B85C /* UserProfileResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = UserProfileResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/responses/UserProfileResponse.kt; sourceTree = "<group>"; };
+		6AD81DE1A1A43695C2A9BE3D /* SessionStorage.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionStorage.kt; path = ../common/src/jsMain/kotlin/es/guillermoorellana/keynotedex/datasource/SessionStorage.kt; sourceTree = "<group>"; };
+		6EEDBAE541295AF03D80301F /* NetworkRepository.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = NetworkRepository.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/repository/NetworkRepository.kt; sourceTree = "<group>"; };
+		76A1614DD4CC0401A6DDDC01 /* SessionUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/requests/SessionUpdateRequest.kt; sourceTree = "<group>"; };
+		7B86D9EC7936DFFD4F621C41 /* UserProfile.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = UserProfile.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/repository/model/UserProfile.kt; sourceTree = "<group>"; };
+		951F0A9ECF92866052638C5F /* User.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = User.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/dto/User.kt; sourceTree = "<group>"; };
+		986EE667469D5005C6E5BB75 /* Session.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Session.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/repository/model/Session.kt; sourceTree = "<group>"; };
+		9A00B3BB86355A538C0D6F26 /* CustomMainScope.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = CustomMainScope.kt; path = ../common/src/jsMain/kotlin/es/guillermoorellana/keynotedex/coroutines/CustomMainScope.kt; sourceTree = "<group>"; };
+		A58E4121F088616AB7699830 /* NotDagger.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = NotDagger.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/di/NotDagger.kt; sourceTree = "<group>"; };
+		A7532F2C13A19CA2469A5B66 /* SessionStorage.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionStorage.kt; path = ../common/src/jvmMain/kotlin/es/guillermoorellana/keynotedex/datasource/SessionStorage.kt; sourceTree = "<group>"; };
+		A79CAF2A1156761B47445061 /* NetworkDataSource.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = NetworkDataSource.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/NetworkDataSource.kt; sourceTree = "<group>"; };
+		A7E1C1F7A02ED0CB03A2DA1A /* UserResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = UserResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/responses/UserResponse.kt; sourceTree = "<group>"; };
 		A88AE4890C534AAC02CE6847 /* Pods-Keynotedex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Keynotedex.release.xcconfig"; path = "Target Support Files/Pods-Keynotedex/Pods-Keynotedex.release.xcconfig"; sourceTree = "<group>"; };
-		ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SignOutResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignOutResponse.kt; sourceTree = "<group>"; };
-		B759B16F6776CBABF9D8A7FB /* Paths.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Paths.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/api/Paths.kt; sourceTree = "<group>"; };
+		ABC349FF0AEDD602160F0261 /* UserProfileUpdateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = UserProfileUpdateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/requests/UserProfileUpdateRequest.kt; sourceTree = "<group>"; };
+		ACCA20A1382F5D9CB14A9404 /* CustomMainScope.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = CustomMainScope.kt; path = ../common/src/iosMain/kotlin/es/guillermoorellana/keynotedex/coroutines/CustomMainScope.kt; sourceTree = "<group>"; };
+		AD224B34B787005FF1128262 /* SessionCreateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionCreateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/requests/SessionCreateRequest.kt; sourceTree = "<group>"; };
+		B905777DB7CD522A2549A257 /* SignOutResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SignOutResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/responses/SignOutResponse.kt; sourceTree = "<group>"; };
+		C59A48DF74639E6169617715 /* ErrorResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = ErrorResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/responses/ErrorResponse.kt; sourceTree = "<group>"; };
 		C87C0025E846D2BC48A85D19 /* libPods-Keynotedex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Keynotedex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD7F4718D50746C30A378D66 /* SignInResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SignInResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SignInResponse.kt; sourceTree = "<group>"; };
-		D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/responses/SubmissionResponse.kt; sourceTree = "<group>"; };
+		CDF385DA8A6AA066824E47EE /* SignInResponse.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SignInResponse.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/responses/SignInResponse.kt; sourceTree = "<group>"; };
+		D33A5E525F6DA92CADF532CF /* CustomMainScope.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = CustomMainScope.kt; path = ../common/src/jvmMain/kotlin/es/guillermoorellana/keynotedex/coroutines/CustomMainScope.kt; sourceTree = "<group>"; };
+		E5A53389CBC11BCF84F54C41 /* SessionStorage.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionStorage.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/SessionStorage.kt; sourceTree = "<group>"; };
 		EAA4DB25672AAFAA467A6A46 /* Pods-Keynotedex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Keynotedex.debug.xcconfig"; path = "Target Support Files/Pods-Keynotedex/Pods-Keynotedex.debug.xcconfig"; sourceTree = "<group>"; };
-		F6D10AAE26DD0BE945EBEABD /* Try.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Try.kt; path = ../common/src/commonMain/kotlin/arrow/core/Try.kt; sourceTree = "<group>"; };
-		FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SubmissionCreateRequest.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/requests/SubmissionCreateRequest.kt; sourceTree = "<group>"; };
+		F28EB884DAFD51E1F92FEADB /* Conference.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = Conference.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/datasource/dto/Conference.kt; sourceTree = "<group>"; };
+		F4A743958EC2B9D6A7D1AA79 /* SessionStorage.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = SessionStorage.kt; path = ../common/src/iosMain/kotlin/es/guillermoorellana/keynotedex/datasource/SessionStorage.kt; sourceTree = "<group>"; };
+		F7D4AF0C6784610CEF269012 /* User.kt */ = {isa = PBXFileReference; includeInIndex = 1; name = User.kt; path = ../common/src/commonMain/kotlin/es/guillermoorellana/keynotedex/repository/model/User.kt; sourceTree = "<group>"; };
 		FAB5AA222273D1190095C309 /* Keynotedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keynotedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB5AA252273D1190095C309 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAB5AA272273D1190095C309 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +118,7 @@
 		FAB5AA412273D11A0095C309 /* KeynotedexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeynotedexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB5AA452273D11A0095C309 /* KeynotedexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynotedexUITests.swift; sourceTree = "<group>"; };
 		FAB5AA472273D11A0095C309 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAF4602E22A01331009B36E4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,92 +147,328 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		140B7FD4E4D5AF95782FDB6D /* api */ = {
+		01633357A5722A4D023058F3 /* coroutines */ = {
 			isa = PBXGroup;
 			children = (
-				B759B16F6776CBABF9D8A7FB /* Paths.kt */,
+				9A00B3BB86355A538C0D6F26 /* CustomMainScope.kt */,
 			);
-			name = api;
+			name = coroutines;
 			sourceTree = "<group>";
 		};
-		23B685E8F6BCFB505400B9F6 /* requests */ = {
+		0EEFF95A331D9752B23A678A /* es */ = {
 			isa = PBXGroup;
 			children = (
-				7D5DA3C1DFB2945D3477C441 /* UserProfileUpdateRequest.kt */,
-				FA0BE33E54B22DEA0CEF5812 /* SubmissionCreateRequest.kt */,
-				A1388FA09F750A25B69680D7 /* SubmissionUpdateRequest.kt */,
-			);
-			name = requests;
-			sourceTree = "<group>";
-		};
-		3D73C4042E53477322085B37 /* dto */ = {
-			isa = PBXGroup;
-			children = (
-				A62E5862E0227A8B29D9C243 /* Conference.kt */,
-				35CEBE1B93E93490133C360A /* User.kt */,
-				5E9D15664C663B9D4AFC0452 /* Submission.kt */,
-			);
-			name = dto;
-			sourceTree = "<group>";
-		};
-		42F857AD1EC672D7037CB898 /* keynotedex */ = {
-			isa = PBXGroup;
-			children = (
-				3D73C4042E53477322085B37 /* dto */,
-				D96F75BDCB7B699265D25AE9 /* responses */,
-				23B685E8F6BCFB505400B9F6 /* requests */,
-				140B7FD4E4D5AF95782FDB6D /* api */,
-			);
-			name = keynotedex;
-			sourceTree = "<group>";
-		};
-		6F11096D8E9F862E1F1F93AE /* core */ = {
-			isa = PBXGroup;
-			children = (
-				F6D10AAE26DD0BE945EBEABD /* Try.kt */,
-			);
-			name = core;
-			sourceTree = "<group>";
-		};
-		92C3D2B980B3306CFCCCAFD2 /* arrow */ = {
-			isa = PBXGroup;
-			children = (
-				6F11096D8E9F862E1F1F93AE /* core */,
-			);
-			name = arrow;
-			sourceTree = "<group>";
-		};
-		A28885A9A92A130A50813450 /* kotlin */ = {
-			isa = PBXGroup;
-			children = (
-				92C3D2B980B3306CFCCCAFD2 /* arrow */,
-				A8C316B56147F670F63FE44A /* es */,
-			);
-			name = kotlin;
-			sourceTree = "<group>";
-		};
-		A8C316B56147F670F63FE44A /* es */ = {
-			isa = PBXGroup;
-			children = (
-				BA4328D72495906EDD457DF7 /* guillermoorellana */,
+				AB1A7F5067327E58D75AE3E4 /* guillermoorellana */,
 			);
 			name = es;
 			sourceTree = "<group>";
 		};
-		B8B761FA9AF9058FEA79426C /* Kotlin */ = {
+		1483B2B7B9E5E48E9DEF0D48 /* datasource */ = {
 			isa = PBXGroup;
 			children = (
-				DE977F2CD6437ACCD5A9E56B /* commonMain */,
+				6218C0663EBD980695015FDD /* dto */,
+				BA863894FDA934D309B75D41 /* responses */,
+				A79CAF2A1156761B47445061 /* NetworkDataSource.kt */,
+				7244BCBFDB102916056E6C24 /* requests */,
+				E5A53389CBC11BCF84F54C41 /* SessionStorage.kt */,
+			);
+			name = datasource;
+			sourceTree = "<group>";
+		};
+		1918EF10706DF4C50B1F7CDD /* kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				C26E409E58FF48D2CD14B9E9 /* es */,
+			);
+			name = kotlin;
+			sourceTree = "<group>";
+		};
+		1B349392D2A273FCC79AB7B4 /* kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				88E148FD28225F05A93113C2 /* es */,
+			);
+			name = kotlin;
+			sourceTree = "<group>";
+		};
+		1DE288C9D98B71A139C15890 /* guillermoorellana */ = {
+			isa = PBXGroup;
+			children = (
+				DB14367CBAAFE02C8B11E9AE /* keynotedex */,
+			);
+			name = guillermoorellana;
+			sourceTree = "<group>";
+		};
+		27E7EBFA026B1D3467349CCB /* Kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				92139F24E3A8CA8D170FF546 /* iosMain */,
+				44E5058004BF7BB13BC0AE61 /* commonMain */,
+				6BA9F79C30633B34499E5E47 /* jvmMain */,
+				C9B7F6CC9FCA2158AA3C1E4F /* jsMain */,
 			);
 			name = Kotlin;
 			sourceTree = "<group>";
 		};
-		BA4328D72495906EDD457DF7 /* guillermoorellana */ = {
+		2998F41726D2DFBAC7A93C2B /* repository */ = {
 			isa = PBXGroup;
 			children = (
-				42F857AD1EC672D7037CB898 /* keynotedex */,
+				6EEDBAE541295AF03D80301F /* NetworkRepository.kt */,
+				F06E0913A81066D1CA57BA4F /* model */,
+			);
+			name = repository;
+			sourceTree = "<group>";
+		};
+		2A39E6276DB82A7F72158759 /* datasource */ = {
+			isa = PBXGroup;
+			children = (
+				6AD81DE1A1A43695C2A9BE3D /* SessionStorage.kt */,
+			);
+			name = datasource;
+			sourceTree = "<group>";
+		};
+		2B2356C585E06F88C44EDF79 /* keynotedex */ = {
+			isa = PBXGroup;
+			children = (
+				1483B2B7B9E5E48E9DEF0D48 /* datasource */,
+				2998F41726D2DFBAC7A93C2B /* repository */,
+				6911A615D2F7F8FDC81AB7D9 /* di */,
+				A2BCDBD2751DEEBBE2FF2465 /* presenter */,
+				3AEB77CC8981057AB1B38860 /* api */,
+				3ACF0D1B7F4A964135C6F1BC /* coroutines */,
+				8531300F9E4D5E2FB9B9FFC3 /* usecase */,
+			);
+			name = keynotedex;
+			sourceTree = "<group>";
+		};
+		31D3DA736404281F117D841E /* es */ = {
+			isa = PBXGroup;
+			children = (
+				7D86660CE5C8C1C850DA1AF5 /* guillermoorellana */,
+			);
+			name = es;
+			sourceTree = "<group>";
+		};
+		3ACF0D1B7F4A964135C6F1BC /* coroutines */ = {
+			isa = PBXGroup;
+			children = (
+				494E170F76ECD67DF2CFDF52 /* CustomMainScope.kt */,
+			);
+			name = coroutines;
+			sourceTree = "<group>";
+		};
+		3AEB77CC8981057AB1B38860 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				3905B0EA284E155755EC72AD /* Paths.kt */,
+			);
+			name = api;
+			sourceTree = "<group>";
+		};
+		3F653E2DF36E7AF8B258529D /* guillermoorellana */ = {
+			isa = PBXGroup;
+			children = (
+				95021703077FE94A982CDFC5 /* keynotedex */,
 			);
 			name = guillermoorellana;
+			sourceTree = "<group>";
+		};
+		44E5058004BF7BB13BC0AE61 /* commonMain */ = {
+			isa = PBXGroup;
+			children = (
+				47D4179308EDB31101622AB3 /* kotlin */,
+			);
+			name = commonMain;
+			sourceTree = "<group>";
+		};
+		47D4179308EDB31101622AB3 /* kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				D198351A017D88A40039B218 /* arrow */,
+				0EEFF95A331D9752B23A678A /* es */,
+			);
+			name = kotlin;
+			sourceTree = "<group>";
+		};
+		4D540A58500251FFDB1B0DBC /* coroutines */ = {
+			isa = PBXGroup;
+			children = (
+				D33A5E525F6DA92CADF532CF /* CustomMainScope.kt */,
+			);
+			name = coroutines;
+			sourceTree = "<group>";
+		};
+		5401263B71A7458E7ACCDD41 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				60053FDE64D1F1CCD894D4D1 /* Try.kt */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		6218C0663EBD980695015FDD /* dto */ = {
+			isa = PBXGroup;
+			children = (
+				F28EB884DAFD51E1F92FEADB /* Conference.kt */,
+				951F0A9ECF92866052638C5F /* User.kt */,
+				5E8F044EFE2C6050E82E3ED6 /* Session.kt */,
+			);
+			name = dto;
+			sourceTree = "<group>";
+		};
+		6911A615D2F7F8FDC81AB7D9 /* di */ = {
+			isa = PBXGroup;
+			children = (
+				A58E4121F088616AB7699830 /* NotDagger.kt */,
+			);
+			name = di;
+			sourceTree = "<group>";
+		};
+		6BA9F79C30633B34499E5E47 /* jvmMain */ = {
+			isa = PBXGroup;
+			children = (
+				1B349392D2A273FCC79AB7B4 /* kotlin */,
+			);
+			name = jvmMain;
+			sourceTree = "<group>";
+		};
+		70A9DA779E93EA8FF341A33A /* kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				31D3DA736404281F117D841E /* es */,
+			);
+			name = kotlin;
+			sourceTree = "<group>";
+		};
+		71C08CD63F14E7AF308F8105 /* datasource */ = {
+			isa = PBXGroup;
+			children = (
+				F4A743958EC2B9D6A7D1AA79 /* SessionStorage.kt */,
+			);
+			name = datasource;
+			sourceTree = "<group>";
+		};
+		7244BCBFDB102916056E6C24 /* requests */ = {
+			isa = PBXGroup;
+			children = (
+				ABC349FF0AEDD602160F0261 /* UserProfileUpdateRequest.kt */,
+				76A1614DD4CC0401A6DDDC01 /* SessionUpdateRequest.kt */,
+				AD224B34B787005FF1128262 /* SessionCreateRequest.kt */,
+			);
+			name = requests;
+			sourceTree = "<group>";
+		};
+		7D86660CE5C8C1C850DA1AF5 /* guillermoorellana */ = {
+			isa = PBXGroup;
+			children = (
+				83EAC5918ACEA6DB8C4065A8 /* keynotedex */,
+			);
+			name = guillermoorellana;
+			sourceTree = "<group>";
+		};
+		83EAC5918ACEA6DB8C4065A8 /* keynotedex */ = {
+			isa = PBXGroup;
+			children = (
+				71C08CD63F14E7AF308F8105 /* datasource */,
+				9D3B24F8EE413D98C3C0B0D5 /* coroutines */,
+			);
+			name = keynotedex;
+			sourceTree = "<group>";
+		};
+		8531300F9E4D5E2FB9B9FFC3 /* usecase */ = {
+			isa = PBXGroup;
+			children = (
+				14039CE34415D2F56A1BF1BA /* GetUserSessions.kt */,
+				16E90242F212EE5EDA193FE5 /* GetUserProfile.kt */,
+			);
+			name = usecase;
+			sourceTree = "<group>";
+		};
+		88E148FD28225F05A93113C2 /* es */ = {
+			isa = PBXGroup;
+			children = (
+				3F653E2DF36E7AF8B258529D /* guillermoorellana */,
+			);
+			name = es;
+			sourceTree = "<group>";
+		};
+		92139F24E3A8CA8D170FF546 /* iosMain */ = {
+			isa = PBXGroup;
+			children = (
+				70A9DA779E93EA8FF341A33A /* kotlin */,
+			);
+			name = iosMain;
+			sourceTree = "<group>";
+		};
+		95021703077FE94A982CDFC5 /* keynotedex */ = {
+			isa = PBXGroup;
+			children = (
+				D810003A9865BBCFAAE8E3F4 /* datasource */,
+				4D540A58500251FFDB1B0DBC /* coroutines */,
+			);
+			name = keynotedex;
+			sourceTree = "<group>";
+		};
+		9D3B24F8EE413D98C3C0B0D5 /* coroutines */ = {
+			isa = PBXGroup;
+			children = (
+				ACCA20A1382F5D9CB14A9404 /* CustomMainScope.kt */,
+			);
+			name = coroutines;
+			sourceTree = "<group>";
+		};
+		A2BCDBD2751DEEBBE2FF2465 /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+				45EB87ABB070E67E6E6530AE /* ProfilePresenter.kt */,
+			);
+			name = presenter;
+			sourceTree = "<group>";
+		};
+		AB1A7F5067327E58D75AE3E4 /* guillermoorellana */ = {
+			isa = PBXGroup;
+			children = (
+				2B2356C585E06F88C44EDF79 /* keynotedex */,
+			);
+			name = guillermoorellana;
+			sourceTree = "<group>";
+		};
+		BA863894FDA934D309B75D41 /* responses */ = {
+			isa = PBXGroup;
+			children = (
+				63119DBDB6155602D057B85C /* UserProfileResponse.kt */,
+				B905777DB7CD522A2549A257 /* SignOutResponse.kt */,
+				54E7158877CBB822AA1542AB /* ConferenceResponse.kt */,
+				C59A48DF74639E6169617715 /* ErrorResponse.kt */,
+				6103DBBE71B75BB4DD67145C /* SessionResponse.kt */,
+				A7E1C1F7A02ED0CB03A2DA1A /* UserResponse.kt */,
+				CDF385DA8A6AA066824E47EE /* SignInResponse.kt */,
+			);
+			name = responses;
+			sourceTree = "<group>";
+		};
+		C26E409E58FF48D2CD14B9E9 /* es */ = {
+			isa = PBXGroup;
+			children = (
+				1DE288C9D98B71A139C15890 /* guillermoorellana */,
+			);
+			name = es;
+			sourceTree = "<group>";
+		};
+		C9B7F6CC9FCA2158AA3C1E4F /* jsMain */ = {
+			isa = PBXGroup;
+			children = (
+				1918EF10706DF4C50B1F7CDD /* kotlin */,
+			);
+			name = jsMain;
+			sourceTree = "<group>";
+		};
+		D198351A017D88A40039B218 /* arrow */ = {
+			isa = PBXGroup;
+			children = (
+				5401263B71A7458E7ACCDD41 /* core */,
+			);
+			name = arrow;
 			sourceTree = "<group>";
 		};
 		D746DFDD63567F5994850DED /* Pods */ = {
@@ -206,26 +480,32 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		D96F75BDCB7B699265D25AE9 /* responses */ = {
+		D810003A9865BBCFAAE8E3F4 /* datasource */ = {
 			isa = PBXGroup;
 			children = (
-				3D220D7D99413EE3F39318DE /* UserProfileResponse.kt */,
-				ABCE870137E86FF16DBFE51D /* SignOutResponse.kt */,
-				15E527D1BE73AE3CC59C6589 /* ConferenceResponse.kt */,
-				6547263808137162AC2525C6 /* ErrorResponse.kt */,
-				96878178FA42FF24BB8D632A /* UserResponse.kt */,
-				D4A9D022D2ECC073E4373CBC /* SubmissionResponse.kt */,
-				CD7F4718D50746C30A378D66 /* SignInResponse.kt */,
+				A7532F2C13A19CA2469A5B66 /* SessionStorage.kt */,
 			);
-			name = responses;
+			name = datasource;
 			sourceTree = "<group>";
 		};
-		DE977F2CD6437ACCD5A9E56B /* commonMain */ = {
+		DB14367CBAAFE02C8B11E9AE /* keynotedex */ = {
 			isa = PBXGroup;
 			children = (
-				A28885A9A92A130A50813450 /* kotlin */,
+				2A39E6276DB82A7F72158759 /* datasource */,
+				01633357A5722A4D023058F3 /* coroutines */,
 			);
-			name = commonMain;
+			name = keynotedex;
+			sourceTree = "<group>";
+		};
+		F06E0913A81066D1CA57BA4F /* model */ = {
+			isa = PBXGroup;
+			children = (
+				2B7172968D732BB53089870D /* SessionPreview.kt */,
+				7B86D9EC7936DFFD4F621C41 /* UserProfile.kt */,
+				F7D4AF0C6784610CEF269012 /* User.kt */,
+				986EE667469D5005C6E5BB75 /* Session.kt */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 		F1E284C6D5D30FFD2B57BD03 /* Frameworks */ = {
@@ -243,9 +523,9 @@
 				FAB5AA392273D11A0095C309 /* KeynotedexTests */,
 				FAB5AA442273D11A0095C309 /* KeynotedexUITests */,
 				FAB5AA232273D1190095C309 /* Products */,
-				B8B761FA9AF9058FEA79426C /* Kotlin */,
 				D746DFDD63567F5994850DED /* Pods */,
 				F1E284C6D5D30FFD2B57BD03 /* Frameworks */,
+				27E7EBFA026B1D3467349CCB /* Kotlin */,
 			);
 			sourceTree = "<group>";
 		};
@@ -268,6 +548,7 @@
 				FAB5AA2C2273D11A0095C309 /* Assets.xcassets */,
 				FAB5AA2E2273D11A0095C309 /* LaunchScreen.storyboard */,
 				FAB5AA312273D11A0095C309 /* Info.plist */,
+				FAF4602E22A01331009B36E4 /* ProfileViewController.swift */,
 			);
 			path = Keynotedex;
 			sourceTree = "<group>";
@@ -449,21 +730,40 @@
 			files = (
 				FAB5AA282273D1190095C309 /* MainViewController.swift in Sources */,
 				FAB5AA262273D1190095C309 /* AppDelegate.swift in Sources */,
-				C2A4E5FD3B4FA72973FDB158 /* Try.kt in Sources */,
-				4B9D6CA8F1C1FC874D8E4BC3 /* Conference.kt in Sources */,
-				ADB51605701B0771862D8844 /* User.kt in Sources */,
-				20FC39FD8D91DE22A6F98FBD /* Submission.kt in Sources */,
-				2A5A014AA731DF861FF614F5 /* UserProfileResponse.kt in Sources */,
-				D891B4504F4598267FE4546D /* SignOutResponse.kt in Sources */,
-				C28E48929C6AD6296162E30F /* ConferenceResponse.kt in Sources */,
-				ADB9BB1BA6310BBC79A78C05 /* ErrorResponse.kt in Sources */,
-				CEF5FDC014DFE5740FD3A347 /* UserResponse.kt in Sources */,
-				90C964C0866EFE4C0BAA899D /* SubmissionResponse.kt in Sources */,
-				39EBD6BFEFCEF83451354005 /* SignInResponse.kt in Sources */,
-				EF03DBA3756358926D7F46C5 /* UserProfileUpdateRequest.kt in Sources */,
-				E2B3C9BF2CE6F350360E1D8F /* SubmissionCreateRequest.kt in Sources */,
-				1465D3BF8837F9BFA28E0E41 /* SubmissionUpdateRequest.kt in Sources */,
-				4A0AB68E052485179DAD0A08 /* Paths.kt in Sources */,
+				FAF4602F22A01331009B36E4 /* ProfileViewController.swift in Sources */,
+				DA101BA136ED61131564A13E /* SessionStorage.kt in Sources */,
+				DA76A607895C5AC1343743F4 /* CustomMainScope.kt in Sources */,
+				AA1EF9EED4AC0C4AE9A64FB6 /* Try.kt in Sources */,
+				FD448A59BB64D0B517BDD8F7 /* Conference.kt in Sources */,
+				E7B0AADDAB120F3CCBBE9269 /* User.kt in Sources */,
+				552D3970533AD2F13AC8C73A /* Session.kt in Sources */,
+				E3E96A3CE0408F803A82448E /* UserProfileResponse.kt in Sources */,
+				3A792B0ECD692011020C36B2 /* SignOutResponse.kt in Sources */,
+				B1D925D36993CA8A3C68A43B /* ConferenceResponse.kt in Sources */,
+				C7A5796FB678F9B645FF0D8C /* ErrorResponse.kt in Sources */,
+				68FD410CE276DE48CEF51720 /* SessionResponse.kt in Sources */,
+				DE8C669196D0A3D2642FBEB8 /* UserResponse.kt in Sources */,
+				741486DDAB9532E8A5EDBD66 /* SignInResponse.kt in Sources */,
+				6C83062F4F3DBFD590490F0C /* NetworkDataSource.kt in Sources */,
+				DAE49BD38E5CC3385325E4F0 /* UserProfileUpdateRequest.kt in Sources */,
+				BE505531CBD54A0393568555 /* SessionUpdateRequest.kt in Sources */,
+				70DD7619F5D6D421AAE42932 /* SessionCreateRequest.kt in Sources */,
+				17128D8CD63B4B75B26D17E3 /* SessionStorage.kt in Sources */,
+				2424794AA7D96F57455DFF63 /* NetworkRepository.kt in Sources */,
+				7618086F99F7B19DD62999D2 /* SessionPreview.kt in Sources */,
+				29D97F9198CB076979020B53 /* UserProfile.kt in Sources */,
+				78799A8BA3EE1705B0DEE96C /* User.kt in Sources */,
+				64674320A45708979B6B37A3 /* Session.kt in Sources */,
+				47493B079EA916025C44985B /* NotDagger.kt in Sources */,
+				CC2D577B0F6D5049CEF7DBEF /* ProfilePresenter.kt in Sources */,
+				DAB7EDCDCD4CD8E12D7203A2 /* Paths.kt in Sources */,
+				1120BD404085AA70098E21A2 /* CustomMainScope.kt in Sources */,
+				951C67F73F34D8CA5D1F1D1B /* GetUserSessions.kt in Sources */,
+				2FC8A9C10CD0746D0BD8F394 /* GetUserProfile.kt in Sources */,
+				CDC915866C0B47FD89B40BEC /* SessionStorage.kt in Sources */,
+				3C48F47D1B2641FD5E3083DE /* CustomMainScope.kt in Sources */,
+				BEFAEDF467B358556BF46AD7 /* SessionStorage.kt in Sources */,
+				31DB70FAC2357B0589CB754E /* CustomMainScope.kt in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

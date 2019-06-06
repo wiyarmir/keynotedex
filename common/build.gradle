@@ -92,8 +92,7 @@ kotlin {
     }
 
     cocoapods {
-        // Configure fields required by CocoaPods.
-        summary = "Conferences, submissions and speakers"
+        summary = "Keynotedex common module"
         homepage = "https://github.com/wiyarmir/keynotedex"
     }
 }
@@ -162,6 +161,7 @@ task iosTest {
         }
     }
 }
+
 detekt {
     input = files(
             "src/commonMain/kotlin",
@@ -169,5 +169,4 @@ detekt {
             "src/jsMain/kotlin",
             "src/jvmMain/kotlin",
     )
-    
 }
