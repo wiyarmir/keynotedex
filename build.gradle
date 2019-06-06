@@ -63,3 +63,7 @@ task stage() {
     group "distribution"
     dependsOn(':backend:release')
 }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompile).all {
+    kotlinOptions.freeCompilerArgs += ["-Xuse-experimental=kotlin.Experimental"]
+}

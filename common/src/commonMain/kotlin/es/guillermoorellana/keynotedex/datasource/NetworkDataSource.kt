@@ -33,6 +33,7 @@ import kotlinx.serialization.Decoder
 import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.internal.UnitDescriptor
 import kotlinx.serialization.json.Json
 
@@ -106,6 +107,7 @@ class NetworkDataSource(
     }
 }
 
+@UseExperimental(UnstableDefault::class)
 private fun makeHttpClient(
     networkConfig: NetworkConfig,
     sessionStorage: SessionStorage

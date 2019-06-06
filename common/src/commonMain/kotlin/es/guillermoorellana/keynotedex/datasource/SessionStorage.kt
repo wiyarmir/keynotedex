@@ -1,7 +1,7 @@
 package es.guillermoorellana.keynotedex.datasource
 
-@Suppress("UnusedPrivateMember")
-expect class SessionStorage {
+@Suppress("UnusedPrivateMember", "EmptyDefaultConstructor")
+expect class SessionStorage constructor() {
     fun put(value: String?)
     fun get(): String?
     fun clear()
