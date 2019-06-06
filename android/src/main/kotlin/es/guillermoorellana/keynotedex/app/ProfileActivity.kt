@@ -25,10 +25,11 @@ class ProfileActivity : AppCompatActivity() {
 
             private val userName: TextView = findViewById(R.id.userName)
             private val userDescription: TextView = findViewById(R.id.userDescription)
-            private val sessionsList: RecyclerView = findViewById<RecyclerView>(R.id.sessionsList).also {
-                it.adapter = sessionsAdapter
-                it.layoutManager = LinearLayoutManager(this@ProfileActivity)
-            }
+            private val sessionsList: RecyclerView = findViewById<RecyclerView>(R.id.sessionsList)
+                .also { recyclerView ->
+                    recyclerView.adapter = sessionsAdapter
+                    recyclerView.layoutManager = LinearLayoutManager(this@ProfileActivity)
+                }
 
             override fun showProfile(profile: UserProfile) {
                 userName.text = profile.user.displayName
