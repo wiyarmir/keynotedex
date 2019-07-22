@@ -99,9 +99,6 @@ private fun Application.createStorage(): KeynotedexDatabase =
     when {
         isDevelopment() -> KeynotedexDatabase(File("build/db"))
         else -> KeynotedexDatabase()
-    }.apply {
-        environment.log.warn("Populating db with mock data")
-        mockData(this@createStorage)
     }
 
 @UseExperimental(KtorExperimentalAPI::class)
