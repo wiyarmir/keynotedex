@@ -69,6 +69,8 @@ object Libs {
     const val kotlinxSerializationRuntimeNative =
         "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serialization}"
 
+    const val kaml = "com.charleskorn.kaml:kaml:0.11.0"
+
     const val ktorAuthJwt = "io.ktor:ktor-auth-jwt:${Versions.ktor}"
     const val ktorClientApache = "io.ktor:ktor-client-apache:${Versions.ktor}"
     const val ktorFreemaker = "io.ktor:ktor-freemarker:${Versions.ktor}"

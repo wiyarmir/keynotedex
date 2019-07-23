@@ -4,6 +4,7 @@ group = 'es.guillermoorellana.keynotedex'
 version = keynotedexVersion
 
 apply plugin: "kotlin"
+apply plugin: 'kotlinx-serialization'
 apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 
@@ -35,13 +36,15 @@ dependencies {
         exclude group: "org.jetbrains.kotlin"
     }
 
+    implementation Libs.logbackClassic
+    implementation Libs.fuel
+
+    implementation Libs.kaml
+
     testImplementation Libs.kotlinTestJunit
     testImplementation Libs.ktorServerTestHost
     testImplementation Libs.jsoup
     testImplementation Libs.mockitoKotlin
-
-    implementation Libs.logbackClassic
-    implementation Libs.fuel
 }
 
 compileKotlin {
