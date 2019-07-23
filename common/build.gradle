@@ -6,14 +6,6 @@ apply plugin: 'co.touchlab.kotlinxcodesync'
 version = keynotedexVersion
 
 kotlin {
-    targets {
-        def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") ? presets.iosArm64 : presets.iosX64
-
-        fromPreset(iOSTarget, 'ios') {
-            compilations.main.outputKinds("FRAMEWORK")
-            compilations.test.outputKinds("FRAMEWORK")
-        }
-    }
 
     jvm {
 
@@ -47,7 +39,7 @@ kotlin {
             }
         }
 
-        iosMain {
+        iOSMain {
             dependencies {
                 api Libs.kotlinxCoroutinesCoreNative
                 api Libs.kotlinxSerializationRuntimeNative
@@ -91,6 +83,20 @@ kotlin {
         }
     }
 
+    targets {
+        def buildForDevice = project.findProperty("kotlin.native.cocoapods.target") == "ios_arm"
+        if (buildForDevice) {
+            iosArm64("iOS64")
+            iosArm32("iOS32")
+
+            def iOSMain = sourceSets.iOSMain
+            sourceSets["iOS64Main"].dependsOn(iOSMain)
+            sourceSets["iOS32Main"].dependsOn(iOSMain)
+        } else {
+            iosX64("iOS")
+        }
+    }
+
     cocoapods {
         summary = "Keynotedex common module"
         homepage = "https://github.com/wiyarmir/keynotedex"
@@ -113,9 +119,9 @@ task packForXCode(type: Sync) {
     final String mode = System.getenv('CONFIGURATION')?.toUpperCase() ?: 'DEBUG'
 
     inputs.property "mode", mode
-    dependsOn kotlin.targets.ios.compilations.main.linkTaskName("FRAMEWORK", mode)
+    dependsOn kotlin.targets.iOS.binaries.findFramework(mode).linkTask
 
-    from { kotlin.targets.ios.compilations.main.getBinary("FRAMEWORK", mode).parentFile }
+    from { kotlin.targets.iOS.compilations.main.findFramework(mode).outputFile.parentFile }
     into frameworkDir
 
     doLast {
@@ -134,9 +140,9 @@ task packForXCodeTest(type: Sync) {
 
     inputs.property "mode", mode
     dependsOn "linkTestDebugFrameworkIos"
-    dependsOn kotlin.targets.ios.compilations.test.linkTaskName("FRAMEWORK", mode)
+    dependsOn kotlin.targets.iOS.binaries.findTest(mode).linkTask
 
-    from { kotlin.targets.ios.compilations.test.getBinary("FRAMEWORK", mode).parentFile }
+    from { kotlin.targets.iOS.binaries.findTest(mode).outputFile.parentFile }
     into frameworkDir
 
     doLast {
