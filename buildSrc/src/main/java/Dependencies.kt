@@ -8,10 +8,10 @@ object Versions {
     const val jsoup = "1.9.1"
     const val junit = "4.12"
     const val kotlin = "1.3.41"
-    const val react = "16.6.0"
+    const val react = "16.8.6"
     const val kotlinFrontendPlugin = "0.0.45"
-    const val kotlinJsExt = "1.0.1-pre.61-kotlin-1.3.0"
-    const val kotlinWrapper = "$react-pre.61-kotlin-1.3.0"
+    const val kotlinJsExt = "1.0.1-pre.79-kotlin-1.3.41"
+    const val kotlinWrapper = "$react-pre.79-kotlin-1.3.41"
     const val kotlinxCoroutines = "1.1.0"
     const val ktor = "1.1.5"
     const val logback = "1.2.1"
@@ -20,7 +20,7 @@ object Versions {
     const val serialization = "0.11.0"
     const val squash = "0.2.4"
     const val reactRouterDom = "4.3.1"
-    const val kotlinReactRouterDom = "$reactRouterDom-pre.68-kotlin-1.3.20"
+    const val kotlinReactRouterDom = "$reactRouterDom-pre.79-kotlin-1.3.41"
 }
 
 object Libs {

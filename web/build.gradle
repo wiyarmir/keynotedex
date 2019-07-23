@@ -46,9 +46,10 @@ kotlinFrontend {
         // wont be needed once https://github.com/ktorio/ktor/issues/961 is fixed
         dependency "text-encoding"
 
-        devDependency "webpack", "4.25.1"
-        devDependency "babel-loader", "7"
-        devDependency "babel-core", "6"
+        devDependency "webpack", "4"
+        devDependency "babel-loader", "8"
+        devDependency "@babel/core"
+        devDependency "@babel/preset-env"
         devDependency "css-loader"
         devDependency "karma"
         devDependency "style-loader"
