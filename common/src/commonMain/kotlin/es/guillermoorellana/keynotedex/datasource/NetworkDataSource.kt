@@ -11,7 +11,7 @@ import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
 import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.features.defaultRequest
-import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.Json
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.DEFAULT
 import io.ktor.client.features.logging.LogLevel
@@ -20,8 +20,6 @@ import io.ktor.client.features.logging.Logging
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.request.host
-import io.ktor.client.request.port
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.utils.EmptyContent
@@ -35,7 +33,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.internal.UnitDescriptor
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.Json.Companion.nonstrict
 
 class NetworkDataSource(
     sessionStorage: SessionStorage,
@@ -48,7 +46,7 @@ class NetworkDataSource(
         Try {
             httpClient.submitForm<SignInResponse>(
                 path = Paths.signUp,
-                formData = parametersOf(
+                formParameters = parametersOf(
                     "userId" to listOf(userId),
                     "password" to listOf(password),
                     "displayName" to listOf(displayName),
@@ -73,7 +71,7 @@ class NetworkDataSource(
     suspend fun login(userId: String, password: String): Try<SignInResponse> = Try {
         httpClient.submitForm<SignInResponse>(
             path = Paths.signIn,
-            formData = parametersOf(
+            formParameters = parametersOf(
                 "userId" to listOf(userId),
                 "password" to listOf(password)
             )
@@ -120,8 +118,8 @@ private fun makeHttpClient(
         }
         sessionStorage.get()?.let { token -> header(HttpHeaders.Authorization, "Bearer $token") }
     }
-    install(JsonFeature) {
-        serializer = KotlinxSerializer(json = Json.nonstrict).apply {
+    Json {
+        serializer = KotlinxSerializer(json = nonstrict).apply {
             register(SignInResponse.serializer())
             register(UserProfileResponse.serializer())
             register(SessionResponse.serializer())
@@ -130,7 +128,7 @@ private fun makeHttpClient(
             register(EmptyContentSerializer)
         }
     }
-    install(Logging) {
+    Logging {
         logger = Logger.DEFAULT
         level = LogLevel.INFO
     }
