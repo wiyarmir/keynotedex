@@ -30,6 +30,7 @@ kotlin {
                 api Libs.ktorClientAuth
                 api Libs.ktorClientJson
                 api Libs.ktorClientLogging
+                api Libs.ktorClientSerialization
             }
         }
 
@@ -46,6 +47,7 @@ kotlin {
                 api Libs.ktorClientIos
                 api Libs.ktorClientJsonNative
                 api Libs.ktorClientLoggingNative
+                api Libs.ktorClientSerializationNative
             }
         }
 
@@ -55,6 +57,7 @@ kotlin {
                 api Libs.kotlinxSerializationRuntime
                 api Libs.ktorClientJsonJvm
                 api Libs.ktorClientLoggingJvm
+                api Libs.ktorClientSerializationJvm
             }
         }
 
@@ -73,6 +76,7 @@ kotlin {
                 api Libs.ktorClientJs
                 api Libs.ktorClientJsonJs
                 api Libs.ktorClientLoggingJs
+                api Libs.ktorClientSerializationJs
             }
         }
 

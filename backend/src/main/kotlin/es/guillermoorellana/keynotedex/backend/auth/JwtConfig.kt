@@ -42,7 +42,7 @@ class JwtConfig(
         .withAudience(JwtAudience.USER.audienceName)
         .sign(algorithm)
 
-    fun applyJwtConfig(config: JWTAuthenticationProvider) = config.run {
+    fun applyJwtConfig(config: JWTAuthenticationProvider.Configuration) = config.run {
         realm = this@JwtConfig.realm
         verifier(verifier)
         validate { credential ->
