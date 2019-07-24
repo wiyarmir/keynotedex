@@ -21,6 +21,7 @@ object Versions {
     const val squash = "0.2.4"
     const val reactRouterDom = "4.3.1"
     const val kotlinReactRouterDom = "$reactRouterDom-pre.79-kotlin-1.3.41"
+    const val okhttp = "4.0.1"
 }
 
 object Libs {
@@ -72,7 +73,6 @@ object Libs {
     const val kaml = "com.charleskorn.kaml:kaml:0.11.0"
 
     const val ktorAuthJwt = "io.ktor:ktor-auth-jwt:${Versions.ktor}"
-    const val ktorClientApache = "io.ktor:ktor-client-apache:${Versions.ktor}"
     const val ktorFreemaker = "io.ktor:ktor-freemarker:${Versions.ktor}"
     const val ktorHtmlBuilder = "io.ktor:ktor-html-builder:${Versions.ktor}"
     const val ktorLocations = "io.ktor:ktor-locations:${Versions.ktor}"
@@ -96,6 +96,10 @@ object Libs {
     const val ktorClientLoggingJvm = "io.ktor:ktor-client-logging-jvm:${Versions.ktor}"
     const val ktorClientLoggingJs = "io.ktor:ktor-client-logging-js:${Versions.ktor}"
     const val ktorClientLoggingNative = "io.ktor:ktor-client-logging-native:${Versions.ktor}"
+    const val ktorClientOkHttp = "io.ktor:ktor-client-okhttp:${Versions.ktor}"
+
+    const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
+    const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
 
     const val slf4jApi = "org.slf4j:slf4j-api:1.7.25"
     const val slf4jAndroid = "uk.uuid.slf4j:slf4j-android:1.7.25-1"

@@ -23,11 +23,13 @@ dependencies {
 
     implementation Libs.kotlinxSerializationRuntime
 
+    implementation Libs.okhttp
+
     implementation Libs.ktorLocations
     implementation Libs.ktorFreemaker
     implementation Libs.ktorHtmlBuilder
     implementation Libs.ktorServerNetty
-    implementation Libs.ktorClientApache
+    implementation Libs.ktorClientOkHttp
     implementation Libs.ktorAuthJwt
 
     implementation Libs.ehcache
@@ -45,6 +47,9 @@ dependencies {
     testImplementation Libs.ktorServerTestHost
     testImplementation Libs.jsoup
     testImplementation Libs.mockitoKotlin
+    testImplementation Libs.mockWebServer
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.0.1"
 }
 
 compileKotlin {

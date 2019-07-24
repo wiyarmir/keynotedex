@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.frontmatter
 
+import es.guillermoorellana.keynotedex.backend.external.Conference
 import org.junit.Test
 
 class FrontMatterParserTest {
@@ -7,22 +8,22 @@ class FrontMatterParserTest {
     fun testComplete() {
         val bufferedReader = javaClass.getResourceAsStream("/frontmatter/complete.md")
             .bufferedReader()
+            .readText()
 
-        val conference = FrontMatterParser.parseConference(bufferedReader)
+        val parser = FrontMatterParser()
+
+        val conference = parser.parse(Conference.serializer(), bufferedReader)
     }
 
-    @Test
-    fun testFromString() {
-        val text = javaClass.getResource("/frontmatter/complete.md").readText()
-
-        val conference = FrontMatterParser.parseConference(text)
-    }
 
     @Test
     fun testMinimal() {
         val bufferedReader = javaClass.getResourceAsStream("/frontmatter/minimal.md")
             .bufferedReader()
+            .readText()
 
-        val conference = FrontMatterParser.parseConference(bufferedReader)
+        val parser = FrontMatterParser()
+
+        val conference = parser.parse(Conference.serializer(), bufferedReader)
     }
 }

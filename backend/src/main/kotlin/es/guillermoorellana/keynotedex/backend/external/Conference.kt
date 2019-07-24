@@ -1,9 +1,9 @@
-package es.guillermoorellana.keynotedex.backend.frontmatter
+package es.guillermoorellana.keynotedex.backend.external
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FMConference(
+data class Conference(
     val name: String,
     val location: String,
     val date_start: String,
