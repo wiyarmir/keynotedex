@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.application.ApplicationEnvironment
 import io.ktor.auth.jwt.JWTAuthenticationProvider
+import io.ktor.util.KtorExperimentalAPI
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
@@ -18,6 +19,7 @@ enum class JwtAudience(val audienceName: String) {
     USER("user")
 }
 
+@UseExperimental(KtorExperimentalAPI::class)
 class JwtConfig(
     environment: ApplicationEnvironment,
     secret: String = environment.config.propertyOrNull("jwt.secret")?.getString() ?: "deadbeef",

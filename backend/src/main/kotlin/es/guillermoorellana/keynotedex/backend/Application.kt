@@ -104,9 +104,10 @@ private fun Application.createStorage(): KeynotedexDatabase = when {
     isDevelopment() -> KeynotedexDatabase(File("build/db"))
     else -> KeynotedexDatabase()
 }.apply {
-
-    listOf("npatarino/tech-conferences-spain" to "_conferences/")
+    environment.config.configList("keynotedex.conferences.frontload")
+        .map { it.property("repo").getString() to it.property("path").getString() }
         .flatMap { (repo, path) ->
+            environment.log.debug("Loading conferences at repo $repo from path $path")
             GithubConferenceScrapper(oauthToken = environment.config.propertyOrNull("keynotedex.oauth.github.token")?.getString())
                 .fetch(repo, path)
         }
