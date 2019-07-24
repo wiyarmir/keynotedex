@@ -89,7 +89,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
             .toList()
     }
 
-    override fun conference(conferenceId: String) = db.transaction {
+    override fun conference(conferenceId: Long) = db.transaction {
         from(ConferencesTable)
             .where { ConferencesTable.id eq conferenceId }
             .execute()
