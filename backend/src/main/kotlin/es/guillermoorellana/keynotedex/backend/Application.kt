@@ -7,6 +7,8 @@ import es.guillermoorellana.keynotedex.backend.auth.createJwtConfig
 import es.guillermoorellana.keynotedex.backend.auth.createJwtTokenProvider
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexDatabase
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
+import es.guillermoorellana.keynotedex.backend.data.conferences.ConferencesTable
+import es.guillermoorellana.keynotedex.backend.external.GithubConferenceScrapper
 import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
@@ -36,6 +38,9 @@ import io.ktor.routing.Routing
 import io.ktor.routing.accept
 import io.ktor.util.KtorExperimentalAPI
 import io.ktor.util.error
+import org.jetbrains.squash.connection.transaction
+import org.jetbrains.squash.statements.insertInto
+import org.jetbrains.squash.statements.values
 import java.io.File
 
 class Keynotedex
@@ -95,11 +100,29 @@ private fun Route.index() {
     }
 }
 
-private fun Application.createStorage(): KeynotedexDatabase =
-    when {
-        isDevelopment() -> KeynotedexDatabase(File("build/db"))
-        else -> KeynotedexDatabase()
-    }
+private fun Application.createStorage(): KeynotedexDatabase = when {
+    isDevelopment() -> KeynotedexDatabase(File("build/db"))
+    else -> KeynotedexDatabase()
+}.apply {
+
+    listOf("npatarino/tech-conferences-spain" to "_conferences/")
+        .flatMap { (repo, path) ->
+            GithubConferenceScrapper(oauthToken = environment.config.propertyOrNull("keynotedex.oauth.github.token")?.getString())
+                .fetch(repo, path)
+        }
+        .toList()
+        .let {
+            db.transaction {
+                it.forEach { conference ->
+                    insertInto(ConferencesTable)
+                        .values { values ->
+                            values[name] = conference.name
+                        }
+                        .execute()
+                }
+            }
+        }
+}
 
 @UseExperimental(KtorExperimentalAPI::class)
 fun Application.isDevelopment() =
