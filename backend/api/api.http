@@ -30,22 +30,22 @@ Accept: application/json
 Cache-Control: no-cache
 
 ###
-# SUBMISSIONS
+# SESSIONS
 ###
 
-GET http://localhost:9090/api/v1/submissions
+GET http://localhost:9090/api/v1/sessions
 Accept: application/json
 Cache-Control: no-cache
 
 ###
 
-GET http://localhost:9090/api/v1/submissions/2
+GET http://localhost:9090/api/v1/sessions/2
 Accept: application/json
 Cache-Control: no-cache
 
 ###
 
-POST http://localhost:9090/api/v1/submissions
+POST http://localhost:9090/api/v1/sessions
 Accept: application/json
 Cache-Control: no-cache
 Authorization: Bearer
@@ -60,7 +60,7 @@ Authorization: Bearer
 
 ###
 
-PUT http://localhost:9090/api/v1/submissions
+PUT http://localhost:9090/api/v1/sessions
 Accept: application/json
 Cache-Control: no-cache
 
@@ -80,19 +80,19 @@ Cache-Control: no-cache
 # CONFERENCE
 ###
 
-GET http://localhost:9090/api/v1/conference
+GET http://localhost:9090/api/v1/conferences
 Accept: application/json
 Cache-Control: no-cache
 
 ###
 
-GET http://localhost:9090/api/v1/conference/0
+GET http://localhost:9090/api/v1/conferences/0
 Accept: application/json
 Cache-Control: no-cache
 
 ###
 
-GET http://localhost:9090/api/v1/conference/3
+GET http://localhost:9090/api/v1/conferences/3
 Accept: application/json
 Cache-Control: no-cache
 
