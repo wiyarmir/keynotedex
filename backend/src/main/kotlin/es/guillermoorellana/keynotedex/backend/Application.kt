@@ -39,6 +39,7 @@ import io.ktor.routing.accept
 import io.ktor.util.KtorExperimentalAPI
 import io.ktor.util.error
 import org.jetbrains.squash.connection.transaction
+import org.jetbrains.squash.statements.deleteFrom
 import org.jetbrains.squash.statements.insertInto
 import org.jetbrains.squash.statements.values
 import java.io.File
@@ -114,6 +115,7 @@ private fun Application.createStorage(): KeynotedexDatabase = when {
         .toList()
         .let {
             db.transaction {
+                if (isDevelopment()) deleteFrom(ConferencesTable).execute()
                 it.forEach { conference ->
                     insertInto(ConferencesTable)
                         .values { values ->
