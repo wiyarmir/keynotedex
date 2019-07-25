@@ -100,16 +100,16 @@ class Application : RComponent<ApplicationProps, ApplicationState>() {
             route("/privacy", PrivacyPolicyScreen::class, exact = true)
             route("/terms", TOSScreen::class, exact = true)
             route("/events", exact = true) {
-                eventsScreen()
+                eventsScreen {
+                    attrs { networkRepository = props.networkRepository }
+                }
             }
             route("/sessions", exact = true) {
                 sessionsScreen()
             }
             route("/sessions/add", exact = true) {
                 addSession {
-                    attrs {
-                        networkRepository = props.networkRepository
-                    }
+                    attrs { networkRepository = props.networkRepository }
                 }
             }
             route<SessionRouteProps>("/:userId/:sessionId", exact = true) { routeProps ->

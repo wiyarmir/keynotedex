@@ -124,6 +124,7 @@ private fun Application.createStorage(): KeynotedexDatabase = when {
                         .execute()
                 }
             }
+            environment.log.debug("Done loading conferences")
         }
 }
 

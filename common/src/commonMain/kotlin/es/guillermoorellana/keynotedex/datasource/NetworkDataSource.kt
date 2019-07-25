@@ -6,6 +6,7 @@ import es.guillermoorellana.keynotedex.datasource.dto.Session
 import es.guillermoorellana.keynotedex.datasource.requests.SessionCreateRequest
 import es.guillermoorellana.keynotedex.datasource.requests.SessionUpdateRequest
 import es.guillermoorellana.keynotedex.datasource.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.datasource.responses.ConferencesResponse
 import es.guillermoorellana.keynotedex.datasource.responses.SessionResponse
 import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
 import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
@@ -101,6 +102,12 @@ class NetworkDataSource(
         httpClient.put<Unit>(
             path = Paths.sessions.replace("{sessionId?}", ""),
             body = session
+        )
+    }
+
+    suspend fun getEvents(): Try<ConferencesResponse> = Try {
+        httpClient.get<ConferencesResponse>(
+            path = Paths.conferences.replace("{conferenceId?}", "")
         )
     }
 }
