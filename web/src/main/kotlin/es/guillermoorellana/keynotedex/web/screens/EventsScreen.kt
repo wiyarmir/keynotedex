@@ -72,6 +72,7 @@ class EventsScreen : RComponent<EventsScreenProps, EventsScreenState>() {
                         +"Name"
                     }
                     th(scope = col) { +"Location" }
+                    th(scope = col) { +"Call for Papers" }
                 }
             }
             tbody {
@@ -84,9 +85,10 @@ class EventsScreen : RComponent<EventsScreenProps, EventsScreenState>() {
         tr {
             td { +dateStart }
             td { +dateEnd }
-            td { twitter?.let { a(href = it) { renderTwitterLogo() } } }
-            td { a(href = website) { +name } }
+            td { twitter?.let { a(href = it, target = "_blank") { renderTwitterLogo() } } }
+            td { a(href = website, target = "_blank") { +name } }
             td { +(location ?: "") }
+            td { cfpSite?.let { a(href = it, target = "_blank") { +"CfP Site" } } }
         }
     }
 }

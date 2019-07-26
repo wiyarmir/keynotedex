@@ -84,6 +84,7 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
 
     override fun conferences() = db.transaction {
         from(ConferencesTable)
+            .orderByDescending(ConferencesTable.dateStart)
             .execute()
             .map(::transformConference)
             .toList()
