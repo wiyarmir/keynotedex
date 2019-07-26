@@ -4,6 +4,9 @@ import es.guillermoorellana.keynotedex.backend.external.GithubConferenceScrapper
 import es.guillermoorellana.keynotedex.backend.external.getHttpClientConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.mockwebserver.MockResponse
@@ -27,7 +30,7 @@ class GithubConferenceScrapperTest {
     }
 
     @Test
-    fun testSomething() {
+    fun testScrapping() = runBlocking {
         server.enqueue(
             MockResponse()
                 .addHeader("Content-Type", "application/json; charset=utf-8")

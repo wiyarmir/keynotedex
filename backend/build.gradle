@@ -43,13 +43,12 @@ dependencies {
 
     implementation Libs.kaml
 
+    testImplementation Libs.kotlinxCoroutinesTest
     testImplementation Libs.kotlinTestJunit
     testImplementation Libs.ktorServerTestHost
     testImplementation Libs.jsoup
     testImplementation Libs.mockitoKotlin
     testImplementation Libs.mockWebServer
-
-    implementation "com.squareup.okhttp3:logging-interceptor:4.0.1"
 }
 
 compileKotlin {
