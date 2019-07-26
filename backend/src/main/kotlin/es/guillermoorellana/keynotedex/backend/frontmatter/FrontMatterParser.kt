@@ -15,4 +15,3 @@ class FrontMatterParser(
         .joinToString(separator = "\n")
         .let { yamlParser.parse(serializer, it) }
 }
-

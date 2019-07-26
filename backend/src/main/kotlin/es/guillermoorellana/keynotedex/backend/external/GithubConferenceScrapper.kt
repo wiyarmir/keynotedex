@@ -25,7 +25,6 @@ fun getHttpClientConfig(oauthToken: String? = null): HttpClientConfig<*>.() -> U
     }
 }
 
-
 class GithubConferenceScrapper(
     private val httpClient: HttpClient,
     private val frontMatterParser: FrontMatterParser

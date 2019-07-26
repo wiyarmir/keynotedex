@@ -21,8 +21,8 @@ suspend fun Application.populateConferences(database: KeynotedexStorage) = datab
         .map { it.toDao() }
         .toList()
         .also { environment.log.debug("Loading ${it.size} conferences into the database") }
-        .let {
-            database.putAll(it)
+        .let { conferences ->
+            database.putAll(conferences)
             environment.log.debug("Done loading conferences")
         }
 }

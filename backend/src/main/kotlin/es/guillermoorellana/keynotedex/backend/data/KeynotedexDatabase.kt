@@ -118,7 +118,6 @@ class KeynotedexDatabase(private val db: DatabaseConnection = H2Connection.creat
         }
     }
 
-
     override fun getById(sessionId: Long): Session? = db.transaction {
         from(SessionsTable)
             .where { SessionsTable.id eq sessionId }
