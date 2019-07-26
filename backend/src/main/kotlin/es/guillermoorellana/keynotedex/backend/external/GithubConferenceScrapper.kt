@@ -8,7 +8,6 @@ import io.ktor.client.features.json.Json
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json.Companion.nonstrict
@@ -39,18 +38,14 @@ class GithubConferenceScrapper(
 
     private val baseUrl: String = "https://api.github.com"
 
-    fun fetch(repo: String, path: String): List<Conference> =
+    suspend fun fetch(repo: String, path: String): List<Conference> =
         getDirectoryContent(repo, path)
-            .asSequence()
             .map { it.downloadUrl }
-            .map { runBlocking { httpClient.get<String>(it) } }
+            .map { httpClient.get<String>(it) }
             .map { frontMatterParser.parse(Conference.serializer(), it) }
-            .toList()
 
-
-    private fun getDirectoryContent(repo: String, path: String) = runBlocking {
+    private suspend fun getDirectoryContent(repo: String, path: String) =
         httpClient.get<List<GithubFile>>("$baseUrl/repos/$repo/contents/$path")
-    }
 }
 
 @Serializable
