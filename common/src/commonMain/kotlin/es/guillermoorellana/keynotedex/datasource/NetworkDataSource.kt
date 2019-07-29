@@ -6,6 +6,7 @@ import es.guillermoorellana.keynotedex.datasource.dto.Session
 import es.guillermoorellana.keynotedex.datasource.requests.SessionCreateRequest
 import es.guillermoorellana.keynotedex.datasource.requests.SessionUpdateRequest
 import es.guillermoorellana.keynotedex.datasource.requests.UserProfileUpdateRequest
+import es.guillermoorellana.keynotedex.datasource.responses.ConferencesResponse
 import es.guillermoorellana.keynotedex.datasource.responses.SessionResponse
 import es.guillermoorellana.keynotedex.datasource.responses.SignInResponse
 import es.guillermoorellana.keynotedex.datasource.responses.UserProfileResponse
@@ -23,7 +24,6 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.utils.EmptyContent
-import io.ktor.http.DEFAULT_PORT
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.parametersOf
@@ -37,7 +37,7 @@ import kotlinx.serialization.json.Json.Companion.nonstrict
 
 class NetworkDataSource(
     sessionStorage: SessionStorage,
-    networkConfig: NetworkConfig = NetworkConfig()
+    networkConfig: NetworkConfig = defaultNetworkConfig
 ) {
 
     private val httpClient: HttpClient = makeHttpClient(networkConfig, sessionStorage)
@@ -103,6 +103,12 @@ class NetworkDataSource(
             body = session
         )
     }
+
+    suspend fun getEvents(): Try<ConferencesResponse> = Try {
+        httpClient.get<ConferencesResponse>(
+            path = Paths.conferences.replace("{conferenceId?}", "")
+        )
+    }
 }
 
 @UseExperimental(UnstableDefault::class)
@@ -141,11 +147,5 @@ private object EmptyContentSerializer : KSerializer<EmptyContent> {
 
     override fun serialize(encoder: Encoder, obj: EmptyContent) = encoder.encodeUnit()
 }
-
-data class NetworkConfig(
-    val host: String = "keynotedex.wiyarmir.es",
-    val port: Int = DEFAULT_PORT,
-    val secure: Boolean = true
-)
 
 val defaultNetworkConfig = NetworkConfig()

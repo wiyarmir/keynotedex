@@ -10,6 +10,7 @@ import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.datasource.responses.ErrorResponse
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
+import io.ktor.application.ApplicationStarted
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
@@ -36,6 +37,7 @@ import io.ktor.routing.Routing
 import io.ktor.routing.accept
 import io.ktor.util.KtorExperimentalAPI
 import io.ktor.util.error
+import kotlinx.coroutines.launch
 import java.io.File
 
 class Keynotedex
@@ -78,6 +80,9 @@ fun Application.keynotedex(
         api(storage, jwtTokenProvider)
         index()
     }
+    environment.monitor.subscribe(ApplicationStarted) {
+        launch { populateConferences(storage) }
+    }
 }
 
 @UseExperimental(KtorExperimentalLocationsAPI::class)
@@ -95,14 +100,10 @@ private fun Route.index() {
     }
 }
 
-private fun Application.createStorage(): KeynotedexDatabase =
-    when {
-        isDevelopment() -> KeynotedexDatabase(File("build/db"))
-        else -> KeynotedexDatabase()
-    }.apply {
-        environment.log.warn("Populating db with mock data")
-        mockData(this@createStorage)
-    }
+private fun Application.createStorage(): KeynotedexDatabase = when {
+    isDevelopment() -> KeynotedexDatabase(File("build/db"))
+    else -> KeynotedexDatabase()
+}
 
 @UseExperimental(KtorExperimentalAPI::class)
 fun Application.isDevelopment() =

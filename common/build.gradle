@@ -21,7 +21,13 @@ kotlin {
     }
 
     sourceSets {
+        commonRelease {}
+
+        commonDebug {}
+
         commonMain {
+            if (rootProject.hasProperty("debug")) dependsOn commonDebug else dependsOn commonRelease
+
             dependencies {
                 api Libs.kotlinStdlibCommon
                 api Libs.kotlinxCoroutinesCoreCommon
@@ -175,7 +181,7 @@ task iosTest {
 detekt {
     input = files(
             "src/commonMain/kotlin",
-            "src/iosMain/kotlin",
+            "src/iOSMain/kotlin",
             "src/jsMain/kotlin",
             "src/jvmMain/kotlin",
     )

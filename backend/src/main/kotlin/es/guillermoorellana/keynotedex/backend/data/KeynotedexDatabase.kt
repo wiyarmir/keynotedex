@@ -1,5 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.data
 
+import es.guillermoorellana.keynotedex.backend.data.conferences.Conference
 import es.guillermoorellana.keynotedex.backend.data.conferences.ConferencesTable
 import es.guillermoorellana.keynotedex.backend.data.conferences.transformConference
 import es.guillermoorellana.keynotedex.backend.data.sessions.Session
@@ -26,7 +27,8 @@ import java.io.File
 
 val hashids = Hashids(salt = "KeynotedexIsGreat", length = 10)
 
-class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryConnection()) : KeynotedexStorage {
+class KeynotedexDatabase(private val db: DatabaseConnection = H2Connection.createMemoryConnection()) :
+    KeynotedexStorage {
     constructor(dir: File) : this(H2Connection.create("jdbc:h2:file:${dir.canonicalFile.absolutePath}"))
 
     init {
@@ -84,17 +86,36 @@ class KeynotedexDatabase(val db: DatabaseConnection = H2Connection.createMemoryC
 
     override fun conferences() = db.transaction {
         from(ConferencesTable)
+            .orderByDescending(ConferencesTable.dateStart)
             .execute()
             .map(::transformConference)
             .toList()
     }
 
-    override fun conference(conferenceId: String) = db.transaction {
+    override fun conference(conferenceId: Long) = db.transaction {
         from(ConferencesTable)
             .where { ConferencesTable.id eq conferenceId }
             .execute()
             .map(::transformConference)
             .singleOrNull()
+    }
+
+    override fun putAll(conferences: List<Conference>) = db.transaction {
+        conferences.forEach { conference ->
+            insertInto(ConferencesTable)
+                .values { values ->
+                    values[name] = conference.name
+                    values[dateStart] = conference.dateStart
+                    values[dateEnd] = conference.dateEnd
+                    values[location] = conference.location
+                    values[website] = conference.website
+                    values[twitter] = conference.twitter
+                    values[cfpStart] = conference.cfpStart
+                    values[cfpEnd] = conference.cfpEnd
+                    values[cfpSite] = conference.cfpSite
+                }
+                .execute()
+        }
     }
 
     override fun getById(sessionId: Long): Session? = db.transaction {
