@@ -9,6 +9,8 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UnstableDefault
+import kotlinx.serialization.json.Json.Companion.nonstrict
 import kotlinx.serialization.list
 
 class GithubHttpClient(
@@ -26,16 +28,17 @@ class GithubHttpClient(
 
     suspend fun getDirectoryFiles(repo: String, path: String): List<String> =
         getDirectoryContent(repo, path)
-            .map { it.downloadUrl }
+            .mapNotNull { it.downloadUrl }
             .map { httpClient.get<String>(it) }
 }
 
+@UseExperimental(UnstableDefault::class)
 fun getHttpClientConfig(oauthToken: String? = null): HttpClientConfig<*>.() -> Unit = {
     defaultRequest {
         if (oauthToken != null) header("Authorization", "token $oauthToken")
     }
     Json {
-        serializer = KotlinxSerializer(json = kotlinx.serialization.json.Json.nonstrict).apply {
+        serializer = KotlinxSerializer(json = nonstrict).apply {
             registerList(GithubFile.serializer())
             register(GithubFile.serializer().list)
         }
@@ -45,4 +48,4 @@ fun getHttpClientConfig(oauthToken: String? = null): HttpClientConfig<*>.() -> U
 fun httpClientWithGithubToken(oauthToken: String?) = HttpClient(getHttpClientConfig(oauthToken))
 
 @Serializable
-data class GithubFile(@SerialName("download_url") val downloadUrl: String)
+data class GithubFile(@SerialName("download_url") val downloadUrl: String?, val path: String)

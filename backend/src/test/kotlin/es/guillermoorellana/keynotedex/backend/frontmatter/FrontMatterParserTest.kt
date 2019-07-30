@@ -1,6 +1,6 @@
 package es.guillermoorellana.keynotedex.backend.frontmatter
 
-import es.guillermoorellana.keynotedex.backend.external.Conference
+import es.guillermoorellana.keynotedex.backend.external.frontmatter.Conference
 import org.junit.Test
 
 class FrontMatterParserTest {

@@ -1,5 +1,6 @@
-package es.guillermoorellana.keynotedex.backend.external
+package es.guillermoorellana.keynotedex.backend.external.frontmatter
 
+import es.guillermoorellana.keynotedex.backend.external.GithubHttpClient
 import es.guillermoorellana.keynotedex.backend.frontmatter.FrontMatterParser
 
 class GithubFrontMatterScrapper(

@@ -9,7 +9,7 @@ import org.jetbrains.squash.definition.varchar
 
 object ConferencesTable : TableDefinition() {
     val id = long("id").primaryKey().autoIncrement()
-    val name = varchar("name", 64)
+    val name = varchar("name", 256)
     val dateStart = varchar("dateStart", 64)
     val dateEnd = varchar("dateEnd", 64)
     val location = varchar("location", 64).nullable()
