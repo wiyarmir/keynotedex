@@ -2,6 +2,7 @@ package es.guillermoorellana.keynotedex.backend
 
 import es.guillermoorellana.keynotedex.backend.data.KeynotedexStorage
 import es.guillermoorellana.keynotedex.backend.external.GithubFrontMatterScrapper
+import es.guillermoorellana.keynotedex.backend.external.GithubHttpClient
 import es.guillermoorellana.keynotedex.backend.external.toDao
 import io.ktor.application.Application
 import io.ktor.util.KtorExperimentalAPI
@@ -9,13 +10,13 @@ import io.ktor.util.KtorExperimentalAPI
 @UseExperimental(KtorExperimentalAPI::class)
 suspend fun Application.populateConferences(database: KeynotedexStorage) = database.apply {
     if (conferences().isNotEmpty()) return@apply
+    val oauthToken = environment.config.propertyOrNull("keynotedex.oauth.github.token")?.getString()
+    val githubHttpClient = GithubHttpClient(oauthToken)
     environment.config.configList("keynotedex.conferences.frontmatter")
         .map { it.property("repo").getString() to it.property("path").getString() }
         .flatMap { (repo, path) ->
             environment.log.debug("Loading conferences at repo $repo from path $path")
-            GithubFrontMatterScrapper(
-                oauthToken = environment.config.propertyOrNull("keynotedex.oauth.github.token")?.getString()
-            )
+            GithubFrontMatterScrapper(githubHttpClient = githubHttpClient)
                 .fetch(repo, path)
         }
         .map { it.toDao() }

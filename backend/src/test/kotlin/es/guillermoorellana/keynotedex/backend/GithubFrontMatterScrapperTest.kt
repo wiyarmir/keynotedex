@@ -1,77 +1,26 @@
 package es.guillermoorellana.keynotedex.backend
 
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import es.guillermoorellana.keynotedex.backend.external.GithubFrontMatterScrapper
-import es.guillermoorellana.keynotedex.backend.external.getHttpClientConfig
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
+import es.guillermoorellana.keynotedex.backend.external.GithubHttpClient
+import es.guillermoorellana.keynotedex.backend.frontmatter.FrontMatterParser
 import kotlinx.coroutines.runBlocking
-import okhttp3.HttpUrl
-import okhttp3.Interceptor
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 
 class GithubFrontMatterScrapperTest {
-
-    private val server = MockWebServer()
-
-    @Before
-    fun setUp() {
-        server.start()
+    private val githubHttpClientMock = mock<GithubHttpClient> {
+        onBlocking { getDirectoryFiles(any(), any()) } doReturn emptyList()
     }
 
-    @After
-    fun tearDown() {
-        server.shutdown()
-    }
+    private val frontMatterParserMock = mock<FrontMatterParser> {}
 
     @Test
     fun testScrapping() = runBlocking {
-        server.enqueue(
-            MockResponse()
-                .addHeader("Content-Type", "application/json; charset=utf-8")
-                .setBody(fromClasspath("/github/mocks/_conferences.json"))
-        )
-
-        server.enqueue(
-            MockResponse()
-                .addHeader("Content-Type", "text/plain; charset=utf-8")
-                .setBody(fromClasspath("/frontmatter/complete.md"))
-        )
-
-        val serverUrl = server.url("/")
-
         val conferences = GithubFrontMatterScrapper(
-            httpClient = HttpClient(
-                OkHttp.create { addInterceptor(rewriteUrlInterceptor(serverUrl)) },
-                getHttpClientConfig()
-            )
-        )
-            .fetch("npatarino/tech-conferences-spain", "_conferences/")
-
-        assert(conferences.size == 1)
-    }
-
-    fun fromClasspath(path: String) = javaClass.getResourceAsStream(path).bufferedReader().readText()
-}
-
-val rewriteUrlInterceptor = { serverUrl: HttpUrl ->
-    Interceptor {
-        val request = it.request()
-
-        val url = request.url
-            .newBuilder()
-            .host(serverUrl.host)
-            .port(serverUrl.port)
-            .scheme("http")
-            .build()
-
-        it.proceed(
-            request.newBuilder()
-                .url(url)
-                .build()
-        )
+            githubHttpClient = githubHttpClientMock,
+            frontMatterParser = frontMatterParserMock
+        ).fetch("npatarino/tech-conferences-spain", "_conferences/")
     }
 }
