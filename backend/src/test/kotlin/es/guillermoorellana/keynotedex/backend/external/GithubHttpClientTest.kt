@@ -1,12 +1,8 @@
-package es.guillermoorellana.keynotedex.backend
+package es.guillermoorellana.keynotedex.backend.external
 
-import es.guillermoorellana.keynotedex.backend.external.GithubConferenceScrapper
-import es.guillermoorellana.keynotedex.backend.external.getHttpClientConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.mockwebserver.MockResponse
@@ -15,8 +11,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class GithubConferenceScrapperTest {
-
+class GithubHttpClientTest {
     private val server = MockWebServer()
 
     @Before
@@ -30,7 +25,29 @@ class GithubConferenceScrapperTest {
     }
 
     @Test
-    fun testScrapping() = runBlocking {
+    fun testDirectoryContent() = runBlocking {
+        server.enqueue(
+            MockResponse()
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .setBody(fromClasspath("/github/mocks/_conferences.json"))
+        )
+
+        val serverUrl = server.url("/")
+
+        val client = GithubHttpClient(
+            httpClient = HttpClient(
+                OkHttp.create { addInterceptor(rewriteUrlInterceptor(serverUrl)) },
+                getHttpClientConfig()
+            )
+        )
+
+        val directory = client.getDirectoryContent("npatarino/tech-conferences-spain", "_conferences/")
+
+        assert(directory.size == 1)
+    }
+
+    @Test
+    fun testDirectoryFiles() = runBlocking {
         server.enqueue(
             MockResponse()
                 .addHeader("Content-Type", "application/json; charset=utf-8")
@@ -45,18 +62,19 @@ class GithubConferenceScrapperTest {
 
         val serverUrl = server.url("/")
 
-        val conferences = GithubConferenceScrapper(
+        val client = GithubHttpClient(
             httpClient = HttpClient(
                 OkHttp.create { addInterceptor(rewriteUrlInterceptor(serverUrl)) },
                 getHttpClientConfig()
             )
         )
-            .fetch("npatarino/tech-conferences-spain", "_conferences/")
 
-        assert(conferences.size == 1)
+        val files = client.getDirectoryFiles("npatarino/tech-conferences-spain", "_conferences/")
+
+        assert(files.size == 1)
     }
 
-    fun fromClasspath(path: String) = javaClass.getResourceAsStream(path).bufferedReader().readText()
+    private fun fromClasspath(path: String) = javaClass.getResourceAsStream(path).bufferedReader().readText()
 }
 
 val rewriteUrlInterceptor = { serverUrl: HttpUrl ->

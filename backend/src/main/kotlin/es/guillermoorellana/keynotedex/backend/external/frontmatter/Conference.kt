@@ -1,4 +1,4 @@
-package es.guillermoorellana.keynotedex.backend.external
+package es.guillermoorellana.keynotedex.backend.external.frontmatter
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
