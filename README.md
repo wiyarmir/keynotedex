@@ -12,9 +12,12 @@ Multiplatform Kotlin implementation of a service to save, track and share confer
 | Android  |   👷   |
 | iOS      |   👷   |
 
-### As featured in my talk "Kotlin beyond Android"
+## Media
 
-- Slides, video and more: https://speakerdex.co/wiyarmir/kotlin-beyond-android-770522b4
+| Title | Venue | Slides | Video |
+| --- | --- | --- | --- |
+| Kotlin Beyond Android | 2018 Milan Community Kotlin Conf | https://speakerdeck.com/wiyarmir/kotlin-beyond-android | https://vimeo.com/280696828 | 
+| All-Stacks Kotlin | 2019 Kotliners Budapest | https://speakerdeck.com/wiyarmir/all-stacks-kotlin | https://www.youtube.com/watch?v=31aX4sONZTs |
 
 ## Building the project
 
